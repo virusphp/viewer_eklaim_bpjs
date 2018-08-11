@@ -11,11 +11,11 @@
                <img class="profile-img" src="{{ asset('img/logo-kraton.png') }}">
                <form class="form-signin" method="POST" action="{{ route('auth.login') }}">
                   {{ csrf_field() }}
-                  <div class="form-group{{ $errors->has('idkaryawan') ? 'has-error' : '' }}">
-                     <input id="idkaryawan" type="text" class="form-control" name="idkrayawan" placeholder="ID karyaywan" value="{{ old('idkaryawan') }}" required autofocus>
-                      @if ($errors->has('idkaryawan'))
+                  <div class="form-group{{ $errors->has('username') ? 'has-error' : '' }}">
+                     <input id="username" type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
+                      @if ($errors->has('username'))
                          <span class="help-block">
-                           <strong>{{ $errors->first('idkaryawan') }}</strong>
+                           <strong>{{ $errors->first('username') }}</strong>
                         </span>
                      @endif
                   </div>

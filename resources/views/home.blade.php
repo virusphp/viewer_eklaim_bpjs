@@ -1,23 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.akunting.app')
+
+@section('breadcrumb')
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ url('/admin/home') }}">Home</a>
+    </li>
+    <li class="breadcrumb-item active">Dashboard</li>
+</ol>
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="card">
+  <div class="card-header text-center">
+    Pengumuman
+  </div>
+  <div class="card-body">
+    RSUD Kraton adalah Rumah sakit umum daerah Kabupaten Pekalongan
+    ini adalah layanan Sistem Informasi Rumah Sakit minipack yang di desain
+    dengan minimum service serta modul modul yang terintegrasi secara langsung
+  </div>
 </div>
+
 @endsection

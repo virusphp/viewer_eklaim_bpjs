@@ -19,7 +19,7 @@ class LoginController extends Controller
     */
     public function username()
     {
-        return 'kd_karyawan';
+        return 'username';
     }
 
     use AuthenticatesUsers;

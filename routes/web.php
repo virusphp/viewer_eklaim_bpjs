@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 //membuat login
-$this->get('panel', 'Auth\LoginController@showLoginForm')->name('auth.login');
-$this->post('panel', 'Auth\LoginController@login')->name('auth.login');
-$this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
+$this->get('panel', 'Auth\LoginController@showLoginForm')->name('login');
+$this->post('panel', 'Auth\LoginController@login')->name('login');
+$this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // group route prefix admin
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()

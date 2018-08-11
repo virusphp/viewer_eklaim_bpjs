@@ -9,7 +9,7 @@
             <p class="text-center daiwabo">AKUNTANSI</p>
             <div class="account-wall">
                <img class="profile-img" src="{{ asset('img/logo-kraton.png') }}">
-               <form class="form-signin" method="POST" action="{{ route('auth.login') }}">
+               <form class="form-signin" method="POST" action="{{ route('login') }}">
                   {{ csrf_field() }}
                   <div class="form-group{{ $errors->has('username') ? 'has-error' : '' }}">
                      <input id="username" type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus>

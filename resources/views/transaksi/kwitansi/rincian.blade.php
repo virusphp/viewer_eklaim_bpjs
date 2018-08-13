@@ -63,7 +63,7 @@
               <td>{{ $data->kelompok }}</td>
               <td>{{ $data->kd_sub_unit }}</td>
               <td>{{ rupiah($data->harga) }}</td>
-              <td>{{ $data->jumlah }}</td>
+              <td>{{ bulatan($data->jumlah) }}</td>
               <td>{{ rupiah($data->tunai) }}</td>
               <td>{{ rupiah($data->piutang) }}</td>
               <td>{{ rupiah($data->tagihan) }}</td>

@@ -17,7 +17,7 @@
   <div class="card">
       <div class="card-header">
         <strong class="controls align-middle">Kwitansi</strong>
-        @include('master.search.search') 
+        @include('layouts.search.datepicker') 
       </div>
       <div class="card-body">
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
@@ -25,7 +25,7 @@
             <tr>
               <th>No</th>
               <th>No Kwitansi</th>
-              <th>Nama Pasien</th>
+              <th>Tanggal Kwitansi</th>
               <th>Untuk</th>
               <th>Tagihan</th>
               <th>Aksi</th>
@@ -36,7 +36,7 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $data->no_kwitansi }}</td>
-              <td>{{ $data->nama_pasien }}</td>
+              <td>{{ tanggal($data->tgl_kwitansi) }}</td>
               <td>{{ $data->untuk }}</td>
               <td>{{ rupiah($data->tagihan) }}</td>
               <td>
@@ -54,3 +54,20 @@
 </div>
 
 @endsection
+@push('css')
+<link rel="stylesheet" href="{{ asset('core-ui/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
+@endpush
+@push('scripts')
+<script type="text/javascript" src="{{ asset('core-ui/moment/min/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'D-M-Y'
+        });
+    });
+
+</script>
+@endpush

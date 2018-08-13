@@ -17,7 +17,7 @@
   <div class="card">
       <div class="card-header">
         <strong class="controls align-middle">Akun Perkiraan</strong>
-        @include('master.search.search') 
+        @include('layouts.search.search') 
       </div>
       <div class="card-body">
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">

@@ -9,16 +9,22 @@ class KwitansiHeader
 
     public function getData($request)
     {
+        $today = date('Y-m-d');
         $data = DB::connection($this->conn)
-            ->table('Kwitansi_Header as kh')->select('kh.no_kwitansi','kh.nama_pasien','kh.untuk',
-                    'kh.tagihan')
+            ->table('Kwitansi_Header')->select('no_kwitansi','tgl_kwitansi','untuk',
+                    'tagihan')
             ->where(function($query) use ($request){
-                if (($term = $request->get('search')) ) 
+                if (( $request->only('search')) ) 
                 {
-                     $keywords = '%'. $term .'%';
-                     $query->where('kh.no_kwitansi','=', $term);
-                     $query->orWhere('kh.no_surat', $term);
-                } 
+                     $keywords = isset($request->search) ? '%'. $request->search . '%' : '';
+                     $query->orWhere('no_kwitansi','LIKE', $keywords);
+                     $query->orWhere('nama_pasien','LIKE', $keywords);
+                } else if($request->only('tgl')) {
+                    $tgl = date('Y-m-d', strtotime($request->tgl));
+                    $query->orWhere('tgl_kwitansi','=',$tgl);
+                } else {
+                    $query->orWhere('tgl_kwitansi','=', date('Y-m-d'));
+                }
             })
             ->paginate(10);
         return $data;

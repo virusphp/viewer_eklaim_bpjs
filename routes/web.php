@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// URL AWAL
 Route::get('/', function () {
     return redirect('/admin/home');
 });
@@ -20,8 +20,6 @@ $this->get('panel', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('panel', 'Auth\LoginController@login')->name('login');
 $this->get('logout', 'Auth\LoginController@logout')->name('logout');
 
-
-
 // group route prefix admin
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 {
@@ -30,6 +28,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     // Group Route Master
     Route::group(['namespace' => 'master'], function() {
         Route::get('/akun/perkiraan','AkunPerkiraanController@index')->name('akun.perkiraan');
+    });
+
+    // Group Route Transaksi
+    Route::group(['namespace' => 'transaksi', 'prefix' => 'transksi'], function() {
+        Route::get('kwitansi', 'KwitansiController@index')->name('kwitansi');
+        Route::get('kwitansi/{no_kwitansi}', 'KwitansiController@getKwitansi')->name('kwitansi.get');
     });
 
 });

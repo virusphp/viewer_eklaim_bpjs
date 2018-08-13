@@ -57,7 +57,7 @@
             <span class="badge badge-secondary">42</span>
           </a>
           <a class="dropdown-item" href="#">
-            <i class="fa fa-file"></i> Projects
+            <i class="fa fa-file"></i> {{ Auth::user()->username }}
             <span class="badge badge-primary">42</span>
           </a>
           <div class="divider"></div>

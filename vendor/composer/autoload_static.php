@@ -330,7 +330,7 @@ class ComposerStaticInitae04adda57599837af589f0c65d4d4f5
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\Master\\AkunPerkiraanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/AkunPerkiraanController.php',
         'App\\Http\\Controllers\\Master\\KwitansiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/KwitansiController.php',
-        'App\\Http\\Controllers\\Transaksi\\KwitansiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Transaksi/KwitansiController.php',
+
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',

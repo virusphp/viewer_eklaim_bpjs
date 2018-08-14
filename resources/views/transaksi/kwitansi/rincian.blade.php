@@ -26,26 +26,12 @@
          </div>
       </div>
       <div class="card-body">
-        <div class="row mb-4">
-          <div class="col-sm-4">
-           <div> #Dari </div>
-           <div><strong>{{ $kwitansi[0]->no_rm }}</strong> </div>
-          </div>
-          <div class="col-sm-4">
-            <div> #Pembayaran</div>
-          </div>
-          <div class="col-sm-4">
-            <div> #Detail</div>
-            <div> Invoice #{{ $kwitansi[0]->no_kwitansi }}</div>
-          </div>
-        </div>
-        <table class="table table-responsive-block table-hover">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
           <thead>
             <tr>
               <th>No</th>
               <th>No Bukti</th>
               <th>Kelompok</th>
-              <th>Unit</th>
               <th>Harga</th>
               <th>Jumlah</th>
               <th>Tunai</th>
@@ -61,7 +47,6 @@
               <td>#</td>
               <td>{{ $data->no_bukti }}</td>
               <td>{{ $data->kelompok }}</td>
-              <td>{{ $data->kd_sub_unit }}</td>
               <td>{{ rupiah($data->harga) }}</td>
               <td>{{ bulatan($data->jumlah) }}</td>
               <td>{{ rupiah($data->tunai) }}</td>
@@ -75,19 +60,11 @@
             </tr>
             <?php $total += $data->tagihan ?>
             @endforeach
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Total</td>
-            <td>{{ rupiah($total) }}</td>
+            <td colspan="7" class="text-center">Total</td>
+            <td><strong>{{ rupiah($total) }}</strong></td>
             <td></td>
           </tbody>
         </table>
-      </div>
   </div>
 </div>
 @endsection

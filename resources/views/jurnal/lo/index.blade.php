@@ -7,7 +7,7 @@
     </li>
 
     <li class="breadcrumb-item">
-      <a href="{{ route('kwitansi') }}">Kwitansi</a>
+      <a href="{{ route('jurnal.lo') }}">Jurnal LO</a>
     </li>
     <li class="breadcrumb-item active">Index</li>
 </ol>
@@ -16,7 +16,7 @@
 <div class="col-md-12">
   <div class="card">
       <div class="card-header">
-        <strong class="controls align-middle">Kwitansi</strong>
+        <strong class="controls align-middle">Jurnal LO</strong>
         @include('layouts.search.datepicker') 
       </div>
       <div class="card-body">
@@ -24,10 +24,10 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>No Kwitansi</th>
-              <th>Tanggal Kwitansi</th>
-              <th>Untuk</th>
-              <th>Tagihan</th>
+              <th>No Perikraan</th>
+              <th>Nama Perkiraan</th>
+              <th>Debet</th>
+              <th>Kredit</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -55,7 +55,6 @@
 
 @endsection
 @push('css')
-<!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
 @endpush
 @push('scripts')

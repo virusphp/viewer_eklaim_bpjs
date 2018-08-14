@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -15,8 +16,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\Master\\AkunPerkiraanController' => $baseDir . '/app/Http/Controllers/Master/AkunPerkiraanController.php',
-    'App\\Http\\Controllers\\Master\\KwitansiController' => $baseDir . '/app/Http/Controllers/Master/KwitansiController.php',
-
+    'App\\Http\\Controllers\\Transaksi\\KwitansiController' => $baseDir . '/app/Http/Controllers/Transaksi/KwitansiController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -28,7 +28,9 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
-    'App\\Repository\\AkunPerkiraan' => $baseDir . '/app/Repository/AkunPerkiraan.php',
+    'App\\Repository\\Master\\AkunPerkiraan' => $baseDir . '/app/Repository/Master/AkunPerkiraan.php',
+    'App\\Repository\\Transaksi\\Kwitansi' => $baseDir . '/app/Repository/Transaksi/Kwitansi.php',
+    'App\\Repository\\Transaksi\\KwitansiHeader' => $baseDir . '/app/Repository/Transaksi/KwitansiHeader.php',
     'App\\User' => $baseDir . '/app/User.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

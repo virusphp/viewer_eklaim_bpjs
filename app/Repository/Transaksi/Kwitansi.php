@@ -9,11 +9,10 @@ class Kwitansi
 
     public function getDetail($no_kw)
     {
-        // dd($no_kw);
         $data = DB::connection($this->conn)
-            ->table('Kwitansi as kw')->select('kw.no_kwitansi','kw.no_bukti','kw.kelompok','kw.harga',
-                    'kw.jumlah','kw.tunai','kw.piutang','kw.tagihan','kw.kd_sub_unit','kw.no_rm','status_bayar')
-            ->where('kw.no_kwitansi', '=', $no_kw)
+            ->table('Kwitansi')->select('no_kwitansi','no_bukti','kelompok','harga',
+                    'jumlah','tunai','piutang','tagihan','status_bayar')
+            ->where('no_kwitansi', '=', $no_kw)
             ->get();
         return $data;
     }

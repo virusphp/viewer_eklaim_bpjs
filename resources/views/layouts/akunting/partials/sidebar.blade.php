@@ -7,7 +7,7 @@
           </a>
         </li>
         <li class="nav-item nav-dropdown">
-          <a class="nav-link nav-dropdown-toggle" href="#">
+          <a class="nav-link nav-dropdown-toggle" href="#master">
             <i class="nav-icon icon-pencil"></i> Master</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
@@ -17,22 +17,22 @@
           </ul>
         </li>
         <li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#">
-              <i class="nav-icon icon-note"></i> Registrasi</a>
+            <a class="nav-link nav-dropdown-toggle" href="#transaksi">
+              <i class="nav-icon icon-pencil"></i> Transaksi</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <i class="nav-icon icon-puzzle"></i> Rawat Jalan</a>
+                <a class="nav-link" href="{{ route('kwitansi') }}">
+                  <i class="nav-icon icon-puzzle"></i> Kwitansi</a>
               </li>
             </ul>
         </li>
         <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#">
-              <i class="nav-icon icon-note"></i> Transaksi</a>
+              <i class="nav-icon icon-note"></i> Jurnal</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('kwitansi') }}">
-                  <i class="nav-icon icon-puzzle"></i> Kwitansi</a>
+                <a class="nav-link" href="#">
+                  <i class="nav-icon icon-puzzle"></i> Jurnal LO</a>
               </li>
             </ul>
         </li>

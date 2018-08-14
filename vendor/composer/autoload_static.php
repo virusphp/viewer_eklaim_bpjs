@@ -322,6 +322,7 @@ class ComposerStaticInitae04adda57599837af589f0c65d4d4f5
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -329,8 +330,7 @@ class ComposerStaticInitae04adda57599837af589f0c65d4d4f5
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\Master\\AkunPerkiraanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/AkunPerkiraanController.php',
-        'App\\Http\\Controllers\\Master\\KwitansiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/KwitansiController.php',
-
+        'App\\Http\\Controllers\\Transaksi\\KwitansiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Transaksi/KwitansiController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -342,7 +342,9 @@ class ComposerStaticInitae04adda57599837af589f0c65d4d4f5
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\Repository\\AkunPerkiraan' => __DIR__ . '/../..' . '/app/Repository/AkunPerkiraan.php',
+        'App\\Repository\\Master\\AkunPerkiraan' => __DIR__ . '/../..' . '/app/Repository/Master/AkunPerkiraan.php',
+        'App\\Repository\\Transaksi\\Kwitansi' => __DIR__ . '/../..' . '/app/Repository/Transaksi/Kwitansi.php',
+        'App\\Repository\\Transaksi\\KwitansiHeader' => __DIR__ . '/../..' . '/app/Repository/Transaksi/KwitansiHeader.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

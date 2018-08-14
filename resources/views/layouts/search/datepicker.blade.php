@@ -2,11 +2,13 @@
     <form id="search" action="{{ $route }}" class="form-inline" role="search" >
         <div class="form-group">
             <div class='input-group date {{ $errors->has('tgl') ? 'has-error' : '' }}' id='datetimepicker'>
-                <input type='text' name="tgl" class="form-control" placeholder="Tanggal..." />              
                 <div class="input-group-append">
                     <span class="input-group-text input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </span>
+                </div>
+                <input type='text' name="tgl" class="form-control" placeholder="Tanggal..." />              
+                <div class="input-group-append">                    
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-search"></i>
                     </button>

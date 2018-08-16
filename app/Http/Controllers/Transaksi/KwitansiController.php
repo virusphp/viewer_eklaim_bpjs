@@ -23,7 +23,7 @@ class KwitansiController extends Controller
             $this->validate($request,$rules, $costumMessage);
         }         
         $kwitansi = $kw->getData($request);
-        $route = Route('kwitansi');
+        $route = Route('kwitansi');        
         return view('transaksi.kwitansi.index',compact('kwitansi','route'));
     }
 

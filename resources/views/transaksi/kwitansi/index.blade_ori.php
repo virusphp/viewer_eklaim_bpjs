@@ -16,12 +16,11 @@
 <div class="col-md-12">
   <div class="card">
       <div class="card-header">
-        <!-- <strong class="controls align-middle">Kwitansi</strong> -->
+        <strong class="controls align-middle">Kwitansi</strong>
         @include('layouts.search.datepicker') 
       </div>
       <div class="card-body">
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
-        <input type="hidden" id="token" value="{{ csrf_token() }}">
           <thead>
             <tr>
               <th>No</th>
@@ -34,7 +33,7 @@
           </thead>
           <tbody>
             @foreach($kwitansi as $data)
-            <tr id="table">
+            <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $data->no_kwitansi }}</td>
               <td>{{ tanggal($data->tgl_kwitansi) }}</td>
@@ -68,33 +67,6 @@
         $('#datetimepicker').datetimepicker({
             format: 'D-M-Y'
         });
-    });
-
-    $(document).ready(function() {
-      $("#btn_tgl").click(function() {
-      $.ajax({
-          type: 'get',
-          url: '{{route("kwitansi")}}',
-          data: {
-              // '_token':$('#token').val(),
-              'jns_pasien': $('select[name=_token]').val(),
-              'jns_rawat': $('select[name=name]').val(),
-              'tgl':$('input[name=tgl]').val()
-          },
-          success: function(data) {
-              // if ((data.errors)){
-              //   $('.error').removeClass('hidden');
-              //   $('.error').text(data.errors.name);
-              // }
-              // else {
-                  // $('.error').addClass('hidden');
-                  $('#table').append("<tr class='table'><td>1</td><td>" + data.no_kwitansi + "</td><td>" + data.tgl_kwitansi + "</td><td>" + data.untuk + "</td><td>" + data.tagihan + "</td><td><a href='' class='btn btn-success btn-sm'><i class='icon-eye icons'></i> view</a></td></tr>");
-              // }
-          },
-
-      });
-      // $('#name').val('');
-      });
     });
 
 </script>

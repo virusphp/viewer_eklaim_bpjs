@@ -20,82 +20,93 @@
         @include('layouts.search.datepicker') 
       </div>
       <div class="card-body">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
-        <input type="hidden" id="token" value="{{ csrf_token() }}">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
           <thead>
             <tr>
               <th>No</th>
               <th>No Kwitansi</th>
               <th>Tanggal Kwitansi</th>
+              <th>Jenis Pasien</th>
+              <th>Jenis Rawat</th>
               <th>Untuk</th>
               <th>Tagihan</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($kwitansi as $data)
-            <tr id="table">
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $data->no_kwitansi }}</td>
-              <td>{{ tanggal($data->tgl_kwitansi) }}</td>
-              <td>{{ $data->untuk }}</td>
-              <td>{{ rupiah($data->tagihan) }}</td>
-              <td>
-                  <a href="{{ route('kwitansi.get', $data->no_kwitansi) }}" id="mtagihan" class="btn btn-success btn-sm">
-                    <i class="icon-eye icons"></i> view
-                  </a>
-              </td>
-            </tr>
-            @endforeach
+           
           </tbody>
-        </table>
-        {!! $kwitansi->appends(Request::all())->links() !!}
+        </table>       
+        
       </div>
   </div>
 </div>
 
 @endsection
 @push('css')
-<!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
+
 <link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
 @endpush
 @push('scripts')
 <script type="text/javascript" src="{{ asset('core-ui/moment/min/moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
             format: 'D-M-Y'
         });
     });
-
-    $(document).ready(function() {
-      $("#btn_tgl").click(function() {
-      $.ajax({
-          type: 'get',
-          url: '{{route("kwitansi")}}',
-          data: {
-              // '_token':$('#token').val(),
-              'jns_pasien': $('select[name=_token]').val(),
-              'jns_rawat': $('select[name=name]').val(),
-              'tgl':$('input[name=tgl]').val()
-          },
-          success: function(data) {
-              // if ((data.errors)){
-              //   $('.error').removeClass('hidden');
-              //   $('.error').text(data.errors.name);
-              // }
-              // else {
-                  // $('.error').addClass('hidden');
-                  $('#table').append("<tr class='table'><td>1</td><td>" + data.no_kwitansi + "</td><td>" + data.tgl_kwitansi + "</td><td>" + data.untuk + "</td><td>" + data.tagihan + "</td><td><a href='' class='btn btn-success btn-sm'><i class='icon-eye icons'></i> view</a></td></tr>");
-              // }
-          },
-
-      });
-      // $('#name').val('');
-      });
+    $(document).ready(function () {
+      ajaxLoad();
     });
+
+    function ajaxLoad(){
+        var jnsPasien = $("#jns_pasien").val();
+        var jnsRawat = $("#jns_rawat").val();
+        var tgl = $("#tgl").val();
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('#mytable').dataTable({
+            "Processing": true,
+            "ServerSide": true,
+            "sDom" : "<t><'row'<p i>>",
+            "iDisplayLength": 25,
+            "bDestroy": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+                "sSearch": "Search Data :  ",
+                "sZeroRecords": "Tidak ada data",
+                "sEmptyTable": "Data tidak tersedia"
+            },           
+            "ajax": {
+                "url": "{{ route('kwitansi.search')}}",
+                "type": "GET",
+                "data": {                   
+                      'jns_pasien': jnsPasien,
+                      'jns_rawat': jnsRawat,                
+                      'tgl': tgl
+                }
+            },
+            "columns": [
+                  {"mData": "no"},
+                  {"mData": "no_kwitansi"},
+                  {"mData": "tgl_kwitansi"},
+                  {"mData": "jenis_pasien"},
+                  {"mData": "jenis_rawat"},
+                  {"mData": "untuk"},
+                  {"mData": "jml_tagihan"},
+                  {"mData": "aksi"}            
+            ]
+        });
+        oTable = $('#mytable').DataTable();  
+        $('#searchInput').keyup(function(){
+            oTable.search($(this).val()).draw() ;
+        }); 
+    }
+
 
 </script>
 @endpush

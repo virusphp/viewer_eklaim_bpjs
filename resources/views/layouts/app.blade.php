@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('datatables/css/datatables.responsive.css') }}" rel="stylesheet">
   
 </head>
 <body>

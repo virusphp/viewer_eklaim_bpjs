@@ -60,9 +60,8 @@
         });
     });
     $(document).ready(function () {
-    //   $('#mytable_wrapper').removeClass('container-fluid').removeAttr('style');
       $('.table').removeAttr('style');
-      ajaxLoad();
+    //   ajaxLoad();
     });
 
     function ajaxLoad(){

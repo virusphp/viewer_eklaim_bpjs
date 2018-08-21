@@ -15,7 +15,7 @@ class SearchProvider extends ServiceProvider
     public function boot()
     {
         //
-        view()->composer('layouts.search.datepicker', SearchComposer::class);
+        view()->composer('transaksi.kwitansi.index', SearchComposer::class);
     }
 
     /**

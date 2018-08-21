@@ -69,13 +69,14 @@ class Kwitansi
     {
         $data = DB::connection($this->conn)
             ->table('Kwitansi_Header as kh')
-            ->select('ap.no_perkiraan','ap.nama_perkiraan','kh.untuk','kw.no_bukti', DB::raw('sum(kw.tagihan) as kredit'), 'tp.kd_tarif')
+            ->select('kw.no_kwitansi','kh.untuk','kw.no_bukti', DB::raw('sum(kw.tagihan) as kredit'), 'tp.kd_tarif', 'ap.no_perkiraan','ap.nama_perkiraan')
             ->join('Kwitansi as kw', function($join){
                 $join->on('kh.no_kwitansi','=','kw.no_kwitansi')
                     ->join('Tagihan_Pasien as tp', function($join){
                         $join->on('kw.no_bukti','=','tp.no_bukti')
                             ->join('Akun_Perkiraan_Tarif as apt',function ($join){
-                                $join->on('tp.kd_tarif','=','apt.kd_tarif')
+                                $join->on('tp.kd_tarif','=','apt.kd_tarif');
+                                $join->on('tp.kd_sub_unit', '=', 'apt.kd_sub_unit')
                                     ->join('Akun_Perkiraan as ap', function($join) {
                                         $join->on('apt.no_perkiraan2','=', 'ap.no_perkiraan');
                                     });
@@ -83,7 +84,7 @@ class Kwitansi
                     });
             })
             ->where('kw.no_kwitansi','=',$no_kw)
-            ->groupBy('kh.untuk','kw.no_bukti','ap.no_perkiraan','ap.nama_perkiraan','tp.kd_tarif')
+            ->groupBy('kh.untuk','kw.no_bukti','tp.kd_tarif','kw.no_kwitansi', 'ap.no_perkiraan','ap.nama_perkiraan')
             ->get();
 
         // $coba = json_decode($data, true);
@@ -93,7 +94,8 @@ class Kwitansi
             $key2 = $val->nama_perkiraan;
             $key3 = $val->untuk;
             $key4 = $val->kredit;
-            unset($val->no_bukti, $val->kd_tarif);
+            $key5 = $val->no_kwitansi;
+            unset($val->no_bukti, $val->kd_tarif, $val->no_kwitansi);
             $kredit[$key1] = $val;
             $kredit[$key1]->debet = 0;
         }

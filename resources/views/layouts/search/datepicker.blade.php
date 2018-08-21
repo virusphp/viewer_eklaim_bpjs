@@ -21,7 +21,7 @@
         <td>
             <div class="form-inline float-right">
                 <div class="form-group col-md-7">
-                    <div class='input-group date {{ $errors->has('tgl') ? 'has-error' : '' }}' id='datetimepicker' >
+                    <div class="input-group date {{ $errors->has('tgl') ? 'has-error' : '' }}" id="datetimepicker" >
                         <div class="input-group-append">
                             <span class="input-group-text input-group-addon">
                                 <i class="fa fa-calendar"></i>

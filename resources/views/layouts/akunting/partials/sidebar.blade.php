@@ -22,17 +22,35 @@
             <ul class="nav-dropdown-items">
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('kwitansi') }}">
-                  <i class="nav-icon icon-puzzle"></i> Kwitansi</a>
+                  <i class="nav-icon icon-puzzle"></i> Jurnal Umum</a>
               </li>
             </ul>
         </li>
         <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#">
-              <i class="nav-icon icon-note"></i> Jurnal</a>
+              <i class="nav-icon icon-note"></i> Laporan Keuangan</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <i class="nav-icon icon-puzzle"></i> Jurnal LO</a>
+                  <i class="nav-icon icon-puzzle"></i> Neraca</a>
+              </li>
+            </ul>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="nav-icon icon-puzzle"></i> Operasional</a>
+              </li>
+            </ul>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="nav-icon icon-puzzle"></i> Arus Kas</a>
+              </li>
+            </ul>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="nav-icon icon-puzzle"></i> Laporan LRA</a>
               </li>
             </ul>
         </li>

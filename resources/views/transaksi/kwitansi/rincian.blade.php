@@ -16,11 +16,11 @@
 <div class="col-md-12">
   <div class="card">
       <div class="card-header">
-         INVOICE #{{ $kwitansi[0]->no_kwitansi }} 
+        JURNAL
          <div class="float-right">
             <div class="controls">
               <div class="input-group">
-                <button class="btn btn-dark" onclick="goBack()">BACK</button>
+                <button class="btn btn-sm btn-dark" onclick="goBack()">BACK</button>
               </div>
             </div>
          </div>
@@ -30,41 +30,39 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>No Bukti</th>
-              <th>Kelompok</th>
-              <th>Harga</th>
-              <th>Jumlah</th>
-              <th>Tunai</th>
-              <th>Piutang</th>
-              <th>Tagihan</th>
+              <th>No Akun</th>
+              <th>Nama Akun</th>
+              <th>Debet</th>
+              <th>Kredit</th>
+              <th>Keterangan</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <?php $total = 0 ?>
+            <?php $kre = 0 ?>
+            <?php $deb = 0 ?>
             @foreach($kwitansi as $data)
            <tr>
               <td>#</td>
-              <td>{{ $data->no_bukti }}</td>
-              <td>{{ $data->kelompok }}</td>
-              <td>{{ rupiah($data->harga) }}</td>
-              <td>{{ bulatan($data->jumlah) }}</td>
-              <td>{{ rupiah($data->tunai) }}</td>
-              <td>{{ rupiah($data->piutang) }}</td>
-              <td>{{ rupiah($data->tagihan) }}</td>
+              <td>{{ $data->no_perkiraan }}</td>
+              <td>{{ $data->nama_perkiraan }}</td>
+              <td>{{ rupiah($data->debet) }}</td>
+              <td>{{ rupiah($data->kredit) }}</td>
+              <td>{{ $data->untuk }}</td>
               <td>
-                <span class="badge badge-{{ $data->status_bayar == 'SUDAH' ? 'success' : 'secondary' }}">
-                  {{ $data->status_bayar }}
-                </span>
               </td>
             </tr>
-            <?php $total += $data->tagihan ?>
+            <?php $kre += $data->kredit ?>
+            <?php $deb += $data->debet ?>
             @endforeach
-            <td colspan="7" class="text-center">Total</td>
-            <td><strong>{{ rupiah($total) }}</strong></td>
-            <td></td>
+            <td colspan="3" class="text-center">Total</td>
+            <td><strong>{{ rupiah($deb) }}</strong></td>
+            <td><strong>{{ rupiah($kre) }}</strong></td>
+            <td><strong></strong></td>
+            <td class="badge badge-{{ $deb == $kre ? 'success': 'secondary' }}"><?php echo $deb == $kre ? 'Balance' : 'Not Balance'; ?></td>
           </tbody>
         </table>
+        <div class="float-right"><button class="btn btn-sm btn-success" onclick="goBack()">BUAT</button></div>
   </div>
 </div>
 @endsection

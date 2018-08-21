@@ -16,10 +16,10 @@
 <div class="col-md-12">
   <div class="card">
       <div class="card-header">
-        <!-- <strong class="controls align-middle">Kwitansi</strong> -->
         @include('layouts.search.datepicker') 
       </div>
       <div class="card-body">
+      
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
           <thead>
             <tr>
@@ -60,6 +60,8 @@
         });
     });
     $(document).ready(function () {
+    //   $('#mytable_wrapper').removeClass('container-fluid').removeAttr('style');
+      $('.table').removeAttr('style');
       ajaxLoad();
     });
 
@@ -71,7 +73,7 @@
         $('#mytable').dataTable({
             "Processing": true,
             "ServerSide": true,
-            "sDom" : "<t><'row'<p i>>",
+            "sDom" : "<t<p i>>",
             "iDisplayLength": 25,
             "bDestroy": true,
             "oLanguage": {
@@ -96,7 +98,7 @@
                   {"mData": "tgl_kwitansi"},
                   {"mData": "jenis_pasien"},
                   {"mData": "jenis_rawat"},
-                  {"mData": "untuk"},
+                  {"width": "30%", "mData": "untuk"},
                   {"mData": "jml_tagihan"},
                   {"mData": "aksi"}            
             ]
@@ -104,6 +106,7 @@
         oTable = $('#mytable').DataTable();  
         $('#searchInput').keyup(function(){
             oTable.search($(this).val()).draw() ;
+            $('.table').removeAttr('style');
         }); 
     }
 

@@ -30,7 +30,7 @@ class KwitansiController extends Controller
                     'jenis_rawat' => $q->jenis_rawat,
                     'untuk' => $q->untuk,
                     'jml_tagihan' => rupiah($q->tagihan),
-                    'aksi' => '<a href="'.route('kwitansi.get', $q->no_kwitansi).'" id="mtagihan" class="btn btn-success btn-sm">
+                    'aksi' => '<a href="'.route('kwitansi.get', array($q->no_kwitansi, $q->tagihan)).'" id="mtagihan" class="btn btn-success btn-sm">
                                     <i class="icon-eye icons"></i> view
                                 </a>',
                 );
@@ -38,6 +38,13 @@ class KwitansiController extends Controller
             $result = isset($query) ? array('data' => $query): array('data' => 0);
             return json_encode($result);
         }
+    }
+
+    public function getKwitansi(Kwitansi $kw, $no_kwitansi)
+    {
+        $kwitansi = $kw->getDetail($no_kwitansi);
+        // return response()->json($kwitansi);
+        return view('transaksi.kwitansi.rincian', compact('kwitansi', 'jumlah'));
     }
 
     public function search2(Request $request,KwitansiHeader $kw)
@@ -68,11 +75,5 @@ class KwitansiController extends Controller
             }
             return Response($output);
         }   
-    }
-
-    public function getKwitansi(Kwitansi $kw, $no_kwitansi)
-    {
-        $kwitansi = $kw->getDetail($no_kwitansi);
-        return view('transaksi.kwitansi.rincian', compact('kwitansi'));
     }
 }

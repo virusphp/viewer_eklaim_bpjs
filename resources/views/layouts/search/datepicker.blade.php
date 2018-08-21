@@ -3,16 +3,19 @@
         <td style="vertical-align: center"><strong>Jenis Pasien</strong></td>
         <td>            
             <select id="jns_pasien" name="jns_pasien" class="form-control" onchange="ajaxLoad()">
-                <option value="UMUM">UMUM</option>
-                <option value="PENJAMIN">PENJAMIN</option>               
+            <option value="">JENIS PASIEN</option>
+                @foreach($j_pasien as $jns)
+                   <option value="{{ $jns->jenis_pasien }}">{{ $jns->jenis_pasien }}</option>
+                @endforeach            
             </select>        
         </td>
         <td style="vertical-align: center"><strong>Jenis Rawat</strong></td>
         <td>
             <select id="jns_rawat" name="jns_rawat" class="form-control" onchange="ajaxLoad()">
-                <option value="RJ">RAWAT JALAN</option>
-                <option value="RI">RAWAT INAP</option>
-                <option value="RD">RAWAT DARURAT</option>
+            <option value="">JENIS RAWAT</option>
+                @foreach($j_rawat as $jns)
+                   <option value="{{ $jns->jenis_rawat }}">{{ $jns->jenis_rawat }}</option>
+                @endforeach            
             </select>    
         </td>
         <td>

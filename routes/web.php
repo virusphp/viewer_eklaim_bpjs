@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     Route::group(['namespace' => 'transaksi', 'prefix' => 'transksi'], function() {
         Route::get('kwitansi', 'KwitansiController@index')->name('kwitansi');
         Route::get('kwitansi/search', 'KwitansiController@search')->name('kwitansi.search');
-        Route::get('kwitansi/{no_kwitansi}', 'KwitansiController@getKwitansi')->name('kwitansi.get');
+        Route::post('kwitansi', 'KwitansiController@getKwitansi')->name('kwitansi.get');
     });
 
 });

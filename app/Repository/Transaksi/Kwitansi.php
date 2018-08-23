@@ -18,8 +18,47 @@ class Kwitansi
 
     public function getDebet($no_kw)
     {
-        $data = DB::connection($this->conn)
-            ->table('Kwitansi_Header as kw')
+        // dd($no_kw,"apa si");
+        $data = DB::table('Kwitansi_Header')
+            ->select('no_kwitansi','untuk','tagihan as debet','status_bayar')
+            ->where('no_kwitansi','=',$no_kw)
+            ->first();
+        $data->no_perkiraan = "111010101";
+        $data->nama_perkiraan = "Kas di Bendahara Penerimaan";
+        $data->kredit = 0;
+        return $data;
+    }
+
+    public function getRekObat($no_kw)
+    {
+        $data = $this->getKredit($no_kw);
+        
+        foreach ($data as $val) {
+            $res = DB::table('ap_jualr2')->select('nama_barang')->where('notaresep', '=', $val->no_bukti)->get();
+        }
+        dd($res);
+    }
+
+    public function getKredit($no_kw)
+    {
+        // dd($no_kw);
+        $data = DB::table('Kwitansi as kw')
+            ->select('kw.no_kwitansi','kw.nama_tarif','kw.tagihan','kw.status_bayar','kelompok','no_bukti')
+            // // ->join('Tagihan_pasien as tp', function($join){
+            // //     $join->on('kw.no_bukti', '=','tp.no_bukti');
+            // // })
+            // ->join('ap_jualr2 as ajr', function ($join) {
+            //     $join->on('kw.no_bukti','=','ajr.notaresep');
+            // })
+            ->where('kw.no_kwitansi',$no_kw)
+            ->get();
+        // $data = DB::select('select no_kwitansi, nama_tarif, tagihan, status_bayar from Kwitansi where no_kwitansi= :kwitansi',['kwitansi'=> $no_kw] );
+        return $data;
+    }
+
+    public function getDeb($no_kw)
+    {
+        $data = DB::table('Kwitansi_Header as kw')
             ->select('kw.tagihan as debet','kw.untuk')
             ->where('kw.no_kwitansi', '=', $no_kw)
             ->get();
@@ -36,10 +75,11 @@ class Kwitansi
         return $debet;
     }
 
-    public function getKredit($no_kw)
+   
+
+    public function getKre($no_kw)
     {
-        $data = DB::connection($this->conn)
-            ->table('Kwitansi as kh')
+        $data = DB::table('Kwitansi as kh')
             ->select('ap.no_perkiraan','ap.nama_perkiraan')
             ->join('Akun_Perkiraan_Tarif as atp', function($join) {
                 $join->on('kh.kd_sub_unit','=','atp.kd_sub_unit')
@@ -67,8 +107,7 @@ class Kwitansi
 
     public function getCoba($no_kw)
     {
-        $data = DB::connection($this->conn)
-            ->table('Kwitansi_Header as kh')
+        $data = DB::table('Kwitansi_Header as kh')
             ->select('kw.no_kwitansi','kh.untuk','kw.no_bukti', DB::raw('sum(kw.tagihan) as kredit'), 'tp.kd_tarif', 'ap.no_perkiraan','ap.nama_perkiraan')
             ->join('Kwitansi as kw', function($join){
                 $join->on('kh.no_kwitansi','=','kw.no_kwitansi')

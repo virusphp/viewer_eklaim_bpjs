@@ -44,7 +44,6 @@
 
 @endsection
 @push('css')
-
 <link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
 @endpush
 @push('scripts')
@@ -61,7 +60,7 @@
     });
     $(document).ready(function () {
       $('.table').removeAttr('style');
-    //   ajaxLoad();
+      ajaxLoad();
     });
 
     function ajaxLoad(){

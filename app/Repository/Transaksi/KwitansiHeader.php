@@ -10,8 +10,7 @@ class KwitansiHeader
     public function getData($request)
     {
         $today = date('Y-m-d');
-        $data = DB::connection($this->conn)
-            ->table('Kwitansi_Header')->select('no_kwitansi','tgl_kwitansi','untuk',
+        $data = DB::table('Kwitansi_Header')->select('no_kwitansi','tgl_kwitansi','untuk',
                     'tagihan','jenis_pasien','jenis_rawat')
             ->where(function($query) use ($request){
                 if (( $request->only('search')) ) 
@@ -33,8 +32,7 @@ class KwitansiHeader
     public function getSearch($request)
     {
         $tgl = date('Y-m-d', strtotime($request->tgl));
-        $data = DB::connection($this->conn)
-            ->table('Kwitansi_Header')->select('no_kwitansi','tgl_kwitansi','untuk',
+        $data = DB::table('Kwitansi_Header')->select('no_kwitansi','tgl_kwitansi','untuk',
                     'tagihan','jenis_pasien','jenis_rawat')
             ->where([
                 ['jenis_rawat','=',$request->jns_rawat],

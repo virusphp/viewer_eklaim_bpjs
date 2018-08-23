@@ -37,10 +37,10 @@ class KwitansiController extends Controller
                     'jenis_rawat' => $q->jenis_rawat,
                     'untuk' => $q->untuk,
                     'jml_tagihan' => rupiah($q->tagihan),
-                    'aksi' => '<form action="'.route('kwitansi.get').'" method="POST" id="mtagihan" class="btn btn-success btn-sm">
+                    'aksi' => '<form action="'.route('kwitansi.get').'" method="POST" id="mtagihan">
                                     <input type="hidden" name="no_kwitansi" value="'.$q->no_kwitansi.'">
                                     <input type="hidden" name="_token" value="'.csrf_token().'">
-                                    <button type="submit" class="icon-eye icons"> view</button>
+                                    <button type="submit" class="btn btn-success btn-sm icon-eye icons"> view</button>
                                 </form>',
                 );
             }

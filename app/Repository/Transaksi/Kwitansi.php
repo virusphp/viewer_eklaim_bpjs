@@ -29,30 +29,97 @@ class Kwitansi
         return $data;
     }
 
+    public function getKredit($no_kw)
+    {
+        $data = $this->kredit($no_kw);
+        foreach($data as $val)
+        {
+            if ($val->kelompok == 'Farmasi / Obat / Alkes') {
+                $res = $this->TObat($val->no_bukti);
+            }else if ($val->kelompok == 'RAWAT JALAN' || 'LABORATORIUM') {
+                $res = $this->TPasien($val->no_bukti);
+            } else {
+                $res = $res;
+            }
+        }
+        return $res;
+    }
+
+    public function TObat($no_bukti)
+    {
+        $res = DB::table('ap_jualr2 as ap')
+            ->select('ak.nama_perkiraan','jo.no_perkiraan_8','ap.nama_barang as nama_tarif','ap.totalharga as tagihan')
+            ->join('jenis_obat as jo',function($join){
+                $join->on('ap.kd_jns_obat','=', 'jo.kd_jns_obat')
+                    ->join('Akun_Perkiraan as ak', function($join){
+                        $join->on('jo.no_perkiraan_8','=','ak.no_perkiraan');
+                    });
+            })
+            ->where('notaresep', '=', $no_bukti)
+            ->get();
+        return $res;
+    }
+
+    public function TPasien($no_bukti)
+    {
+        $res = DB::table('Tagihan_Pasien as tp')
+                ->select('tp.nama_tarif','tp.tagihan','ap.no_perkiraan as no_perkiraan_8','ap.nama_perkiraan')
+                ->join('Akun_Perkiraan_Tarif as apt', function($join) {
+                    $join->on('tp.kd_tarif','=','apt.kd_tarif')
+                       ->on('tp.kd_sub_unit','=','apt.kd_sub_unit')
+                            ->join('Akun_Perkiraan as ap', function($join) {
+                                $join->on('apt.no_perkiraan2','=', 'ap.no_perkiraan');
+                            });
+                })
+                ->where('tp.no_bukti', $no_bukti)
+                ->get();
+        return $res;
+    }
+
     public function getRekObat($no_kw)
     {
         $data = $this->getKredit($no_kw);
-        
         foreach ($data as $val) {
-            $res = DB::table('ap_jualr2')->select('nama_barang')->where('notaresep', '=', $val->no_bukti)->get();
+            $res = DB::table('ap_jualr2 as ap')
+                ->select('ak.nama_perkiraan','jo.no_perkiraan_8','ap.nama_barang as nama_tarif','ap.totalharga as tagihan')
+                ->join('jenis_obat as jo',function($join){
+                    $join->on('ap.kd_jns_obat','=', 'jo.kd_jns_obat')
+                        ->join('Akun_Perkiraan as ak', function($join){
+                            $join->on('jo.no_perkiraan_8','=','ak.no_perkiraan');
+                        });
+                })
+                ->where('notaresep', '=', $val->no_bukti)
+                ->get();
         }
-        dd($res);
+       return $res;
     }
 
-    public function getKredit($no_kw)
+    public function getRekPasien($no_kw)
     {
-        // dd($no_kw);
+        $data = $this->getKredit($no_kw);
+        foreach($data as $val) {
+            $res = DB::table('Tagihan_Pasien as tp')
+                ->select('tp.nama_tarif','tp.tagihan','ap.no_perkiraan as no_perkiraan_8','ap.nama_perkiraan')
+                ->join('Akun_Perkiraan_Tarif as apt', function($join) {
+                    $join->on('tp.kd_tarif','=','apt.kd_tarif')
+                       ->on('tp.kd_sub_unit','=','apt.kd_sub_unit')
+                            ->join('Akun_Perkiraan as ap', function($join) {
+                                $join->on('apt.no_perkiraan2','=', 'ap.no_perkiraan');
+                            });
+                })
+                ->where('tp.no_bukti', $val->no_bukti)
+                ->get();
+        }
+        return $res;
+
+    }
+
+    public function kredit($no_kw)
+    {
         $data = DB::table('Kwitansi as kw')
             ->select('kw.no_kwitansi','kw.nama_tarif','kw.tagihan','kw.status_bayar','kelompok','no_bukti')
-            // // ->join('Tagihan_pasien as tp', function($join){
-            // //     $join->on('kw.no_bukti', '=','tp.no_bukti');
-            // // })
-            // ->join('ap_jualr2 as ajr', function ($join) {
-            //     $join->on('kw.no_bukti','=','ajr.notaresep');
-            // })
             ->where('kw.no_kwitansi',$no_kw)
             ->get();
-        // $data = DB::select('select no_kwitansi, nama_tarif, tagihan, status_bayar from Kwitansi where no_kwitansi= :kwitansi',['kwitansi'=> $no_kw] );
         return $data;
     }
 

@@ -52,10 +52,9 @@ class KwitansiController extends Controller
     public function getKwitansi(Request $request)
     {
         // dd($request->all());
-        // dd($no_kwitansi);
-        // $debet = $this->kw->getDebet($request->no_kwitansi);
-        $kredit = $this->kw->getRekObat($request->no_kwitansi);
-        dd($kredit);
+        $debet = $this->kw->getDebet($request->no_kwitansi);
+        $kredit = $this->kw->getKredit($request->no_kwitansi);
+        // dd($kredit);
         // return response()->json($kwitansi);
         return view('transaksi.kwitansi.rincian', compact('debet', 'kredit'));
     }

@@ -28,7 +28,6 @@
               <th>Keterangan</th>
               <th>Debet</th>
               <th>Kredit</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -40,25 +39,21 @@
               <td>{{ $debet->untuk }}</td>
               <td>{{ rupiah($debet->debet) }}</td>
               <td>{{ rupiah($debet->kredit) }}</td>
-              <td>{{ $debet->status_bayar }}</td>
             </tr>
             @foreach($kredit as $data)
            <tr>
               <td>#</td>
-              <td></td>
-              <td></td>
+              <td>{{ $data->no_perkiraan_8 }}</td>
+              <td>{{ $data->nama_perkiraan }}</td>
               <td>{{ $data->nama_tarif }}</td>
               <td></td>
               <td>{{ rupiah($data->tagihan) }}</td>
-              <td>{{ $data->status_bayar }}</td>
             </tr>
             <?php $kre += $data->tagihan ?>
             @endforeach
             <td colspan="4" class="text-center">Total Kredit</td>
             <td><strong>{{ rupiah($debet->debet) }}</strong></td>
             <td><strong>{{ rupiah($kre) }}</strong></td>
-            <td><strong></strong></td>
-            <td class="badge badge-success"></td>
           </tbody>
         </table>
         <div class="float-right"><button class="btn btn-sm btn-success" onclick="goBack()">BUAT</button></div>

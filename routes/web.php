@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Group Route Master
-    Route::group(['namespace' => 'sep'], function() {
+    Route::group(['namespace' => 'Sep'], function() {
         // autocompleted
         Route::get('/bpjs/diagnosa','BpjsController@getDiagnosa')->name('bpjs.diagnosa');
         Route::get('/bpjs/poli','BpjsController@getPoli')->name('bpjs.poli');

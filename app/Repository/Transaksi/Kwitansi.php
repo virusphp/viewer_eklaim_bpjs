@@ -32,15 +32,16 @@ class Kwitansi
     public function getKredit($no_kw)
     {
         $data = $this->kredit($no_kw);
+        // dd($data);
+        $co = [];
         foreach($data as $val)
-        {
+        {   
             if ($val->kelompok == 'Farmasi / Obat / Alkes') {
                 $res = $this->TObat($val->no_bukti);
-            }else if ($val->kelompok == 'RAWAT JALAN' || 'LABORATORIUM') {
+            }else {
                 $res = $this->TPasien($val->no_bukti);
-            } else {
-                $res = $res;
-            }
+            } 
+          
         }
         return $res;
     }
@@ -63,7 +64,7 @@ class Kwitansi
     public function TPasien($no_bukti)
     {
         $res = DB::table('Tagihan_Pasien as tp')
-                ->select('tp.nama_tarif','tp.tagihan','ap.no_perkiraan as no_perkiraan_8','ap.nama_perkiraan')
+                ->select('ap.no_perkiraan as no_perkiraan_8','ap.nama_perkiraan','tp.nama_tarif','tp.tagihan')
                 ->join('Akun_Perkiraan_Tarif as apt', function($join) {
                     $join->on('tp.kd_tarif','=','apt.kd_tarif')
                        ->on('tp.kd_sub_unit','=','apt.kd_sub_unit')
@@ -73,6 +74,7 @@ class Kwitansi
                 })
                 ->where('tp.no_bukti', $no_bukti)
                 ->get();
+        // dd($res);
         return $res;
     }
 
@@ -96,7 +98,7 @@ class Kwitansi
 
     public function getRekPasien($no_kw)
     {
-        $data = $this->getKredit($no_kw);
+        $data = $this->kredit($no_kw);
         foreach($data as $val) {
             $res = DB::table('Tagihan_Pasien as tp')
                 ->select('tp.nama_tarif','tp.tagihan','ap.no_perkiraan as no_perkiraan_8','ap.nama_perkiraan')

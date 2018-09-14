@@ -1,0 +1,112 @@
+<?php
+namespace App\Service\Bpjs;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use DB;
+use GuzzleHttp\Psr7;
+use Guzzle\Http\Message\Response;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
+
+class Sep 
+{
+    protected $client = null;
+    protected $api_url;
+
+    public function __construct()
+    {
+        $this->client = new Client(['cookies' => true, 'verify' => false]);    
+        $this->api_url = config('bpjs.api.endpoint');   
+    }
+
+    public function cariSep($sep)
+    {
+        try {
+            $url = $this->api_url . "SEP/". $sep;
+            $response = $this->client->get($url);
+            return $response;
+        } catch (RequestException $e) {
+            return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                return Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function saveSep($data)
+    {
+        try {
+            $url = $this->api_url . "sep/insert";
+            $response = $this->client->post($url, ['body' => $data]);
+            return $response;
+        } catch (RequestException $e) {
+           return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+            return Psr7\str($e->getResponse());
+            }
+        } 
+ 
+    }
+
+    public function updateSep($data)
+    {
+        $data = file_get_contents("php://input");
+        try {
+            $url = $this->api_url . "Sep/1.1/Update";
+            $response = $this->client->put($url, ['headers' => $this->headers, 'body' => $data]);
+            return $response;
+        } catch (RequestException $e) {
+            return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+            return Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function deleteSep($data)
+    {
+        $data = file_get_contents("php://input");
+        // dd($data);
+        try {
+            $url = $this->api_url . "SEP/Delete";
+            $response = $this->client->delete($url, ['headers' => $this->headers, 'body' => $data]);
+            return $response;
+        } catch (RequestException $e) {
+            return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+            return Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function updatePulang($data)
+    {
+        $data = file_get_contents("php://input");
+        try {
+            $url = $this->api_url . "Sep/updtglplg";
+            $response = $this->client->put($url, ['headers' => $this->headers, 'body' => $data]);
+            return $response;
+        } catch (RequestException $e) {
+            return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+            return Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function suplesi($noKartu,$tglPel)
+    {
+        try {
+            $url = $this->api_url . "sep/JasaRaharja/Suplesi/". $noKartu. "/tglPelayanan"."/".$tglPel;
+            $response = $this->client->get($url, ['headers' => $this->header]);
+            return $response;
+        } catch (RequestException $e) {
+            return Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                return Psr7\str($e->getResponse());
+            }
+        } 
+    }
+}

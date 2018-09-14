@@ -67,7 +67,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'sqlsrv_akun' => [
+        'sqlsrv' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
@@ -78,7 +78,7 @@ return [
             'prefix' => '',
         ],
 
-        'sqlsrv' => [
+        'sqlsrv_akun' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST2', 'localhost'),
             'port' => env('DB_PORT2', '1433'),

@@ -30,3 +30,8 @@ function bulatan($nilai)
 {
     return round($nilai, 2);
 }
+
+function noReg($nilai)
+{
+	return substr($nilai, 0, 2);
+}

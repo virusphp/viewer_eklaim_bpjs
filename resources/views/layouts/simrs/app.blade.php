@@ -18,16 +18,19 @@
     <link href="{{ asset('core-ui/css/simple-line-icons.css') }}" rel="stylesheet">
     <!-- Main styles for this application-->
     <link href="{{ asset('core-ui/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->
     @stack('css')
 
   </head>
   <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    @include('layouts.akunting.partials.header')
+    @include('layouts.simrs.partials.header')
     <div class="app-body">
-        @include('layouts.akunting.partials.sidebar')
+        @include('layouts.simrs.partials.sidebar')
       <main class="main">
         <!-- Breadcrumb-->
-        {{-- @include('layouts.akunting.partials.breadcrumb') --}}
+        {{-- @include('layouts.simrs.partials.breadcrumb') --}}
         @yield('breadcrumb')
 
         <div class="container-fluid">
@@ -39,16 +42,21 @@
         </div>
       </main>
     </div>
-    @include('layouts.akunting.partials.footer')
+    @include('layouts.simrs.partials.footer')
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('core-ui/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('core-ui/js/popper.min.js') }}"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script src="{{ asset('core-ui/js/popper.min.js') }}"></script> -->
     <script src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('core-ui/js/pace.min.js') }}"></script>
-    <script src="{{ asset('core-ui/js/perfect-scrollbar.min.js') }}"></script>
+    <!-- <script src="{{ asset('core-ui/js/pace.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('core-ui/js/perfect-scrollbar.min.js') }}"></script> -->
     <script src="{{ asset('core-ui/js/coreui.min.js') }}"></script>
     <!-- Plugins and scripts required by this view-->
     <script src="{{ asset('core-ui/js/custom-tooltips.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('core-ui/moment/min/moment.min.js') }}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+    <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
     @stack('scripts')
   </body>
 </html>

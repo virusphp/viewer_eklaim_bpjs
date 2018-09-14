@@ -15,7 +15,7 @@ class SearchProvider extends ServiceProvider
     public function boot()
     {
         //
-        view()->composer('transaksi.kwitansi.index', SearchComposer::class);
+        view()->composer('layouts.search.search', SearchComposer::class);
     }
 
     /**

@@ -8,15 +8,15 @@ class SearchComposer
 {
     public function compose(View $view)
 	{
-		$this->composeJPasien($view);
+		$this->composeCaraBayar($view);
 		$this->composeJRawat($view);
 	}
 
-    public function composeJPasien(View $view)
+    public function composeCaraBayar(View $view)
     {
-        $j_pasien = DB::connection('sqlsrv')->table('Kwitansi_Header')
-            ->select('jenis_pasien')->where('jenis_pasien', '!=', '0')->groupBy('jenis_pasien')->get();
-        $view->with('j_pasien', $j_pasien);
+        $cara_bayar = DB::table('cara_bayar')
+            ->select('kd_cara_bayar','keterangan')->where('kd_cara_bayar', '!=', '0')->get();
+        $view->with('cara_bayar', $cara_bayar);
     }
 
     public function composeJRawat(View $view)

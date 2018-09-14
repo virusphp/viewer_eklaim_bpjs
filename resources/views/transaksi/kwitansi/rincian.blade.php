@@ -54,6 +54,7 @@
             <td colspan="4" class="text-center">Total Kredit</td>
             <td><strong>{{ rupiah($debet->debet) }}</strong></td>
             <td><strong>{{ rupiah($kre) }}</strong></td>
+            <td><strong>{{ if ($debet->debet == $kre) ? 'Balance' : 'Not Balance' }}</strong></td>
           </tbody>
         </table>
         <div class="float-right"><button class="btn btn-sm btn-success" onclick="goBack()">BUAT</button></div>

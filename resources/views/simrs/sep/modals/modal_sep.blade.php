@@ -115,7 +115,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa</label>
-                                <input class="form-control" id="diagnosa" name="diagnosa" type="text">
+                                <input class="form-control" id="diagnosa" name="diagnosa" maxLengh="3" type="text">
                                 <input class="form-control form-control-sm" id="kd_diagnosa" name="diagAwal" type="hidden">
                             </div>
                         </div>

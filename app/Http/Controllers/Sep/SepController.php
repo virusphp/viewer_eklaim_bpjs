@@ -110,8 +110,9 @@ class SepController extends Controller
     {
         
         $data = $req->all();
-        $data['penjamin'] = implode(",",$data['penjamin']);
-        // dd($data);
+        if ($data['penjamin'] != 0) {
+            $data['penjamin'] = implode(",",$data['penjamin']);
+        }
         $data['tglSep'] = date('Y-m-d');
         $data['ppkPelayanan'] = '1105R001';
         $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));

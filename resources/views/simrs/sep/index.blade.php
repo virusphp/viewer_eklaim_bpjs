@@ -107,7 +107,7 @@
             select : function (event, ui) {
                 $('#diagnosa').val(ui.item.value);
                 $('#kd_diagnosa').val(ui.item.id);
-                return ui.item.value;
+                return false;
             }
         });
     })
@@ -135,11 +135,13 @@
             minLength: 3,
             select : function (event, ui) {
                 $('#poli').val(ui.item.value);
-                $('#kd_poli').val(ui.item.id);
-                return ui.item.value;
+                $('#kd_poli').val(ui.item.id); 
+                return false;
             }
         });
     })
+
+
 
     $(document).on('click', "#edit-item", function() {
         $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.

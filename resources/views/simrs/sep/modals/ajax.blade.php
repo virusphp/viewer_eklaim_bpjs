@@ -21,6 +21,24 @@ function getPeserta()
     })
 } 
 
+$('#diagnosa').keydown(function(e) {
+    var diagnosa = $('#diagnosa').val();
+    if (diagnosa.length > 3) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
+        }
+    }
+});
+
+$('#poli').keydown(function(e) {
+    var poli = $('#poli').val();
+    if (poli.length > 3) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
+        }
+    }
+});
+
 function formatReg(no_reg) 
 {
     return no_reg.substring(0,2); 

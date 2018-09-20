@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         // autocompleted
         Route::get('/bpjs/diagnosa','BpjsController@getDiagnosa')->name('bpjs.diagnosa');
         Route::get('/bpjs/poli','BpjsController@getPoli')->name('bpjs.poli');
+        Route::get('/bpjs/dpjp','BpjsController@getDpjp')->name('bpjs.dpjp');
+        Route::get('/rujukan/internal','RujukanController@getRujukanInternal')->name('rujukan.internal');
 
         Route::get('/bpjs/provinsi','BpjsController@getProvinsi')->name('bpjs.provinsi');
         Route::get('/bpjs/kabupaten','BpjsController@getKabupaten')->name('bpjs.kabupaten');

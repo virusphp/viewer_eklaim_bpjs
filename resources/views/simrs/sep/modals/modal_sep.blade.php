@@ -93,6 +93,7 @@
                             <div class="form-group">
                                 <label for="no_rujukan">No Rujukan</label>
                                 <input class="form-control form-control-sm" id="no_rujukan" name="noRujukan" type="text" placeholder="No Rujukan" autofocus>
+                                <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
                                 <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
                             </div>
                         </div>
@@ -147,7 +148,8 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="text" placeholder="Ketik Nama Dokter DPJP">
+                                <input class="form-control form-control-sm" id="namadpjp" type="text" placeholder="Ketik Nama Dokter DPJP">
+                                <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
                     </div>

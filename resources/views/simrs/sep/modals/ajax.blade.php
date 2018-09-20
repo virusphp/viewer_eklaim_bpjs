@@ -21,6 +21,24 @@ function getPeserta()
     })
 } 
 
+$('#no_rujukan').keydown(function(e) {
+    var rujukan = $('#no_rujukan').val();
+    if (rujukan.length > 18) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
+        }
+    }
+});
+
+$('#namadpjp').keydown(function(e) {
+    var rujukan = $('#namadpjp').val();
+    if (rujukan.length > 18) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
+        }
+    }
+});
+
 $('#diagnosa').keydown(function(e) {
     var diagnosa = $('#diagnosa').val();
     if (diagnosa.length > 3) {
@@ -55,7 +73,7 @@ function asalRujukan()
         success: function(data) {
             d = JSON.parse(data);
             response = d.response.faskses[0];
-            console.log(response);
+            // console.log(response);
             $('#jns_faskes').val(response.jenis_faskes);
             $('#nama_faskes').val(response.nama);
             if($('#jns_faskes').val() == 1) {
@@ -96,6 +114,16 @@ function asalRujukan()
     $('#kecamatan option').prop('selected', function() {
         return this.defaultSelected;
     });
+    
+}
+
+function katarak()
+{
+    if($('#kd_poli').val() === 'MAT') {
+        $('#form-katarak').show();
+    } else {
+        $('#form-katarak').hide();
+    }
 }
 
 function getEditItem(data)

@@ -113,6 +113,37 @@
     })
 
     $(document).ready(function() {
+        var src = "{{ route('bpjs.dpjp') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#namadpjp').autocomplete({
+            source : function (request, response) {
+                var jnsPel = $('#jns_pelayanan').val();
+                var date = new Date();
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term, jnsPel: jnsPel},
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kode,
+                                value : m.nama
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            },
+            minLength: 3,
+            select : function (event, ui) {
+                $('#namadpjp').val(ui.item.value);
+                $('#kd_dpjp').val(ui.item.id);
+                return false;
+            }
+        });
+    })
+
+    $(document).ready(function() {
         var src = "{{ route('bpjs.poli') }}";
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#poli').autocomplete({
@@ -128,6 +159,7 @@
                                 value : m.nama
                             };
                         });
+                        
                         response(array);
                     }
                 });
@@ -136,12 +168,11 @@
             select : function (event, ui) {
                 $('#poli').val(ui.item.value);
                 $('#kd_poli').val(ui.item.id); 
+                katarak();
                 return false;
             }
         });
     })
-
-
 
     $(document).on('click', "#edit-item", function() {
         $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
@@ -191,7 +222,7 @@
             data : {rujukan: rujukan},
             success: function(data){
                 d = JSON.parse(data);
-                console.log(d);
+                // console.log(d);
                 if (d.response === null) {
                     $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                     $('#error_rujukan').html('No Rujukan tidak ada').hide()
@@ -206,16 +237,16 @@
                         $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
                         $('#poli').val(response.poliRujukan.nama);
                         $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
+                        $('#no_rujukan').val(response.noKunjungan);
                         // getDiagnosa(response.diagnosa.kode, response.diagnosa.nama);
                         // getPoli(response.plliRujukan.kode, response.poliRujukan.nama)
                         asalRujukan();
-                        if($('#kd_poli').val() === 'MAT') {
-                            $('#form-katarak').show(10);
-                        } else {
-                            $('#form-katarak').hide();
-                        }
+                        katarak();
+                        getSkdp();
+
                     } else {
-                         $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                         $('#error_rujukan').html('No Rujukan tidak cocok').hide()
                             .fadeIn(1500, function() { $('#error_rujukan'); });
                             setTimeout(resetAll,3000);
@@ -231,6 +262,24 @@
         })
     })
 
+    function getSkdp()
+    {
+        var internal = $('#intern_rujukan').val();
+        if (internal !== 0) {
+            $.ajax({
+                url : '{{ route('rujukan.internal') }}',
+                type: 'get',
+                data: {internal: internal},
+                success: function(data) {
+                    if (data.length > 0) {
+                        $('#form-skdp').show();
+                    }
+                }
+            })
+        }
+
+    }
+
     $('#cetak-sep').click(function(e) {
         var form = $('#form-sep').serialize();
         var url = $('#form-sep').attr("action");
@@ -240,7 +289,7 @@
             url : url,
             data : form,
             success :function(data) {
-                console.log(data)
+                // console.log(data)
                 if (data.response !== null) {
                     var no_reg = $('#no_reg').val();
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')

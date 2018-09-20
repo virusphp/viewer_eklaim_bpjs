@@ -99,6 +99,21 @@ class BpjsController extends Controller
         // }
     }
 
+    public function getDpjp(Request $req)
+    {
+        if ($req->ajax()) {
+            $kode = $req->all();
+            $dpjp = $this->Dpjp($kode);
+            $data = json_decode($dpjp);
+            if ($data->response != null) {
+                $dpjp = $data->response->list;
+            } else {
+                $dpjp = [];
+            }
+            return $dpjp;
+        }
+    }
+
     public function getPoli(Request $req)
     {
         if ($req->ajax()) {
@@ -169,6 +184,22 @@ class BpjsController extends Controller
     {
         try { 
             $url = $this->api_url . "referensi/poli/".$kode;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        }
+    }
+
+    public function Dpjp($kode)
+    {
+        $tgl = date('Y-m-d');
+        try { 
+            $url = $this->api_url . "referensi/dokter/pelayanan/".$kode['jnsPel']."/tglpelayanan/".$tgl."/spesialis/".$kode['term'];
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;

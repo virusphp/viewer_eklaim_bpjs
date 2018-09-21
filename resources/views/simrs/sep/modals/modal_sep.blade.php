@@ -90,17 +90,20 @@
                    </div>
                    <div class="row">
                         <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="no_rujukan">No Rujukan</label>
-                                <input class="form-control form-control-sm" id="no_rujukan" name="noRujukan" type="text" placeholder="No Rujukan" autofocus>
-                                <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
-                                <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
+                            <div id="k-rujukan" class="form-group">
+                                <div>
+                                    <label for="no_rujukan">No Rujukan</label>
+                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="Cari">
+                                </div>
+                                <input class="form-control form-control-sm" id="no_rujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
                             </div>
+                            <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
+                            <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="nama_faskes">Asal Rujukan</label>
-                                <input class="form-control form-control-sm" id="asal_rujukan" type="text" placeholder="Nama faskes" readonly>
+                                <input class="form-control form-control-sm" id="asal_rujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
                                 <input class="form-control form-control-sm" id="jns_faskes" name="asalRujukan" type="hidden" placeholder="Nama faskes" readonly>
                             </div>
                         </div>
@@ -116,7 +119,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa</label>
-                                <input class="form-control" id="diagnosa" name="diagnosa" maxLengh="3" type="text">
+                                <input class="form-control form-control-sm" id="diagnosa" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
                                 <input class="form-control form-control-sm" id="kd_diagnosa" name="diagAwal" type="hidden">
                             </div>
                         </div>
@@ -124,9 +127,9 @@
                             <div class="form-group">
                                 <div class="form-check checkbox">
                                     <input class="form-check-input" id="c_eksekutif" type="checkbox" value="0">
-                                    <label class="form-check-label" for="c_eksekutif">Eksekutif | Spe / SubSpesialis</label>
+                                    <label class="form-check-label" for="poli">Eksekutif | Spe / SubSpesialis</label>
                                 </div>
-                                <input class="form-control form-control-sm" id="poli" nama="poli" type="text" placeholder="Nama Poli">
+                                <input class="form-control form-control-sm" id="poli" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
                                 <input class="form-control form-control-sm" id="kd_poli" name="tujuan" type="hidden" readonly>
                                 <input class="form-control form-control-sm" id="eksekutif" name="eksekutif" type="hidden" value="0" readonly>
                             </div>
@@ -134,7 +137,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">No Telp</label>
-                                <input class="form-control form-control-sm" id="no_telp" name="noTelp" type="text" placeholder="No Telp">
+                                <input class="form-control form-control-sm" id="no_telp" name="noTelp" type="text" tabindex="4" placeholder="No Telp">
                             </div>
                         </div>
                     </div>
@@ -142,20 +145,20 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="no_surat">Surat Kontrol</label>
-                                <input class="form-control form-control-sm" id="no_surat" name="noSurat" type="text" placeholder="Ketik no surat kontrol">
+                                <input class="form-control form-control-sm" id="no_surat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol">
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="namadpjp" type="text" placeholder="Ketik Nama Dokter DPJP">
+                                <input class="form-control form-control-sm" id="namadpjp" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="catatan">Catatan</label>
-                        <textarea class="form-control form-control-sm" id="catatan" name="catatan" type="text" placeholder="Catatan"></textarea>
+                        <textarea class="form-control form-control-sm" id="catatan" name="catatan" type="text" tabindex="7 "placeholder="Catatan"></textarea>
                     </div>
                     <div class="form-group" id="form-katarak">
                         <div class="form-check checkbox">
@@ -253,13 +256,57 @@
                 </div>
               </div>
         </div>
-        </form>
+
       </div>
       <div class="modal-footer">
-        <input id="cetak-sep" type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" value="Cetak SEP">
+        <input id="cetak-sep" type="submit" class="btn btn-sm btn-primary" value="Cetak SEP">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
+        </form>
     </div>
   </div>
 </div>
 <!-- /Attachment Modal -->
+
+<!-- modal lain -->
+<div class="modal" id="modal-rujukan" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
+<div class="modal-dialog modal-md modal-secondary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label">Pilih Rujukan Aktif</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="tbl-rujukan" class="table table-responsive-sm table-bordered table-striped table-sm">
+            <thead>
+                 <tr>
+                    <th>No</th>
+                    <th>No Rujukan</th>
+                    <th>Tgl Rujukan</th>
+                    <th>No Kartu</th>
+                    <th>Nama</th>
+                    <th>PPK Perujuk</th>
+                    <th>Sub/Speliasis</th>
+                </tr>
+            </thead>
+            <tbody>
+                    
+            </tbody>
+        </table>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<td>1</td> 
+<!-- <td>
+    <div class="btn-group">
+        <button data-rujukan="0001029613443" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">234234234234</button>
+    </div> 
+</td> 
+<td>93-293-299</td> 
+<td>239429349234</td> 
+<td>Subagio</td> 
+<td>makanNasi</td> 
+<td>Burung Garuda</td>  -->

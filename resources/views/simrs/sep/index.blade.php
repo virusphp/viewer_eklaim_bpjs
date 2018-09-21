@@ -53,6 +53,7 @@
 @push('css')
 <!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+<link rel="stylesheet" href="{{ asset('selectize/css/selectize.css') }}" />
 
 @endpush
 @push('scripts')
@@ -60,10 +61,11 @@
 <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ asset('selectize/js/standalone/selectize.min.js') }}" ></script>
+<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 @include('simrs.sep.modals.ajax')
 <script type="text/javascript">
@@ -173,6 +175,58 @@
             }
         });
     })
+    
+    $(document).on('click', "#h-rujukan", function() {
+        var rujukan = $('#h-rujukan').data('rujukan');
+        $('#no_rujukan').val(rujukan);
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: 'get',
+            url : '{{ route('bpjs.rujukan') }}',
+            data : {rujukan: rujukan},
+            success: function(data){
+                d = JSON.parse(data);
+                // console.log(d);
+                if (d.response === null) {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                    $('#error_rujukan').html('No Rujukan tidak ada').hide()
+                        .fadeIn(1500, function() { $('#error_rujukan'); });
+                        setTimeout(resetAll,3000);
+                } else {
+                    response = d.response.rujukan;
+                    if ($('#no_kartu').val() === response.peserta.noKartu) {
+                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#ppk_rujukan').val(response.provPerujuk.kode);
+                        $('#diagnosa').val(response.diagnosa.nama);
+                        $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
+                        $('#poli').val(response.poliRujukan.nama);
+                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
+                        $('#no_rujukan').val(response.noKunjungan);
+                        // getDiagnosa(response.diagnosa.kode, response.diagnosa.nama);
+                        // getPoli(response.plliRujukan.kode, response.poliRujukan.nama)
+                        asalRujukan();
+                        katarak();
+                        getSkdp();
+
+                    } else {
+                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                        $('#error_rujukan').html('No Rujukan tidak cocok').hide()
+                            .fadeIn(1500, function() { $('#error_rujukan'); });
+                            setTimeout(resetAll,3000);
+                    }
+                }
+               
+            }, 
+            error: function() {
+                $('#frame_error').show(100);
+                $('#error_rujukan').html('Brigding lamban, sedang gangguan server bpjs');
+            }
+           
+        });
+        $('#modal-rujukan').modal('hide');
+        console.log(rujukan);
+    })
 
     $(document).on('click', "#edit-item", function() {
         $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
@@ -211,10 +265,12 @@
         $('#edit-modal').modal(options)
     })
 
-    $(document).on('keyup', '#no_rujukan', function() {
+
+    $('#no_rujukan').bind('keyup', function(event) {
         // var rujukan = $('#no_rujukan').val();
-        if(this.value.length < 19) return;
+        if(this.value.length < 17) return;
         var rujukan =$(this).val();
+        // console.log(rujukan);
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             type: 'get',
@@ -280,8 +336,42 @@
 
     }
 
+    $('#edit-modal').on('hidden.bs.modal', function() {
+        var $alertas = $('#form-sep');
+        $alertas.validate().resetForm();
+        $alertas.find('.error').removeClass('error');
+    });
+
+    function sepValidation()
+    {
+        $("#form-sep").validate({
+            rules: {
+                noRujukan: {
+                    required: true,
+                    minlength: 8
+                },
+                asalRujukan: "required",
+                jnsFaskes: "required",
+                diagnosa: "required",
+                namaPoli: "required"
+            },
+            messages: {
+                noRujukan: {
+                    required: "Kolom tidak boleh kosong!",
+                    minlength: "Rujukana kurang dari 17 digit"
+                },
+                asalRujukan: "Kolom tidak boleh kosong!",
+                jnsFaskes: "Kolom tidak boleh kosong!",
+                diagnosa: "Kolom tidak boleh kosong!",
+                namaPoli: "Kolom tidak boleh kosong!"
+            }
+        });
+    }
+
+
     $('#cetak-sep').click(function(e) {
         var form = $('#form-sep').serialize();
+        sepValidation();
         var url = $('#form-sep').attr("action");
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
         $.ajax({
@@ -323,6 +413,53 @@
             }
         })
 
+    })
+
+    $(document).on('click', "#cari_rujukan", function() {
+        $(this).addClass('edit-item-trigger-clicked');
+        var options = {
+            'backdrop': 'static'
+        };
+        var no_kartu = $('#no_kartu').val();
+        $('#tbl-rujukan').dataTable({
+            "Processing": true,
+            "ServerSide": true,
+            "sDom" : "<t<p i>>",
+            "iDisplayLength": 25,
+            "bDestroy": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+                "sSearch": "Search Data :  ",
+                "sZeroRecords": "Tidak ada data",
+                "sEmptyTable": "Data tidak tersedia",
+                "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
+            },
+            "ajax": {
+                "url": "{{ route('bpjs.listrujukan')}}",
+                "type": "GET",
+                "data": {                   
+                      'no_kartu': no_kartu
+                }
+            },
+            "columns": [
+                  {"mData": "no"},
+                  {"mData": "noKunjungan"},
+                  {"mData": "tglKunjungan"},
+                  {"mData": "noKartu"},
+                  {"mData": "nama"},
+                  {"mData": "ppkPerujuk"},
+                  {"mData": "poli"}            
+            ]
+           
+        });
+        oTable = $('#tbl-rujukan').DataTable();  
+        $('#no_kartu').keyup(function(){
+            oTable.search($(this).val()).draw() ;
+            $('.table').removeAttr('style');
+        }); 
+        
+        $('#modal-rujukan').modal(options);
     })
 
     function ajaxLoad(){

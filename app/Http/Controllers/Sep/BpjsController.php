@@ -38,6 +38,22 @@ class BpjsController extends Controller
         } 
     }
 
+    public function listRujukan($req)
+    {
+        // dd($req->no_kartu);
+        try {
+            $url = $this->api_url . "rujukan/list/peserta/".$req->no_kartu;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
     public function getPeserta(Request $req)
     {
         try { 
@@ -67,6 +83,8 @@ class BpjsController extends Controller
         return $data;
     }
 
+   
+
     public function ppkRujukan($kode, $jns)
     {
         try { 
@@ -91,12 +109,7 @@ class BpjsController extends Controller
             $diagAwal = $data->response->diagnosa;
             return $diagAwal;
         }
-        // $data = json_decode($diagnosa, tue);
-        // // $diagnosa = "<option value='$kode'>$req->nama</option>";
-        // foreach($data['response']['diagnosa'] as $d) 
-        // {
-        //     $diagnosa.= "<option value='$d[kode]'>$d[nama]</option>";
-        // }
+      
     }
 
     public function getDpjp(Request $req)
@@ -136,6 +149,46 @@ class BpjsController extends Controller
             $prov.= "<option value='$d[kode]'>$d[nama]</option>";
         }
         return $prov;
+    }
+
+    public function getListRujukan(Request $req)
+    {
+        // dd($req->all());
+        if ($req->ajax()) {
+            $no = 1;
+            $rujukan = $this->listRujukan($req);
+            $data = json_decode($rujukan);
+            // dd($data->response->rujukan);
+            foreach($data->response->rujukan as $val) {
+                $query[] = [
+                    'no' => $no++,
+                    'noKunjungan' => '
+                        <div class="btn-group">
+                            <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                        </div> ',
+                    'tglKunjungan' => $val->tglKunjungan,
+                    'noKartu' => $val->peserta->noKartu,
+                    'nama' => $val->peserta->nama,
+                    'ppkPerujuk' => $val->provPerujuk->kode,
+                    'poli' => $val->poliRujukan->kode
+                ];
+            }
+            $result = isset($query) ? ['data' => $query] : ['data' => 0];
+            // dd($result);
+            return json_encode($result);
+        }
+
+        // $data = json_decode($rujukan, true);
+        // if ($data['response'] == null) {
+        //     $ruj = [];
+        // } else {
+        //     $ruj ="<option value='0'>--Silahkan Pilih Rujukan--</pilih>";
+        //     foreach($data['response']['rujukan'] as $d)
+        //     {
+        //         $ruj .= "<option value='$d[noKunjungan]'>$d[noKunjungan]</option>";
+        //     } 
+        // }
+       
     }
 
     public function getKabupaten(Request $req)

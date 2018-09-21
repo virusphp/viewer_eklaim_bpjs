@@ -1,5 +1,27 @@
 <script type="text/javascript">
 // Hak kelas Peserta
+$(function() {
+
+$("#form-sep").validate({
+  rules: {
+    noRujukan: "required",
+    asalRujukan: "required",
+    jnsFaskes: "required",
+    diagnosa: "required",
+    poli: "required",
+    catatan: "required"
+  },
+  messages: {
+    noRujukan: "Kolom tidak boleh kosong!",
+    asalRujukan: "Kolom tidak boleh kosong!",
+    jnsFaskses: "Kolom tidak boleh kosong!",
+    diagnosa: "Kolom tidak boleh kosong!",
+    poli: "Kolom tidak boleh kosong!",
+    catatan: "Kolom tidak boleh kosong!"
+  }
+});
+});
+
 function getPeserta()
 {
     var no_kartu = $('#no_kartu').val(); 
@@ -24,7 +46,7 @@ function getPeserta()
 $('#no_rujukan').keydown(function(e) {
     var rujukan = $('#no_rujukan').val();
     if (rujukan.length > 18) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
         }
     }
@@ -33,7 +55,7 @@ $('#no_rujukan').keydown(function(e) {
 $('#namadpjp').keydown(function(e) {
     var rujukan = $('#namadpjp').val();
     if (rujukan.length > 18) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
         }
     }
@@ -42,16 +64,17 @@ $('#namadpjp').keydown(function(e) {
 $('#diagnosa').keydown(function(e) {
     var diagnosa = $('#diagnosa').val();
     if (diagnosa.length > 3) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
         }
     }
 });
 
+
 $('#poli').keydown(function(e) {
     var poli = $('#poli').val();
     if (poli.length > 3) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
         }
     }
@@ -62,7 +85,7 @@ function formatReg(no_reg)
     return no_reg.substring(0,2); 
 }
 
-// Asal Rujukan
+// Asal Rujukan // iki PR
 function asalRujukan()
 {
     var ppk_rujukan = $('#ppk_rujukan').val();
@@ -176,6 +199,8 @@ function getPoli(kode, nama)
         }
     })
 }
+
+
 // Penjamin KLL
 function getProvinsi()
 {

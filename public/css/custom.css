@@ -2,6 +2,10 @@
     max-width: 1286px;
 }
 
+.modal-md {
+    max-width: 700px;
+}
+
 .modal-header {
     padding: 0.125rem;
 }
@@ -80,4 +84,12 @@
   }
   #modalIns{
       width: 500px;
+  }
+
+  .error {
+   color : red;
+  }
+
+  .btn-cus {
+    padding: 0.0212rem 0.0812rem;
   }

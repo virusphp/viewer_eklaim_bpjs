@@ -2,6 +2,10 @@
     max-width: 1286px;
 }
 
+.modal {
+    overflow-y:auto;
+}
+
 .modal-md {
     max-width: 700px;
 }

@@ -228,44 +228,6 @@
         console.log(rujukan);
     })
 
-    $(document).on('click', "#edit-item", function() {
-        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-        var date = moment().format("YYYY-MM-DD");
-        $('input#tgl_reg').val(formatDate(date));
-        getStart();
-       
-        var options = {
-        'backdrop': 'static'
-        };
-        var no_reg = $(this).val();
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-            type : 'post',
-            url : '{{ route('sep.buat') }}',
-            data : {
-                _token : CSRF_TOKEN,
-                no_reg : no_reg
-            },
-            success:function(data) {
-                // console.log(data);
-                getEditItem(data);
-                if ($('#no_kartu').val() !== '') {
-                    getPeserta();
-                }
-                getProvinsi();
-               
-                if($('#jns_pelayanan').val() == 2) {
-                    $('#nama_pelayanan').val('Rawat Jalan');
-                } else {
-                    $('#nama_pelayanan').val('Rawat Inap');
-                }
-                 
-            }
-        })
-        $('#edit-modal').modal(options)
-    })
-
-
     $('#no_rujukan').bind('keyup', function(event) {
         // var rujukan = $('#no_rujukan').val();
         if(this.value.length < 17) return;
@@ -368,15 +330,53 @@
         });
     }
 
+    $(document).on('click', "#edit-item", function(e) {
+        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+        var date = moment().format("YYYY-MM-DD");
+        $('input#tgl_reg').val(formatDate(date));
+        getStart();
+       
+        var options = {
+        'backdrop': 'static'
+        };
+        var no_reg = $(this).val();
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type : 'post',
+            url : '{{ route('sep.buat') }}',
+            data : {
+                _token : CSRF_TOKEN,
+                no_reg : no_reg
+            },
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                getEditItem(data);
+                if ($('#no_kartu').val() !== '') {
+                    getPeserta();
+                }
+                getProvinsi();
+               
+                if($('#jns_pelayanan').val() == 2) {
+                    $('#nama_pelayanan').val('Rawat Jalan');
+                } else {
+                    $('#nama_pelayanan').val('Rawat Inap');
+                }
+                 
+            }
+        });
+        $('#edit-modal').modal(options);
+        
+    });
 
-    $('#cetak-sep').click(function(e) {
+    $(document).on('click',"#cetak-sep", function(e) {
+        e.preventDefault();
         var form = $('#form-sep').serialize();
         sepValidation();
-        var url = $('#form-sep').attr("action");
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
         $.ajax({
-            type : 'POST',
-            url : url,
+            type : 'post',
+            url : '{{ route('sep.insert') }}',
             data : form,
             success :function(data) {
                 // console.log(data)
@@ -384,6 +384,7 @@
                     var no_reg = $('#no_reg').val();
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
                     // console.log(no_reg, data.response.sep.noSep);
+                    e.preventDefault();
                     $.ajax({
                         type : 'POST',
                         url : '{{ route('sep.simpan') }}',
@@ -395,6 +396,8 @@
                             .fadeIn(1500, function() { $('#success_sep'); });
                             setTimeout(resetSuccessSep,4000);
                             ajaxLoad(0);
+                            $('#edit-modal').modal('hide');
+                            
                         }
                     })
                 } else {
@@ -403,7 +406,7 @@
                     .fadeIn(1500, function() { $('#error_sep'); });
                     setTimeout(resetSuccessSep,4000);
                 }
-               
+
             }, 
             error : function(data) {
                 $('#frame_sep_error').show().html("<span class='text-danger' id='error_sep'></span>");
@@ -411,9 +414,11 @@
                     .fadeIn(1500, function() { $('#error_sep'); });
                     setTimeout(resetSuccessSep,4000);
             }
-        })
-
-    })
+        });
+        //  window.history.back();
+        // e.unbind();
+        // return false;
+    });
 
     $(document).on('click', "#cari_rujukan", function() {
         $(this).addClass('edit-item-trigger-clicked');

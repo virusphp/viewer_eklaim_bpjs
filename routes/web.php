@@ -41,10 +41,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/ppkrujukan','BpjsController@getPpkRujukan')->name('bpjs.ppkrujukan');
         
         Route::get('/sep/pembuatan','SepController@index')->name('sep.index');
+        Route::get('/sep/search','SepController@search')->name('sep.search');
         Route::post('/sep/pembuatan','SepController@buatSep')->name('sep.buat');
         Route::post('/sep/insert','SepController@sepInsert')->name('sep.insert');
         Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
-        Route::get('/sep/search','SepController@search')->name('sep.search');
     });
 
     // Group Route Transaksi

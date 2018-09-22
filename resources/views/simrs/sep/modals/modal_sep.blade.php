@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="modal-body" id="attachment-body-content">
-      <form id="form-sep" action="{{ route('sep.insert') }}" class="form-horizontal" method="POST"?>
+      <form id="form-sep" class="form-horizontal" method="POST">
         <div id="frame_error" class="alert alert-danger">
             <!-- error message -->
         </div>
@@ -299,7 +299,6 @@
     </div>
   </div>
 </div>
-<td>1</td> 
 <!-- <td>
     <div class="btn-group">
         <button data-rujukan="0001029613443" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">234234234234</button>

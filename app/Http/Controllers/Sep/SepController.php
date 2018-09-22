@@ -81,14 +81,14 @@ class SepController extends Controller
                 })
                 ->where('ri.no_reg','=',$request->no_reg)
                 ->first();
-
+            // dd($query);
             $query->jnsPelayanan = '1';
             $query->noKartu = $noKartu->no_kartu;
             $query->tglSep = date('Y-m-d');
             $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
         } else if ($jenis_rawat == '01') {
            
-            $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
+            $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir')
                 ->join('pasien as p', function($join) {
                     $join->on('rj.no_rm','=','p.no_rm');
                 })
@@ -97,6 +97,7 @@ class SepController extends Controller
                 })
                 ->where('rj.no_reg','=',$request->no_reg)
                 ->first();
+    // dd($query);
             $query->jnsPelayanan = '2';
             $query->noKartu = $noKartu->no_kartu;
             $query->tglSep = date('Y-m-d');

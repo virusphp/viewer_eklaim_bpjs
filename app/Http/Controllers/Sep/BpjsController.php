@@ -158,20 +158,23 @@ class BpjsController extends Controller
             $no = 1;
             $rujukan = $this->listRujukan($req);
             $data = json_decode($rujukan);
-            // dd($data->response->rujukan);
-            foreach($data->response->rujukan as $val) {
-                $query[] = [
-                    'no' => $no++,
-                    'noKunjungan' => '
-                        <div class="btn-group">
-                            <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
-                        </div> ',
-                    'tglKunjungan' => $val->tglKunjungan,
-                    'noKartu' => $val->peserta->noKartu,
-                    'nama' => $val->peserta->nama,
-                    'ppkPerujuk' => $val->provPerujuk->kode,
-                    'poli' => $val->poliRujukan->kode
-                ];
+            if ($data->response == null) {
+                $query = [];
+            } else {
+                foreach($data->response->rujukan as $val) {
+                    $query[] = [
+                        'no' => $no++,
+                        'noKunjungan' => '
+                            <div class="btn-group">
+                                <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                            </div> ',
+                        'tglKunjungan' => $val->tglKunjungan,
+                        'noKartu' => $val->peserta->noKartu,
+                        'nama' => $val->peserta->nama,
+                        'ppkPerujuk' => $val->provPerujuk->kode,
+                        'poli' => $val->poliRujukan->kode
+                    ];
+                }
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             // dd($result);

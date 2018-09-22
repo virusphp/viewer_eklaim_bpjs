@@ -254,7 +254,7 @@
                 }
                 getProvinsi();
                
-                if($('#jns_pelayanan').val() === 1) {
+                if($('#jns_pelayanan').val() === 2) {
                     $('#nama_pelayanan').val('Rawat Jalan');
                 } else {
                     $('#nama_pelayanan').val('Rawat Inap');

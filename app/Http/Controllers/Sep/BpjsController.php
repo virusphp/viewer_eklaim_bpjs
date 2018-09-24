@@ -166,7 +166,7 @@ class BpjsController extends Controller
                         'no' => $no++,
                         'noKunjungan' => '
                             <div class="btn-group">
-                                <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" type="submit" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                                <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
                             </div> ',
                         'tglKunjungan' => $val->tglKunjungan,
                         'noKartu' => $val->peserta->noKartu,

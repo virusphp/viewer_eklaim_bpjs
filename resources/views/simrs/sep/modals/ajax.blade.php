@@ -2,24 +2,24 @@
 // Hak kelas Peserta
 $(function() {
 
-$("#form-sep").validate({
-  rules: {
-    noRujukan: "required",
-    asalRujukan: "required",
-    jnsFaskes: "required",
-    diagnosa: "required",
-    poli: "required",
-    catatan: "required"
-  },
-  messages: {
-    noRujukan: "Kolom tidak boleh kosong!",
-    asalRujukan: "Kolom tidak boleh kosong!",
-    jnsFaskses: "Kolom tidak boleh kosong!",
-    diagnosa: "Kolom tidak boleh kosong!",
-    poli: "Kolom tidak boleh kosong!",
-    catatan: "Kolom tidak boleh kosong!"
-  }
-});
+    $("#form-sep").validate({
+        rules: {
+            noRujukan: "required",
+            asalRujukan: "required",
+            jnsFaskes: "required",
+            diagnosa: "required",
+            poli: "required",
+            catatan: "required"
+        },
+        messages: {
+            noRujukan: "Kolom tidak boleh kosong!",
+            asalRujukan: "Kolom tidak boleh kosong!",
+            jnsFaskes: "Kolom tidak boleh kosong!",
+            diagnosa: "Kolom tidak boleh kosong!",
+            poli: "Kolom tidak boleh kosong!",
+            catatan: "Kolom tidak boleh kosong!"
+        }
+    });
 });
 
 function getPeserta()
@@ -200,6 +200,23 @@ function getPoli(kode, nama)
     })
 }
 
+function getSkdp()
+{
+    var internal = $('#intern_rujukan').val();
+    if (internal !== 0) {
+        $.ajax({
+            url : '{{ route('rujukan.internal') }}',
+            type: 'get',
+            data: {internal: internal},
+            success: function(data) {
+                if (data.length > 0) {
+                    $('#form-skdp').show();
+                }
+            }
+        })
+    }
+
+}
 
 // Penjamin KLL
 function getProvinsi()

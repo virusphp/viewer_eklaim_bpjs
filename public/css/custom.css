@@ -97,3 +97,11 @@
   .btn-cus {
     padding: 0.0212rem 0.0812rem;
   }
+
+
+/* Validation Custome */
+.pesan {
+	display: none;
+	color: red;	
+	margin: 10px;
+}

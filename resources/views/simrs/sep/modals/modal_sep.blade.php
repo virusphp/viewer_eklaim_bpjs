@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="modal-body" id="attachment-body-content">
-      <form id="form-sep" class="form-horizontal" method="POST">
+      <form id="form-sep" action="" class="form-horizontal" method="POST">
         <div id="frame_error" class="alert alert-danger">
             <!-- error message -->
         </div>
@@ -96,6 +96,7 @@
                                     <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="Cari">
                                 </div>
                                 <input class="form-control form-control-sm" id="no_rujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
+                                <span class="pesan pesan-error">Rujukan Harus di isi!</span>
                             </div>
                             <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
                             <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
@@ -256,13 +257,12 @@
                 </div>
               </div>
         </div>
-
       </div>
+    </form>
       <div class="modal-footer">
-        <input id="cetak-sep" type="submit" class="btn btn-sm btn-primary" value="Cetak SEP">
+        <input id="cetak-sep" type="button" class="btn btn-sm btn-primary" value="Cetak SEP">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
-        </form>
     </div>
   </div>
 </div>

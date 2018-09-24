@@ -48,7 +48,8 @@ class SepController extends Controller
 
     public function buatSep(Request $request)
     { 
-        $noKartu = DB::table('registrasi as r')->select('pp.no_kartu','rjk.no_rujukan')
+        if ($request->ajax()) {
+             $noKartu = DB::table('registrasi as r')->select('pp.no_kartu','rjk.no_rujukan')
             ->join('penjamin_pasien as pp', function($join){
                 $join->on('r.no_rm', '=','pp.no_rm')
                     ->on('r.kd_penjamin','=','pp.kd_penjamin');
@@ -59,69 +60,74 @@ class SepController extends Controller
             })
             ->where('r.no_reg','=',$request->no_reg)
             ->first();
-        // dd($noKartu);
-        $jenis_rawat = noReg($request->no_reg);
-        if ($jenis_rawat == '02') {
+            // dd($noKartu);
+            $jenis_rawat = noReg($request->no_reg);
+            if ($jenis_rawat == '02') {
 
-            $query = DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
-                ->join('pasien as p', function($join) {
-                    $join->on('ri.no_rm','=','p.no_rm');
-                })
-                ->join('pegawai as pg', function($join) {
-                    $join->on('ri.kd_dokter','=','pg.kd_pegawai');
-                })
-                ->join('tempat_tidur as tt',function($join){
-                    $join->on('ri.kd_tempat_tidur','=','tt.kd_tempat_tidur')
-                        ->join('kamar as k', function($join) {
-                            $join->on('tt.kd_kamar','=','k.kd_kamar')
-                                ->join('sub_unit as su',function($join) {
-                                    $join->on('k.kd_sub_unit','=','su.kd_sub_unit');
-                                });
-                        });
-                })
-                ->where('ri.no_reg','=',$request->no_reg)
-                ->first();
-            // dd($query);
-            $query->jnsPelayanan = '1';
-            $query->noKartu = $noKartu->no_kartu;
-            $query->tglSep = date('Y-m-d');
-            $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
-        } else if ($jenis_rawat == '01') {
-           
-            $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir')
-                ->join('pasien as p', function($join) {
-                    $join->on('rj.no_rm','=','p.no_rm');
-                })
-                ->join('pegawai as pg', function($join) {
-                        $join->on('rj.kd_dokter','=','pg.kd_pegawai');
-                })
-                ->where('rj.no_reg','=',$request->no_reg)
-                ->first();
-    // dd($query);
-            $query->jnsPelayanan = '2';
-            $query->noKartu = $noKartu->no_kartu;
-            $query->tglSep = date('Y-m-d');
-            $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+                $query = DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
+                    ->join('pasien as p', function($join) {
+                        $join->on('ri.no_rm','=','p.no_rm');
+                    })
+                    ->join('pegawai as pg', function($join) {
+                        $join->on('ri.kd_dokter','=','pg.kd_pegawai');
+                    })
+                    ->join('tempat_tidur as tt',function($join){
+                        $join->on('ri.kd_tempat_tidur','=','tt.kd_tempat_tidur')
+                            ->join('kamar as k', function($join) {
+                                $join->on('tt.kd_kamar','=','k.kd_kamar')
+                                    ->join('sub_unit as su',function($join) {
+                                        $join->on('k.kd_sub_unit','=','su.kd_sub_unit');
+                                    });
+                            });
+                    })
+                    ->where('ri.no_reg','=',$request->no_reg)
+                    ->first();
+                // dd($query);
+                $query->jnsPelayanan = '1';
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = date('Y-m-d');
+                $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+            } else if ($jenis_rawat == '01') {
+            
+                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir')
+                    ->join('pasien as p', function($join) {
+                        $join->on('rj.no_rm','=','p.no_rm');
+                    })
+                    ->join('pegawai as pg', function($join) {
+                            $join->on('rj.kd_dokter','=','pg.kd_pegawai');
+                    })
+                    ->where('rj.no_reg','=',$request->no_reg)
+                    ->first();
+        // dd($query);
+                $query->jnsPelayanan = '2';
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = date('Y-m-d');
+                $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+            }
+
+            return response()->json($query);
         }
-
-        return response()->json($query);
+       
     }
 
     public function sepInsert(SepRequest $req)
     {
-        
-        $data = $req->all();
-        if ($data['penjamin'] != 0) {
-            $data['penjamin'] = implode(",",$data['penjamin']);
+        if ($req->ajax()) {
+            $data = $req->all();
+            // dd($data);
+            if ($data['penjamin'] != 0) {
+                $data['penjamin'] = implode(",",$data['penjamin']);
+            }
+            $data['tglSep'] = date('Y-m-d');
+            $data['ppkPelayanan'] = '1105R001';
+            $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
+            $data['klsRawat'] = '3';
+            $data['user'] = 'udin admin';
+            $res = json_encode($this->mapSep($data));
+            $result = $this->conn->saveSep($res);
+            return $result;
         }
-        $data['tglSep'] = date('Y-m-d');
-        $data['ppkPelayanan'] = '1105R001';
-        $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
-        $data['klsRawat'] = '3';
-        $data['user'] = 'udin admin';
-        $res = json_encode($this->mapSep($data));
-        $result = $this->conn->saveSep($res);
-        return $result;
+       
     }
 
     public function simpanSep(Request $req)

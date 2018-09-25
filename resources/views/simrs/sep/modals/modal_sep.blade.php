@@ -95,8 +95,7 @@
                                     <label for="no_rujukan">No Rujukan</label>
                                     <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="Cari">
                                 </div>
-                                <input class="form-control form-control-sm" id="no_rujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
-                                <span class="pesan pesan-error">Rujukan Harus di isi!</span>
+                                <input class="form-control form-control-sm" id="noRujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
                             </div>
                             <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
                             <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
@@ -104,7 +103,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="nama_faskes">Asal Rujukan</label>
-                                <input class="form-control form-control-sm" id="asal_rujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
+                                <input class="form-control form-control-sm" id="asalRujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
                                 <input class="form-control form-control-sm" id="jns_faskes" name="asalRujukan" type="hidden" placeholder="Nama faskes" readonly>
                             </div>
                         </div>
@@ -120,7 +119,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa</label>
-                                <input class="form-control form-control-sm" id="diagnosa" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
+                                <input class="form-control form-control-sm" id="diagAwal" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
                                 <input class="form-control form-control-sm" id="kd_diagnosa" name="diagAwal" type="hidden">
                             </div>
                         </div>
@@ -130,7 +129,7 @@
                                     <input class="form-check-input" id="c_eksekutif" type="checkbox" value="0">
                                     <label class="form-check-label" for="poli">Eksekutif | Spe / SubSpesialis</label>
                                 </div>
-                                <input class="form-control form-control-sm" id="poli" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
+                                <input class="form-control form-control-sm" id="tujuan" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
                                 <input class="form-control form-control-sm" id="kd_poli" name="tujuan" type="hidden" readonly>
                                 <input class="form-control form-control-sm" id="eksekutif" name="eksekutif" type="hidden" value="0" readonly>
                             </div>

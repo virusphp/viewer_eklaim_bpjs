@@ -22,6 +22,7 @@ $(function() {
     });
 });
 
+
 function getPeserta()
 {
     var no_kartu = $('#no_kartu').val(); 
@@ -43,8 +44,8 @@ function getPeserta()
     })
 } 
 
-$('#no_rujukan').keydown(function(e) {
-    var rujukan = $('#no_rujukan').val();
+$('#noRujukan').keydown(function(e) {
+    var rujukan = $('#noRujukan').val();
     if (rujukan.length > 18) {
         if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
@@ -61,8 +62,8 @@ $('#namadpjp').keydown(function(e) {
     }
 });
 
-$('#diagnosa').keydown(function(e) {
-    var diagnosa = $('#diagnosa').val();
+$('#diagAwal').keydown(function(e) {
+    var diagnosa = $('#diagAwal').val();
     if (diagnosa.length > 3) {
         if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
@@ -71,8 +72,8 @@ $('#diagnosa').keydown(function(e) {
 });
 
 
-$('#poli').keydown(function(e) {
-    var poli = $('#poli').val();
+$('#tujuan').keydown(function(e) {
+    var poli = $('#tujuan').val();
     if (poli.length > 3) {
         if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
@@ -100,9 +101,9 @@ function asalRujukan()
             $('#jns_faskes').val(response.jenis_faskes);
             $('#nama_faskes').val(response.nama);
             if($('#jns_faskes').val() == 1) {
-                $('#asal_rujukan').val('Faskes Tingkat 1');
+                $('#asalRujukan').val('Faskes Tingkat 1');
             } else {
-                $('#asal_rujukan').val('Faskes Tingkat 2');
+                $('#asalRujukan').val('Faskes Tingkat 2');
             }
         }
     })
@@ -115,8 +116,8 @@ function asalRujukan()
     $('#frame_error').hide();
     $('#tgl_rujukan').val("");
     $('#ppk_rujukan').val("");
-    $('#diagnosa').val("");
-    $('#poli').val("");
+    $('#diagAwal').val("");
+    $('#tujuan').val("");
     $('#kd_diagnosa').val("");
     $('#kd_poli').val("");
     $('#asal_rujukan').val("");
@@ -151,8 +152,8 @@ function katarak()
 
 function getEditItem(data)
 {
-    $('#no_rujukan').focus();
-    $('#no_rujukan').val(data.noRujukan);
+    $('#noRujukan').focus();
+    $('#noRujukan').val(data.noRujukan);
     $('#jns_pelayanan').val(data.jnsPelayanan);
     $('#nama_pasien').val(data.nama_pasien);
     $('#no_ktp').val(data.nik);

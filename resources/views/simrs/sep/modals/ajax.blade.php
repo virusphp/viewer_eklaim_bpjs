@@ -138,6 +138,12 @@ function asalRujukan()
     $('#kecamatan option').prop('selected', function() {
         return this.defaultSelected;
     });
+
+    var form = $('#form-sep');
+    // Reset validationo error
+    form.find('.invalid-feedback').remove();
+    form.find('input').removeClass('is-invalid');
+    form.find('textarea').removeClass('is-invalid');
     
 }
 

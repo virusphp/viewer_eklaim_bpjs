@@ -29,7 +29,7 @@ class SepRequest extends FormRequest
             'noMR' => 'required',
             'cob' => 'required',
             'no_reg' => 'required',
-            'noRujukan' => 'required|min:10',
+            'noRujukan' => 'required|min:17',
             'ppkRujukan' => 'required',
             'asalRujukan' => 'required',
             'tglRujukan' => 'required',
@@ -50,6 +50,20 @@ class SepRequest extends FormRequest
             'kdKabupaten' => 'required',
             'kdKecamatan' => 'required'
             //
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'noRujukan.required' => 'No Rujukan tidak boleh kosong!',
+            'noRujukan.min' => 'No Rujukan kurang dari 17 digit!',
+            'asalRujukan.required' => 'Asal Rujukan Tidak boleh kosong!',
+            'diagAwal.required' => 'Diagnosa Awal tidak boleh kosong!',
+            'tujuan.required' => 'Poli Tujuan tidak boleh kosong!',
+            'noTelp.required' => 'No telp tidak boleh kosong!',
+            'catatan.required' => 'Catatan Tidak boleh null',
+            'noSurat.required' => 'No Surat tidak boleh harus unit!'
         ];
     }
 }

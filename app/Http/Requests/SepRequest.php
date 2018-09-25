@@ -63,7 +63,9 @@ class SepRequest extends FormRequest
             'tujuan.required' => 'Poli Tujuan tidak boleh kosong!',
             'noTelp.required' => 'No telp tidak boleh kosong!',
             'catatan.required' => 'Catatan Tidak boleh null',
-            'noSurat.required' => 'No Surat tidak boleh harus unit!'
+            'noSurat.required' => 'No Surat tidak boleh harus unit!',
+            'noTelp.required' => 'No Telp tidak boleh harus unit!',
+            'kodeDPJP.required' => 'Kode DPJP tidak boleh harus unit!'
         ];
     }
 }

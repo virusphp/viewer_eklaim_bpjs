@@ -78,13 +78,53 @@
         });
     });
 
-$(document).ready(function () {
-    getStart();
-    resetSuccessSep();
-    $('.table').removeAttr('style');
-    ajaxLoad();
-});
+    $(document).ready(function () {
+        getStart();
+        resetSuccessSep();
+        $('.table').removeAttr('style');
+        ajaxLoad();
+    });
 
+    $(document).on('click', "#edit-item", function(e) {
+        // e.preventDefault();
+        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+        var date = moment().format("YYYY-MM-DD");
+        $('input#tgl_reg').val(formatDate(date));
+        getStart();
+        
+        var options = {
+        'backdrop': 'static'
+        };
+        var no_reg = $(this).val();
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type : 'get',
+            url : '{{ route('sep.buat') }}',
+            data : {
+                _token : CSRF_TOKEN,
+                no_reg : no_reg
+            },
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                // debugger;
+                getEditItem(data);
+                if ($('#no_kartu').val() !== '') {
+                    getPeserta();
+                }
+                getProvinsi();
+                
+                if($('#jns_pelayanan').val() == 2) {
+                    $('#nama_pelayanan').val('Rawat Jalan');
+                } else {
+                    $('#nama_pelayanan').val('Rawat Inap');
+                }
+                    
+            }
+        });
+        $('#edit-modal').modal(options);
+        // return false;
+    });
 
     $('#edit-modal').on('hidden.bs.modal', function() {
         var $alertas = $('#form-sep');
@@ -258,7 +298,7 @@ $(document).ready(function () {
     $(document).ready(function() {
         var src = "{{ route('bpjs.dpjp') }}";
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('#namadpjp').autocomplete({
+        $('#kodeDPJP').autocomplete({
             source : function (request, response) {
                 var jnsPel = $('#jns_pelayanan').val();
                 var date = new Date();
@@ -279,52 +319,11 @@ $(document).ready(function () {
             },
             minLength: 3,
             select : function (event, ui) {
-                $('#namadpjp').val(ui.item.value);
+                $('#kodeDPJP').val(ui.item.value);
                 $('#kd_dpjp').val(ui.item.id);
                 return false;
             }
         });
-    });
-
-    $(document).on('click', "#edit-item", function(e) {
-        // e.preventDefault();
-        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-        var date = moment().format("YYYY-MM-DD");
-        $('input#tgl_reg').val(formatDate(date));
-        getStart();
-        
-        var options = {
-        'backdrop': 'static'
-        };
-        var no_reg = $(this).val();
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-            type : 'get',
-            url : '{{ route('sep.buat') }}',
-            data : {
-                _token : CSRF_TOKEN,
-                no_reg : no_reg
-            },
-            dataType: "json",
-            success: function(data) {
-                // console.log(data);
-                // debugger;
-                getEditItem(data);
-                if ($('#no_kartu').val() !== '') {
-                    getPeserta();
-                }
-                getProvinsi();
-                
-                if($('#jns_pelayanan').val() == 2) {
-                    $('#nama_pelayanan').val('Rawat Jalan');
-                } else {
-                    $('#nama_pelayanan').val('Rawat Inap');
-                }
-                    
-            }
-        });
-        $('#edit-modal').modal(options);
-        // return false;
     });
 
     $(document).on('click','#cetak-sep', function(e) {

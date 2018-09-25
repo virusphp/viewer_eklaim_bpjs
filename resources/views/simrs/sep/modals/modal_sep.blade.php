@@ -137,7 +137,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">No Telp</label>
-                                <input class="form-control form-control-sm" id="no_telp" name="noTelp" type="text" tabindex="4" placeholder="No Telp">
+                                <input class="form-control form-control-sm" id="noTelp" name="noTelp" type="text" tabindex="4" placeholder="No Telp">
                             </div>
                         </div>
                     </div>
@@ -145,13 +145,13 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="no_surat">Surat Kontrol</label>
-                                <input class="form-control form-control-sm" id="no_surat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol">
+                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="6">
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="namadpjp" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
+                                <input class="form-control form-control-sm" id="kodeDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>

@@ -1,27 +1,5 @@
 <script type="text/javascript">
 // Hak kelas Peserta
-$(function() {
-
-    $("#form-sep").validate({
-        rules: {
-            noRujukan: "required",
-            asalRujukan: "required",
-            jnsFaskes: "required",
-            diagnosa: "required",
-            poli: "required",
-            catatan: "required"
-        },
-        messages: {
-            noRujukan: "Kolom tidak boleh kosong!",
-            asalRujukan: "Kolom tidak boleh kosong!",
-            jnsFaskes: "Kolom tidak boleh kosong!",
-            diagnosa: "Kolom tidak boleh kosong!",
-            poli: "Kolom tidak boleh kosong!",
-            catatan: "Kolom tidak boleh kosong!"
-        }
-    });
-});
-
 
 function getPeserta()
 {
@@ -53,12 +31,29 @@ $('#noRujukan').keydown(function(e) {
     }
 });
 
-$('#namadpjp').keydown(function(e) {
-    var rujukan = $('#namadpjp').val();
+$('#noSurat').focusout(function() {
+    var noSurat = "000000";
+    if ($(this).val().length == 0) {
+        $('#noSurat').val(noSurat);
+    } else if ($(this).val().length >= 1) {
+        $('#noSurat').val(autonumber($(this).val()));
+    }
+})
+
+
+$('#kodeDPJP').keydown(function(e) {
+    var rujukan = $('#kodeDPJP').val();
     if (rujukan.length > 18) {
         if(e.keyCode !== 8 && e.keyCode !== 9) {
             e.preventDefault();
         }
+    }
+});
+
+$('#kodeDPJP').keyup(function() {
+    if(this.value.length > 1) return;
+    if ($(this).val().length == 0) {
+        $('#kd_dpjp').val("");
     }
 });
 
@@ -71,6 +66,12 @@ $('#diagAwal').keydown(function(e) {
     }
 });
 
+$('#diagAwal').keyup(function() {
+    if(this.value.length > 1) return;
+    if ($(this).val().length == 0) {
+        $('#kd_diagnosa').val("");
+    }
+});
 
 $('#tujuan').keydown(function(e) {
     var poli = $('#tujuan').val();
@@ -80,6 +81,24 @@ $('#tujuan').keydown(function(e) {
         }
     }
 });
+
+$('#tujuan').keyup(function() {
+    if(this.value.length > 1) return;
+    if ($(this).val().length == 0) {
+        $('#kd_poli').val("");
+    }
+});
+
+function autonumber(nilai)
+{
+  nilai = nilai.toString();
+  var spas = "", 
+      start = 0, 
+      max = 6 - nilai.length;
+  for(; start < max; start++)
+    spas += "0";
+  return spas + nilai;
+}
 
 function formatReg(no_reg) 
 {
@@ -129,8 +148,8 @@ function asalRujukan()
     $('#form-penjamin1').hide();
     $('#form-penjamin2').hide();
     $('#form-katarak').hide();
-    $('#no_surat').val("000000");
-    $('#kd_dpjp').val("00000");
+    $('#noSurat').val("");
+    $('#kd_dpjp').val("");
     $('#ket_kill').val("0");
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
@@ -167,7 +186,7 @@ function getEditItem(data)
     $('#no_rm').val(data.no_rm);
     $('#no_reg').val(data.no_reg);
     $('#alamat').val(data.alamat);
-    $('#no_telp').val(data.no_telp);
+    $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
 }
 
@@ -218,6 +237,7 @@ function getSkdp()
             success: function(data) {
                 if (data.length > 0) {
                     $('#form-skdp').show();
+                    $('#noSurat').val("000000");
                 }
             }
         })

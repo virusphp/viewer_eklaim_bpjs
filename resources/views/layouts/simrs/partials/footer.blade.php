@@ -4,7 +4,7 @@
       <span>&copy; 2018 RSUD Kraton.</span>
     </div>
     <div class="ml-auto">
-      <span>Powered by</span>
-      <a href="https://coreui.io">CoreUI</a>
+      <span>Modified by</span>
+      <a href="http://epasien.rsudkraton.com">IT RSUD Kraton</a>
     </div>
   </footer>

@@ -232,8 +232,117 @@
         console.log(rujukan);
     });
 
-   // cari diagnosa
-   $(document).ready(function() {
+    $('#noRujukan').bind('keyup', function(event) {
+        if(this.value.length < 17) return;
+        var rujukan =$(this).val();
+        // console.log(rujukan);
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: 'get',
+            url : '{{ route('bpjs.rujukan') }}',
+            data : {rujukan: rujukan},
+            success: function(data){
+                d = JSON.parse(data);
+                // console.log(d);
+                if (d.response === null) {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                    $('#error_rujukan').html('No Rujukan tidak ada').hide()
+                        .fadeIn(1500, function() { $('#error_rujukan'); });
+                        setTimeout(resetAll,3000);
+                } else {
+                    response = d.response.rujukan;
+                    if ($('#no_kartu').val() === response.peserta.noKartu) {
+                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#ppk_rujukan').val(response.provPerujuk.kode);
+                        $('#diagAwal').val(response.diagnosa.nama);
+                        $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
+                        $('#tujuan').val(response.poliRujukan.nama);
+                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
+                        $('#no_rujukan').val(response.noKunjungan);
+                        // getDiagnosa(response.diagnosa.kode, response.diagnosa.nama);
+                        // getPoli(response.plliRujukan.kode, response.poliRujukan.nama)
+                        asalRujukan();
+                        katarak();
+                        getSkdp();
+
+                    } else {
+                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                        $('#error_rujukan').html('No Rujukan tidak cocok').hide()
+                            .fadeIn(1500, function() { $('#error_rujukan'); });
+                            setTimeout(resetAll,3000);
+                    }
+                }
+               
+            }, 
+            error: function() {
+                $('#frame_error').show(100);
+                $('#error_rujukan').html('Brigding lamban, sedang gangguan server bpjs');
+            }
+           
+        })
+    });
+
+    // CETAK SEP
+    $(document).on('click','#cetak-sep', function(e) {
+        // e.preventDefault();
+        var form = $('#form-sep'),
+                method = 'POST';
+
+        // Reset validationo error
+        form.find('.invalid-feedback').remove();
+        form.find('input').removeClass('is-invalid');
+        $.ajax({
+            method : method,
+            url : '{{ route('sep.insert') }}',
+            data : form.serialize(),
+            dataType: "json",
+            success :function(data) {
+                // console.log(data)
+                if (data.response !== null) {
+                    var no_reg = $('#no_reg').val();
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
+                    $.ajax({
+                        type : 'POST',
+                        url : '{{ route('sep.simpan') }}',
+                        data : { _token: CSRF_TOKEN, no_reg : no_reg, no_sep: data.response.sep.noSep},
+                        success : function(response) {
+                            // console.log(data); 
+                            $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
+                            $('#success_sep').html(data.metaData.message+" No SEP :"+data.response.sep.noSep).hide()
+                            .fadeIn(1500, function() { $('#success_sep'); });
+                            setTimeout(resetSuccessSep,4000);
+                            ajaxLoad();
+                        }
+                    });
+                    $('#edit-modal').modal('hide');
+                } else {
+                    // e.preventDefault();
+                    $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
+                    $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
+                    .fadeIn(1500, function() { $('#error_sep'); });
+                    setTimeout(resetAll,4000);
+                }
+
+                
+            }, 
+            error : function(xhr) {
+                var errors = xhr.responseJSON; 
+                errorsHtml = '<ul>';
+                $.each( errors.errors, function( key, value ) {
+                    $("#" + key)
+                            .addClass('is-invalid')
+                            .closest('.form-group')
+                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
+                });
+             
+            }
+        });
+    
+    });
+
+    // cari diagnosa
+    $(document).ready(function() {
         var src = "{{ route('bpjs.diagnosa') }}";
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#diagAwal').autocomplete({
@@ -326,112 +435,7 @@
         });
     });
 
-    $(document).on('click','#cetak-sep', function(e) {
-        // e.preventDefault();
-        var form = $('#form-sep'),
-                method = 'POST';
-
-        // Reset validationo error
-        form.find('.invalid-feedback').remove();
-        form.find('input').removeClass('is-invalid');
-        $.ajax({
-            method : method,
-            url : '{{ route('sep.insert') }}',
-            data : form.serialize(),
-            dataType: "json",
-            success :function(data) {
-                // console.log(data)
-                if (data.response !== null) {
-                    var no_reg = $('#no_reg').val();
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
-                    // console.log(no_reg, data.response.sep.noSep);
-                    $.ajax({
-                        type : 'POST',
-                        url : '{{ route('sep.simpan') }}',
-                        data : { _token: CSRF_TOKEN, no_reg : no_reg, no_sep: data.response.sep.noSep},
-                        success : function(response) {
-                            // console.log(data); 
-                            $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
-                            $('#success_sep').html(data.metaData.message+" No SEP :"+data.response.sep.noSep).hide()
-                            .fadeIn(1500, function() { $('#success_sep'); });
-                            setTimeout(resetSuccessSep,4000);
-                            ajaxLoad();
-                        }
-                    });
-                } else {
-                    $('#frame_sep_error').show().html("<span class='text-danger' id='error_sep'></span>");
-                    $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
-                    .fadeIn(1500, function() { $('#error_sep'); });
-                    setTimeout(resetSuccessSep,4000);
-                }
-
-                $('#edit-modal').modal('hide');
-            }, 
-            error : function(xhr) {
-                var errors = xhr.responseJSON; 
-                errorsHtml = '<ul>';
-                $.each( errors.errors, function( key, value ) {
-                    $("#" + key)
-                            .addClass('is-invalid')
-                            .closest('.form-group')
-                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
-                });
-             
-            }
-        });
     
-    });
-
-    $('#noRujukan').bind('keyup', function(event) {
-        if(this.value.length < 17) return;
-        var rujukan =$(this).val();
-        // console.log(rujukan);
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-            type: 'get',
-            url : '{{ route('bpjs.rujukan') }}',
-            data : {rujukan: rujukan},
-            success: function(data){
-                d = JSON.parse(data);
-                // console.log(d);
-                if (d.response === null) {
-                    $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
-                    $('#error_rujukan').html('No Rujukan tidak ada').hide()
-                        .fadeIn(1500, function() { $('#error_rujukan'); });
-                        setTimeout(resetAll,3000);
-                } else {
-                    response = d.response.rujukan;
-                    if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan);
-                        $('#ppk_rujukan').val(response.provPerujuk.kode);
-                        $('#diagAwal').val(response.diagnosa.nama);
-                        $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
-                        $('#tujuan').val(response.poliRujukan.nama);
-                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
-                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
-                        $('#no_rujukan').val(response.noKunjungan);
-                        // getDiagnosa(response.diagnosa.kode, response.diagnosa.nama);
-                        // getPoli(response.plliRujukan.kode, response.poliRujukan.nama)
-                        asalRujukan();
-                        katarak();
-                        getSkdp();
-
-                    } else {
-                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
-                        $('#error_rujukan').html('No Rujukan tidak cocok').hide()
-                            .fadeIn(1500, function() { $('#error_rujukan'); });
-                            setTimeout(resetAll,3000);
-                    }
-                }
-               
-            }, 
-            error: function() {
-                $('#frame_error').show(100);
-                $('#error_rujukan').html('Brigding lamban, sedang gangguan server bpjs');
-            }
-           
-        })
-    });
 
     function ajaxLoad(){
             var jnsRawat = $("#jns_rawat:checked").val();

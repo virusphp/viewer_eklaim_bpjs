@@ -78,6 +78,7 @@
         });
     });
 
+
     $(document).ready(function () {
         getStart();
         resetSuccessSep();
@@ -229,7 +230,7 @@
         
         });
         $('#modal-rujukan').modal('hide');
-        console.log(rujukan);
+        // console.log(rujukan);
     });
 
     $('#noRujukan').bind('keyup', function(event) {
@@ -324,7 +325,6 @@
                     setTimeout(resetAll,4000);
                 }
 
-                
             }, 
             error : function(xhr) {
                 var errors = xhr.responseJSON; 
@@ -434,8 +434,6 @@
             }
         });
     });
-
-    
 
     function ajaxLoad(){
             var jnsRawat = $("#jns_rawat:checked").val();

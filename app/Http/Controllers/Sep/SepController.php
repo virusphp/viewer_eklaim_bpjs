@@ -9,6 +9,7 @@ use App\Repository\Sep\Registrasi;
 use App\Repository\Sep\Sep;
 use App\Http\Requests\SepRequest;
 use DB;
+Use DateTime;
 
 class SepController extends Controller
 {
@@ -119,6 +120,9 @@ class SepController extends Controller
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
             $data['tglSep'] = date('Y-m-d');
+            // $datetime = new DateTime('tomorrow');
+            // $data['tglSep'] = $datetime->format('Y-m-d');
+            // dd($data);
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
             $data['klsRawat'] = '3';

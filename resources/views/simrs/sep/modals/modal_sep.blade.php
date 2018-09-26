@@ -152,6 +152,7 @@
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
                                 <input class="form-control form-control-sm" id="kodeDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
+                                <!-- <select id="kodeDPJP" name="kodeDPJP" class="form-control form-control-sm"></select> -->
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>

@@ -19,8 +19,8 @@ function getStart()
     $('#form-penjamin1').hide();
     $('#form-penjamin2').hide();
     $('#form-katarak').hide();
-    $('#noSurat').val("");
-    $('#kd_dpjp').val("");
+    $('#noSurat').val("000000");
+    $('#kd_dpjp').val("000000");
     $('#ket_kill').val("0");
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
@@ -94,6 +94,11 @@ function asalRujukan()
             }
         }
     })
+}
+
+function selectSkdp()
+{
+
 }
 
 $('#noRujukan').keydown(function(e) {

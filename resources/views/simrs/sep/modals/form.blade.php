@@ -1,44 +1,29 @@
-<!-- Attachment Modal -->
-<div class="modal fade" id="modal-sep" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-info" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      <div class="col-md-4">
-        <h5 class="modal-title" id="edit-modal-label">Buat SEP</h5>
-      </div>
-      <div class="col-md-4">
-        <input class="form-control-plaintext" type="text" id="tgl_reg" nama="tgl_reg" readonly>
-      </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="attachment-body-content">
-      <form id="form-sep" action="" class="form-horizontal" method="POST">
-        <div id="frame_error" class="alert alert-danger">
-            <!-- error message -->
-        </div>
+<form id="form-sep" action="{{ route('sep.insert') }}" class="form-horizontal" method="POST">
+        <!-- <div id="frame_error" class="alert alert-danger">
+            error message
+        </div> -->
       
-        <div class="row">
-            <!-- profile -->
-              <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-header">
+    <div class="row">
+    <!-- start profile -->
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
                     <strong>Profil</strong>
                     <small>Pasien</small>
-                  </div>
-                  <div class="card-body">
+                </div>
+                <div class="card-body">
                     <div class="form-group">
-                      <label for="company">No KTP</label>
-                      <input class="form-control form-control-sm" id="no_ktp" type="text" placeholder="No KTP" readonly>
-                      <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
+                        <label for="company">No KTP</label>
+                        <input class="form-control form-control-sm" id="no_ktp" type="text" placeholder="No KTP" readonly>
+                        <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                     </div>
                     <div class="form-group">
-                      <label for="street">Nama Pasien</label>
-                      <input class="form-control form-control-sm" id="nama_pasien" type="text" placeholder="Nama Pasien" readonly>
+                        <label for="street">Nama Pasien</label>
+                        <input class="form-control form-control-sm" id="nama_pasien" type="text" placeholder="Nama Pasien" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="vat">Tanggal Lahir</label>
-                      <input class="form-control form-control-sm" id="tgl_lahir" type="text" placeholder="Tanggal Lahir" readonly>
+                        <label for="vat">Tanggal Lahir</label>
+                        <input class="form-control form-control-sm" id="tgl_lahir" type="text" placeholder="Tanggal Lahir" readonly>
                     </div>
                     <div class="form-group">
                         <label for="city">Hak Kelas</label>
@@ -53,21 +38,22 @@
                         <input class="form-control form-control-sm" id="nama_pelayanan" type="text" placeholder="Jenis Pelayanan" readonly>
                         <input class="form-control form-control-sm" id="jns_pelayanan" name="jnsPelayanan" type="hidden">
                     </div>
-                  </div>
                 </div>
-              </div>
-              <!-- profile -->
-            <div id="data-post-sep" class="col-sm-8">
-                <div class="card">
-                  <div class="card-header">
+            </div>
+        </div>
+        <!-- endCol-4 -->
+        <!-- start SEP -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
                     <strong>Pembuatan SEP</strong>
                     <small>Data insert SEP </small>
-                  </div>
-                  <div class="card-body">
-                   <div class="row">
+                </div>
+                <div class="card-body">
+                    <div class="row">
                         <div class="col-sm-4">
-                            <div id="form-kartu" class="form-group">
-                                <label id="no-sep" for="no_kartu">No Kartu</label>
+                            <div class="form-group">
+                                <label for="company">No Kartu</label>
                                 <input type="text" class="form-control form-control-sm" id="no_kartu" name="noKartu" placeholder="No Kartu" readonly>
                             </div>
                         </div>
@@ -88,6 +74,7 @@
                             </div>
                         </div>
                    </div>
+                   <!-- endRow -->
                    <div class="row">
                         <div class="col-sm-4">
                             <div id="k-rujukan" class="form-group">
@@ -103,7 +90,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="nama_faskes">Asal Rujukan</label>
-                                <input class="form-control form-control-sm" id="asalRujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
+                                <input class="form-control form-control-sm" id="asal_rujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
                                 <input class="form-control form-control-sm" id="jns_faskes" name="asalRujukan" type="hidden" placeholder="Nama faskes" readonly>
                             </div>
                         </div>
@@ -115,11 +102,12 @@
                             </div>
                         </div>
                     </div>
+                    <!-- endRow -->
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa</label>
-                                <input class="form-control form-control-sm" id="diagAwal" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
+                                <input class="form-control form-control-sm" id="diagnosa" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
                                 <input class="form-control form-control-sm" id="kd_diagnosa" name="diagAwal" type="hidden">
                             </div>
                         </div>
@@ -129,7 +117,7 @@
                                     <input class="form-check-input" id="c_eksekutif" type="checkbox" value="0">
                                     <label class="form-check-label" for="poli">Eksekutif | Spe / SubSpesialis</label>
                                 </div>
-                                <input class="form-control form-control-sm" id="tujuan" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
+                                <input class="form-control form-control-sm" id="poli" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
                                 <input class="form-control form-control-sm" id="kd_poli" name="tujuan" type="hidden" readonly>
                                 <input class="form-control form-control-sm" id="eksekutif" name="eksekutif" type="hidden" value="0" readonly>
                             </div>
@@ -137,26 +125,27 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">No Telp</label>
-                                <input class="form-control form-control-sm" id="noTelp" name="noTelp" type="text" tabindex="4" placeholder="No Telp">
+                                <input class="form-control form-control-sm" id="no_telp" name="noTelp" type="text" tabindex="4" placeholder="No Telp">
                             </div>
                         </div>
                     </div>
+                    <!-- endRow -->
                     <div id="form-skdp" class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="no_surat">Surat Kontrol</label>
-                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="6">
+                                <input class="form-control form-control-sm" id="no_surat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol">
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="kodeDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
-                                <!-- <select id="kodeDPJP" name="kodeDPJP" class="form-control form-control-sm"></select> -->
+                                <input class="form-control form-control-sm" id="namadpjp" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
                     </div>
+                    <!-- endRow -->
                     <div class="form-group">
                         <label for="catatan">Catatan</label>
                         <textarea class="form-control form-control-sm" id="catatan" name="catatan" type="text" tabindex="7 "placeholder="Catatan"></textarea>
@@ -204,6 +193,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- endRow -->
                     <div id="form-penjamin2">
                         <!-- Tanggal -->
                         <div class="row">
@@ -223,6 +213,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- endRow -->
                         <div clss="lokasi-header">Lokasi Kejadian</div>
                         <div class="form-group row">
                             <div class="col-4">
@@ -253,49 +244,14 @@
                         </div>
                     </div>
 
-                  </div>
+                    </div>
+                    <!-- endRow -->
                 </div>
-              </div>
+                <!-- endCardBody -->
+            </div>
+            <!-- endCard -->
         </div>
-      </div>
-    </form>
-      <div class="modal-footer">
-        <input id="cetak-sep" type="button" class="btn btn-sm btn-primary" value="Cetak SEP">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+        <!-- endCol-8 -->
     </div>
-  </div>
-</div>
-<!-- /Attachment Modal -->
-
-<!-- modal lain -->
-<div class="modal" id="modal-rujukan" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
-<div class="modal-dialog modal-md modal-secondary" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="edit-modal-label">Pilih Rujukan Aktif</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table id="tbl-rujukan" class="table table-responsive-sm table-bordered table-striped table-sm">
-            <thead>
-                 <tr>
-                    <th>No</th>
-                    <th>No Rujukan</th>
-                    <th>Tgl Rujukan</th>
-                    <th>No Kartu</th>
-                    <th>Nama</th>
-                    <th>PPK Perujuk</th>
-                    <th>Sub/Speliasis</th>
-                </tr>
-            </thead>
-            <tbody>
-                    
-            </tbody>
-        </table>
-       
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- endRow -->
+</form>

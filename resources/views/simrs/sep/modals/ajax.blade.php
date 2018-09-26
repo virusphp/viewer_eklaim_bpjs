@@ -3,6 +3,7 @@
 // Start Modal 
 function getStart()
 {
+    
     $('#frame_error').hide();
     $('#tgl_rujukan').val("");
     $('#ppk_rujukan').val("");
@@ -52,6 +53,13 @@ function getEditItem(data)
     $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
 }
+
+//get data edit SEP
+function getEditSep(data)
+{
+    
+}
+
 // Hak kelas Peserta
 function getPeserta()
 {

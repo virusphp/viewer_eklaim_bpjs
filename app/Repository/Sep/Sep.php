@@ -28,6 +28,12 @@ class Sep
                         ->update([
                             'no_SJP' => $data['no_sep']
                         ]);
+
+        $updateRujukan = DB::table('Rujukan')
+                        ->where('no_reg', '=', $data['no_reg'])
+                        ->update([
+                            'no_rujukan' => $data['no_rujukan']
+                        ]);
         return $updateSep;
     }
 }

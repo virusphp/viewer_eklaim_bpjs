@@ -89,26 +89,26 @@
     $(document).on('click', "#edit-item", function(e) {
         // e.preventDefault();
         $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-        var date = moment().format("YYYY-MM-DD");
+        var date = moment().format("YYYY-MM-DD"),
+            no_reg = $(this).val(),
+            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            options = {
+                'backdrop' : 'static'
+            },
+            method = 'GET',
+            url = '{{ route('sep.buat') }}';
         $('input#tgl_reg').val(formatDate(date));
+        $('#cetak-sep').val('Buat Sep').removeClass('btn-warning').addClass('btn-primary')
         getStart();
-        
-        var options = {
-        'backdrop': 'static'
-        };
-        var no_reg = $(this).val();
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            type : 'get',
-            url : '{{ route('sep.buat') }}',
+            method : method,
+            url : url,
             data : {
                 _token : CSRF_TOKEN,
                 no_reg : no_reg
             },
             dataType: "json",
             success: function(data) {
-                // console.log(data);
-                // debugger;
                 getEditItem(data);
                 if ($('#no_kartu').val() !== '') {
                     getPeserta();
@@ -120,14 +120,45 @@
                 } else {
                     $('#nama_pelayanan').val('Rawat Inap');
                 }
-                    
             }
         });
-        $('#edit-modal').modal(options);
+        $('#modal-sep').modal(options);
         // return false;
     });
 
-    $('#edit-modal').on('hidden.bs.modal', function() {
+    $(document).on('click', "#edit-sep", function(e) {
+        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+        var date = moment().format("YYYY-MM-DD"),
+            no_reg = $(this).val(),
+            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            options = {
+                'backdrop' : 'static'
+            },
+            method = 'GET',
+            url = '{{ route('sep.edit') }}';
+        // $('#no-sep').empty().append('No Sep').closest('.form-group').append('<input type="text" class="form-control form-control-sm" id="noSep" name="noSep" placeholder="No SEP" readonly></input>');
+        // $('#no_kartu').remove()
+        $('input#tgl_reg').val(formatDate(date));
+        $('#cetak-sep').val('Edit Sep').removeClass('btn-primary').addClass('btn-warning');
+        getStart();
+        $.ajax({
+            method: method,
+            url: url,
+            data: {
+                _token: CSRF_TOKEN,
+                no_reg: no_reg
+            },
+            success: function(response) {
+                console.log(response);
+            }
+
+        })
+
+
+        $('#modal-sep').modal(options);
+    });
+
+    $('#modal-sep').on('hidden.bs.modal', function() {
         var $alertas = $('#form-sep');
         $alertas.validate().resetForm();
         $alertas.find('.error').removeClass('error');
@@ -301,12 +332,14 @@
             success :function(data) {
                 // console.log(data)
                 if (data.response !== null) {
-                    var no_reg = $('#no_reg').val();
+                    var no_reg = $('#no_reg').val(),
+                        no_rujukan = $('#noRujukan').val();
+                        console.log(no_rujukan);
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
                     $.ajax({
                         type : 'POST',
                         url : '{{ route('sep.simpan') }}',
-                        data : { _token: CSRF_TOKEN, no_reg : no_reg, no_sep: data.response.sep.noSep},
+                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, no_sep: data.response.sep.noSep},
                         success : function(response) {
                             // console.log(data); 
                             $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
@@ -371,8 +404,8 @@
         });
    });
    
+    // cari poli bpjs
     $(document).ready(function() {
-        // cari poli bpjs
         var src = "{{ route('bpjs.poli') }}";
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#tujuan').autocomplete({
@@ -479,6 +512,5 @@
                 $('.table').removeAttr('style');
             }); 
         }   
-        
 </script>
 @endpush

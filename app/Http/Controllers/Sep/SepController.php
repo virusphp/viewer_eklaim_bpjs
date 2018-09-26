@@ -38,7 +38,10 @@ class SepController extends Controller
                     'tgl_reg' => $q->tgl_reg,
                     'jns_rawat' => $q->jns_rawat,
                     'no_sjp' => $q->no_sjp,
-                    'aksi' => '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>'
+                    'aksi' => '
+                            <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
+                            <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_reg.'">Edit</button>
+                            '
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
@@ -50,7 +53,7 @@ class SepController extends Controller
     public function buatSep(Request $request)
     { 
         if ($request->ajax()) {
-             $noKartu = DB::table('registrasi as r')->select('pp.no_kartu','rjk.no_rujukan')
+             $noKartu = DB::table('registrasi as r')->select('r.no_sjp','pp.no_kartu','rjk.no_rujukan')
             ->join('penjamin_pasien as pp', function($join){
                 $join->on('r.no_rm', '=','pp.no_rm')
                     ->on('r.kd_penjamin','=','pp.kd_penjamin');
@@ -111,6 +114,72 @@ class SepController extends Controller
        
     }
 
+    public function editSep(Request $request)
+    {
+        if ($request->ajax()) {
+            $noKartu = DB::table('registrasi as r')->select('r.no_sjp','pp.no_kartu','rjk.no_rujukan')
+            ->join('penjamin_pasien as pp', function($join){
+                $join->on('r.no_rm', '=','pp.no_rm')
+                    ->on('r.kd_penjamin','=','pp.kd_penjamin');
+            })
+            ->join('rujukan as rjk', function($join) {
+                $join->on('r.no_reg','=','rjk.no_reg')
+                    ->on('r.no_rm','=','rjk.no_rm');
+            })
+            ->where('r.no_reg','=',$request->no_reg)
+            ->first();
+            // dd($noKartu);
+
+            $jenis_rawat = noReg($request->no_reg);
+            if ($jenis_rawat == '02') {
+
+                $query = DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
+                    ->join('pasien as p', function($join) {
+                        $join->on('ri.no_rm','=','p.no_rm');
+                    })
+                    ->join('pegawai as pg', function($join) {
+                        $join->on('ri.kd_dokter','=','pg.kd_pegawai');
+                    })
+                    ->join('tempat_tidur as tt',function($join){
+                        $join->on('ri.kd_tempat_tidur','=','tt.kd_tempat_tidur')
+                            ->join('kamar as k', function($join) {
+                                $join->on('tt.kd_kamar','=','k.kd_kamar')
+                                    ->join('sub_unit as su',function($join) {
+                                        $join->on('k.kd_sub_unit','=','su.kd_sub_unit');
+                                    });
+                            });
+                    })
+                    ->where('ri.no_reg','=',$request->no_reg)
+                    ->first();
+                // dd($query);
+                $query->noSep = $noKartu->no_sjp;
+                $query->jnsPelayanan = '1';
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = date('Y-m-d');
+                $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+            } else if ($jenis_rawat == '01') {
+            
+                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir')
+                    ->join('pasien as p', function($join) {
+                        $join->on('rj.no_rm','=','p.no_rm');
+                    })
+                    ->join('pegawai as pg', function($join) {
+                            $join->on('rj.kd_dokter','=','pg.kd_pegawai');
+                    })
+                    ->where('rj.no_reg','=',$request->no_reg)
+                    ->first();
+                $query->noSep = $noKartu->no_sjp;
+                $query->jnsPelayanan = '2';
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = date('Y-m-d');
+                $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+                dd($query);
+            }
+
+            return response()->json($query);
+        }
+    }
+
     public function sepInsert(SepRequest $req)
     {
         if ($req->ajax()) {
@@ -122,11 +191,11 @@ class SepController extends Controller
             $data['tglSep'] = date('Y-m-d');
             // $datetime = new DateTime('tomorrow');
             // $data['tglSep'] = $datetime->format('Y-m-d');
-            // dd($data);
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
             $data['klsRawat'] = '3';
             $data['user'] = 'udin admin';
+            // dd($data);
             $res = json_encode($this->mapSep($data));
             $result = $this->conn->saveSep($res);
             return $result;

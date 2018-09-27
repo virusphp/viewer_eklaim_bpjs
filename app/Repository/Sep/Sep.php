@@ -19,6 +19,11 @@ class Sep
         return $result;
     }
 
+    public function updateSep($data)
+    {
+        $result = $this->conn->updateSep($data);
+        return $result;
+    }
 
     public function simpanSep($data)
     {

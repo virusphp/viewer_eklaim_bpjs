@@ -69,6 +69,21 @@ class BpjsController extends Controller
         }
     }
 
+    public function getSep(Request $req)
+    {
+        try { 
+            $url = $this->api_url . "sep/".$req->noSep;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        }
+    }
+
     public function getPpkRujukan(Request $req)
     {
         $jns_faskes = "1";

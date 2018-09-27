@@ -42,7 +42,7 @@ class Sep
             $response = $this->client->post($url, ['body' => $data]);
             return $response;
         } catch (RequestException $e) {
-           return Psr7\str($e->getRequest());
+            return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {
             return Psr7\str($e->getResponse());
             }
@@ -52,10 +52,9 @@ class Sep
 
     public function updateSep($data)
     {
-        $data = file_get_contents("php://input");
         try {
-            $url = $this->api_url . "Sep/1.1/Update";
-            $response = $this->client->put($url, ['headers' => $this->headers, 'body' => $data]);
+            $url = $this->api_url . "sep/update";
+            $response = $this->client->put($url, ['body' => $data]);
             return $response;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());

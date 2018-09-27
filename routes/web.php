@@ -39,12 +39,14 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/rujukan','BpjsController@getRujukan')->name('bpjs.rujukan');
         Route::get('/bpjs/peserta','BpjsController@getPeserta')->name('bpjs.peserta');
         Route::get('/bpjs/ppkrujukan','BpjsController@getPpkRujukan')->name('bpjs.ppkrujukan');
+        Route::get('/bpjs/sep','BpjsController@getSep')->name('bpjs.sep');
         
         Route::get('/sep','SepController@index')->name('sep.index');
         Route::get('/sep/search','SepController@search')->name('sep.search');
         Route::get('/sep/pembuatan','SepController@buatSep')->name('sep.buat');
         Route::get('/sep/perubahan','SepController@editSep')->name('sep.edit');
         Route::post('/sep/insert','SepController@sepInsert')->name('sep.insert');
+        Route::put('/sep/update','SepController@sepUpdate')->name('sep.update');
         Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
     });
 

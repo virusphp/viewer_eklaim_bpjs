@@ -53,7 +53,7 @@ class SepController extends Controller
     public function buatSep(Request $request)
     { 
         if ($request->ajax()) {
-             $noKartu = DB::table('registrasi as r')->select('r.no_sjp','pp.no_kartu','rjk.no_rujukan')
+             $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','rjk.no_rujukan')
             ->join('penjamin_pasien as pp', function($join){
                 $join->on('r.no_rm', '=','pp.no_rm')
                     ->on('r.kd_penjamin','=','pp.kd_penjamin');
@@ -65,6 +65,8 @@ class SepController extends Controller
             ->where('r.no_reg','=',$request->no_reg)
             ->first();
             // dd($noKartu);
+            $datetime = new DateTime($noKartu->tgl_reg);
+            $noKartu->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
             if ($jenis_rawat == '02') {
 
@@ -89,7 +91,7 @@ class SepController extends Controller
                 // dd($query);
                 $query->jnsPelayanan = '1';
                 $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = date('Y-m-d');
+                $query->tglSep = $noKartu->tgl_reg;
                 $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
@@ -102,22 +104,20 @@ class SepController extends Controller
                     })
                     ->where('rj.no_reg','=',$request->no_reg)
                     ->first();
-        // dd($query);
+                // dd($query);
                 $query->jnsPelayanan = '2';
                 $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = date('Y-m-d');
+                $query->tglSep = $noKartu->tgl_reg;
                 $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             }
-
             return response()->json($query);
         }
-       
     }
 
     public function editSep(Request $request)
     {
         if ($request->ajax()) {
-            $noKartu = DB::table('registrasi as r')->select('r.no_sjp','pp.no_kartu','rjk.no_rujukan')
+            $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','rjk.no_rujukan')
             ->join('penjamin_pasien as pp', function($join){
                 $join->on('r.no_rm', '=','pp.no_rm')
                     ->on('r.kd_penjamin','=','pp.kd_penjamin');
@@ -130,6 +130,8 @@ class SepController extends Controller
             ->first();
             // dd($noKartu);
 
+            $datetime = new DateTime($noKartu->tgl_reg);
+            $noKartu->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
             if ($jenis_rawat == '02') {
 
@@ -155,7 +157,7 @@ class SepController extends Controller
                 $query->noSep = $noKartu->no_sjp;
                 $query->jnsPelayanan = '1';
                 $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = date('Y-m-d');
+                $query->tglSep = $noKartu->tgl_reg;
                 $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
@@ -171,11 +173,10 @@ class SepController extends Controller
                 $query->noSep = $noKartu->no_sjp;
                 $query->jnsPelayanan = '2';
                 $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = date('Y-m-d');
+                $query->tglSep = $noKartu->tgl_reg;
                 $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
-                dd($query);
+                // dd($query);
             }
-
             return response()->json($query);
         }
     }
@@ -188,7 +189,7 @@ class SepController extends Controller
             if ($data['penjamin'] != 0) {
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
-            $data['tglSep'] = date('Y-m-d');
+            // $data['tglSep'] = date('Y-m-d');
             // $datetime = new DateTime('tomorrow');
             // $data['tglSep'] = $datetime->format('Y-m-d');
             $data['ppkPelayanan'] = '1105R001';
@@ -200,7 +201,24 @@ class SepController extends Controller
             $result = $this->conn->saveSep($res);
             return $result;
         }
-       
+    }
+
+    public function sepUpdate(SepRequest $req)
+    {
+        if ($req->ajax()) {
+            $data = $req->all();
+            if ($data['penjamin'] != 0) {
+                $data['penjamin'] = implode(",",$data['penjamin']);
+            }
+            $data['ppkPelayanan'] = '1105R001';
+            $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
+            $data['klsRawat'] = '3';
+            $data['user'] = 'udin admin';
+            // dd($data);
+            $res = json_encode($this->mapSepUpdate($data));
+            $result = $this->conn->updateSep($res);
+            return $result;
+        }
     }
 
     public function simpanSep(Request $req)
@@ -210,6 +228,72 @@ class SepController extends Controller
         return $simpanSep;
     }
 
+    public function mapSepUpdate($data)
+    {
+        $res['noSep'] = $data['noSep'];
+        $res['klsRawat'] = $data['klsRawat'];
+        $res['noMR'] = $data['noMR'];
+        $res['rujukan'] = [
+            'asalRujukan' => $data['asalRujukan'],
+            'tglRujukan' => $data['tglRujukan'],
+            'noRujukan' => $data['noRujukan'],
+            'ppkRujukan' => $data['ppkRujukan']
+        ];
+        $res['catatan'] = $data['catatan'];
+        $res['diagAwal'] = $data['diagAwal'];
+        $res['poli'] = [
+            'eksekutif' => $data['eksekutif']
+        ];
+        $res['cob'] = [
+            'cob' => $data['cob']
+        ];
+
+        $res['katarak'] = [
+           'katarak' => $data['katarak'] 
+        ];
+
+        $res['skdp'] = [
+            'noSurat' => $data['noSurat'],
+            'kodeDPJP' => $data['kodeDPJP']
+        ];
+
+        $lokasiLaka = [
+            'kdPropinsi' => $data['kdPropinsi'],
+            'kdKabupaten' => $data['kdKabupaten'],
+            'kdKecamatan' => $data['kdKecamatan']
+        ];
+
+        $suplesi = [
+            'suplesi' => $data['suplesi'],
+            'noSepSuplesi' => $data['noSepSuplesi'],
+            'lokasiLaka' => $lokasiLaka
+        ];
+
+        $penjamin = [
+            'penjamin' => $data['penjamin'],
+            'tglKejadian' => $data['tglKejadian'],
+            'keterangan' => $data['keterangan'],
+            'suplesi' => $suplesi
+        ];
+        
+        $res['jaminan'] = [
+            'lakaLantas' => $data['lakaLantas'],
+            'penjamin' => $penjamin
+        ]; 
+
+        $res['noTelp'] = $data['noTelp'];
+        $res['user'] = $data['user'];
+
+        $result = [
+            't_sep' => $res 
+         ];
+ 
+         $request = [
+             'request' => $result
+         ];
+
+         return $request;
+    }
 
     public function mapSep($data)
     {

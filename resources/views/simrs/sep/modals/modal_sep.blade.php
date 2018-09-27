@@ -4,10 +4,10 @@
     <div class="modal-content">
       <div class="modal-header">
       <div class="col-md-4">
-        <h5 class="modal-title" id="edit-modal-label">Buat SEP</h5>
+        <h5 class="modal-title" id="edit-modal-sep">Surat Eligibilitas Peserta </h5>
       </div>
       <div class="col-md-4">
-        <input class="form-control-plaintext" type="text" id="tgl_reg" nama="tgl_reg" readonly>
+        <!-- <input class="form-control-plaintext" type="text" id="tglSep" nama="tgl_reg" readonly> -->
       </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
@@ -69,6 +69,8 @@
                             <div id="form-kartu" class="form-group">
                                 <label id="no-sep" for="no_kartu">No Kartu</label>
                                 <input type="text" class="form-control form-control-sm" id="no_kartu" name="noKartu" placeholder="No Kartu" readonly>
+                                <input type="hidden" class="form-control form-control-sm" id="noSep" name="noSep" readonly>
+                                <input type="hidden" class="form-control form-control-sm" id="tglSep" name="tglSep" readonly>
                             </div>
                         </div>
                         <div class="col-sm-4">

@@ -42,7 +42,7 @@ function getStart()
 function getEditItem(data)
 {
     $('#noRujukan').focus();
-    $('#noRujukan').val(data.noRujukan);
+    $('#noRujukan').val(data.noRujukan).removeAttr('readonly');
     $('#jns_pelayanan').val(data.jnsPelayanan);
     $('#nama_pasien').val(data.nama_pasien);
     $('#no_ktp').val(data.nik);
@@ -52,19 +52,119 @@ function getEditItem(data)
     $('#alamat').val(data.alamat);
     $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
+    $('#noSep').val(data.noSep);
+    $('#tglSep').val(data.tglSep);
+    if($('#jns_pelayanan').val() == 2) {
+        $('#nama_pelayanan').val('Rawat Jalan');
+    } else {
+        $('#nama_pelayanan').val('Rawat Inap');
+    }
+    getPeserta();
 }
 
 //get data edit SEP
 function getEditSep(data)
 {
-    
+    $('#noRujukan').val(data.noRujukan).attr('readonly','true');
+    $('#jns_pelayanan').val(data.jnsPelayanan);
+    $('#nama_pasien').val(data.nama_pasien);
+    $('#no_ktp').val(data.nik);
+    $('#tgl_lahir').val(data.tgl_lahir);
+    $('#no_rm').val(data.no_rm);
+    $('#no_reg').val(data.no_reg);
+    $('#alamat').val(data.alamat);
+    $('#noTelp').val(data.no_telp);
+    $('#no_kartu').val(data.noKartu);
+    $('#noSep').val(data.noSep);
+    $('#tglSep').val(data.tglSep);
+    if($('#jns_pelayanan').val() == 2) {
+        $('#nama_pelayanan').val('Rawat Jalan');
+    } else {
+        $('#nama_pelayanan').val('Rawat Inap');
+    }
+    getPeserta();
+    getDataSep();
+    getRujukan();
+}
+
+function getRujukan()
+{
+    var rujukan = $('#noRujukan').val();
+    if (rujukan.length < 17) return;
+    $.ajax({
+            type: 'get',
+            url : '{{ route('bpjs.rujukan') }}',
+            data : {rujukan: rujukan},
+            success: function(data){
+                d = JSON.parse(data);
+                // console.log(d);
+                if (d.response === null) {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                    $('#error_rujukan').html('No Rujukan tidak ada').hide()
+                        .fadeIn(1500, function() { $('#error_rujukan'); });
+                        setTimeout(resetAll,3000);
+                } else {
+                    response = d.response.rujukan;
+                    if ($('#no_kartu').val() === response.peserta.noKartu) {
+                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#ppk_rujukan').val(response.provPerujuk.kode);
+                        $('#diagAwal').val(response.diagnosa.nama);
+                        $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
+                        $('#tujuan').val(response.poliRujukan.nama);
+                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
+                        $('#noRujukan').val(response.noKunjungan);
+                        asalRujukan();
+                        katarak();
+                        getSkdp();
+
+                    } else {
+                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                        $('#error_rujukan').html('No Rujukan tidak cocok').hide()
+                            .fadeIn(1500, function() { $('#error_rujukan'); });
+                            setTimeout(resetAll,3000);
+                    }
+                }
+            
+            }, 
+            error: function() {
+                $('#frame_error').show(100);
+                $('#error_rujukan').html('Brigding lamban, sedang gangguan server bpjs');
+            }
+        
+        });
+}
+
+function getDataSep()
+{
+    var noSep = $('#noSep').val(),
+        url = '{{ route('bpjs.sep') }}',
+        method = 'GET';
+    if (noSep.length < 1) return;
+    $.ajax({
+        method: method,
+        url: url,
+        data: {
+            noSep: noSep
+        },
+        success: function(response) {
+            // console.log(response);
+            d = JSON.parse(response);
+            if (d.response !== null) {
+                response = d.response;
+                $('#catatan').val(response.catatan);
+                $('#edit-modal-sep').append('<span>'+response.noSep+'</span>');
+            }
+        }
+    })
 }
 
 // Hak kelas Peserta
 function getPeserta()
 {
-    var no_kartu = $('#no_kartu').val(); 
-    var tgl_sep = moment().format("YYYY-MM-DD");
+    var no_kartu = $('#no_kartu').val(),
+        tgl_sep = moment().format("YYYY-MM-DD");
+    if (no_kartu.length < 1) return;
     $.ajax({
         type: 'get',
         url: '{{ route('bpjs.peserta') }}',

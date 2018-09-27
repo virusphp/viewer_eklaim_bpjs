@@ -78,7 +78,6 @@
         });
     });
 
-
     $(document).ready(function () {
         getStart();
         resetSuccessSep();
@@ -98,7 +97,7 @@
             method = 'GET',
             url = '{{ route('sep.buat') }}';
         $('input#tgl_reg').val(formatDate(date));
-        $('#cetak-sep').val('Buat Sep').removeClass('btn-warning').addClass('btn-primary')
+        $('#update-sep').attr('id','cetak-sep').val('Buat Sep').removeClass('btn-warning').addClass('btn-primary')
         getStart();
         $.ajax({
             method : method,
@@ -110,20 +109,10 @@
             dataType: "json",
             success: function(data) {
                 getEditItem(data);
-                if ($('#no_kartu').val() !== '') {
-                    getPeserta();
-                }
                 getProvinsi();
-                
-                if($('#jns_pelayanan').val() == 2) {
-                    $('#nama_pelayanan').val('Rawat Jalan');
-                } else {
-                    $('#nama_pelayanan').val('Rawat Inap');
-                }
             }
         });
         $('#modal-sep').modal(options);
-        // return false;
     });
 
     $(document).on('click', "#edit-sep", function(e) {
@@ -136,10 +125,8 @@
             },
             method = 'GET',
             url = '{{ route('sep.edit') }}';
-        // $('#no-sep').empty().append('No Sep').closest('.form-group').append('<input type="text" class="form-control form-control-sm" id="noSep" name="noSep" placeholder="No SEP" readonly></input>');
-        // $('#no_kartu').remove()
         $('input#tgl_reg').val(formatDate(date));
-        $('#cetak-sep').val('Edit Sep').removeClass('btn-primary').addClass('btn-warning');
+        $('#cetak-sep').attr('id','update-sep').val('Edit Sep').removeClass('btn-primary').addClass('btn-warning');
         getStart();
         $.ajax({
             method: method,
@@ -149,17 +136,16 @@
                 no_reg: no_reg
             },
             success: function(response) {
-                console.log(response);
+               getEditSep(response);
             }
 
-        })
-
-
+        });
         $('#modal-sep').modal(options);
     });
 
     $('#modal-sep').on('hidden.bs.modal', function() {
         var $alertas = $('#form-sep');
+        $('#edit-modal-sep span').remove();
         $alertas.validate().resetForm();
         $alertas.find('.error').removeClass('error');
     });
@@ -349,7 +335,7 @@
                             ajaxLoad();
                         }
                     });
-                    $('#edit-modal').modal('hide');
+                    $('#modal-sep').modal('hide');
                 } else {
                     // e.preventDefault();
                     $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
@@ -368,10 +354,53 @@
                             .closest('.form-group')
                             .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
                 });
-             
             }
         });
     
+    });
+
+    // Update Sep
+    $(document).on('click','#update-sep', function(e) {
+        var form = $('#form-sep'),
+                method = 'PUT',
+                url = '{{ route('sep.update') }}';
+      
+        // Reset validationo error
+        form.find('.invalid-feedback').remove();
+        form.find('input').removeClass('is-invalid');  
+        
+        $.ajax({
+            method: method,
+            url: url,
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                if (response.response !== null) {
+                    $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
+                    $('#success_sep').html(response.metaData.message+" update No SEP :"+response.response).hide()
+                        .fadeIn(1500, function() { $('#success_sep'); });
+                    setTimeout(resetSuccessSep,4000);
+                    ajaxLoad();
+                    $('#modal-sep').modal('hide');
+                } else {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
+                    $('#error_sep').html(response.metaData.message+" Silahkan lengkapi").hide()
+                        .fadeIn(1500, function() { $('#error_sep'); });
+                    setTimeout(resetAll,4000);
+                }
+            },
+            error: function(xhr) {
+                var errors = xhr.responseJSON; 
+                errorsHtml = '<ul>';
+                $.each( errors.errors, function( key, value ) {
+                    $("#" + key)
+                            .addClass('is-invalid')
+                            .closest('.form-group')
+                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
+                });
+            }
+        });
     });
 
     // cari diagnosa

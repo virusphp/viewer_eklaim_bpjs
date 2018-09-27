@@ -85,6 +85,7 @@
         ajaxLoad();
     });
 
+
     $(document).on('click', "#edit-item", function(e) {
         // e.preventDefault();
         $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
@@ -375,7 +376,7 @@
             data: form.serialize(),
             dataType: 'json',
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if (response.response !== null) {
                     $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
                     $('#success_sep').html(response.metaData.message+" update No SEP :"+response.response).hide()

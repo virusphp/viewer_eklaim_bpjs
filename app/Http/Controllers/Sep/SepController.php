@@ -31,6 +31,13 @@ class SepController extends Controller
             $no = 1;
             $data = $reg->getSearch($request);
             foreach($data as $q) {
+                if (empty($q->no_sjp)) {
+                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
+                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" disabled>Edit</button>';
+                } else {
+                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'" disabled>Buat</button>
+                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>';
+                }
                 $query[] = [
                     'no' => $no++,
                     'no_reg' => $q->no_reg,
@@ -38,10 +45,7 @@ class SepController extends Controller
                     'tgl_reg' => $q->tgl_reg,
                     'jns_rawat' => $q->jns_rawat,
                     'no_sjp' => $q->no_sjp,
-                    'aksi' => '
-                            <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
-                            <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_reg.'">Edit</button>
-                            '
+                    'aksi' => $button
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];

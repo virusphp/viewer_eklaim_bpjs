@@ -3,7 +3,6 @@
 // Start Modal 
 function getStart()
 {
-    
     $('#frame_error').hide();
     $('#tgl_rujukan').val("");
     $('#ppk_rujukan').val("");
@@ -29,6 +28,11 @@ function getStart()
     $('#kecamatan option').prop('selected', function() {
         return this.defaultSelected;
     });
+
+   
+    //     if (sep.length !== null) {
+    //         $('#edit-item').attr('disabled', 'disabled');
+    //     }
 
     var form = $('#form-sep');
     // Reset validationo error

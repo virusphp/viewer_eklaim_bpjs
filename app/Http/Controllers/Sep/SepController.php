@@ -33,9 +33,9 @@ class SepController extends Controller
             foreach($data as $q) {
                 if (empty($q->no_sjp)) {
                     $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
-                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" disabled>Edit</button>';
+                               <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>';
                 } else {
-                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'" disabled>Buat</button>
+                    $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
                                <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>';
                 }
                 $query[] = [

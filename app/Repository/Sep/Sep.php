@@ -16,6 +16,7 @@ class Sep
     public function saveSep($data)
     {
         $result = $this->conn->saveSep($data);
+        if($result)
         return $result;
     }
 
@@ -27,11 +28,10 @@ class Sep
 
     public function simpanSep($data)
     {
-        // dd($data);
         $updateSep = DB::table('Registrasi')
                         ->where('no_reg', '=', $data['no_reg'])
                         ->update([
-                            'no_SJP' => $data['no_sep']
+                            'no_SJP' => $data['sep']['noSep']
                         ]);
 
         $updateRujukan = DB::table('Rujukan')
@@ -39,6 +39,20 @@ class Sep
                         ->update([
                             'no_rujukan' => $data['no_rujukan']
                         ]);
+        dd($data);
+        // $simpanSep = $this->simpanBpjs($data);
+
         return $updateSep;
+    }
+
+
+    public function simpanBpjs($data)
+    {
+        $simpanSep = DB::table('sep_bpjs')->insert([
+            'no_reg' => $data['no_reg'],
+            'no_sjp' => $data['sep']['noSep'],
+            'cob' => $data['sep']['cob'],
+            'kd_faskes' => $data['']
+        ]);
     }
 }

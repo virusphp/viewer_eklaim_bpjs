@@ -326,9 +326,9 @@
                     $.ajax({
                         type : 'POST',
                         url : '{{ route('sep.simpan') }}',
-                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, no_sep: data.response.sep.noSep},
+                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, sep: data.response.sep},
                         success : function(response) {
-                            // console.log(data); 
+                            console.log(response); 
                             $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
                             $('#success_sep').html(data.metaData.message+" No SEP :"+data.response.sep.noSep).hide()
                             .fadeIn(1500, function() { $('#success_sep'); });

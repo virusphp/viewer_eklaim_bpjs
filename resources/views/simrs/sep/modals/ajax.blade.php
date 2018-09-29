@@ -3,15 +3,16 @@
 // Start Modal 
 function getStart()
 {
+    $('#asalRujukan').prop('disabled', false);
     $('#frame_error').hide();
-    $('#tgl_rujukan').val("");
+    // $('#tgl_rujukan').attr('readonly', true);
     $('#ppk_rujukan').val("");
     $('#diagAwal').val("");
     $('#tujuan').val("");
     $('#kd_diagnosa').val("");
     $('#kd_poli').val("");
     $('#asal_rujukan').val("");
-    $('#nama_faskes').val("");
+    $('#nama_faskes').val("").attr('readonly', false);
     $('#catatan').val("");
     $('#penjamin').val('0');
     $('#c_penjamin').prop('checked', false);
@@ -63,8 +64,10 @@ function getEditItem(data)
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
     }
+    // getPRujukanppkpkAsal();
     getPeserta();
 }
+
 
 //get data edit SEP
 function getEditSep(data)
@@ -179,7 +182,13 @@ function getPeserta()
                 response = d.response.peserta;
                 $('#kelas').val(response.hakKelas.keterangan);
                 $('#aktif').val(response.statusPeserta.keterangan);
-                // console.log(response);
+
+                if ($('#jns_pelayanan').val() == 1) {
+                    $('#nama_faskes').val(response.provUmum.nmProvider);
+                    $('#ppk_rujukan').val(response.provUmum.kdProvider);
+                    $('#tgl_rujukan').attr('readonly', false);
+                }
+               // console.log(response);
             }
         }
     })
@@ -197,21 +206,12 @@ function asalRujukan()
             d = JSON.parse(data);
             response = d.response.faskses[0];
             // console.log(response);
-            $('#jns_faskes').val(response.jenis_faskes);
-            $('#nama_faskes').val(response.nama);
-            if($('#jns_faskes').val() == 1) {
-                $('#asalRujukan').val('Faskes Tingkat 1');
-            } else {
-                $('#asalRujukan').val('Faskes Tingkat 2');
-            }
+            $('#nama_faskes').val(response.nama).attr('readonly',true);
+            $('#asalRujukan option[value='+response.jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
         }
     })
 }
 
-function selectSkdp()
-{
-
-}
 
 $('#noRujukan').keydown(function(e) {
     var rujukan = $('#noRujukan').val();

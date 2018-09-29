@@ -76,6 +76,9 @@
         $('#dtgl_kejadian').datetimepicker({
             format: 'D-M-Y'
         });
+        $('#dtgl_rujukan').datetimepicker({
+            format: 'D-M-Y'
+        });
     });
 
     $(document).ready(function () {
@@ -145,10 +148,13 @@
     });
 
     $('#modal-sep').on('hidden.bs.modal', function() {
-        var $alertas = $('#form-sep');
+        var alertas = $('#form-sep'),
+            tgl_reg = '{{ date('Y-m-d') }}';
+        
         $('#edit-modal-sep span').remove();
-        $alertas.validate().resetForm();
-        $alertas.find('.error').removeClass('error');
+        $('#tgl_rujukan').val(); 
+        alertas.validate().resetForm();
+        alertas.find('.error').removeClass('error');
     });
 
     // Rujukan cari
@@ -220,7 +226,7 @@
                 } else {
                     response = d.response.rujukan;
                     if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly','true');
                         $('#ppk_rujukan').val(response.provPerujuk.kode);
                         $('#diagAwal').val(response.diagnosa.nama);
                         $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
@@ -311,6 +317,7 @@
         // Reset validationo error
         form.find('.invalid-feedback').remove();
         form.find('input').removeClass('is-invalid');
+        form.find('#asalRujukan').prop('disabled', false);
         $.ajax({
             method : method,
             url : '{{ route('sep.insert') }}',
@@ -326,7 +333,7 @@
                     $.ajax({
                         type : 'POST',
                         url : '{{ route('sep.simpan') }}',
-                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, sep: data.response.sep},
+                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, sep: data.response.sep.noSep},
                         success : function(response) {
                             console.log(response); 
                             $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
@@ -348,6 +355,7 @@
             }, 
             error : function(xhr) {
                 var errors = xhr.responseJSON; 
+                // console.log(xhr);
                 errorsHtml = '<ul>';
                 $.each( errors.errors, function( key, value ) {
                     $("#" + key)

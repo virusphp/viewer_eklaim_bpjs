@@ -15,8 +15,12 @@ class Sep
 
     public function saveSep($data)
     {
-        $result = $this->conn->saveSep($data);
-        if($result)
+        $req = json_encode($this->mapSep($data));
+        $result = $this->conn->saveSep($req);
+
+        if ($result) {
+            $this->simpanBpjs($data);
+        }
         return $result;
     }
 
@@ -31,7 +35,7 @@ class Sep
         $updateSep = DB::table('Registrasi')
                         ->where('no_reg', '=', $data['no_reg'])
                         ->update([
-                            'no_SJP' => $data['sep']['noSep']
+                            'no_SJP' => $data['sep']
                         ]);
 
         $updateRujukan = DB::table('Rujukan')
@@ -39,8 +43,6 @@ class Sep
                         ->update([
                             'no_rujukan' => $data['no_rujukan']
                         ]);
-        dd($data);
-        // $simpanSep = $this->simpanBpjs($data);
 
         return $updateSep;
     }
@@ -48,11 +50,83 @@ class Sep
 
     public function simpanBpjs($data)
     {
+        dd($data);
         $simpanSep = DB::table('sep_bpjs')->insert([
             'no_reg' => $data['no_reg'],
-            'no_sjp' => $data['sep']['noSep'],
-            'cob' => $data['sep']['cob'],
+            'cob' => $data['cob'],
             'kd_faskes' => $data['']
         ]);
+    }
+
+    public function mapSep($data)
+    {
+        $res['noKartu'] = $data['noKartu'];
+        $res['tglSep'] = $data['tglSep'];
+        $res['ppkPelayanan'] = $data['ppkPelayanan'];
+        $res['jnsPelayanan'] = $data['jnsPelayanan'];
+        $res['klsRawat'] = $data['klsRawat'];
+        $res['noMR'] = $data['noMR'];
+        $res['rujukan'] = [
+            'asalRujukan' => $data['asalRujukan'],
+            'tglRujukan' => $data['tglRujukan'],
+            'noRujukan' => $data['noRujukan'],
+            'ppkRujukan' => $data['ppkRujukan']
+        ];
+        $res['catatan'] = $data['catatan'];
+        $res['diagAwal'] = $data['diagAwal'];
+        $res['poli'] = [
+            'tujuan' => $data['tujuan'],
+            'eksekutif' => $data['eksekutif']
+        ];
+
+        $res['cob'] = [
+            'cob' => $data['cob']
+        ];
+
+        $res['katarak'] = [
+           'katarak' => $data['katarak'] 
+        ];
+
+        $lokasiLaka = [
+            'kdPropinsi' => $data['kdPropinsi'],
+            'kdKabupaten' => $data['kdKabupaten'],
+            'kdKecamatan' => $data['kdKecamatan']
+        ];
+
+         $suplesi = [
+            'suplesi' => $data['suplesi'],
+            'noSepSuplesi' => $data['noSepSuplesi'],
+            'lokasiLaka' => $lokasiLaka
+        ];
+
+        $penjamin = [
+            'penjamin' => $data['penjamin'],
+            'tglKejadian' => $data['tglKejadian'],
+            'keterangan' => $data['keterangan'],
+            'suplesi' => $suplesi
+        ];
+
+        $res['jaminan'] = [
+            'lakaLantas' => $data['lakaLantas'],
+            'penjamin' => $penjamin
+        ]; 
+        
+        $res['skdp'] = [
+            'noSurat' => $data['noSurat'],
+            'kodeDPJP' => $data['kodeDPJP']
+        ];
+
+        $res['noTelp'] = $data['noTelp'];
+        $res['user'] = $data['user'];
+
+        $result = [
+           't_sep' => $res 
+        ];
+
+        $request = [
+            'request' => $result
+        ];
+
+        return $request;
     }
 }

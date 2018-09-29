@@ -202,8 +202,7 @@ class SepController extends Controller
             $data['klsRawat'] = '3';
             $data['user'] = 'udin admin';
             // dd($data);
-            $res = json_encode($this->mapSep($data));
-            $result = $this->conn->saveSep($res);
+            $result = $this->conn->saveSep($data);
             return $result;
         }
     }
@@ -300,75 +299,4 @@ class SepController extends Controller
          return $request;
     }
 
-    public function mapSep($data)
-    {
-        $res['noKartu'] = $data['noKartu'];
-        $res['tglSep'] = $data['tglSep'];
-        $res['ppkPelayanan'] = $data['ppkPelayanan'];
-        $res['jnsPelayanan'] = $data['jnsPelayanan'];
-        $res['klsRawat'] = $data['klsRawat'];
-        $res['noMR'] = $data['noMR'];
-        $res['rujukan'] = [
-            'asalRujukan' => $data['asalRujukan'],
-            'tglRujukan' => $data['tglRujukan'],
-            'noRujukan' => $data['noRujukan'],
-            'ppkRujukan' => $data['ppkRujukan']
-        ];
-        $res['catatan'] = $data['catatan'];
-        $res['diagAwal'] = $data['diagAwal'];
-        $res['poli'] = [
-            'tujuan' => $data['tujuan'],
-            'eksekutif' => $data['eksekutif']
-        ];
-
-        $res['cob'] = [
-            'cob' => $data['cob']
-        ];
-
-        $res['katarak'] = [
-           'katarak' => $data['katarak'] 
-        ];
-
-        $lokasiLaka = [
-            'kdPropinsi' => $data['kdPropinsi'],
-            'kdKabupaten' => $data['kdKabupaten'],
-            'kdKecamatan' => $data['kdKecamatan']
-        ];
-
-         $suplesi = [
-            'suplesi' => $data['suplesi'],
-            'noSepSuplesi' => $data['noSepSuplesi'],
-            'lokasiLaka' => $lokasiLaka
-        ];
-
-        $penjamin = [
-            'penjamin' => $data['penjamin'],
-            'tglKejadian' => $data['tglKejadian'],
-            'keterangan' => $data['keterangan'],
-            'suplesi' => $suplesi
-        ];
-
-        $res['jaminan'] = [
-            'lakaLantas' => $data['lakaLantas'],
-            'penjamin' => $penjamin
-        ]; 
-        
-        $res['skdp'] = [
-            'noSurat' => $data['noSurat'],
-            'kodeDPJP' => $data['kodeDPJP']
-        ];
-
-        $res['noTelp'] = $data['noTelp'];
-        $res['user'] = $data['user'];
-
-        $result = [
-           't_sep' => $res 
-        ];
-
-        $request = [
-            'request' => $result
-        ];
-
-        return $request;
-    }
 }

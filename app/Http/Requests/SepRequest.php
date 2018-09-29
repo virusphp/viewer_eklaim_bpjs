@@ -29,7 +29,7 @@ class SepRequest extends FormRequest
             'noMR' => 'required',
             'cob' => 'required',
             'no_reg' => 'required',
-            'noRujukan' => 'required|min:17',
+            'noRujukan' => 'required|min:5',
             'ppkRujukan' => 'required',
             'asalRujukan' => 'required',
             'tglRujukan' => 'required',

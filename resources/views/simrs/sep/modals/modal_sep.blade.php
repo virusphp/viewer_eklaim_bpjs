@@ -28,6 +28,10 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group">
+                        <label for="vat">No Registrasi</label>
+                        <input class="form-control form-control-sm" id="no_reg" name="no_reg" type="text" placeholder="No Registrasi" readonly>
+                    </div>
+                    <div class="form-group">
                       <label for="company">No KTP</label>
                       <input class="form-control form-control-sm" id="no_ktp" type="text" placeholder="No KTP" readonly>
                       <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
@@ -85,8 +89,20 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="vat">No Registrasi</label>
-                                <input class="form-control form-control-sm" id="no_reg" name="no_reg" type="text" placeholder="No Registrasi" readonly>
+                                <label for="vat">Tanggal Rujukan</label>
+                                <!-- <input class="form-control form-control-sm" id="tgl_rujukan" name="tglRujukan" type="text" placeholder="No Registrasi" readonly> -->
+                                <div class="input-group date {{ $errors->has('tglRujukan') ? 'has-error' : '' }}" id="dtgl_rujukan" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>                        
+                                        <input class="form-control form-control-sm" id="tgl_rujukan" 
+                                                value="{{ date('Y-m-d')}}" 
+                                                placeholder="Tanggal Kejadian" name="tglRujukan"
+                                                type="text"
+                                                data-date-format='YYYY-MM-DD'/>
+                                    </div>
                             </div>
                         </div>
                    </div>
@@ -100,20 +116,22 @@
                                 <input class="form-control form-control-sm" id="noRujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
                             </div>
                             <input class="form-control form-control-sm" id="intern_rujukan" type="hidden" value='0'>
-                            <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="nama_faskes">Asal Rujukan</label>
-                                <input class="form-control form-control-sm" id="asalRujukan" name="jnsFaskes" type="text" placeholder="Nama faskes" readonly>
-                                <input class="form-control form-control-sm" id="jns_faskes" name="asalRujukan" type="hidden" placeholder="Nama faskes" readonly>
+                                <select id="asalRujukan" name="asalRujukan" class="form-control">
+                                        <option value="1">Faskes Tingkat 1</option> 
+                                        <option value="2">Faskes Tingkat 2</option> 
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">PPK Asal Rujukan</label>
-                                <input class="form-control form-control-sm" id="nama_faskes" type="text" placeholder="PPK Asal Rujukan" readonly>
-                                <input class="form-control form-control-sm" id="tgl_rujukan" name="tglRujukan" type="hidden"> 
+                                <input class="form-control form-control-sm" id="nama_faskes" type="text" placeholder="PPK Asal Rujukan">
+                                <!-- <input class="form-control form-control-sm" id="tgl_rujukan" name="tglRujukan" type="hidden">  -->
+                                <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >
                             </div>
                         </div>
                     </div>
@@ -217,7 +235,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </span>
                                         </div>                        
-                                    <input class="form-control" id="tgl_kejadian" 
+                                        <input class="form-control form-control-sm" id="tgl_kejadian" 
                                                 value="{{ date('d-m-Y')}}" 
                                                 placeholder="Tanggal Kejadian" name="tglKejadian"
                                                 type="text"/>
@@ -262,7 +280,7 @@
       </div>
     </form>
       <div class="modal-footer">
-        <input id="cetak-sep" type="button" class="btn btn-sm btn-primary" value="Cetak SEP">
+        <input id="cetak-sep" type="button" class="btn btn-sm btn-primary" tabindex="8" value="Cetak SEP">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

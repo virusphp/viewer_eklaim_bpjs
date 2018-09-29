@@ -54,7 +54,10 @@ class Sep
         $simpanSep = DB::table('sep_bpjs')->insert([
             'no_reg' => $data['no_reg'],
             'cob' => $data['cob'],
-            'kd_faskes' => $data['']
+            'kd_faskes' => $data['ppkRujukan'],
+            'nama_faskes' => $data['namaFaskes'],
+            'kd_diagnosa' => $data['diagAwal'],
+
         ]);
     }
 

@@ -128,9 +128,9 @@
                 'backdrop' : 'static'
             },
             method = 'GET',
-            url = '{{ route('sep.edit') }}';
+            url = '{{ route('sep.ubah') }}';
         $('input#tgl_reg').val(formatDate(date));
-        $('#cetak-sep').attr('id','update-sep').val('Edit Sep').removeClass('btn-primary').addClass('btn-warning');
+        $('#cetak-sep').attr('id','update-sep').val('Update Sep').removeClass('btn-primary').addClass('btn-warning');
         getStart();
         $.ajax({
             method: method,

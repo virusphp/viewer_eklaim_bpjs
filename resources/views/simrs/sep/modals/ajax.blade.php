@@ -7,10 +7,10 @@ function getStart()
     $('#frame_error').hide();
     // $('#tgl_rujukan').attr('readonly', true);
     $('#ppk_rujukan').val("");
-    $('#diagAwal').val("");
-    $('#tujuan').val("");
+    $('#diagAwal').val("0");
+    $('#tujuan').val("0");
     $('#kd_diagnosa').val("");
-    $('#kd_poli').val("");
+    $('#kd_poli').val("0");
     $('#asal_rujukan').val("");
     $('#nama_faskes').val("").attr('readonly', false);
     $('#catatan').val("");
@@ -22,6 +22,7 @@ function getStart()
     $('#form-katarak').hide();
     $('#noSurat').val("000000");
     $('#kd_dpjp').val("000000");
+    $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
@@ -88,10 +89,11 @@ function getEditSep(data)
         $('#nama_pelayanan').val('Rawat Jalan');
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
+        $('#kd_poli').val('000');
+        $('#tujuan').attr('readonly','true');
     }
     getPeserta();
     getDataSep();
-    getRujukan();
 }
 
 function getRujukan()
@@ -113,7 +115,7 @@ function getRujukan()
                 } else {
                     response = d.response.rujukan;
                     if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly', 'true');
                         $('#ppk_rujukan').val(response.provPerujuk.kode);
                         $('#diagAwal').val(response.diagnosa.nama);
                         $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
@@ -145,23 +147,35 @@ function getRujukan()
 function getDataSep()
 {
     var noSep = $('#noSep').val(),
-        url = '{{ route('bpjs.sep') }}',
+        noReg = $('#no_reg').val(),
+        url = '{{ route('sep.edit') }}',
         method = 'GET';
     if (noSep.length < 1) return;
     $.ajax({
         method: method,
         url: url,
         data: {
-            noSep: noSep
+            noSep: noSep, noReg: noReg
         },
         success: function(response) {
-            // console.log(response);
-            d = JSON.parse(response);
-            if (d.response !== null) {
-                response = d.response;
-                $('#catatan').val(response.catatan);
-                $('#edit-modal-sep').append('<span>'+response.noSep+'</span>');
+            console.log(response);
+            if ($('#jns_pelayanan').val() == 2) {
+                getSkdp();
             }
+            $('#tgl_rujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
+            $('#ppk_rujukan').val(response.Kd_Faskes);
+            $('#diagAwal').val(response.Nama_Diagnosa);
+            $('#kd_diagnosa').val(response.Kd_Diagnosa).attr('readonly','true');
+            $('#tujuan').val(response.Nama_Poli);
+            $('#kd_poli').val(response.Kd_Poli).attr('readonly','true');
+            $('#catatan').val(response.catatan);
+            $('#asalRujukan option[value='+response.Asal_Faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
+            $('#nama_faskes').val(response.Nama_Faskes).attr('readonly', 'true');
+            $('#noSuratLama').val(response.no_surat);
+            $('noSurat').val(response.no_surat);
+            $('#kd_dpjp').val(response.kd_dpjp).attr('readonly', 'true');
+            $('#kodeDPJP').val(response.dokter_dpjp);
+            $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
         }
     })
 }
@@ -186,7 +200,7 @@ function getPeserta()
                 if ($('#jns_pelayanan').val() == 1) {
                     $('#nama_faskes').val(response.provUmum.nmProvider);
                     $('#ppk_rujukan').val(response.provUmum.kdProvider);
-                    $('#tgl_rujukan').attr('readonly', false);
+                    // $('#tgl_rujukan').attr('readonly', false);
                 }
                // console.log(response);
             }

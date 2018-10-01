@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label for="city">Hak Kelas</label>
-                        <input class="form-control form-control-sm" id="kelas" type="text" placeholder="kelas" readonly>
+                        <input class="form-control form-control-sm" id="kelas" name="namaKelas" type="text" placeholder="kelas" readonly>
                     </div>
                     <div class="form-group">
                         <label for="aktif">Peserta</label>
@@ -149,7 +149,7 @@
                                     <input class="form-check-input" id="c_eksekutif" type="checkbox" value="0">
                                     <label class="form-check-label" for="poli">Eksekutif | Spe / SubSpesialis</label>
                                 </div>
-                                <input class="form-control form-control-sm" id="tujuan" nama="poli" type="text" tabindex="3" placeholder="Nama Poli">
+                                <input class="form-control form-control-sm" id="tujuan" name="poli" type="text" tabindex="3" placeholder="Nama Poli">
                                 <input class="form-control form-control-sm" id="kd_poli" name="tujuan" type="hidden" readonly>
                                 <input class="form-control form-control-sm" id="eksekutif" name="eksekutif" type="hidden" value="0" readonly>
                             </div>
@@ -166,12 +166,13 @@
                             <div class="form-group">
                                 <label for="no_surat">Surat Kontrol</label>
                                 <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="6">
+                                <input class="form-control form-control-sm" id="noSuratLama" type="hidden" tabindex="5">
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="kodeDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
+                                <input class="form-control form-control-sm" id="kodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
                                 <!-- <select id="kodeDPJP" name="kodeDPJP" class="form-control form-control-sm"></select> -->
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>

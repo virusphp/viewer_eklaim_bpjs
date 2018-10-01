@@ -29,7 +29,7 @@ class SepRequest extends FormRequest
             'noMR' => 'required',
             'cob' => 'required',
             'no_reg' => 'required',
-            'noRujukan' => 'required|min:5',
+            'noRujukan' => 'required',
             'ppkRujukan' => 'required',
             'asalRujukan' => 'required',
             'tglRujukan' => 'required',
@@ -57,7 +57,7 @@ class SepRequest extends FormRequest
     {
         return [
             'noRujukan.required' => 'No Rujukan tidak boleh kosong!',
-            'noRujukan.min' => 'No Rujukan kurang dari 17 digit!',
+            'noRujukan.min' => 'No Rujukan kurang dari 5 digit!',
             'asalRujukan.required' => 'Asal Rujukan Tidak boleh kosong!',
             'diagAwal.required' => 'Diagnosa Awal tidak boleh kosong!',
             'tujuan.required' => 'Poli Tujuan tidak boleh kosong!',

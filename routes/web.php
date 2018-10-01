@@ -44,8 +44,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/sep','SepController@index')->name('sep.index');
         Route::get('/sep/search','SepController@search')->name('sep.search');
         Route::get('/sep/pembuatan','SepController@buatSep')->name('sep.buat');
-        Route::get('/sep/perubahan','SepController@editSep')->name('sep.edit');
+        Route::get('/sep/perubahan','SepController@editSep')->name('sep.ubah');
         Route::post('/sep/insert','SepController@sepInsert')->name('sep.insert');
+        Route::get('/sep/edit','SepController@sepEdit')->name('sep.edit');
         Route::put('/sep/update','SepController@sepUpdate')->name('sep.update');
         Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
     });

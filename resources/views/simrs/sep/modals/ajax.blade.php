@@ -7,10 +7,10 @@ function getStart()
     $('#frame_error').hide();
     // $('#tgl_rujukan').attr('readonly', true);
     $('#ppk_rujukan').val("");
-    $('#diagAwal').val("0");
-    $('#tujuan').val("0");
+    $('#diagAwal').val("");
+    $('#tujuan').val("");
     $('#kd_diagnosa').val("");
-    $('#kd_poli').val("0");
+    $('#kd_poli').val("");
     $('#asal_rujukan').val("");
     $('#nama_faskes').val("").attr('readonly', false);
     $('#catatan').val("");
@@ -85,13 +85,6 @@ function getEditSep(data)
     $('#no_kartu').val(data.noKartu);
     $('#noSep').val(data.noSep);
     $('#tglSep').val(data.tglSep);
-    if($('#jns_pelayanan').val() == 2) {
-        $('#nama_pelayanan').val('Rawat Jalan');
-    } else {
-        $('#nama_pelayanan').val('Rawat Inap');
-        $('#kd_poli').val('000');
-        $('#tujuan').attr('readonly','true');
-    }
     getPeserta();
     getDataSep();
 }
@@ -176,7 +169,16 @@ function getDataSep()
             $('#kd_dpjp').val(response.kd_dpjp).attr('readonly', 'true');
             $('#kodeDPJP').val(response.dokter_dpjp);
             $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
+            if($('#jns_pelayanan').val() == 2) {
+                $('#nama_pelayanan').val('Rawat Jalan');
+            } else {
+                $('#nama_pelayanan').val('Rawat Inap');
+                $('#tujuan').attr('readonly','true');
+                $('#kd_poli').val("000");
+                $('#noRujukan').val(response.No_Rujukan);
+            }
         }
+
     })
 }
 

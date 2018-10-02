@@ -153,6 +153,7 @@
         
         $('#edit-modal-sep span').remove();
         $('#tgl_rujukan').val(); 
+        $('#tgl_rujukan').attr('readonly', false); 
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');
     });
@@ -377,6 +378,7 @@
         // Reset validationo error
         form.find('.invalid-feedback').remove();
         form.find('input').removeClass('is-invalid');  
+        form.find('#asalRujukan').prop('disabled', false);
         
         $.ajax({
             method: method,

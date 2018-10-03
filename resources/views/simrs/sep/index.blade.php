@@ -68,6 +68,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 @include('simrs.sep.modals.ajax')
+@include('simrs.sep.modals.insert_sep')
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -88,65 +89,6 @@
         ajaxLoad();
     });
 
-
-    $(document).on('click', "#edit-item", function(e) {
-        // e.preventDefault();
-        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-        var date = moment().format("YYYY-MM-DD"),
-            no_reg = $(this).val(),
-            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
-            options = {
-                'backdrop' : 'static'
-            },
-            method = 'GET',
-            url = '{{ route('sep.buat') }}';
-        $('input#tgl_reg').val(formatDate(date));
-        $('#update-sep').attr('id','cetak-sep').val('Buat Sep').removeClass('btn-warning').addClass('btn-primary')
-        getStart();
-        $.ajax({
-            method : method,
-            url : url,
-            data : {
-                _token : CSRF_TOKEN,
-                no_reg : no_reg
-            },
-            dataType: "json",
-            success: function(data) {
-                getEditItem(data);
-                getProvinsi();
-            }
-        });
-        $('#modal-sep').modal(options);
-    });
-
-    $(document).on('click', "#edit-sep", function(e) {
-        $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-        var date = moment().format("YYYY-MM-DD"),
-            no_reg = $(this).val(),
-            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
-            options = {
-                'backdrop' : 'static'
-            },
-            method = 'GET',
-            url = '{{ route('sep.ubah') }}';
-        $('input#tgl_reg').val(formatDate(date));
-        $('#cetak-sep').attr('id','update-sep').val('Update Sep').removeClass('btn-primary').addClass('btn-warning');
-        getStart();
-        $.ajax({
-            method: method,
-            url: url,
-            data: {
-                _token: CSRF_TOKEN,
-                no_reg: no_reg
-            },
-            success: function(response) {
-               getEditSep(response);
-            }
-
-        });
-        $('#modal-sep').modal(options);
-    });
-
     $('#modal-sep').on('hidden.bs.modal', function() {
         var alertas = $('#form-sep'),
             tgl_reg = '{{ date('Y-m-d') }}';
@@ -159,17 +101,18 @@
     });
 
     // Rujukan cari
-    $('#cari_rujukan').on('click', function() {
+    $('#cari_sko').on('click', function() {
         $(this).addClass('edit-item-trigger-clicked');
         var options = {
             'backdrop': 'static'
         };
-        var no_kartu = $('#no_kartu').val();
-        $('#tbl-rujukan').dataTable({
+        var no_kartu = $('#no_kartu').val(),
+            akhir = moment().format("YYYY-MM-DD");
+        $('#tbl-history').dataTable({
             "Processing": true,
             "ServerSide": true,
             "sDom" : "<t<p i>>",
-            "iDisplayLength": 25,
+            "iDisplayLength": 3,
             "bDestroy": true,
             "oLanguage": {
                 "sLengthMenu": "_MENU_ ",
@@ -180,42 +123,41 @@
                 "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
             },
             "ajax": {
-                "url": "{{ route('bpjs.listrujukan')}}",
+                "url": "{{ route('bpjs.history')}}",
                 "type": "GET",
                 "data": {                   
-                    'no_kartu': no_kartu
+                    no_kartu: no_kartu, akhir: akhir
                 }
             },
             "columns": [
                 {"mData": "no"},
-                {"mData": "noKunjungan"},
-                {"mData": "tglKunjungan"},
+                {"mData": "noSep"},
+                {"mData": "tglSep"},
                 {"mData": "noKartu"},
-                {"mData": "nama"},
-                {"mData": "ppkPerujuk"},
-                {"mData": "poli"}            
+                {"mData": "namaPeserta"},
+                {"mData": "ppkPerujuk"}
             ]
         
         });
-        oTable = $('#tbl-rujukan').DataTable();  
+        oTable = $('#tbl-history').DataTable();  
         $('#no_kartu').keyup(function(){
             oTable.search($(this).val()).draw() ;
             $('.table').removeAttr('style');
         }); 
         
-        $('#modal-rujukan').modal(options);
+        $('#modal-history').modal(options);
     });
 
     // Rujukan keyup
-    $(document).on('click','#h-rujukan', function() {
-        var rujukan = $('#h-rujukan').data('rujukan');
+    $(document).on('click','#h-sep', function() {
+        var sep = $('#h-sep').data('sep');
         console.log(rujukan);
-        $('#no_rujukan').val(rujukan);
+        $('#no_rujukan').val(sep);
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             type: 'get',
-            url : '{{ route('bpjs.rujukan') }}',
-            data : {rujukan: rujukan},
+            url : '',
+            data : {sep: sep},
             success: function(data){
                 d = JSON.parse(data);
                 // console.log(d);
@@ -254,7 +196,7 @@
             }
         
         });
-        $('#modal-rujukan').modal('hide');
+        $('#modal-sep').modal('hide');
         // console.log(rujukan);
     });
 
@@ -268,6 +210,7 @@
             url : '{{ route('bpjs.rujukan') }}',
             data : {rujukan: rujukan},
             success: function(data){
+                // console.log(data);
                 d = JSON.parse(data);
                 // console.log(d);
                 if (d.response === null) {
@@ -307,111 +250,6 @@
             }
            
         })
-    });
-
-    // CETAK SEP
-    $(document).on('click','#cetak-sep', function(e) {
-        // e.preventDefault();
-        var form = $('#form-sep'),
-                method = 'POST';
-
-        // Reset validationo error
-        form.find('.invalid-feedback').remove();
-        form.find('input').removeClass('is-invalid');
-        form.find('#asalRujukan').prop('disabled', false);
-        $.ajax({
-            method : method,
-            url : '{{ route('sep.insert') }}',
-            data : form.serialize(),
-            dataType: "json",
-            success :function(data) {
-                // console.log(data)
-                if (data.response !== null) {
-                    var no_reg = $('#no_reg').val(),
-                        no_rujukan = $('#noRujukan').val();
-                        console.log(no_rujukan);
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
-                    $.ajax({
-                        type : 'POST',
-                        url : '{{ route('sep.simpan') }}',
-                        data : { _token: CSRF_TOKEN, no_reg: no_reg, no_rujukan: no_rujukan, sep: data.response.sep.noSep},
-                        success : function(response) {
-                            console.log(response); 
-                            $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
-                            $('#success_sep').html(data.metaData.message+" No SEP :"+data.response.sep.noSep).hide()
-                            .fadeIn(1500, function() { $('#success_sep'); });
-                            setTimeout(resetSuccessSep,4000);
-                            ajaxLoad();
-                        }
-                    });
-                    $('#modal-sep').modal('hide');
-                } else {
-                    // e.preventDefault();
-                    $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
-                    $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
-                    .fadeIn(1500, function() { $('#error_sep'); });
-                    setTimeout(resetAll,4000);
-                }
-
-            }, 
-            error : function(xhr) {
-                var errors = xhr.responseJSON; 
-                // console.log(xhr);
-                errorsHtml = '<ul>';
-                $.each( errors.errors, function( key, value ) {
-                    $("#" + key)
-                            .addClass('is-invalid')
-                            .closest('.form-group')
-                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
-                });
-            }
-        });
-    
-    });
-
-    // Update Sep
-    $(document).on('click','#update-sep', function(e) {
-        var form = $('#form-sep'),
-                method = 'PUT',
-                url = '{{ route('sep.update') }}';
-      
-        // Reset validationo error
-        form.find('.invalid-feedback').remove();
-        form.find('input').removeClass('is-invalid');  
-        form.find('#asalRujukan').prop('disabled', false);
-        
-        $.ajax({
-            method: method,
-            url: url,
-            data: form.serialize(),
-            dataType: 'json',
-            success: function(response) {
-                // console.log(response);
-                if (response.response !== null) {
-                    $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
-                    $('#success_sep').html(response.metaData.message+" update No SEP :"+response.response).hide()
-                        .fadeIn(1500, function() { $('#success_sep'); });
-                    setTimeout(resetSuccessSep,4000);
-                    ajaxLoad();
-                    $('#modal-sep').modal('hide');
-                } else {
-                    $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
-                    $('#error_sep').html(response.metaData.message+" Silahkan lengkapi").hide()
-                        .fadeIn(1500, function() { $('#error_sep'); });
-                    setTimeout(resetAll,4000);
-                }
-            },
-            error: function(xhr) {
-                var errors = xhr.responseJSON; 
-                errorsHtml = '<ul>';
-                $.each( errors.errors, function( key, value ) {
-                    $("#" + key)
-                            .addClass('is-invalid')
-                            .closest('.form-group')
-                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
-                });
-            }
-        });
     });
 
     // cari diagnosa
@@ -471,6 +309,38 @@
                 $('#tujuan').val(ui.item.value);
                 $('#kd_poli').val(ui.item.id); 
                 katarak();
+                return false;
+            }
+        });
+    });
+
+    // cari dbjp
+    $(document).ready(function() {
+        var src = "{{ route('bpjs.faskes') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#nama_faskes').autocomplete({
+            source : function (request, response) {
+                var asalRujukan = $('#asalRujukan').val();
+                var date = new Date();
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term, asalRujukan: asalRujukan},
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kode,
+                                value : m.nama
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            },
+            minLength: 3,
+            select : function (event, ui) {
+                $('#nama_faskes').val(ui.item.value);
+                $('#ppk_rujukan').val(ui.item.id);
                 return false;
             }
         });

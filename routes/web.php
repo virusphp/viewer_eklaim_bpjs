@@ -30,8 +30,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/diagnosa','BpjsController@getDiagnosa')->name('bpjs.diagnosa');
         Route::get('/bpjs/poli','BpjsController@getPoli')->name('bpjs.poli');
         Route::get('/bpjs/dpjp','BpjsController@getDpjp')->name('bpjs.dpjp');
+        Route::get('/bpjs/faskes','BpjsController@getFaskes')->name('bpjs.faskes');
         Route::get('/rujukan/internal','RujukanController@getRujukanInternal')->name('rujukan.internal');
         Route::get('/bpjs/listrujukan','BpjsController@getListRujukan')->name('bpjs.listrujukan');
+        Route::get('/bpjs/history','BpjsController@getHistory')->name('bpjs.history');
+        Route::get('/bpjs/cekhistory','BpjsController@getcekHistory')->name('bpjs.cekhistory');
+
 
         Route::get('/bpjs/provinsi','BpjsController@getProvinsi')->name('bpjs.provinsi');
         Route::get('/bpjs/kabupaten','BpjsController@getKabupaten')->name('bpjs.kabupaten');

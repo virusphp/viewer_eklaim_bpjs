@@ -111,7 +111,8 @@
                             <div id="k-rujukan" class="form-group">
                                 <div>
                                     <label for="no_rujukan">No Rujukan</label>
-                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="Cari">
+                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="cari">
+                                    <input class="btn btn-ghost-primary btn-cus float-right" id="cari_sko" type="button" value="sko">
                                 </div>
                                 <input class="form-control form-control-sm" id="noRujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
                             </div>
@@ -120,7 +121,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="nama_faskes">Asal Rujukan</label>
-                                <select id="asalRujukan" name="asalRujukan" class="form-control">
+                                <select id="asalRujukan" name="asalRujukan" class="form-control form-control-sm">
                                         <option value="1">Faskes Tingkat 1</option> 
                                         <option value="2">Faskes Tingkat 2</option> 
                                 </select>
@@ -289,12 +290,12 @@
 </div>
 <!-- /Attachment Modal -->
 
-<!-- modal lain -->
+<!-- modal Rujukan-->
 <div class="modal" id="modal-rujukan" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
 <div class="modal-dialog modal-md modal-secondary" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="edit-modal-label">Pilih Rujukan Aktif</h5>
+        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih Rujukan Aktif</strong></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -309,6 +310,37 @@
                     <th>Nama</th>
                     <th>PPK Perujuk</th>
                     <th>Sub/Speliasis</th>
+                </tr>
+            </thead>
+            <tbody>
+                    
+            </tbody>
+        </table>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal Sep -->
+<div class="modal" id="modal-history" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
+<div class="modal-dialog modal-md modal-secondary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih Sep Sebagai Rujukan SKO/SPO</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="tbl-history" class="table table-responsive-sm table-bordered table-striped table-sm">
+            <thead>
+                 <tr>
+                    <th>No</th>
+                    <th>No Rujukan</th>
+                    <th>Tgl Rujukan</th>
+                    <th>No Kartu</th>
+                    <th>Nama</th>
+                    <th>PPK Perujuk</th>
                 </tr>
             </thead>
             <tbody>

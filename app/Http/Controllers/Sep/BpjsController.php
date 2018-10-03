@@ -127,6 +127,22 @@ class BpjsController extends Controller
       
     }
 
+    public function getFaskes(Request $req)
+    {
+        if ($req->ajax()) {
+            $kode = $req->all();
+            $faskes = $this->Faskes($kode);
+            $data = json_decode($faskes);
+            // dd($data);
+            if ($data->response != null) {
+                $faskes = $data->response->faskses;
+            } else {
+                $faskes = [];
+            }
+            return $faskes;
+        }
+    }
+    
     public function getDpjp(Request $req)
     {
         if ($req->ajax()) {
@@ -209,6 +225,67 @@ class BpjsController extends Controller
        
     }
 
+    public function getHistory(Request $req)
+    {
+        // dd($req->all());
+        if ($req->ajax()) {
+            $no = 1;
+            $rujukan = $this->monHistory($req);
+            $data = json_decode($rujukan);
+            if ($data->response == null) {
+                $query = [];
+            } else {
+                foreach($data->response->histori as $val) {
+                    $query[] = [
+                        'no' => $no++,
+                        'noSep' => '
+                            <div class="btn-group">
+                                <button data-sep="'.$val->noSep.'" id="h-sep" class="btn btn-sencodary btn-xs btn-cus">'.$val->noSep.'</button>
+                            </div> ',
+                        'tglSep' => $val->tglSep,
+                        'noKartu' => $val->noKartu,
+                        'namaPeserta' => $val->namaPeserta,
+                        'ppkPerujuk' => substr($val->ppkPelayanan, 0,10)
+                    ];
+                }
+            }
+            $result = isset($query) ? ['data' => $query] : ['data' => 0];
+            // dd($result);
+            return json_encode($result);
+        }
+    }
+
+    public function getcekHistory(Request $req)
+    {
+        // dd($req->all());
+        if ($req->ajax()) {
+            $histori = $this->monHistory($req);
+            $data = json_decode($histori, true);
+            if ($data['response'] == null) {
+                $result = [];
+            } else {
+                $result = $data['response']['histori'][0];
+            }
+            // dd($result);
+            return response()->json($result);
+        }
+    }
+
+    public function monHistory($req)
+    {
+        $tglAwal = date_format(date_sub(date_create($req->akhir), date_interval_create_from_date_string('30 days')), 'Y-m-d');
+        try {
+            $url = $this->api_url . "mon/hislayanan/nokartu/".$req->no_kartu."/"."tglawal/".$tglAwal."/"."tglakhir/".$req->akhir;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
     public function getKabupaten(Request $req)
     {
         $kd_prov = $req->kd_prov;
@@ -255,6 +332,21 @@ class BpjsController extends Controller
     {
         try { 
             $url = $this->api_url . "referensi/poli/".$kode;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        }
+    }
+
+    public function Faskes($kode)
+    {
+        try { 
+            $url = $this->api_url . "referensi/faskes/".$kode['term']."/".$kode['asalRujukan'];
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;

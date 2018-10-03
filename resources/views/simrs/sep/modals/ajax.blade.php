@@ -67,6 +67,7 @@ function getEditItem(data)
     }
     // getPRujukanppkpkAsal();
     getPeserta();
+    getHistory();
 }
 
 
@@ -153,7 +154,7 @@ function getDataSep()
         success: function(response) {
             console.log(response);
             if ($('#jns_pelayanan').val() == 2) {
-                getSkdp();
+                SetSkdp();
             }
             $('#tgl_rujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
             $('#ppk_rujukan').val(response.Kd_Faskes);
@@ -209,6 +210,33 @@ function getPeserta()
         }
     })
 } 
+
+// History pengunjung
+function getHistory()
+{
+    var no_kartu = $('#no_kartu').val(),
+        url = '{{ route('bpjs.cekhistory') }}',
+        method = 'GET',
+        akhir = moment().format("YYYY-MM-DD");
+    if (no_kartu.length < 1) return;
+    $.ajax({
+        method: method,
+        url: url,
+        data: {no_kartu:no_kartu, akhir:akhir},
+        success: function(response) {
+            console.log(response.diagnosa);
+            if (response.jnsPelayanan == 1) {
+                $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
+                $('#noRujukan').val(response.noSep).attr('readonly',true);
+                $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
+                $('#ppk_rujukan').val(response.noSep.substr(0,8)).attr('readonly',true);
+                $('#tgl_rujukan').val(response.tglSep);
+                $('#form-skdp').show();
+                $('#noSurat').val("000000");
+            }
+        }
+    })
+}
 
 // Asal Rujukan // iki PR
 function asalRujukan()

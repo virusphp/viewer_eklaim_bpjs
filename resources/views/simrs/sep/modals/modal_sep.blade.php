@@ -338,7 +338,7 @@
                     <th>No</th>
                     <th>No Rujukan</th>
                     <th>Tgl Rujukan</th>
-                    <th>No Kartu</th>
+                    <th>Jenis Rawat</th>
                     <th>Nama</th>
                     <th>PPK Perujuk</th>
                 </tr>

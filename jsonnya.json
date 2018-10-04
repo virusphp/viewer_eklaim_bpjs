@@ -1,0 +1,30 @@
+{
+    "response": {
+        "histori": [
+        {
+            "diagnosa": "A25.0 - Spirillosis",
+            "jnsPelayanan": "2",
+            "kelasRawat": "Kelas 3",
+            "namaPeserta": "SISWANTO",
+            "noKartu": "0001029613443",
+            "noSep": "1105R0011018VXXXX14",
+            "poli": "PENYAKIT DALAM",
+            "ppkPelayanan": "RSU KRATON, Pekalongan",
+            "tglPlgSep": "2018-10-03",
+            "tglSep": "2018-10-03"
+        },
+        {
+            "diagnosa": "D36.0 - Benign neoplasm of lymph nodes",
+            "jnsPelayanan": "1",
+            "kelasRawat": "Kelas 3",
+            "namaPeserta": "SISWANTO",
+            "noKartu": "0001029613443",
+            "noSep": "1105R0011018VXXXX13",
+            "poli": "",
+            "ppkPelayanan": "RSU KRATON, Pekalongan",
+            "tglPlgSep": null,
+            "tglSep": "2018-10-02"
+        }
+        ]
+    }
+}

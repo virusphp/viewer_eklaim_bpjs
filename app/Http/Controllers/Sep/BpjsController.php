@@ -71,8 +71,9 @@ class BpjsController extends Controller
 
     public function getSep(Request $req)
     {
+        // dd($req->sep);
         try { 
-            $url = $this->api_url . "sep/".$req->noSep;
+            $url = $this->api_url . "sep/".$req->sep;
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;

@@ -69,6 +69,7 @@
 
 @include('simrs.sep.modals.ajax')
 @include('simrs.sep.modals.insert_sep')
+@include('simrs.sep.modals.update_sep')
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -150,45 +151,30 @@
 
     // Rujukan keyup
     $(document).on('click','#h-sep', function() {
-        var sep = $('#h-sep').data('sep');
-        console.log(rujukan);
+        var sep = $(this).data('sep');
+        console.log(sep);
         $('#no_rujukan').val(sep);
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            url = '{{ route('bpjs.sep') }}',
+            method = 'GET';
         $.ajax({
-            type: 'get',
-            url : '',
+            method: method,
+            url: url,
             data : {sep: sep},
-            success: function(data){
-                d = JSON.parse(data);
-                // console.log(d);
-                if (d.response === null) {
-                    $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
-                    $('#error_rujukan').html('No Rujukan tidak ada').hide()
-                        .fadeIn(1500, function() { $('#error_rujukan'); });
-                        setTimeout(resetAll,3000);
-                } else {
-                    response = d.response.rujukan;
-                    if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly','true');
-                        $('#ppk_rujukan').val(response.provPerujuk.kode);
-                        $('#diagAwal').val(response.diagnosa.nama);
-                        $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
-                        $('#tujuan').val(response.poliRujukan.nama);
-                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
-                        $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
-                        $('#noRujukan').val(response.noKunjungan);
-                        asalRujukan();
-                        katarak();
-                        getSkdp();
+            success: function(response){
+                res = JSON.parse(response);
+                // console.log(res);
+                $('#form-skdp').show();
+                $('#tgl_rujukan').val(res.response.tglSep).attr('readonly','true');
+                $('#ppk_rujukan').val(res.response.noSep.substr(0,8));
+                $('#diagAwal').val(res.response.diagnosa);
+                $('#tujuan').val(res.response.poli);
+                $('#intern_rujukan').val(res.response.noSep).attr('readonly','true');
+                $('#noRujukan').val(res.response.noSep);
+                asalRujukan();
+                katarak();
+                getSkdp();
 
-                    } else {
-                        $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
-                        $('#error_rujukan').html('No Rujukan tidak cocok').hide()
-                            .fadeIn(1500, function() { $('#error_rujukan'); });
-                            setTimeout(resetAll,3000);
-                    }
-                }
-            
             }, 
             error: function() {
                 $('#frame_error').show(100);
@@ -196,7 +182,7 @@
             }
         
         });
-        $('#modal-sep').modal('hide');
+        $('#modal-history').modal('hide');
         // console.log(rujukan);
     });
 

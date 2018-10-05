@@ -32,6 +32,7 @@ class SepController extends Controller
             $data = $reg->getSearch($request);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_reg);
+                dd(empty($q->no_sjp), $q->no_sjp);
                 if (empty($q->no_sjp)) {
                     $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
                                <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>';

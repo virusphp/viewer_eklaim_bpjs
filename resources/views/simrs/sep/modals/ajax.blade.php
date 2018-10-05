@@ -204,6 +204,7 @@ function getPeserta()
                     $('#nama_faskes').val(response.provUmum.nmProvider);
                     $('#ppk_rujukan').val(response.provUmum.kdProvider);
                     // $('#tgl_rujukan').attr('readonly', false);
+                } else {
                     getHistory();
                 }
             }
@@ -224,8 +225,9 @@ function getHistory()
         url: url,
         data: {no_kartu:no_kartu, akhir:akhir},
         success: function(response) {
-            console.log(response.diagnosa);
-            if (response.jnsPelayanan == 1) {
+            // console.log(response.diagnosa);
+            // ini SKO
+            if ($('#jns_pelayanan').val() == 2 && response.jnsPelayanan == 1) {
                 $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
                 $('#noRujukan').val(response.noSep).attr('readonly',true);
                 $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
@@ -233,7 +235,8 @@ function getHistory()
                 $('#tgl_rujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
-            } else if ($('#jns_pelayanan').val() == 1 || response.jnsPelayanan == 2) {
+            // ini SPO
+            } else if ($('#jns_pelayanan').val() == 1 && response.jnsPelayanan == 2) {
                 $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
                 $('#noRujukan').val(response.noSep).attr('readonly',true);
                 $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
@@ -241,7 +244,7 @@ function getHistory()
                 $('#tgl_rujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
-            }
+            } 
         }
     })
 }

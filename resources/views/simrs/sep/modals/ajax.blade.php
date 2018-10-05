@@ -67,7 +67,7 @@ function getEditItem(data)
     }
     // getPRujukanppkpkAsal();
     getPeserta();
-    
+    getHistory();
 }
 
 
@@ -204,8 +204,6 @@ function getPeserta()
                     $('#nama_faskes').val(response.provUmum.nmProvider);
                     $('#ppk_rujukan').val(response.provUmum.kdProvider);
                     // $('#tgl_rujukan').attr('readonly', false);
-                } else {
-                    getHistory();
                 }
             }
         }

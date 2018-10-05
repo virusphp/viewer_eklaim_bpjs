@@ -32,12 +32,12 @@ class SepController extends Controller
             $data = $reg->getSearch($request);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_reg);
-                if (empty($q->no_SJP)) {
+                if (empty($q->no_sjp)) {
                     $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
                                <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>';
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
-                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_SJP.'" >Edit</button>';
+                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>';
                 }
                 $query[] = [
                     'no' => $no++,
@@ -45,7 +45,7 @@ class SepController extends Controller
                     'no_rm' => $q->no_rm,
                     'tgl_reg' => $tgl->format('Y-m-d'),
                     'jns_rawat' => $q->jns_rawat,
-                    'no_sjp' => $q->no_SJP,
+                    'no_sjp' => $q->no_sjp,
                     'aksi' => $button
                 ];
             }

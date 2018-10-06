@@ -10,6 +10,7 @@ use App\Repository\Sep\Sep;
 use App\Http\Requests\SepRequest;
 use DB;
 Use DateTime;
+use PDF;
 
 class SepController extends Controller
 {
@@ -247,7 +248,12 @@ class SepController extends Controller
 
     public function printSep(Request $req)
     {
-        
+        $invoice = DB::table('sep_bpjs')->where('no_sjp', '=', $req->noSep)->get();
+        $nama = DB::table('sep_bpjs')->select('no_sjp')->where('no_sjp', '=', $req->noSep)->first();
+        // return $invoice;
+        $nameFile = $invoice;
+        $genPdf = PDF::loadView('pdf.invoiceSep', $invoice);
+        return $genPdf->stream('No SEP'.$nama->no_sjp.'.pdf');
     }
     
 }

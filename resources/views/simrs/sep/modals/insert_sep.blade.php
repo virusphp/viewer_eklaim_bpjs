@@ -30,6 +30,27 @@ $(document).on('click', "#edit-item", function(e) {
     $('#modal-sep').modal(options);
 });
 
+$(document).on('click', "#print-sep", function(e) {
+    var noSep = $(this).val(),
+        method = "GET",
+        CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+        url = '{{ route('sep.print') }}';
+    $.ajax({
+        method: method,
+        url: url,
+        data: {
+            noSep: noSep, _token: CSRF_TOKEN
+        },
+        success: function(res) {
+            var newWindow = window.open("","newPage");
+                newWindow.document.open();
+                newWindow.document.write(res);
+                newWindow.document.close();
+            
+        }
+    });
+})
+
 // Rujukan cari
 $('#cari_rujukan').on('click', function() {
     $(this).addClass('edit-item-trigger-clicked');

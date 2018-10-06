@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/sep/edit','SepController@sepEdit')->name('sep.edit');
         Route::put('/sep/update','SepController@sepUpdate')->name('sep.update');
         Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
+        Route::post('/sep/print','SepController@printSep')->name('sep.print');
     });
 
     // // Group Route Transaksi

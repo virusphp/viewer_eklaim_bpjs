@@ -35,10 +35,12 @@ class SepController extends Controller
                 // dd(empty($q->no_sjp), $q->no_sjp == "");
                 if ($q->no_sjp <= 15) {
                     $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
-                               <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>';
+                               <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>
+                               <button type="button" class="btn btn-sm btn-primary" id="print-sep">Print</button>';
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
-                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>';
+                               <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>
+                               <button type="button" value="'.$q->no_sjp.'" class="btn btn-sm btn-primary" id="print-sep" data-print="'.$q->no_sjp.'">Print</button>';
                 }
                 $query[] = [
                     'no' => $no++,
@@ -243,5 +245,9 @@ class SepController extends Controller
         return $simpanSep;
     }
 
+    public function printSep(Request $req)
+    {
+        
+    }
     
 }

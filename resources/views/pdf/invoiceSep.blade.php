@@ -12,50 +12,54 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-left: -50px;
-            margin-right: -50px;
-            margin-top: -50px;
-            margin-bottom: -50px;
+            margin-left: -40px;
+            margin-right: -40px;
+            /* margin-top: -50px;
+            margin-bottom: -50px; */
         }       
+        /* table .table-ttd .ttd, .table-ttd {
+            border: 1px solid;
+        }    */
+        .ttd-garis{
+            border-bottom: 2px solid;
+        }
+        
         th {
             height: 15px;
             padding: 8px;
         }
         td {            
-            font-family: "Courier, monospace";
-            font-size:13px;
+            font-family: "Arial, monospace";
+            font-size:12px;
             height: 8px;
             padding: 2px;
         }
-
-        .double_underline  {
-            border-bottom: 1px black solid;
-        }
+     
         #sep-image {
-            margin-top: 1px;
+            /* margin-top: 1px; */
             width: 10%;
             vertical-align: top;
         }
         .avatar-view {
-            width: 180px;
-            height: 25px;
+            width: 250px;
+            height: 35px;
         }
         #sep-title {
             margin-top: 1px;
-            padding-left: 2.8em;
+            padding-left: 7em;
             width: 100%;
-            font-size: 15px;
+            font-size: 20px;
         }
         #sep-title-2 {
-            margin-top: -50px;
-            padding-left: 4em;
-            width: 90%;
-            font-size: 15px;
+            /* margin-top: -50px; */
+            padding-left: 7.6em;
+            width: 100%;
+            font-size: 20px;
         }
-        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan{
+        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
             width: 15%;
         }
-        #tgl-sep .nilai-tgl-sep, .nilai-no-rm, .dpjp, .g-2 {
+        #tgl-sep .nilai-tgl-sep, .nilai-no-rm, .ttd-dokter, .g-2 .ttd-garis{
             width: 30%;
         }
         #tgl-sep .nilai-tgl-lahir, .kel-pas, .g-1{
@@ -70,6 +74,11 @@
         .blanked {
             width: 35%;
         }
+        /* Set Page */
+        /* @page {
+            margin-top: 0.3em;
+            margin-left: 0.6em;
+        } */
     </style>
 </head>
 <body>
@@ -83,7 +92,7 @@
         <tr>
             <td id="sep-title-2">RSUD KRATON Pekalongan</td>
         </tr> 
-        <tr style="width:30px">
+        <tr style="width:50px">
             <td colspan="2"></td>                            
         </tr>                       
     </table>   
@@ -91,18 +100,18 @@
         <tr>
             <td>No. SEP</td>
             <td>:</td>
-            <td>12458477</td>
+            <td>{{ $data->no_SJP }}</td>
             <td>Nama Peserta</td>
             <td>:</td>
-            <td>Sugandi</td>
+            <td>{{ $data->nama_pasien }}</td>
         </tr>
         <tr id="tgl-sep">
             <td class="tgl-sep">Tanggal SEP</td>
             <td>:</td>
-            <td class="nilai-tgl-sep">6 Oktober 2018</td>
+            <td class="nilai-tgl-sep">{{ tanggal($data->tgl_sjp) }}</td>
             <td class="tgl-lahir">Tanggal Lahir</td>
             <td>:</td>
-            <td class="nilai-tgl-lahir">9 September 1999</td>
+            <td class="nilai-tgl-lahir">{{ tanggal($data->tgl_lahir) }}</td>
             <td class="jns-kel">Jns Kel</td>
             <td>:</td>
             <td class="nilai-jns-kel">L</td>
@@ -110,15 +119,15 @@
         <tr>
             <td class="no-rm">No. RM</td>
             <td class="tt-dua">:</td>
-            <td class="nilai-no-rm">123456</td>
+            <td class="nilai-no-rm">{{ $data->no_rm }}</td>
             <td rowspan="3" class="alamat-p">Alamat Pasien</td>
             <td rowspan="3" class="tt-dua">:</td>
-            <td rowspan="3" colspan="4" class="nilai-alamat-p">Krapyak Lor Nomor 33 RT 2 RW 99 Kec.Bojong Kab.Pekalongan Provinsi Jawa Tengah</td>
+            <td rowspan="3" colspan="10" class="nilai-alamat-p">{{ $data->alamat }}</td>
         </tr>
         <tr>
             <td>No. Registrasi</td>
             <td>:</td>
-            <td>01254685788</td>
+            <td>{{ $data->no_reg }}</td>
         </tr>
         <tr>
             <td>No. Kartu</td>
@@ -128,7 +137,7 @@
         <tr>
             <td>Poli Tujuan</td>
             <td>:</td>
-            <td>Hati</td>
+            <td>{{ $data->Nama_Poli }}</td>
             <td>Peserta</td>
             <td>:</td>
             <td colspan="4">PBI (APBN)</td>
@@ -136,7 +145,7 @@
         <tr>
             <td class="asal-fks">Asal Faskes Tk. I</td>
             <td class="tt-dua">:</td>
-            <td class="nama-fks">Krapyak Kidul</td>
+            <td class="nama-fks">{{ $data->Nama_Faskes }}</td>
             <td>COB</td>
             <td>:</td>
             <td colspan="4">0</td>
@@ -144,32 +153,77 @@
         <tr>
             <td>Antrian</td>
             <td>:</td>
-            <td>1</td>
+            <td>1 {{ $data->nama_sub_unit }}</td>
             <td>Jenis Rawat</td>
             <td>:</td>
-            <td colspan="4">Rawat Hati</td>
+            <td colspan="4">{{ $data->jns_rawat == 1 ? "Rawat Jalan" : "Rawat Inap"}}</td>
         </tr>
         <tr>
             <td rowspan="2" class="diagnosa">Diagnosa Awal</td>
             <td rowspan="2" class="tt-dua">:</td>
-            <td rowspan="2" class="nilai-diagnosa">LOV Cinta yang mekar seperti bunga matahari</td>
+            <td rowspan="2" class="nilai-diagnosa">{{ $data->Nama_Diagnosa }}</td>
             <td>Kls Tanggungan</td>
             <td>:</td>
-            <td colspan="4">VVIP</td>
+            <td colspan="4">{{ $data->Nama_Kelas_Rawat }}</td>
         </tr>
         <tr>
             <td>Catatan</td>
             <td>:</td>
-            <td colspan="4">Jatuh cinta berkali kali</td>
+            <td colspan="4">{{ $data->catatan }}</td>
         </tr>
         <tr>
             <td>Diagnosa Utama</td>
             <td>:</td>
-            <td>LOVE Seperti Cinta Mekar</td>
+            <td></td>
             <td>Penjamin</td>
             <td>:</td>
             <td colspan="4">BPJS</td>
         </tr>        
+    </table>
+    <table class="table table-ttd">
+        <tr>
+            <td style="height:10px" colspan="4"></td>
+        </tr>
+        <tr>
+            <td class="tindakan">Tindakan/ Operasi</td>
+            <td>:</td>
+            <td class="nilai-tindakan"></td>
+        </tr>
+        <tr>
+            <td style="height:50px" colspan="4"></td>
+        </tr>
+        <tr class="ttd">
+            <td sytle="vertical-align: top;"></td>
+            <td style="width:15%"></td>
+            <td style="width:15%"></td>
+            <td style="width:15%" class="ttd-pasien">Pasien/ <br>Keluarga Pasien</td>
+            <td style="width:15%"></td>
+            <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
+        </tr>
+        <tr>
+            <td style="height:50px" colspan="6"></td>
+        </tr>
+        <tr class="ttd-ttd">
+            <td sytle="vertical-align: top;"></td>
+            <td style="width:15%"></td>
+            <td style="width:15%"></td>
+            <td style="width:20%" class="ttd-garis"></td>
+            <td style="width:15%" class="g-gr"></td>
+            <td style="width:20%" class="ttd-garis"></td>   
+        </tr>
+        <tr>
+            <td style="height:20px" colspan="6"></td>
+        </tr>
+        <tr>
+            <td colspan="5"> 
+                <i>
+                    *Saya Menyetujui BPJS Kesehatan menggunakan Informasi Medis Pasien jika diperlukan 
+                     <br>*SEP bukan sebagai bukti penjamin peserta
+                     <br><u><span>peserta PRB</span></u>
+                </i>
+            </td>
+            <td >Dicetak Oleh : {{ $data->user }}</td>
+        </tr>
     </table>
 </body>
 </html>

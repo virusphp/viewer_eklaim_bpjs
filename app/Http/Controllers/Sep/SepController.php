@@ -41,7 +41,7 @@ class SepController extends Controller
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
                                <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>
-                               <button type="button" value="'.$q->no_sjp.'" class="btn btn-sm btn-primary" id="print-sep" data-print="'.$q->no_sjp.'">Print</button>';
+                               <a target="popup" href="#" class="btn btn-sm btn-primary" data-print="'.$q->no_sjp.'"  id="print-sep">Print</button>';
                 }
                 $query[] = [
                     'no' => $no++,
@@ -246,14 +246,45 @@ class SepController extends Controller
         return $simpanSep;
     }
 
-    public function printSep(Request $req)
+    public function printSep($noSep)
     {
-        $invoice = DB::table('sep_bpjs')->where('no_sjp', '=', $req->noSep)->get();
-        $nama = DB::table('sep_bpjs')->select('no_sjp')->where('no_sjp', '=', $req->noSep)->first();
-        // return $invoice;
-        $nameFile = $invoice;
-        $genPdf = PDF::loadView('pdf.invoiceSep', $invoice);
-        return $genPdf->stream('No SEP'.$nama->no_sjp.'.pdf');
+
+        $data = DB::table('sep_bpjs as sb')
+                ->select('sb.*', 'r.no_rm', 'r.jns_rawat', 'p.nama_pasien','p.alamat', 'p.tgl_lahir', 
+                        'kl.nama_kelurahan','kc.nama_kecamatan', 'kb.nama_kabupaten','pr.nama_propinsi',
+                        'su.nama_sub_unit')
+                ->join('registrasi as r', function($join) {
+                    $join->on('sb.no_reg', '=', 'r.no_reg');
+                })
+                ->join('rawat_jalan as rj', function($join) {
+                    $join->on('sb.no_reg', '=', 'rj.no_reg')
+                        ->join('sub_unit as su', function($join) {
+                            $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
+                        });
+                })
+                ->join('pasien as p', function($join) {
+                    $join->on('r.no_rm', '=', 'p.no_rm');
+                })
+                ->join('kelurahan as kl', function($join) {
+                    $join->on('p.kd_kelurahan', '=', 'kl.kd_kelurahan');
+                })
+                ->join('kecamatan as kc', function($join) {
+                    $join->on('kl.kd_kecamatan','=','kc.kd_kecamatan');
+                })
+                ->join('kabupaten as kb', function($join) {
+                    $join->on('kc.kd_kabupaten','=','kb.kd_kabupaten');
+                })
+                ->join('propinsi as pr', function($join) {
+                    $join->on('kb.kd_propinsi','=','pr.kd_propinsi');
+                })
+                ->where('sb.no_sjp', $noSep)->first();
+        // $peserta = $this->getPeserta($data->no_kartu)
+        $data->alamat = $data->alamat.' Kel.'.$data->nama_kelurahan.' Kec.'.$data->nama_kecamatan.' Kab.'.$data->nama_kabupaten.' Prov.'.$data->nama_propinsi;
+        unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian);
+        // $nama = DB::table('sep_bpjs')->select('no_sjp')->where('no_sjp', '=', $req->noSep)->first();
+        // dd($invoice);
+        $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $data));
+        return $genPdf->stream('No SEP'.$data->no_SJP.'.pdf');
     }
     
 }

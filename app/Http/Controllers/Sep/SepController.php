@@ -37,7 +37,7 @@ class SepController extends Controller
                 if ($q->no_sjp <= 15) {
                     $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-success" id="edit-item" data-item="'.$q->no_reg.'">Buat</button>
                                <button type="button" class="btn btn-sm btn-warning" id="edit-sep" disabled>Edit</button>
-                               <button type="button" class="btn btn-sm btn-primary" id="print-sep">Print</button>';
+                               <button type="button" class="btn btn-sm btn-primary" id="print-sep" disabled>Print</button>';
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
                                <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>

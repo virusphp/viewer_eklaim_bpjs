@@ -41,7 +41,7 @@ class SepController extends Controller
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-success" id="edit-item" disabled>Buat</button>
                                <button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-sep" data-sep="'.$q->no_sjp.'" >Edit</button>
-                               <a target="popup" href="#" class="btn btn-sm btn-primary" data-print="'.$q->no_sjp.'"  id="print-sep">Print</button>';
+                               <a target="popup" class="btn btn-sm btn-primary" data-print="'.$q->no_sjp.'"  id="print-sep">Print</button>';
                 }
                 $query[] = [
                     'no' => $no++,

@@ -30,7 +30,8 @@ $(document).on('click', "#edit-item", function(e) {
     $('#modal-sep').modal(options);
 });
 
-$(document).on('click', '#print-sep', function() {
+$(document).on('click', '#print-sep', function(e) {
+    // e.preverentDefault();
     var print = $(this),
         no_sep = print.data('print'),
         url = '/admin/sep/print/'+no_sep; 

@@ -7,9 +7,9 @@ return [
 	'margin_bottom'			=> 8,
 	// 'mirrorMargins' 		=> true,
 	'author'                => 'IT RSUD KRATON',
-	'subject'               => 'CETAK SEP',
+	'subject'               => 'SURAT ELEGIBILITAS PESERTA',
 	'keywords'              => '',
 	'creator'               => 'RSUD KRATON',
 	'display_mode'          => 'fullpage',
-	'tempDir'               => base_path('../temp/')
+	'tempDir'               => base_path('public/ttfontdata')
 ];

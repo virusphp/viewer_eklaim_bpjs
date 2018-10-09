@@ -153,7 +153,7 @@
         <tr>
             <td>Antrian</td>
             <td>:</td>
-            <td>1 {{ $data->nama_sub_unit }}</td>
+            <td>{{ $data->antrian }} {{ $data->nama_poli }}</td>
             <td>Jenis Rawat</td>
             <td>:</td>
             <td colspan="4">{{ $data->jns_rawat == 1 ? "Rawat Jalan" : "Rawat Inap"}}</td>

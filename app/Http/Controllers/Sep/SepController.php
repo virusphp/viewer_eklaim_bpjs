@@ -250,16 +250,9 @@ class SepController extends Controller
     {
         $data = DB::table('sep_bpjs as sb')
                 ->select('sb.*', 'r.no_rm', 'r.jns_rawat', 'p.nama_pasien','p.alamat', 'p.tgl_lahir', 'pp.no_kartu', 
-                        'kl.nama_kelurahan','kc.nama_kecamatan', 'kb.nama_kabupaten','pr.nama_propinsi',
-                        'su.nama_sub_unit')
+                        'kl.nama_kelurahan','kc.nama_kecamatan', 'kb.nama_kabupaten','pr.nama_propinsi')
                 ->join('registrasi as r', function($join) {
                     $join->on('sb.no_reg', '=', 'r.no_reg');
-                })
-                ->join('rawat_jalan as rj', function($join) {
-                    $join->on('sb.no_reg', '=', 'rj.no_reg')
-                        ->join('sub_unit as su', function($join) {
-                            $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
-                        });
                 })
                 ->join('pasien as p', function($join) {
                     $join->on('r.no_rm', '=', 'p.no_rm');
@@ -282,15 +275,29 @@ class SepController extends Controller
                 })
                 ->where('sb.no_sjp', $noSep)->first();
                 // dd($data);
+                
+        if (noReg($data->no_reg) == "02") {
+            $data->Nama_Poli = "-";
+            $data->nama_poli = "-";
+        } else {
+            $poli =  DB::table('rawat_jalan as rj')->select('su.nama_sub_unit as nama_klinik')
+                            ->join('sub_unit as su', function($join) {
+                                $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');  
+                            })
+                            ->where('no_reg', '=', $data->no_reg)
+                            ->first();
+            $data->nama_poli = $poli->nama_klinik;
+        }
         $peserta = $this->conn->getPeserta($data->no_kartu,formatTgl($data->tgl_sjp));
         $peserta = json_decode($peserta);
         $jnsPeserta = $peserta->response->peserta->jenisPeserta->keterangan;
-        // dd($jnsPeserta);
+        $antrian = DB::table('antrian')->where('no_reg', '=', $data->no_reg)->first();
+
+        $data->antrian = isset($antrian) ? $antrian->no_antrian : "-";
         $data->jns_peserta = $jnsPeserta;
         $data->alamat = $data->alamat.' Kel.'.$data->nama_kelurahan.' Kec.'.$data->nama_kecamatan.' Kab.'.$data->nama_kabupaten.' Prov.'.$data->nama_propinsi;
+        // dd($data);
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian);
-        // $nama = DB::table('sep_bpjs')->select('no_sjp')->where('no_sjp', '=', $req->noSep)->first();
-        // dd($invoice);
         $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $data));
         return $genPdf->stream('No SEP'.$data->no_SJP.'.pdf');
     }

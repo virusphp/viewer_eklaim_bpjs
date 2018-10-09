@@ -21,6 +21,21 @@ class Sep
         $this->api_url = config('bpjs.api.endpoint');   
     }
 
+    public function getPeserta($noKartu,$tglSep)
+    {
+        try { 
+            $url = $this->api_url . "peserta/nokartu/".$noKartu."/tglsep"."/".$tglSep;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        }
+    }
+
     public function cariSep($sep)
     {
         try {

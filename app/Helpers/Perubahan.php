@@ -35,3 +35,8 @@ function noReg($nilai)
 {
 	return substr($nilai, 0, 2);
 }
+
+function formatTgl($nilai)
+{
+	return date('Y-m-d', strtotime($nilai));
+}

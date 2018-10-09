@@ -248,9 +248,8 @@ class SepController extends Controller
 
     public function printSep($noSep)
     {
-
         $data = DB::table('sep_bpjs as sb')
-                ->select('sb.*', 'r.no_rm', 'r.jns_rawat', 'p.nama_pasien','p.alamat', 'p.tgl_lahir', 
+                ->select('sb.*', 'r.no_rm', 'r.jns_rawat', 'p.nama_pasien','p.alamat', 'p.tgl_lahir', 'pp.no_kartu', 
                         'kl.nama_kelurahan','kc.nama_kecamatan', 'kb.nama_kabupaten','pr.nama_propinsi',
                         'su.nama_sub_unit')
                 ->join('registrasi as r', function($join) {
@@ -265,6 +264,10 @@ class SepController extends Controller
                 ->join('pasien as p', function($join) {
                     $join->on('r.no_rm', '=', 'p.no_rm');
                 })
+                ->join('penjamin_pasien as pp', function($join) {
+                    $join->on('r.no_rm', '=', 'pp.no_rm')
+                        ->where('pp.aktif', '=', 1);
+                })
                 ->join('kelurahan as kl', function($join) {
                     $join->on('p.kd_kelurahan', '=', 'kl.kd_kelurahan');
                 })
@@ -278,7 +281,12 @@ class SepController extends Controller
                     $join->on('kb.kd_propinsi','=','pr.kd_propinsi');
                 })
                 ->where('sb.no_sjp', $noSep)->first();
-        // $peserta = $this->getPeserta($data->no_kartu)
+                // dd($data);
+        $peserta = $this->conn->getPeserta($data->no_kartu,formatTgl($data->tgl_sjp));
+        $peserta = json_decode($peserta);
+        $jnsPeserta = $peserta->response->peserta->jenisPeserta->keterangan;
+        // dd($jnsPeserta);
+        $data->jns_peserta = $jnsPeserta;
         $data->alamat = $data->alamat.' Kel.'.$data->nama_kelurahan.' Kec.'.$data->nama_kecamatan.' Kab.'.$data->nama_kabupaten.' Prov.'.$data->nama_propinsi;
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian);
         // $nama = DB::table('sep_bpjs')->select('no_sjp')->where('no_sjp', '=', $req->noSep)->first();

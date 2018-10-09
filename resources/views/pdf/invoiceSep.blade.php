@@ -68,7 +68,7 @@
         #tgl-sep .jns-kel, #tgl-sep .nilai-jns-kel{
             width: 10%;
         }
-        .no-rm, .nilai-no-rm, .alamat-p, .nilai-alamat-p, .tt-dua, .asal-fks, .nama-fks, .diagnosa, .nilai-diagnosa{
+        .no-rm, .nilai-no-rm, .alamat-p, .nilai-alamat-p, .tt-dua, .asal-fks, .nama-fks, .diagnosa, .nilai-diagnosa, .catatan, .n-catatan{
             vertical-align: top;
         }
         .blanked {
@@ -132,7 +132,7 @@
         <tr>
             <td>No. Kartu</td>
             <td>:</td>
-            <td>337524415458</td>
+            <td>{{ $data->no_kartu }}</td>
         </tr>
         <tr>
             <td>Poli Tujuan</td>
@@ -140,7 +140,7 @@
             <td>{{ $data->Nama_Poli }}</td>
             <td>Peserta</td>
             <td>:</td>
-            <td colspan="4">PBI (APBN)</td>
+            <td colspan="4">{{ $data->jns_peserta }}</td>
         </tr>
         <tr>
             <td class="asal-fks">Asal Faskes Tk. I</td>
@@ -166,10 +166,10 @@
             <td>:</td>
             <td colspan="4">{{ $data->Nama_Kelas_Rawat }}</td>
         </tr>
-        <tr>
-            <td>Catatan</td>
-            <td>:</td>
-            <td colspan="4">{{ $data->catatan }}</td>
+        <tr rowspan="2">
+            <td class="catatan">Catatan</td>
+            <td class="tt-dua">:</td>
+            <td class="n-catatan" colspan="4">{{ $data->catatan }}</td>
         </tr>
         <tr>
             <td>Diagnosa Utama</td>
@@ -190,7 +190,7 @@
             <td class="nilai-tindakan"></td>
         </tr>
         <tr>
-            <td style="height:50px" colspan="4"></td>
+            <td style="height:35px" colspan="4"></td>
         </tr>
         <tr class="ttd">
             <td sytle="vertical-align: top;"></td>

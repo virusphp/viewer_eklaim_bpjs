@@ -13,6 +13,12 @@ class Sep
         $this->conn = new ServiceSEP();
     }
 
+    public function getPeserta($noKartu,$tglSep)
+    {
+        $result = $this->conn->getPeserta($noKartu,$tglSep);
+        return $result;
+    }
+
     public function saveSep($data)
     {
         $req = json_encode($this->mapSep($data));

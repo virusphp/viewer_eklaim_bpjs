@@ -37,8 +37,8 @@ $(document).on('click', '#print-sep', function() {
         url = '/admin/sep/print/'+no_sep; 
         console.log(no_sep);
         printed = window.open(url, "popupWindow", "width=850, height=600");
-        printed.focus();
-        setTimeout(window.close, 0);
+        printed.print();
+        setTimeout(printed.close, 0);
 })
 // Rujukan cari
 $('#cari_rujukan').on('click', function() {

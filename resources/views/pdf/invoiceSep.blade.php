@@ -219,7 +219,7 @@
                 <i>
                     *Saya Menyetujui BPJS Kesehatan menggunakan Informasi Medis Pasien jika diperlukan 
                      <br>*SEP bukan sebagai bukti penjamin peserta
-                     <br><u><span>peserta PRB</span></u>
+                     <br><u><span>{{ $data->prb }}</span></u>
                 </i>
             </td>
             <td >Dicetak Oleh : {{ $data->user }}</td>

@@ -291,12 +291,13 @@ class SepController extends Controller
         $peserta = $this->conn->getPeserta($data->no_kartu,formatTgl($data->tgl_sjp));
         $peserta = json_decode($peserta);
         $jnsPeserta = $peserta->response->peserta->jenisPeserta->keterangan;
+        $pesertaPrb = $peserta->response->peserta->informasi->prolanisPRB;
         $antrian = DB::table('antrian')->where('no_reg', '=', $data->no_reg)->first();
 
+        $data->prb = !is_null($pesertaPrb) ? $pesertaPrb : "";
         $data->antrian = isset($antrian) ? $antrian->no_antrian : "-";
         $data->jns_peserta = $jnsPeserta;
         $data->alamat = $data->alamat.' Kel.'.$data->nama_kelurahan.' Kec.'.$data->nama_kecamatan.' Kab.'.$data->nama_kabupaten.' Prov.'.$data->nama_propinsi;
-        // dd($data);
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian);
         $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $data));
         return $genPdf->stream('No SEP'.$data->no_SJP.'.pdf');

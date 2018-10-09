@@ -34,12 +34,19 @@ $(document).on('click', '#print-sep', function() {
     // e.preverentDefault();
     var print = $(this),
         no_sep = print.data('print'),
-        url = '/admin/sep/print/'+no_sep; 
+        url = '{{ url('admin/sep/print') }}/'+no_sep; 
         console.log(no_sep);
-        printed = window.open(url, "popupWindow", "width=850, height=600");
-        printed.print();
-        setTimeout(printed.close, 0);
-})
+        var w = window.open(url, "popupWindow", "width=850, height=600");
+        setTimeout(() => {
+            w.print();
+        }, 0);
+        // setTimeout(() => {
+        //    w.document.close();
+        //    w.close(); 
+        // }, 0);
+        w.document.onfocus = function () { setTimeout(function () { w.document.close();w.close(); },w.close(), 0); }
+});
+
 // Rujukan cari
 $('#cari_rujukan').on('click', function() {
     $(this).addClass('edit-item-trigger-clicked');

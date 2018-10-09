@@ -81,7 +81,7 @@
         } */
     </style>
 </head>
-<body>
+<body id="sep-content">
     <table class="table table-borderless table-header">
         <tr>
             <td id="sep-image" rowspan="2"><img class="img-responsive avatar-view"  src="{{ asset('img/logo-bpjs.png') }}"></td>

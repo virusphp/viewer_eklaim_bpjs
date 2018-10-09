@@ -30,13 +30,13 @@ $(document).on('click', "#edit-item", function(e) {
     $('#modal-sep').modal(options);
 });
 
-$(document).on('click', '#print-sep', function(e) {
+$(document).on('click', '#print-sep', function() {
     // e.preverentDefault();
     var print = $(this),
         no_sep = print.data('print'),
         url = '/admin/sep/print/'+no_sep; 
         console.log(no_sep);
-        window.open(url, "popupWindow", "width=850, height=600, scrollbars=yes");
+        window.open(url, "popupWindow", "width=850, height=600");
 })
 // Rujukan cari
 $('#cari_rujukan').on('click', function() {

@@ -40,3 +40,19 @@ function formatTgl($nilai)
 {
 	return date('Y-m-d', strtotime($nilai));
 }
+
+function jenisRawat($nilai)
+{
+	return $nilai = 1 ? 'Rawat Jalan' : $nilai = 2 ? 'Rawat Inap' : 'Gawat Darurat';
+}
+
+function caraBayar($nilai)
+{
+	$cara_bayar = [
+		3 => 'Asuransi Lain',
+		8 => 'BPJS',
+		9 => 'Bayar Sendiri'
+	];
+
+	return $cara_bayar[$nilai];
+}

@@ -7,7 +7,7 @@
     </li>
 
     <li class="breadcrumb-item">
-      <a href="{{ route('sep.index') }}">Kwitansi</a>
+      <a href="{{ route('sep.index') }}">SEP</a>
     </li>
     <li class="breadcrumb-item active">Index</li>
 </ol>
@@ -33,6 +33,7 @@
               <th>No Reg</th>
               <th>No RM</th>
               <th>Tanggal Reg</th>
+              <th>Jenis Rawat</th>
               <th>No SJP/SEP</th>
               <th>Aksi</th>
             </tr>
@@ -390,7 +391,8 @@
                     "data": {                   
                         'jns_rawat': jnsRawat,
                         'kd_cara_bayar': caraBayar,
-                        'tgl_reg': tglReg
+                        'tgl_reg': tglReg,
+                        'search' : search
                     }
                 },
                 "columns": [
@@ -398,6 +400,7 @@
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
                     {"mData": "tgl_reg"},
+                    {"mData": "jns_rawat"},
                     {"mData": "no_sjp"},
                     {"mData": "aksi"}            
                 ]

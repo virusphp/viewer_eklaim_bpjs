@@ -36,31 +36,71 @@ class Registrasi
                     'jns_rawat','no_sjp')
             ->where(function($query) use ($request) {
                 $tgl = date('Y-m-d', strtotime($request->tgl_reg));
-                if (($request->jns_rawat == null)) {
+                if (($request->search == null) && ($request->kd_cara_bayar == null)) {
                     $query->orWhere([
+                        ['jns_rawat','=',$request->jns_rawat],
+                        ['tgl_reg','=',$tgl]
+                    ]);
+                } else if ($request->search == null) {
+                    $query->orWhere([
+                        ['jns_rawat','=',$request->jns_rawat],
                         ['kd_cara_bayar','=',$request->kd_cara_bayar],
                         ['tgl_reg','=',$tgl]
                     ]);
                 } else if ($request->kd_cara_bayar == null) {
+                    $term = $request->get('search');
+                    $keywords = '%'. $term .'%';
                     $query->orWhere([
                         ['jns_rawat','=',$request->jns_rawat],
-                        ['tgl_reg','=',$tgl]
+                        ['tgl_reg','=',$tgl],
+                        ['no_rm','LIKE',$keywords]
                     ]);
-                } else if (($request->kd_cara_bayar == null) && ($request->jns_rawat == null)) {
-                    $query->orWhere('tgl_reg','=',$tgl);
                 } else {
+                    $term = $request->get('search');
+                    $keywords = '%'. $term .'%';
                     $query->orWhere([
                         ['jns_rawat','=',$request->jns_rawat],
                         ['kd_cara_bayar','=',$request->kd_cara_bayar],
-                        ['tgl_reg','=',$tgl]
+                        ['tgl_reg','=',$tgl],
+                        ['no_rm','LIKE',$keywords]
                     ]);
                 }
             })        
-            // ->where([
-            //     ['jns_rawat','=',$request->jns_rawat],
-            //     ['kd_cara_bayar','=',$request->kd_cara_bayar],
-            //     ['tgl_reg','=',$tgl]
-            //     ])
+            ->get();
+        return $data;
+    }
+
+    public function getSearchRj($request)
+    {
+        // dd($request->all());
+        $tgl = date('Y-m-d', strtotime($request->tgl_reg));
+        $data = DB::table('Registrasi')->select('no_reg','no_rm','tgl_reg','kd_cara_bayar',
+                    'jns_rawat','no_sjp')
+            ->where(function($query) use ($request) {
+                $tgl = date('Y-m-d', strtotime($request->tgl_reg));
+                if (($request->search == null) && ($request->kd_cara_bayar == null)) {
+                    $query->orWhere([
+                        ['tgl_reg','=',$tgl]
+                    ]);
+                } else if ($request->kd_cara_bayar == null) {
+                    $term = $request->get('search');
+                    $keywords = '%'. $term . '%';
+                    $query->orWhere([
+                        ['jns_rawat','=',1],
+                        ['tgl_reg','=',$tgl],
+                        ['no_rm', 'LIKE', $keywords]
+                    ]);
+                } else {
+                    $term = $request->get('search');
+                    $keywords = '%'. $term . '%';
+                    $query->orWhere([
+                        ['jns_rawat','=',1],
+                        ['kd_cara_bayar','=',$request->kd_cara_bayar],
+                        ['tgl_reg','=',$tgl],
+                        ['no_rm', 'LIKE', $keywords]
+                    ]);
+                }
+            })        
             ->get();
         return $data;
     }

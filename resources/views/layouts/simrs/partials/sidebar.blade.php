@@ -6,6 +6,18 @@
             <i class="nav-icon icon-speedometer"></i> Dashboard
           </a>
         </li>
+        <!-- Registrasi -->
+        <li class="nav-item nav-dropdown">
+          <a class="nav-link nav-dropdown-toggle" href="#master">
+            <i class="nav-icon icon-pencil"></i> Registrasi</a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('reg.rj.index') }}">
+                <i class="nav-icon icon-puzzle"></i> Rawat Jalan</a>
+            </li>
+          </ul>
+        </li>
+        <!-- SEP -->
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">
             <i class="nav-icon icon-pencil"></i> SEP</a>

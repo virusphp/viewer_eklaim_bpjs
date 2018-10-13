@@ -21,12 +21,26 @@ class Sep
 
     public function saveSep($data)
     {
-        $req = json_encode($this->mapSep($data));
-        $result = $this->conn->saveSep($req);
-        if ($result) {
-            $this->simpanBpjs($data);
+        DB::beginTransaction();
+        try{
+            $req = json_encode($this->mapSep($data));
+            $result = $this->conn->saveSep($req);
+            if ($result) {
+                $res = json_decode($result);
+                if ($res->response != null) {
+                    $this->simpanBpjs($data);
+                } else {
+                    DB::rollback();
+                    return $result;
+                }
+                DB::commit();
+            }
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $result;
         }
-        return $result;
+       
     }
 
     public function updateSep($data)

@@ -48,7 +48,7 @@ class SepController extends Controller
                     'no_reg' => $q->no_reg,
                     'no_rm' => $q->no_rm,
                     'tgl_reg' => $tgl->format('Y-m-d'),
-                    'jns_rawat' => $q->jns_rawat,
+                    'jns_rawat' => jenisRawat($q->jns_rawat),
                     'no_sjp' => $q->no_sjp,
                     'aksi' => $button
                 ];

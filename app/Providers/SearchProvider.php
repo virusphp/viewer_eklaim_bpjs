@@ -16,6 +16,7 @@ class SearchProvider extends ServiceProvider
     {
         //
         view()->composer('layouts.search.search', SearchComposer::class);
+        view()->composer('layouts.search.rjsearch', SearchComposer::class);
     }
 
     /**

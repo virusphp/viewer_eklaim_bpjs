@@ -1,34 +1,21 @@
 <div class="col-md-12 form-inline">
     <div class="col-md-3 col-offset-3">
-        <div class="col-md-12 col-form-label form-inline">
-            <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat" value="1" name="jns_rawat" checked>
-                <label class="form-check-label" for="inline-radio1">Rawat Jalan</label>
-            </div>
-            <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat" value="2" name="jns_rawat">
-                <label class="form-check-label" for="inline-radio2">Rawat Inap</label>
-            </div>
-            <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat" value="3" name="jns_rawat">
-                <label class="form-check-label" for="inline-radio3">IGD</label>
-            </div>
-        </div>
+        <button class="btn btn-primary">Pendaftaran</button>
     </div>
     <!-- Cara Bayar -->
     <div class="col-md-3 col-offset-3">
-    <form action="">
-        <div class="controls">
-        <div class="input-group">
-            <select id="cara_bayar" name="cara_bayar" class="form-control">
-                <option value="">Pilih</option> 
-                @foreach($cara_bayar as $data)
-                    <option value="{{ $data->kd_cara_bayar }}">{{ $data->keterangan }}</option> 
-                @endforeach
-            </select>
-        </div>
-        </div>
-    </form>
+        <form action="">
+            <div class="controls">
+            <div class="input-group">
+                <select id="cara_bayar" name="cara_bayar" class="form-control">
+                    <option value="">Pilih</option> 
+                    @foreach($cara_bayar as $data)
+                        <option value="{{ $data->kd_cara_bayar }}">{{ $data->keterangan }}</option> 
+                    @endforeach
+                </select>
+            </div>
+            </div>
+        </form>
     </div>
     <div class="col-md-3 col-offset-3">
         <div class="form-group">

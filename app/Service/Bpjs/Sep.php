@@ -55,7 +55,8 @@ class Sep
         try {
             $url = $this->api_url . "sep/insert";
             $response = $this->client->post($url, ['body' => $data]);
-            return $response;
+            $result = $response->getBody();
+            return $result;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {

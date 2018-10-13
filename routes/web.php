@@ -56,11 +56,16 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/sep/print/{sep}','SepController@printSep')->name('sep.print');
     });
 
-    // // Group Route Transaksi
-    // Route::group(['namespace' => 'transaksi', 'prefix' => 'transksi'], function() {
-    //     Route::get('kwitansi', 'KwitansiController@index')->name('kwitansi');
-    //     Route::get('kwitansi/search', 'KwitansiController@search')->name('kwitansi.search');
-    //     Route::post('kwitansi', 'KwitansiController@getKwitansi')->name('kwitansi.get');
-    // });
+    // Group Route Registrasi
+    Route::group(['namespace' => 'registrasi'], function() {
+        Route::get('reg/rawatjalan', 'RegRawatJalanController@index')->name('reg.rj.index');
+        Route::get('reg/rawatjalan/search', 'RegRawatJalanController@search')->name('reg.rj.search');
+    });
+
+    // Group Route Registrasi
+    Route::group(['namespace' => 'User'], function() {
+        Route::get('user', 'UserController@index')->name('user.index');
+        Route::get('user/search', 'UserController@search')->name('user.search');
+    });
 
 });

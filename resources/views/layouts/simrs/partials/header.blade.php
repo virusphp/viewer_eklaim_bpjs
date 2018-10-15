@@ -23,7 +23,7 @@
       </ul>
       <ul class="nav navbar-nav ml-auto"> 
           <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-              <span class="semi-bold">{{Auth::user()->nama}}</span>
+              <span class="semi-bold">{{Auth::user()->nama_pegawai}}</span>
           </div>       
           <li class="nav-item dropdown">
        
@@ -36,7 +36,7 @@
                 <strong></strong>
               </div>           
               <a class="dropdown-item" href="#">
-                <i class="fa fa-user"></i> Profile
+                <i class="fa fa-user"></i> {{Auth::user()->role}}
               </a>            
               <div class="divider"></div>            
               <a class="dropdown-item" href="{{ route('logout') }}"

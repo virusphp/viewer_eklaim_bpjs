@@ -15,11 +15,12 @@ class UserSeeder extends Seeder
         //
         //
     	//reset tabel user
-    	DB::table('user_akunting')->truncate();
+    	DB::table('user_login_sep')->truncate();
 
 		$admin = App\User::create([
-            'username' => 'admin',
-            'nama' => 'Admin',
+            'kd_pegawai' => 'virusphp',
+            'nama_pegawai' => 'Slamet Sugandi',
+            'role' => 'Developer',
             'password' => bcrypt('password'),
 		]);	 
     }

@@ -45,7 +45,7 @@
     @include('layouts.simrs.partials.footer')
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('core-ui/jquery/jquery.min.js') }}"></script>
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script src="//code.jquery.com/jquery-1.12.4.js"></script> -->
     <!-- <script src="{{ asset('core-ui/js/popper.min.js') }}"></script> -->
     <script src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
     <!-- <script src="{{ asset('core-ui/js/pace.min.js') }}"></script> -->

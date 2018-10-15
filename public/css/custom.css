@@ -114,4 +114,8 @@
     margin-bottom: 0.2rem;
 }
 
+input#v-alamat, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, *:focus{
+    outline: none;
+    border: 0px solid;
+}
 

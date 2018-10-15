@@ -21,13 +21,13 @@ class AuthController extends Controller
     public function loginproses(Request $request)
     {
         $this->validate($request,$this->validate,$this->message);
-        $count = User::where('username', '=', $request->username)->count();
+        $count = User::where('kd_pegawai', '=', $request->username)->count();
         if ($count > 0) {   
-            $data = User::where('username', '=', $request->username)->first();           
-            if (Auth::attempt(['username'=>$request->username,'password'=>$request->password])) {
+            $data = User::where('kd_pegawai', '=', $request->username)->first();           
+            if (Auth::attempt(['kd_pegawai'=>$request->username,'password'=>$request->password])) {
                 $user = array(
-                    'username' => $data['username'],
-                    'name' => $data['name'],
+                    'kd_pegawai' => $data['username'],
+                    'nama_pegawai' => $data['name'],
                     'role' => $data['role'],                                    
                 );
                 Session::put('user',$user);               

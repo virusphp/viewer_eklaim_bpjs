@@ -1,6 +1,6 @@
 <div class="col-md-12 form-inline">
     <div class="col-md-3 col-offset-3">
-        <button class="btn btn-primary">Pendaftaran</button>
+        <button id="daftar-pasien" class="btn btn-primary">Pendaftaran</button>
     </div>
     <!-- Cara Bayar -->
     <div class="col-md-3 col-offset-3">

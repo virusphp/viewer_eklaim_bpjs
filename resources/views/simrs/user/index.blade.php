@@ -69,21 +69,6 @@
         ajaxLoad();
     });
 
-    $(document).on('click','#tambah_user', function() {
-        $(this).addClass('edit-item-trigger-clicked');
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
-            options = {
-                'backdrop' : 'static'
-            };
-
-        $('#modal-user').modal(options);
-    });
-
-    $('.modal').on('hidden.bs.modal', function(){
-        $(this).find('form')[0].reset();
-        $('#v-foto').attr('src', '');
-    });
-
     // simpan user akun
     $(document).on('click', '#simpan-user', function (e) {
         var form = $('#form-user'),
@@ -96,7 +81,6 @@
             data: form.serialize(),
             dataType: "json",
             success: function(response) {
-                console.log(response);
                 if (response.status == 'success') {
                     $('#frame_user_success').show().html("<span class='text-success' id='success_user'></span>");
                         $('#success_user').html(response.message).hide()

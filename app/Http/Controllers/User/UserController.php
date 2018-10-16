@@ -21,7 +21,7 @@ class UserController extends Controller
             $data = $user->getSearch($request);
             foreach($data as $q) {
                 $tgl = new DateTime($q->created_at);
-                if ($q->role == 'developer' || $q->role == 'admin') {
+                if ($q->role == 'developer' || $q->role == 'superadmin') {
                     $button = '<button type="button" class="btn btn-sm btn-danger" disabled>Hapus</button>';
                 } else {
                     $button = '<button type="button" class="btn btn-sm btn-danger" id="delete-user" data-user="'.$q->kd_pegawai.'" onclick="return deleteUser()">Hapus</button>';

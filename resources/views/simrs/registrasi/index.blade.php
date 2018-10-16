@@ -45,6 +45,8 @@
   </div>
 </div>
 
+@include('simrs.registrasi.modals.modal_register')
+
 @endsection
 @push('css')
 <!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
@@ -63,9 +65,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-@include('simrs.sep.modals.ajax')
-@include('simrs.sep.modals.insert_sep')
-@include('simrs.sep.modals.update_sep')
+@include('simrs.registrasi.modals.ajax')
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -74,9 +74,78 @@
     });
 
     $(document).ready(function () {
+        getStart();
         $('.table').removeAttr('style');
         ajaxLoad();
     });
+
+    $(document).on('click','#daftar-pasien', function() {
+        $(this).addClass('edit-item-trigger-clicked');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            options = {
+                'backdrop' : 'static'
+            };
+
+        $('#modal-register').modal(options);
+    });
+
+    // cari pasien
+    $('#no_rm').bind('keyup', function(event) {
+        if(this.value.length < 6) return;
+        var noRm = $(this).val(),
+            url = '{{ route('reg.pasien.search') }}',
+            method = 'GET';
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            method: method,
+            url : url,
+            data : { noRm: noRm},
+            success: function(res){
+                $('#v-no-rm').val(res.no_RM).attr('readonly', true);
+                $('#v-nama-pasien').val(res.nama_pasien).attr('readonly', true);
+                $('#v-alamat').val(res.alamat).attr('readonly', true);
+                $('#v-jns-kel').val(res.jns_kel).attr('readonly', true);
+                $('#v-tgl-lahir').val(res.tgl_lahir).attr('readonly', true);
+                $('#v-tmpt-lahir').val(res.tempat_lahir).attr('readonly', true);
+                $('#v-no-telp').val(res.no_telp).attr('readonly', true);
+                $('#no_rm').attr('readonly', true);
+                getPoli();
+            } 
+        })
+    });
+
+    $(document).on('change', '#poli', function() {
+        var kdPoli = $(this).val(),
+            method = 'GET',
+            url = '{{ route('simrs.poli.harga') }}',
+            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            method: method,
+            url : url,
+            data : {kdPoli: kdPoli},
+            success: function(res) {
+                // console.log(res);
+                d = JSON.parse(res);
+                $('#tarif').val(d.hasil.harga).attr('readonly', true);
+            } 
+        });
+    });
+
+    function getPoli() {
+        var noRm = $('#v-no-rm').val(),
+            token = $('meta[name="csrf-token"]').attr('content'),
+            url = '{{ route('simrs.poli') }}',
+            method = 'GET';
+            if(noRm.length < 6) return;
+        $.ajax({
+            method: method,
+            url: url,
+            data : {_token: token},
+            success: function(res) {
+                $('#poli').html(res);
+            }
+        })
+    }
 
     function ajaxLoad(){
             var caraBayar = $("#cara_bayar").val();

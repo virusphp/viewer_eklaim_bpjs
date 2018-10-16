@@ -28,7 +28,8 @@
             </li>
           </ul>
         </li>
-        @if( Auth::user()->role == 'developer')
+        <?php $user = Auth::user()->role; ?>
+        @if( $user == 'developer' || $user == 'superadmin')
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">
             <i class="nav-icon icon-pencil"></i> Manajement User</a>

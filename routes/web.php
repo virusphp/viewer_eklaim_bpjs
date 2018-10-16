@@ -60,15 +60,21 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     Route::group(['namespace' => 'registrasi'], function() {
         Route::get('reg/rawatjalan', 'RegRawatJalanController@index')->name('reg.rj.index');
         Route::get('reg/rawatjalan/search', 'RegRawatJalanController@search')->name('reg.rj.search');
+        Route::get('reg/pasien/search', 'RegRawatJalanController@searchPasien')->name('reg.pasien.search');
     });
 
     // Group Route Registrasi
-    Route::group(['namespace' => 'User'], function() {
+    Route::group(['namespace' => 'user'], function() {
         Route::get('user', 'UserController@index')->name('user.index');
         Route::get('user/search', 'UserController@search')->name('user.search');
         Route::get('user/pegawai','UserController@pegawai')->name('user.pegawai');
         Route::post('user/simpan','UserController@simpanUser')->name('user.simpan');
         Route::delete('user/delete','UserController@deleteUser')->name('user.delete');
+    });
+
+    Route::group(['namespace' => 'master'], function() {
+        Route::get('simrs/poli', 'PoliController@getPoli')->name('simrs.poli');
+        Route::get('simrs/poli/harga', 'PoliController@getHarga')->name('simrs.poli.harga');
     });
 
 });

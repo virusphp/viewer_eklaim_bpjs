@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Registrasi;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repository\Sep\Registrasi;
+use App\Repository\Registrasi\Registrasi;
+use App\Service\Pasien\Pasien;
 Use DateTime;
 
 class RegRawatJalanController extends Controller
@@ -33,6 +34,17 @@ class RegRawatJalanController extends Controller
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             return json_encode($result);
+        }
+    }
+
+    public function searchPasien(Request $req, Pasien $ps)
+    {
+        if ($req->ajax()) {
+            $pasien = $ps->getPasien($req);
+            if ($pasien) {
+                $res = json_decode($pasien)[0];
+            }
+            return response()->json($res);
         }
     }
 }

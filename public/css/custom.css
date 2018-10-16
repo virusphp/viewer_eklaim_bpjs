@@ -114,8 +114,12 @@
     margin-bottom: 0.2rem;
 }
 
-input#v-alamat, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, *:focus{
+input#v-alamat, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, #v-no-rm, #v-nama-pasien,
+#v-no-telp, #v-jns-kel, *:focus{
     outline: none;
     border: 0px solid;
 }
 
+input#v-alamat {
+    width: 300px;
+}

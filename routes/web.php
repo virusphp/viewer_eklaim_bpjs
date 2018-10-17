@@ -11,9 +11,7 @@
 |
 */
 // URL AWAL
-Route::get('/', function () {
-    return redirect('/admin/home');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('auth','AuthController@showLoginForm')->name('login');
 Route::post('auth','AuthController@loginproses')->name('login.post');

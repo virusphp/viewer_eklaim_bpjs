@@ -32,8 +32,10 @@
               <th>No</th>
               <th>No Reg</th>
               <th>No RM</th>
+              <th>Nama Pasien</th>
               <th>Tanggal Reg</th>
               <th>Jenis Rawat</th>
+              <th>Jenis Pasien</th>
               <th>No SJP/SEP</th>
               <th>Aksi</th>
             </tr>
@@ -399,8 +401,10 @@
                     {"mData": "no"},
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
+                    {"mData": "nama_pasien"},
                     {"mData": "tgl_reg"},
                     {"mData": "jns_rawat"},
+                    {"mData": "kd_cara_bayar"},
                     {"mData": "no_sjp"},
                     {"mData": "aksi"}            
                 ]

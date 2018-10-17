@@ -51,7 +51,7 @@ function caraBayar($nilai)
 	$cara_bayar = [
 		3 => 'Asuransi Lain',
 		8 => 'BPJS',
-		9 => 'Bayar Sendiri'
+		9 => 'UMUM'
 	];
 
 	return $cara_bayar[$nilai];

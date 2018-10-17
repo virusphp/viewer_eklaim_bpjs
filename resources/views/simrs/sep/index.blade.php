@@ -34,8 +34,8 @@
               <th>No RM</th>
               <th>Nama Pasien</th>
               <th>Tanggal Reg</th>
-              <th>Jenis Rawat</th>
-              <th>Jenis Pasien</th>
+              <th>Jns Rawat</th>
+              <th>Jns Pasien</th>
               <th>No SJP/SEP</th>
               <th>Aksi</th>
             </tr>

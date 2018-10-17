@@ -80,7 +80,7 @@
                                     <tr>
                                         <th>Alamat</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-alamat"></td>
+                                        <td><input type="text" id="v-alamat-reg"></td>
                                     </tr> 
                                     <tr>
                                         <th>Kelamin</th>

@@ -30,4 +30,13 @@ class PoliController extends Controller
             return $data;
         }
     }
+
+    public function getDokter(Request $req, Poli $poli)
+    {
+        if ($req->ajax()) {
+            $request = $req->kdPoli;
+            $data = $poli->getDokter($request);
+            return $data;
+        }
+    }
 }

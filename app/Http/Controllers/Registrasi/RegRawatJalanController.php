@@ -47,4 +47,12 @@ class RegRawatJalanController extends Controller
             return response()->json($res);
         }
     }
+
+    public function getKartu(Request $req, Pasien $ps)
+    {
+        if ($req->ajax()) {
+            $pasien = $ps->getKartu($req);
+            return $pasien;
+        }
+    }
 }

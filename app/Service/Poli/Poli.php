@@ -47,4 +47,20 @@ class Poli
             }
         } 
     }
+
+    public function getDokter($kdPoli)
+    {
+        $tgl_reg = date('Y-m-d');
+        try {
+            $url = $this->api_url . "getdokterpengganti/". $kdPoli ."/". $tgl_reg;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
 }

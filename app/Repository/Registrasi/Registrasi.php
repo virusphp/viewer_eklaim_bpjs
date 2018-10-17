@@ -74,7 +74,8 @@ class Registrasi
     {
         // dd($request->all());
         $tgl = date('Y-m-d', strtotime($request->tgl_reg));
-        $data = DB::table('Registrasi')->select('no_reg','no_rm','tgl_reg','kd_cara_bayar',
+        $data = DB::table('Registrasi')
+            ->select('no_reg','no_rm','tgl_reg','kd_cara_bayar',
                     'jns_rawat','no_sjp')
             ->where(function($query) use ($request) {
                 $tgl = date('Y-m-d', strtotime($request->tgl_reg));

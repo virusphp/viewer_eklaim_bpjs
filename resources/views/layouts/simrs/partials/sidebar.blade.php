@@ -6,7 +6,9 @@
             <i class="nav-icon icon-speedometer"></i> Dashboard
           </a>
         </li>
+        <?php $user = Auth::user()->role; ?>
         <!-- Registrasi -->
+        @if( $user == 'developer')
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">
             <i class="nav-icon icon-pencil"></i> Registrasi</a>
@@ -17,6 +19,7 @@
             </li>
           </ul>
         </li>
+        @endif
         <!-- SEP -->
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">
@@ -28,7 +31,6 @@
             </li>
           </ul>
         </li>
-        <?php $user = Auth::user()->role; ?>
         @if( $user == 'developer' || $user == 'superadmin')
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">

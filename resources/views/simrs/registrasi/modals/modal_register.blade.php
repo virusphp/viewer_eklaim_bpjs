@@ -102,6 +102,11 @@
                                         <td>:</td>
                                         <td><input type="text" id="v-no-telp"></td>
                                     </tr> 
+                                    <tr>
+                                        <th>No BPJS</th>
+                                        <td>:</td>
+                                        <td><input type="text" id="v-no-kartu"></td>
+                                    </tr> 
                                 </table>
                             </div>
                         </div>

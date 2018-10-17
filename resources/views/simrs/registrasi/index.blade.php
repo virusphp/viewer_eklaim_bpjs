@@ -110,9 +110,25 @@
                 $('#v-no-telp').val(res.no_telp).attr('readonly', true);
                 $('#no_rm').attr('readonly', true);
                 getPoli();
+                getNoKartu();
             } 
         })
     });
+
+    function getNoKartu()
+    {
+        var noRm = $('#v-no-rm').val(),
+            url = '{{ route('reg.pasien.kartu') }}',
+            method = 'GET';
+        $.ajax({
+            method: method,
+            url: url,
+            data: { noRm: noRm },
+            success: function(res) {
+                $('#v-no-kartu').val(res.no_kartu).attr('readonly',true);
+            }
+        })
+    }
 
     $(document).on('change', '#poli', function() {
         var kdPoli = $(this).val(),
@@ -127,9 +143,26 @@
                 // console.log(res);
                 d = JSON.parse(res);
                 $('#tarif').val(d.hasil.harga).attr('readonly', true);
+                getDokter();
             } 
         });
     });
+
+    function getDokter() {
+        var kdPoli = $('#poli').val(),
+            url = '{{ route('simrs.poli.dokter') }}',
+            method = 'GET',
+            CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            method: method,
+            url: url,
+            data: { kdPoli: kdPoli },
+            success: function(res) {
+                console.log(res);
+            }
+        })
+            
+    }
 
     function getPoli() {
         var noRm = $('#v-no-rm').val(),

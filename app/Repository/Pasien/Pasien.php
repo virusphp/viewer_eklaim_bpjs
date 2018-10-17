@@ -24,6 +24,14 @@ class Pasien
         return $data;
     }
 
+    public function getKartu($req)
+    {
+        $data = DB::table('penjamin_pasien')
+                  ->select('no_rm','no_kartu')
+                  ->where('no_rm', $req->noRm)->first();
+        return $data;
+    }
+
     public function simpanUser($data)
     {
         $result = DB::table('user_login_sep')->insert([

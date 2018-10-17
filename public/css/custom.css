@@ -115,7 +115,7 @@
 }
 
 input#v-alamat, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, #v-no-rm, #v-nama-pasien,
-#v-no-telp, #v-jns-kel, *:focus{
+#v-no-telp, #v-jns-kel, #v-no-kartu, *:focus{
     outline: none;
     border: 0px solid;
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\sep;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repository\Sep\Registrasi;
-// use App\Service\Bpjs\Sep;
 use App\Repository\Sep\Sep;
 use App\Http\Requests\SepRequest;
 use DB;

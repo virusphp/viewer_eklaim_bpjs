@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 
     // Group Route Registrasi
     Route::group(['namespace' => 'User'], function() {
+        Route::get('user/pegawai/foto', 'UserController@getFoto')->name('user.foto');
         Route::get('user', 'UserController@index')->name('user.index');
         Route::get('user/search', 'UserController@search')->name('user.search');
         Route::get('user/pegawai','UserController@pegawai')->name('user.pegawai');

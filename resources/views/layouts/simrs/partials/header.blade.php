@@ -12,10 +12,7 @@
       </button>
       <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Users</a>
+          <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
         </li>
         <li class="nav-item px-3">
           <a class="nav-link" href="#">Settings</a>
@@ -28,7 +25,7 @@
           <li class="nav-item dropdown">
        
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <img class="img-avatar" src="{{asset('core-ui/img/avatars/6.jpg')}}" alt="admin@bootstrapmaster.com">
+              <img id="v-avatar" class="img-avatar" src="{{asset('core-ui/img/avatars/6.jpg')}}" alt="">
             </a>
             
             <div class="dropdown-menu dropdown-menu-right">

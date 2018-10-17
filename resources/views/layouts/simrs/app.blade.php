@@ -58,5 +58,24 @@
     <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
     @stack('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+          var kd = '{{ Auth::user()->kd_pegawai }}',
+              url = '{{ route('user.foto') }}',
+              method = 'GET';
+          $.ajax({
+            method: method,
+            url: url,
+            data: { kd: kd },
+            success: function(res) {
+              if (res.foto == '↵') {
+                $('#v-avatar').attr('src', '{{asset('core-ui/img/avatars/6.jpg')}}');
+              } else {
+                $('#v-avatar').attr('src', 'data:image/jpeg;base64,'+res.foto);
+              }
+            }
+          })
+        })
+    </script>
   </body>
 </html>

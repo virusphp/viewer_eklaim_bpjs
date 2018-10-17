@@ -55,6 +55,16 @@ class UserController extends Controller
         }
     }
 
+    public function getFoto(Request $req, User $user)
+    {
+        if ($req->ajax()) {
+            $pegawai = $user->getFoto($req);
+            $pegawai->foto = chunk_split(base64_encode($pegawai->foto));
+            header("Content-type: image/jpeg");
+            return response()->json($pegawai);
+        }
+    }
+
     public function simpanUser(Request $req, User $user)
     {
         // dd($req->all());

@@ -35,6 +35,13 @@ class User
         return $data;
     }
 
+    public function getFoto($req)
+    {
+        // dd($req->kd);
+        $data = DB::table('pegawai')->select('foto')->where('kd_pegawai', '=', $req->kd)->first();
+        return $data;
+    }
+
     public function simpanUser($data)
     {
         $result = DB::table('user_login_sep')->insert([

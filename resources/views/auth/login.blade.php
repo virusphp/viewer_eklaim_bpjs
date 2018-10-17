@@ -30,10 +30,10 @@
                   <div class="form-group">
                      <button class="btn btn-lg btn-primary btn-block" type="submit">Masuk</button>
                      <br>
-                     <label class="pull-left">
+                     <!-- <label class="pull-left">
                         <input type="checkbox" name="remember" value="remember-me" {{ old('remember') ? 'checked' : '' }}>
                         Remember Me
-                     </label>
+                     </label> -->
                   </div>
                </form>
             </div>

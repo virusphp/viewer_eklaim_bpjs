@@ -103,7 +103,7 @@
             success: function(res){
                 $('#v-no-rm').val(res.no_RM).attr('readonly', true);
                 $('#v-nama-pasien').val(res.nama_pasien).attr('readonly', true);
-                $('#v-alamat').val(res.alamat).attr('readonly', true);
+                $('#v-alamat-reg').val(res.alamat).attr('readonly', true);
                 $('#v-jns-kel').val(res.jns_kel).attr('readonly', true);
                 $('#v-tgl-lahir').val(res.tgl_lahir).attr('readonly', true);
                 $('#v-tmpt-lahir').val(res.tempat_lahir).attr('readonly', true);

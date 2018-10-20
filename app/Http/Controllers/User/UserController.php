@@ -46,9 +46,11 @@ class UserController extends Controller
         if ($req->ajax()) {
             $request = $req->get('term');
             $pegawai = $user->getPegawai($request);
-            // $data = json_decode($pegawai);
             // dd($pegawai);
-            $pegawai[0]->foto = chunk_split(base64_encode($pegawai[0]->foto));
+            file_put_contents(public_path("images/user")."\\".($filename = $pegawai[0]->kd_pegawai.".jpg"), $pegawai[0]->foto);
+            // dd($filename);
+            // $pegawai[0]->foto = chunk_split(base64_encode($pegawai[0]->foto));
+            $pegawai[0]->foto = $filename;
             $pegawai[0]->tgl_lahir = tanggal($pegawai[0]->tgl_lahir);
             header("Content-type: image/jpeg");
             return $pegawai;

@@ -335,37 +335,44 @@
         });
     });
 
-    // cari dbjp
-    $(document).ready(function() {
-        var src = "{{ route('bpjs.dpjp') }}";
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('#kodeDPJP').autocomplete({
-            source : function (request, response) {
-                var jnsPel = $('#jns_pelayanan').val();
-                var date = new Date();
-                $.ajax({
-                    url : src,
-                    dataType : "json",
-                    data : { term: request.term, jnsPel: jnsPel},
-                    success: function(data) {
-                        var array = data.error ? [] : $.map(data, function(m) {
-                            return {
-                                id : m.kode,
-                                value : m.nama
-                            };
-                        });
-                        response(array);
-                    }
-                });
-            },
-            minLength: 3,
-            select : function (event, ui) {
-                $('#kodeDPJP').val(ui.item.value);
-                $('#kd_dpjp').val(ui.item.id);
-                return false;
-            }
-        });
-    });
+    
+
+    // // cari dbjp
+    $('#kodeDPJP').on('change',function() {
+        var kdDPJP = $(this).val();
+        $('#kd_dpjp').val(kdDPJP);         
+    })
+
+    // $(document).ready(function() {
+    //     var src = "{{ route('bpjs.dpjp') }}";
+    //     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    //     $('#kodeDPJP').autocomplete({
+    //         source : function (request, response) {
+    //             var jnsPel = $('#jns_pelayanan').val();
+    //             var date = new Date();
+    //             $.ajax({
+    //                 url : src,
+    //                 dataType : "json",
+    //                 data : { term: request.term, jnsPel: jnsPel},
+    //                 success: function(data) {
+    //                     var array = data.error ? [] : $.map(data, function(m) {
+    //                         return {
+    //                             id : m.kode,
+    //                             value : m.nama
+    //                         };
+    //                     });
+    //                     response(array);
+    //                 }
+    //             });
+    //         },
+    //         minLength: 3,
+    //         select : function (event, ui) {
+    //             $('#kodeDPJP').val(ui.item.value);
+    //             $('#kd_dpjp').val(ui.item.id);
+    //             return false;
+    //         }
+    //     });
+    // });
 
     function ajaxLoad(){
             var jnsRawat = $("#jns_rawat:checked").val();

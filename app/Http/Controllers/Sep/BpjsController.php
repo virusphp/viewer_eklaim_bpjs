@@ -159,6 +159,27 @@ class BpjsController extends Controller
         }
     }
 
+    public function getListDpjp(Request $req)
+    {
+        if ($req->ajax()) {
+            $kode = $req->all();
+            $dpjp = $this->Dpjp($kode);
+            $data = json_decode($dpjp);
+            if ($data->response != null) {
+                $dpjp = $data->response->list;
+                // dd($dpjp);
+                $dokter="<option value='00000'>--Silahkan Pilih Dokter/Kota--</pilih>";
+                foreach($dpjp as $d)
+                {
+                    $dokter.= "<option value='$d->kode'>$d->nama</option>";
+                }
+            } else {
+                $dokter = [];
+            }
+            return $dokter;
+        }
+    }
+
     public function getPoli(Request $req)
     {
         if ($req->ajax()) {

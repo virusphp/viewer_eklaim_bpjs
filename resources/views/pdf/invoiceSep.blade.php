@@ -100,7 +100,7 @@
         <tr>
             <td>No. SEP</td>
             <td>:</td>
-            <td>{{ $data->no_SJP }}</td>
+            <td>{{ $data->no_sjp }}</td>
             <td>Nama Peserta</td>
             <td>:</td>
             <td>{{ $data->nama_pasien }}</td>
@@ -108,7 +108,7 @@
         <tr id="tgl-sep">
             <td class="tgl-sep">Tanggal SEP</td>
             <td>:</td>
-            <td class="nilai-tgl-sep">{{ tanggal($data->tgl_sjp) }}</td>
+            <td class="nilai-tgl-sep">{{ tanggal($data->tgl_reg) }}</td>
             <td class="tgl-lahir">Tanggal Lahir</td>
             <td>:</td>
             <td class="nilai-tgl-lahir">{{ tanggal($data->tgl_lahir) }}</td>
@@ -137,7 +137,7 @@
         <tr>
             <td>Poli Tujuan</td>
             <td>:</td>
-            <td>{{ $data->Nama_Poli }}</td>
+            <td>{{ $data->nama_poli }}</td>
             <td>Peserta</td>
             <td>:</td>
             <td colspan="4">{{ $data->jns_peserta }}</td>
@@ -145,7 +145,7 @@
         <tr>
             <td class="asal-fks">Asal Faskes Tk. I</td>
             <td class="tt-dua">:</td>
-            <td class="nama-fks">{{ $data->Nama_Faskes }}</td>
+            <td class="nama-fks">{{ $data->nama_faskes }}</td>
             <td>COB</td>
             <td>:</td>
             <td colspan="4">0</td>
@@ -161,10 +161,10 @@
         <tr>
             <td rowspan="2" class="diagnosa">Diagnosa Awal</td>
             <td rowspan="2" class="tt-dua">:</td>
-            <td rowspan="2" class="nilai-diagnosa">{{ $data->Nama_Diagnosa }}</td>
+            <td rowspan="2" class="nilai-diagnosa">{{ $data->nama_diagnosa }}</td>
             <td>Kls Tanggungan</td>
             <td>:</td>
-            <td colspan="4">{{ $data->Nama_Kelas_Rawat }}</td>
+            <td colspan="4">{{ $data->nama_kelas_rawat }}</td>
         </tr>
         <tr rowspan="2">
             <td class="catatan">Catatan</td>
@@ -222,7 +222,7 @@
                      <br><u><span>{{ $data->prb }}</span></u>
                 </i>
             </td>
-            <td >Dicetak Oleh : {{ $data->user }}</td>
+            <td >Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
         </tr>
     </table>
 </body>

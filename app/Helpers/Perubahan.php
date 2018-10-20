@@ -43,7 +43,7 @@ function formatTgl($nilai)
 
 function jenisRawat($nilai)
 {
-	return $nilai = 1 ? 'Rawat Jalan' : $nilai = 2 ? 'Rawat Inap' : 'Gawat Darurat';
+	return $nilai = 1 ? 'R Jalan' : $nilai = 2 ? 'R Inap' : 'IGD';
 }
 
 function caraBayar($nilai)
@@ -51,7 +51,8 @@ function caraBayar($nilai)
 	$cara_bayar = [
 		3 => 'Asuransi Lain',
 		8 => 'BPJS',
-		9 => 'UMUM'
+		9 => 'UMUM',
+		1 => 'UMUM'
 	];
 
 	return $cara_bayar[$nilai];

@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="nama_pegawai">Nama pegawai</label>
-                            <input class="form-control form-control-sm" id="nama_pegawai" name="nama_pegawai" type="text" placeholder="Nama Pegawai">
+                            <input class="form-control form-control-sm" id="nama_pegawai" name="nama_pegawai" type="text" placeholder="Nama Pegawai" autofocus>
                             <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                         </div>
                         <div class="form-group">

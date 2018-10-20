@@ -17,7 +17,6 @@
         <!-- <div id="frame_error" class="alert alert-danger">
           
         </div> -->
-      
         <div class="row">
             <!-- Akun Pegawai -->
             <div class="col-sm-4">
@@ -29,7 +28,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="no_rm">No Rekam Medis</label>
-                            <input class="form-control form-control-sm" id="no_rm" name="no_rm" type="text" placeholder="No Reka Medis">
+                            <input class="form-control form-control-sm" tabindex="1" id="no_rm" name="no_rm" type="text" placeholder="No Reka Medis" autofocus>
                             <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                         </div>
                         <div class="form-group">
@@ -47,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label for="jnsPasien">Jenis Pasien</label>
-                            <select id="jnsPasien" name="jnsPasien" class="form-control form-control-sm">
+                            <select id="jnsPasien" name="jnsPasien" tabindex="2" class="form-control form-control-sm">
                                     <option value="">-- Pilih Pembayaran --</option> 
                                     <option value="jan">jan</option> 
                                     <option value="mata">mata</option> 
@@ -118,7 +117,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <input id="simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="8" value="Simpan">
+        <input id="simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="3" value="Simpan">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

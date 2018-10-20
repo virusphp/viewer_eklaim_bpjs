@@ -472,6 +472,7 @@ function getSkdp()
                 if (data.length > 0) {
                     $('#form-skdp').show();
                     $('#noSurat').val("000000");
+                    $('#kodeDPJP').attr('disabled', true); 
                 }
             }
         })

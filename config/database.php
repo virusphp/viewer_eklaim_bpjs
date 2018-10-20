@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlsrv_akun'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,13 +78,13 @@ return [
             'prefix' => '',
         ],
 
-        'sqlsrv_akun' => [
+        'sqlsrv_ok' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST2', 'localhost'),
-            'port' => env('DB_PORT2', '1433'),
-            'database' => env('DB_DATABASE2', 'forge'),
-            'username' => env('DB_USERNAME2', 'forge'),
-            'password' => env('DB_PASSWORD2', ''),
+            // 'host' => '192.168.0.205\SQL2008',
+            // 'port' => '1433',
+            'database' => 'DBSIMRS',
+            'username' => 'sa',
+            'password' => 'RSUDserver2014',
             'charset' => 'utf8',
             'prefix' => '',
         ],

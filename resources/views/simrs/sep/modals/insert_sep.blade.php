@@ -33,18 +33,19 @@ $(document).on('click', "#edit-item", function(e) {
 $(document).on('click', '#print-sep', function() {
     // e.preverentDefault();
     var print = $(this),
-        no_sep = print.data('print'),
-        url = '{{ url('admin/sep/print') }}/'+no_sep; 
-        console.log(no_sep);
-        var w = window.open(url, "popupWindow", "width=850, height=600");
-        setTimeout(() => {
-            w.print();
-        }, 0);
+        no_reg = print.data('print'),
+        url = '{{ url('admin/sep/print') }}/'+no_reg; 
+        console.log(no_reg);
+        var w = window.open(url, "_blank", "width=850, height=600");
+        // var w = window.open(url, "popupWindow", "width=850, height=600");
+        // setTimeout(() => {
+        //     w.print();
+        // }, 0);
         // setTimeout(() => {
         //    w.document.close();
         //    w.close(); 
         // }, 0);
-        w.document.onfocus = function () { setTimeout(function () { w.document.close();w.close(); },w.close(), 0); }
+        // w.document.onfocus = function () { setTimeout(function () { w.document.close();w.close(); },w.close(), 0); }
 });
 
 // Rujukan cari
@@ -93,6 +94,77 @@ $('#cari_rujukan').on('click', function() {
     }); 
     
     $('#modal-rujukan').modal(options);
+});
+
+// Rujukan cari
+$('#cari_no_surat').on('click', function() {
+    $(this).addClass('edit-item-trigger-clicked');
+    var options = {
+        'backdrop': 'static'
+    };
+    var noRujukan = $('#noRujukan').val();
+    $('#tbl-nosurat').dataTable({
+        "Processing": true,
+        "ServerSide": true,
+        "sDom" : "<t<p i>>",
+        "iDisplayLength": 5,
+        "bDestroy": true,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ ",
+            "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+            "sSearch": "Search Data :  ",
+            "sZeroRecords": "Tidak ada data",
+            "sEmptyTable": "Data tidak tersedia",
+            "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
+        },
+        "ajax": {
+            "url": "{{ route('nosurat.internal')}}",
+            "type": "GET",
+            "data": {                   
+                'noRujukan': noRujukan
+            }
+        },
+        "columns": [
+            {"mData": "no"},
+            {"mData": "noSurat"},
+            {"mData": "noReg"},
+            {"mData": "noRujukan"},
+            {"mData": "jnsSurat"},
+            {"mData": "namaDokter"}
+        ]
+    
+    });
+    oTable = $('#tbl-nosurat').DataTable();  
+    $('#no_kartu').keyup(function(){
+        oTable.search($(this).val()).draw() ;
+        $('.table').removeAttr('style');
+    }); 
+    
+    $('#modal-nosurat').modal(options);
+});
+
+$(document).on('click', '#h-no-surat', function() {
+    var noSurat = $(this).data('surat');
+        $('#noSurat').val(noSurat.substring(4, 11));
+        $('#kdPoliDPJP').val(noSurat.substring(16, 19));
+        $('#kodeDPJP').attr('disabled', false);
+        $('#modal-nosurat').modal('hide');
+        
+    var kdPoliDPJP = $('#kdPoliDPJP').val(),
+        jnsPel = $('#jns_pelayanan').val(),
+        method = 'GET',
+        url = '{{ route('bpjs.dpjp.dokter') }}';
+    $.ajax({
+        method: method,
+        url: url,
+        data: { term: kdPoliDPJP, jnsPel: jnsPel },
+        success: function(res) {
+            console.log(res);
+            $('#kodeDPJP').html(res);
+            // di sini
+        }
+        
+    })
 });
 
 // Rujukan keyup

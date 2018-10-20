@@ -81,7 +81,8 @@ class Registrasi
                 $tgl = date('Y-m-d', strtotime($request->tgl_reg));
                 if (($request->search == null) && ($request->kd_cara_bayar == null)) {
                     $query->orWhere([
-                        ['tgl_reg','=',$tgl]
+                        ['tgl_reg','=',$tgl],
+                        ['jns_rawat','=',1]
                     ]);
                 } else if ($request->kd_cara_bayar == null) {
                     $term = $request->get('search');

@@ -171,9 +171,11 @@
                     $('#v-tgl-lahir').val(ui.item.tglLahir).attr('readonly', true);
                     $('#v-tmpt-lahir').val(ui.item.tmptLahir).attr('readonly', true);
                     $('#v-unit-kerja').val(ui.item.unitKerja).attr('readonly', true);
-                    $('#v-foto').attr('src', 'data:image/jpeg;base64,'+ui.item.foto);
+                    // $('#v-foto').attr('src', 'data:image/jpeg;base64,'+ui.item.foto);
+                    $('#v-foto').attr('src', '{{ asset('images/user') }}/'+ui.item.foto);
                     return false;
-                }
+                },
+                autoFocus: true
             });
     });
 

@@ -165,16 +165,21 @@
                     <div id="form-skdp" class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="no_surat">Surat Kontrol</label>
+                                <div>
+                                    <!-- <label for="no_rujukan">No Rujukan</label> -->
+                                    <label for="no_surat">Surat Kontrol</label>
+                                    <input class="btn btn-ghost-primary btn-cus" id="cari_no_surat" type="button" value="cari">
+                                </div>
                                 <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="6">
-                                <input class="form-control form-control-sm" id="noSuratLama" type="hidden" tabindex="5">
+                                <input class="form-control form-control-sm" id="kdPoliDPJP" type="hidden" tabindex="5" readonly>
+                                <input class="form-control form-control-sm" id="noSuratLama" type="hidden" tabindex="5" readonly>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <input class="form-control form-control-sm" id="kodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP">
-                                <!-- <select id="kodeDPJP" name="kodeDPJP" class="form-control form-control-sm"></select> -->
+                                <!-- <input class="form-control form-control-sm" id="kodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP"> -->
+                                <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm"></select>
                                 <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
@@ -303,13 +308,13 @@
         <table id="tbl-rujukan" class="table table-responsive-sm table-bordered table-striped table-sm">
             <thead>
                  <tr>
-                    <th>No</th>
-                    <th>No Rujukan</th>
-                    <th>Tgl Rujukan</th>
-                    <th>No Kartu</th>
-                    <th>Nama</th>
-                    <th>PPK Perujuk</th>
-                    <th>Sub/Speliasis</th>
+                    <td>No</td>
+                    <td>No Rujukan</td>
+                    <td>Tgl Rujukan</td>
+                    <td>No Kartu</td>
+                    <td>Nama</td>
+                    <td>PPK Perujuk</td>
+                    <td>Sub Speliasis</td>
                 </tr>
             </thead>
             <tbody>
@@ -335,12 +340,43 @@
         <table id="tbl-history" class="table table-responsive-sm table-bordered table-striped table-sm">
             <thead>
                  <tr>
+                    <td>No</td>
+                    <td>No Rujukan</td>
+                    <td>Tgl Rujukan</td>
+                    <td>No Kartu</td>
+                    <td>Nama</td>
+                    <td>PPK Perujuk</td>
+                </tr>
+            </thead>
+            <tbody>
+                    
+            </tbody>
+        </table>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal no surat -->
+<div class="modal" id="modal-nosurat" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
+<div class="modal-dialog modal-md modal-secondary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih No Surat dari DPJP</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="tbl-nosurat" class="table table-responsive-sm table-bordered table-striped table-sm">
+            <thead>
+                 <tr>
                     <th>No</th>
+                    <th>No Reg</th>
+                    <th>No Surat</th>
                     <th>No Rujukan</th>
-                    <th>Tgl Rujukan</th>
-                    <th>Jenis Rawat</th>
-                    <th>Nama</th>
-                    <th>PPK Perujuk</th>
+                    <th>Jenis Surat</th>
+                    <th>Dokter</th>
                 </tr>
             </thead>
             <tbody>

@@ -29,7 +29,7 @@
             padding: 2px;
         }
         td {            
-            font-family: "Times New Roman";
+            font-family: "Verdana";
             font-size:12px;
             height: 8px;
             padding: 2px;

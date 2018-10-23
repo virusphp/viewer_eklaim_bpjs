@@ -38,10 +38,12 @@ class Sep
 
     public function cariSep($sep)
     {
+        // dd($sep);
         try {
-            $url = $this->api_url . "SEP/". $sep;
+            $url = $this->api_url . "sep/". $sep;
             $response = $this->client->get($url);
-            return $response;
+            $result = $response->getBody();
+            return $result;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {

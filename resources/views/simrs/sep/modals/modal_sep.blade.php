@@ -111,8 +111,9 @@
                             <div id="k-rujukan" class="form-group">
                                 <div>
                                     <label for="no_rujukan">No Rujukan</label>
-                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="cari">
-                                    <input class="btn btn-ghost-primary btn-cus float-right" id="cari_sko" type="button" value="sko">
+                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan" type="button" value="Pcare">
+                                    <input class="btn btn-ghost-primary btn-cus" id="cari_rujukan_rs" type="button" value="RS">
+                                    <input class="btn btn-ghost-primary btn-cus float-right" id="cari_sko" type="button" value="SKO">
                                 </div>
                                 <input class="form-control form-control-sm" id="noRujukan" name="noRujukan" type="text" placeholder="No Rujukan" tabindex="1" autofocus>
                             </div>
@@ -300,7 +301,7 @@
 <div class="modal-dialog modal-md modal-secondary" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih Rujukan Aktif</strong></h5>
+        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih Rujukan Pcare Aktif</strong></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -377,6 +378,39 @@
                     <th>No Rujukan</th>
                     <th>Jenis Surat</th>
                     <th>Dokter</th>
+                </tr>
+            </thead>
+            <tbody>
+                    
+            </tbody>
+        </table>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal Rujukan RS-->
+<div class="modal" id="modal-rujukan-rs" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label-2" aria-hidden="true">
+<div class="modal-dialog modal-md modal-secondary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label"><strong>Pilih Rujukan RS Aktif</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="tbl-rujukan-rs" class="table table-responsive-sm table-bordered table-striped table-sm">
+            <thead>
+                 <tr>
+                    <td>No</td>
+                    <td>No Rujukan</td>
+                    <td>Tgl Rujukan</td>
+                    <td>No Kartu</td>
+                    <td>Nama</td>
+                    <td>PPK Perujuk</td>
+                    <td>Sub Speliasis</td>
                 </tr>
             </thead>
             <tbody>

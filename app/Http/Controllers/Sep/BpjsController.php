@@ -38,11 +38,43 @@ class BpjsController extends Controller
         } 
     }
 
+    public function getRujukanRS(Request $req)
+    {
+        // return $req->rujukan;
+        try {
+            $url = $this->api_url . "rujukan/rs/".$req->rujukan;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
     public function listRujukan($req)
     {
         // dd($req->no_kartu);
         try {
             $url = $this->api_url . "rujukan/list/peserta/".$req->no_kartu;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function listRujukanRS($req)
+    {
+        // dd($req->no_kartu);
+        try {
+            $url = $this->api_url . "rujukan/rs/list/peserta/".$req->no_kartu;
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;
@@ -233,18 +265,36 @@ class BpjsController extends Controller
             // dd($result);
             return json_encode($result);
         }
+    }
 
-        // $data = json_decode($rujukan, true);
-        // if ($data['response'] == null) {
-        //     $ruj = [];
-        // } else {
-        //     $ruj ="<option value='0'>--Silahkan Pilih Rujukan--</pilih>";
-        //     foreach($data['response']['rujukan'] as $d)
-        //     {
-        //         $ruj .= "<option value='$d[noKunjungan]'>$d[noKunjungan]</option>";
-        //     } 
-        // }
-       
+    public function getListRujukanRS(Request $req)
+    {
+        if ($req->ajax()) {
+            $no = 1;
+            $rujukan = $this->listRujukanRS($req);
+            $data = json_decode($rujukan);
+            if ($data->response == null) {
+                $query = [];
+            } else {
+                foreach($data->response->rujukan as $val) {
+                    $query[] = [
+                        'no' => $no++,
+                        'noKunjungan' => '
+                            <div class="btn-group">
+                                <button data-rujukanrs="'.$val->noKunjungan.'" id="h-rujukan-rs" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                            </div> ',
+                        'tglKunjungan' => $val->tglKunjungan,
+                        'noKartu' => $val->peserta->noKartu,
+                        'nama' => $val->peserta->nama,
+                        'ppkPerujuk' => $val->provPerujuk->kode,
+                        'poli' => $val->poliRujukan->kode
+                    ];
+                }
+            }
+            $result = isset($query) ? ['data' => $query] : ['data' => 0];
+            // dd($result);
+            return json_encode($result);
+        }
     }
 
     public function getHistory(Request $req)

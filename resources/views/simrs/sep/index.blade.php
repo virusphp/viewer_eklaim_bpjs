@@ -104,7 +104,7 @@
         alertas.find('.error').removeClass('error');
     });
 
-    // Rujukan cari
+    // cari SKO
     $('#cari_sko').on('click', function() {
         $(this).addClass('edit-item-trigger-clicked');
         var options = {

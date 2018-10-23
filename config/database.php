@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlsrv'),
+    'default' => env('DB_CONNECTION', 'sqlsrv_prod'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'sqlsrv' => [
+        'sqlsrv_dev' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
@@ -78,9 +78,9 @@ return [
             'prefix' => '',
         ],
 
-        'sqlsrv_ok' => [
+        'sqlsrv_prod' => [
             'driver' => 'sqlsrv',
-            // 'host' => '192.168.0.205\SQL2008',
+            'host' => '192.168.0.205\SQL2008',
             // 'port' => '1433',
             'database' => 'DBSIMRS',
             'username' => 'sa',

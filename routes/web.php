@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/dpjp/dokter','BpjsController@getListDpjp')->name('bpjs.dpjp.dokter');
         Route::get('/bpjs/faskes','BpjsController@getFaskes')->name('bpjs.faskes');
         Route::get('/bpjs/listrujukan','BpjsController@getListRujukan')->name('bpjs.listrujukan');
+        Route::get('/bpjs/listrujukan/rs','BpjsController@getListRujukanRS')->name('bpjs.listrujukan.rs');
         Route::get('/bpjs/history','BpjsController@getHistory')->name('bpjs.history');
         Route::get('/bpjs/cekhistory','BpjsController@getcekHistory')->name('bpjs.cekhistory');
         Route::get('/rujukan/internal','RujukanController@getRujukanInternal')->name('rujukan.internal');
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/kabupaten','BpjsController@getKabupaten')->name('bpjs.kabupaten');
         Route::get('/bpjs/kecamatan','BpjsController@getKecamatan')->name('bpjs.kecamatan');
         Route::get('/bpjs/rujukan','BpjsController@getRujukan')->name('bpjs.rujukan');
+        Route::get('/bpjs/rujukan/rs','BpjsController@getRujukanRS')->name('bpjs.rujukan.rs');
         Route::get('/bpjs/peserta','BpjsController@getPeserta')->name('bpjs.peserta');
         Route::get('/bpjs/ppkrujukan','BpjsController@getPpkRujukan')->name('bpjs.ppkrujukan');
         Route::get('/bpjs/sep','BpjsController@getSep')->name('bpjs.sep');

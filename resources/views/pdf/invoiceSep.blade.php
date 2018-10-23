@@ -13,7 +13,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-left: -40px;
-            margin-right: -40px;
+            /* margin-r2ght: -40px; */
             /* margin-top: -50px;
             margin-bottom: -50px; */
         }       
@@ -26,10 +26,10 @@
         
         th {
             height: 15px;
-            padding: 8px;
+            padding: 2px;
         }
         td {            
-            font-family: "Arial, monospace";
+            font-family: "Times New Roman";
             font-size:12px;
             height: 8px;
             padding: 2px;
@@ -100,26 +100,26 @@
         <tr>
             <td>No. SEP</td>
             <td>:</td>
-            <td>{{ $data->no_sjp }}</td>
+            <td>{{ $data->noSep }}</td>
             <td>Nama Peserta</td>
             <td>:</td>
-            <td>{{ $data->nama_pasien }}</td>
+            <td>{{ $data->peserta->nama }}</td>
         </tr>
         <tr id="tgl-sep">
             <td class="tgl-sep">Tanggal SEP</td>
             <td>:</td>
-            <td class="nilai-tgl-sep">{{ tanggal($data->tgl_reg) }}</td>
+            <td class="nilai-tgl-sep">{{ $data->tglSep }}</td>
             <td class="tgl-lahir">Tanggal Lahir</td>
             <td>:</td>
-            <td class="nilai-tgl-lahir">{{ tanggal($data->tgl_lahir) }}</td>
+            <td class="nilai-tgl-lahir">{{ $data->peserta->tglLahir }}</td>
             <td class="jns-kel">Jns Kel</td>
             <td>:</td>
-            <td class="nilai-jns-kel">L</td>
+            <td class="nilai-jns-kel">{{ $data->peserta->kelamin }}</td>
         </tr>
         <tr>
             <td class="no-rm">No. RM</td>
             <td class="tt-dua">:</td>
-            <td class="nilai-no-rm">{{ $data->no_rm }}</td>
+            <td class="nilai-no-rm">{{ $data->peserta->noMr }}</td>
             <td rowspan="3" class="alamat-p">Alamat Pasien</td>
             <td rowspan="3" class="tt-dua">:</td>
             <td rowspan="3" colspan="10" class="nilai-alamat-p">{{ $data->alamat }}</td>
@@ -127,25 +127,25 @@
         <tr>
             <td>No. Registrasi</td>
             <td>:</td>
-            <td>{{ $data->no_reg }}</td>
+            <td>{{ $data->noReg }}</td>
         </tr>
         <tr>
             <td>No. Kartu</td>
             <td>:</td>
-            <td>{{ $data->no_kartu }}</td>
+            <td>{{ $data->peserta->noKartu }}</td>
         </tr>
         <tr>
             <td>Poli Tujuan</td>
             <td>:</td>
-            <td>{{ $data->nama_poli }}</td>
+            <td>{{ $data->poli }}</td>
             <td>Peserta</td>
             <td>:</td>
-            <td colspan="4">{{ $data->jns_peserta }}</td>
+            <td colspan="4">{{ $data->peserta->jnsPeserta }}</td>
         </tr>
         <tr>
             <td class="asal-fks">Asal Faskes Tk. I</td>
             <td class="tt-dua">:</td>
-            <td class="nama-fks">{{ $data->nama_faskes }}</td>
+            <td class="nama-fks">{{ $data->asalFaskes }}</td>
             <td>COB</td>
             <td>:</td>
             <td colspan="4">0</td>
@@ -153,21 +153,21 @@
         <tr>
             <td>Antrian</td>
             <td>:</td>
-            <td>{{ $data->antrian }} {{ $data->nama_poli }}</td>
+            <td>{{ $data->antrian }} {{ $data->namaKlinik }}</td>
             <td>Jenis Rawat</td>
             <td>:</td>
-            <td colspan="4">{{ $data->jns_rawat == 1 ? "Rawat Jalan" : "Rawat Inap"}}</td>
+            <td colspan="4">{{ $data->jnsPelayanan }}</td>
         </tr>
         <tr>
             <td rowspan="2" class="diagnosa">Diagnosa Awal</td>
             <td rowspan="2" class="tt-dua">:</td>
-            <td rowspan="2" class="nilai-diagnosa">{{ $data->nama_diagnosa }}</td>
+            <td rowspan="2" class="nilai-diagnosa">{{ $data->diagnosa }} {{ $data->kdDiagnosa }}</td>
             <td>Kls Tanggungan</td>
             <td>:</td>
-            <td colspan="4">{{ $data->nama_kelas_rawat }}</td>
+            <td colspan="4">Kelas {{ $data->kelasRawat }}</td>
         </tr>
         <tr rowspan="2">
-            <td class="catatan">Catatan</td>
+        <td class="catatan">Catatan</td>
             <td class="tt-dua">:</td>
             <td class="n-catatan" colspan="4">{{ $data->catatan }}</td>
         </tr>
@@ -177,52 +177,49 @@
             <td></td>
             <td>Penjamin</td>
             <td>:</td>
-            <td colspan="4">BPJS</td>
+            <td colspan="4"></td>
         </tr>        
     </table>
     <table class="table table-ttd">
         <tr>
-            <td style="height:10px" colspan="4"></td>
+            <td style="height:100px" colspan="4"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
             <td>:</td>
             <td class="nilai-tindakan"></td>
         </tr>
-        <tr>
-            <td style="height:35px" colspan="4"></td>
-        </tr>
         <tr class="ttd">
             <td sytle="vertical-align: top;"></td>
-            <td style="width:15%"></td>
-            <td style="width:15%"></td>
+            <td style="width:27%"></td>
+            <td style="width:27%"></td>
             <td style="width:15%" class="ttd-pasien">Pasien/ <br>Keluarga Pasien</td>
-            <td style="width:15%"></td>
-            <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
+            <td style="width:1%"></td>
+            <td style="width:1%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:50px" colspan="6"></td>
+            <td style="height:50px" colspan="1"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>
-            <td style="width:15%"></td>
-            <td style="width:15%"></td>
-            <td style="width:20%" class="ttd-garis"></td>
-            <td style="width:15%" class="g-gr"></td>
-            <td style="width:20%" class="ttd-garis"></td>   
+            <td style="width:27%"></td>
+            <td style="width:27%"></td>
+            <td style="width:15%" class="ttd-garis"></td>
+            <td class="g-gr"></td>
+            <td style="width:1%" class="ttd-garis"></td>   
         </tr>
         <tr>
-            <td style="height:20px" colspan="6"></td>
+            <td style="height:5px" colspan="6"></td>
         </tr>
         <tr>
             <td colspan="5"> 
                 <i>
                     *Saya Menyetujui BPJS Kesehatan menggunakan Informasi Medis Pasien jika diperlukan 
                      <br>*SEP bukan sebagai bukti penjamin peserta
-                     <br><u><span>{{ $data->prb }}</span></u>
+                     <br><u><span>{{ !is_null($data->informasi) ? $data->informasi->prolanisPRB : '' }}</span></u>
                 </i>
             </td>
-            <td >Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
+            <td>Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
         </tr>
     </table>
 </body>

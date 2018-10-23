@@ -97,6 +97,53 @@ $('#cari_rujukan').on('click', function() {
 });
 
 // Rujukan cari
+$('#cari_rujukan_rs').on('click', function() {
+    $(this).addClass('edit-item-trigger-clicked');
+    var options = {
+        'backdrop': 'static'
+    };
+    var no_kartu = $('#no_kartu').val();
+    $('#tbl-rujukan-rs').dataTable({
+        "Processing": true,
+        "ServerSide": true,
+        "sDom" : "<t<p i>>",
+        "iDisplayLength": 25,
+        "bDestroy": true,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ ",
+            "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+            "sSearch": "Search Data :  ",
+            "sZeroRecords": "Tidak ada data",
+            "sEmptyTable": "Data tidak tersedia",
+            "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
+        },
+        "ajax": {
+            "url": "{{ route('bpjs.listrujukan.rs')}}",
+            "type": "GET",
+            "data": {                   
+                'no_kartu': no_kartu
+            }
+        },
+        "columns": [
+            {"mData": "no"},
+            {"mData": "noKunjungan"},
+            {"mData": "tglKunjungan"},
+            {"mData": "noKartu"},
+            {"mData": "nama"},
+            {"mData": "ppkPerujuk"},
+            {"mData": "poli"}            
+        ]
+    
+    });
+    oTable = $('#tbl-rujukan').DataTable();  
+    $('#no_kartu').keyup(function(){
+        oTable.search($(this).val()).draw() ;
+        $('.table').removeAttr('style');
+    }); 
+    
+    $('#modal-rujukan-rs').modal(options);
+});
+// Rujukan cari
 $('#cari_no_surat').on('click', function() {
     $(this).addClass('edit-item-trigger-clicked');
     var options = {
@@ -163,7 +210,6 @@ $(document).on('click', '#h-no-surat', function() {
             $('#kodeDPJP').html(res);
             // di sini
         }
-        
     })
 });
 
@@ -176,6 +222,49 @@ $(document).on('click','#h-rujukan', function() {
     $.ajax({
         type: 'get',
         url : '{{ route('bpjs.rujukan') }}',
+        data : {rujukan: rujukan},
+        success: function(data){
+            d = JSON.parse(data);
+            response = d.response.rujukan;
+            if ($('#no_kartu').val() == response.peserta.noKartu) {
+                $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly','true');
+                $('#ppk_rujukan').val(response.provPerujuk.kode);
+                $('#diagAwal').val(response.diagnosa.nama);
+                $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
+                $('#tujuan').val(response.poliRujukan.nama);
+                $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
+                $('#noRujukan').val(response.noKunjungan);
+                asalRujukan();
+                katarak();
+                getSkdp();
+
+            } else {
+                $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
+                $('#error_rujukan').html('No Rujukan tidak cocok').hide()
+                    .fadeIn(1500, function() { $('#error_rujukan'); });
+                    setTimeout(resetAll,3000);
+            }
+        }, 
+        error: function() {
+            $('#frame_error').show(100);
+            $('#error_rujukan').html('Brigding lamban, sedang gangguan server bpjs');
+        }
+    
+    });
+    $('#modal-rujukan').modal('hide');
+    // console.log(rujukan);
+});
+
+// Rujukan keyup
+$(document).on('click','#h-rujukan-rs', function() {
+    var rujukan = $(this).data('rujukan');
+    // console.log(rujukan);
+    $('#no_rujukan').val(rujukan);
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        type: 'get',
+        url : '{{ route('bpjs.rujukan.rs') }}',
         data : {rujukan: rujukan},
         success: function(data){
             d = JSON.parse(data);

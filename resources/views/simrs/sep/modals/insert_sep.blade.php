@@ -339,7 +339,7 @@ $(document).on('click','#cetak-sep', function(e) {
                         $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
                         $('#success_sep').html(data.metaData.message+" No SEP :"+data.response.sep.noSep).hide()
                         .fadeIn(1500, function() { $('#success_sep'); });
-                        setTimeout(resetSuccessSep,4000);
+                        setTimeout(resetSuccessSep,5000);
                         ajaxLoad();
                     }
                 });
@@ -349,7 +349,7 @@ $(document).on('click','#cetak-sep', function(e) {
                 $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
                 $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
                 .fadeIn(1500, function() { $('#error_sep'); });
-                setTimeout(resetAll,4000);
+                setTimeout(resetAll,5000);
             }
 
         }, 

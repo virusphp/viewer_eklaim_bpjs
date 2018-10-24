@@ -48,7 +48,7 @@
         }
         .avatar-view {
             width: 170px;
-            height: 30px;
+            height: 25px;
         }
         #sep-title {
             margin-top: 1px;
@@ -86,7 +86,7 @@
         } */
     </style>
 </head>
-<body id="sep-content" onload="onload()">
+<body id="sep-content" onload="printSep()">
     <table class="table table-borderless table-header">
         <tr>
             <td id="sep-image" rowspan="2"><img class="img-responsive avatar-view"  src="{{ asset('img/logo-bpjs.png') }}"></td>
@@ -187,7 +187,7 @@
     </table>
     <table class="table table-ttd">
         <tr>
-            <td style="height:100px" colspan="6"></td>
+            <td style="height:115px" colspan="6"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
@@ -203,7 +203,7 @@
             <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:50px" colspan="6"></td>
+            <td style="height:35px" colspan="6"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>
@@ -230,9 +230,8 @@
 </body>
 </html>
 <script>
-    function onload(){           
+    function printSep(){           
         window.print();
-        // window.location.href = "";    
         window.close();        
     }   
 </script>

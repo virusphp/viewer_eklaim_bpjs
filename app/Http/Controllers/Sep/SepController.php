@@ -277,6 +277,7 @@ class SepController extends Controller
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian, $data->nama_propinsi,$data->tgl_reg, $data->kd_poliklinik,$data->no_sjp);
         $dataSep = json_decode($req);
         $dataSep = $dataSep->response;
+        // dd($dataSep);
         $dataSep->noReg = $data->no_reg;
         $dataSep->noMr = $data->no_rm;
         $dataSep->alamat = $data->alamat;

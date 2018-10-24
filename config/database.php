@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlsrv_prod'),
+    'default' => env('DB_CONNECTION', 'sqlsrv_dev'),
 
     /*
     |--------------------------------------------------------------------------

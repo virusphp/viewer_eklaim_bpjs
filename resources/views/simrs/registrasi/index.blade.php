@@ -79,6 +79,17 @@
         ajaxLoad();
     });
 
+    $(document).on('click','#simpan-user', function(e) {
+        var form = $('#form-pasien'),
+            url = "",
+            method = 'POST';
+        console.log(form.serialize());
+        // Reset validationo error
+        form.find('.invalid-feedback').remove();
+        form.find('input').removeClass('is-invalid');
+        form.find('#asalRujukan').prop('disabled', false);   
+    });
+
     $(document).on('click','#daftar-pasien', function() {
         $(this).addClass('edit-item-trigger-clicked');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
@@ -109,7 +120,9 @@
                 $('#v-tmpt-lahir').val(res.tempat_lahir).attr('readonly', true);
                 $('#v-no-telp').val(res.no_telp).attr('readonly', true);
                 $('#no_rm').attr('readonly', true);
+                $('#poli').attr('readonly', false);
                 getPoli();
+                getJnsPasien();
                 getNoKartu();
             } 
         })
@@ -143,7 +156,11 @@
                 // console.log(res);
                 d = JSON.parse(res);
                 $('#tarif').val(d.hasil.harga).attr('readonly', true);
+                $('#kd_tarif').val(d.hasil.kd_tarif).attr('readonly', true);
+                $('#rek_p').val(d.hasil.Rek_P).attr('readonly', true);
+                $('#jnsPasien').attr('readonly', false);
                 getDokter();
+                $('#kdDokter').attr('readonly', false);
             } 
         });
     });
@@ -158,7 +175,8 @@
             url: url,
             data: { kdPoli: kdPoli },
             success: function(res) {
-                console.log(res);
+                // console.log(res);
+                $('#kdDokter').html(res);
             }
         })
             
@@ -176,6 +194,20 @@
             data : {_token: token},
             success: function(res) {
                 $('#poli').html(res);
+            }
+        })
+    }
+    
+    function getJnsPasien() {
+        var token = $('meta[name="csrf-token"]').attr('content'),
+            url = '{{ route('simrs.carabayar') }}',
+            method = 'GET';
+        $.ajax({
+            method: method,
+            url: url,
+            data : {_token: token},
+            success: function(res) {
+                $('#jnsPasien').html(res);
             }
         })
     }

@@ -41,6 +41,7 @@ class RegRawatJalanController extends Controller
     {
         if ($req->ajax()) {
             $pasien = $ps->getPasien($req);
+            // dd($pasien);
             if ($pasien) {
                 $res = json_decode($pasien)[0];
             }

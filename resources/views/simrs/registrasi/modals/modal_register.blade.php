@@ -39,17 +39,17 @@
                         <div class="form-group">
                             <label for="tarif">tarif</label>
                             <input class="form-control form-control-sm" id="tarif" name="tarif" type="text" placeholder="Tarif">
+                            <input class="form-control form-control-sm" id="kd_tarif" name="kd_tarif" type="hidden" placeholder="Tarif">
+                            <input class="form-control form-control-sm" id="rek_p" name="Rek_P" type="hidden" placeholder="Tarif">
                         </div>
                         <div class="form-group">
                             <label for="dokter">dokter</label>
-                            <input class="form-control form-control-sm" id="kdDokter" name="kdDokter" type="text" placeholder="Dokter">
+                            <select id="kdDokter" name="kd_pegawai" class="form-control form-control-sm">
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="jnsPasien">Jenis Pasien</label>
-                            <select id="jnsPasien" name="jnsPasien" tabindex="2" class="form-control form-control-sm">
-                                    <option value="">-- Pilih Pembayaran --</option> 
-                                    <option value="jan">jan</option> 
-                                    <option value="mata">mata</option> 
+                            <select id="jnsPasien" name="kd_cara_bayar" class="form-control form-control-sm">
                             </select>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                     <tr>
                                         <th>No Telp</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-no-telp"></td>
+                                        <td><input name="noTelp" type="text" id="v-no-telp"></td>
                                     </tr> 
                                     <tr>
                                         <th>No BPJS</th>

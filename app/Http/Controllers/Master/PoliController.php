@@ -35,8 +35,14 @@ class PoliController extends Controller
     {
         if ($req->ajax()) {
             $request = $req->kdPoli;
-            $data = $poli->getDokter($request);
-            return $data;
+            $dataDokter = $poli->getDokter($request);
+            $data = json_decode($dataDokter);
+            // dd($data->hasil);
+            foreach($data->hasil as $d)
+            {
+                $dokter = "<option value='$d->Kd_Pegawai'>$d->nama_pegawai</option>";
+            }
+            return $dokter;
         }
     }
 }

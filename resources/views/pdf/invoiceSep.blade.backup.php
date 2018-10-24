@@ -24,41 +24,42 @@
             border-bottom: 2px solid;
         }
        
+
         th {
             height: 15px;
             padding: 2px;
         }
 
         body {
-            font-family: "Arial";
+            font-family: "Arial, "Helvetica Neue", Helvetica, sans-serif";
             font-size:12px;
             height: 8px;
             padding: 2px;
         }
         td {            
-            font-family: "Arial";
+            font-family: "Arial, "Helvetica Neue", Helvetica, sans-serif";
             font-size:12px;
             height: 8px;
-            padding: 1px;
+            padding: 2px;
         }
      
         #sep-image {
-            width: 5%;
+            width: 10%;
             vertical-align: top;
         }
         .avatar-view {
-            width: 170px;
-            height: 30px;
+            width: 250px;
+            height: 35px;
         }
         #sep-title {
             margin-top: 1px;
-            padding-left: 5em;
-            /* width: 100%; */
+            padding-left: 7em;
+            width: 100%;
             font-size: 20px;
         }
         #sep-title-2 {
-            padding-left: 6.6em;
-            /* width: 100%; */
+            padding-left: 7.6em;
+            width: 100%;
             font-size: 20px;
         }
        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
@@ -86,7 +87,7 @@
         } */
     </style>
 </head>
-<body id="sep-content" onload="onload()">
+<body id="sep-content">
     <table class="table table-borderless table-header">
         <tr>
             <td id="sep-image" rowspan="2"><img class="img-responsive avatar-view"  src="{{ asset('img/logo-bpjs.png') }}"></td>
@@ -105,52 +106,52 @@
         <tr>
             <td>No. SEP</td>
             <td>:</td>
-            <td id="v-noSep">{{ $dataSep->noSep }}</td>
+            <td id="v-noSep">{{ $data->noSep }}</td>
             <td>Nama Peserta</td>
             <td>:</td>
-            <td colspan="4" id="v-nmPeserta">{{ $dataSep->peserta->nama }}</td>
+            <td colspan="4" id="v-nmPeserta">{{ $data->peserta->nama }}</td>
         </tr>
         <tr id="tgl-sep">
             <td class="tgl-sep">Tanggal SEP</td>
             <td>:</td>
-            <td class="nilai-tgl-sep">{{ $dataSep->tglSep }}</td>
+            <td class="nilai-tgl-sep">{{ $data->tglSep }}</td>
             <td class="tgl-lahir">Tanggal Lahir</td>
             <td>:</td>
-            <td class="nilai-tgl-lahir">{{ $dataSep->peserta->tglLahir }}</td>
+            <td class="nilai-tgl-lahir">{{ $data->peserta->tglLahir }}</td>
             <td class="jns-kel">Jns Kel</td>
             <td>:</td>
-            <td class="nilai-jns-kel">{{ $dataSep->peserta->kelamin }}</td>
+            <td class="nilai-jns-kel">{{ $data->peserta->kelamin }}</td>
         </tr>
         <tr>
             <td class="no-rm">No. RM</td>
             <td class="tt-dua">:</td>
-            <td class="nilai-no-rm">{{ $dataSep->peserta->noMr }}</td>
+            <td class="nilai-no-rm">{{ $data->peserta->noMr }}</td>
             <td rowspan="3" class="alamat-p">Alamat Pasien</td>
             <td rowspan="3" class="tt-dua">:</td>
-            <td rowspan="3" colspan="10" class="nilai-alamat-p">{{ $dataSep->alamat }}</td>
+            <td rowspan="3" colspan="10" class="nilai-alamat-p">{{ $data->alamat }}</td>
         </tr>
         <tr>
             <td>No. Registrasi</td>
             <td>:</td>
-            <td>{{ $dataSep->noReg }}</td>
+            <td>{{ $data->noReg }}</td>
         </tr>
         <tr>
             <td>No. Kartu</td>
             <td>:</td>
-            <td>{{ $dataSep->peserta->noKartu }}</td>
+            <td>{{ $data->peserta->noKartu }}</td>
         </tr>
         <tr>
             <td>Poli Tujuan</td>
             <td>:</td>
-            <td>{{ $dataSep->poli }}</td>
+            <td>{{ $data->poli }}</td>
             <td>Peserta</td>
             <td>:</td>
-            <td colspan="4">{{ $dataSep->peserta->jnsPeserta }}</td>
+            <td colspan="4">{{ $data->peserta->jnsPeserta }}</td>
         </tr>
         <tr>
             <td class="asal-fks">Asal Faskes Tk. I</td>
             <td class="tt-dua">:</td>
-            <td class="nama-fks">{{ $dataSep->asalFaskes }}</td>
+            <td class="nama-fks">{{ $data->asalFaskes }}</td>
             <td>COB</td>
             <td>:</td>
             <td colspan="4">0</td>
@@ -158,23 +159,23 @@
         <tr>
             <td>Antrian</td>
             <td>:</td>
-            <td>{{ $dataSep->antrian }} {{ $dataSep->namaKlinik }}</td>
+            <td>{{ $data->antrian }} {{ $data->namaKlinik }}</td>
             <td>Jenis Rawat</td>
             <td>:</td>
-            <td colspan="4">{{ $dataSep->jnsPelayanan }}</td>
+            <td colspan="4">{{ $data->jnsPelayanan }}</td>
         </tr>
         <tr>
             <td rowspan="2" class="diagnosa">Diagnosa Awal</td>
             <td rowspan="2" class="tt-dua">:</td>
-            <td rowspan="2" class="nilai-diagnosa">{{ $dataSep->diagnosa }} {{ $dataSep->kdDiagnosa }}</td>
+            <td rowspan="2" class="nilai-diagnosa">{{ $data->diagnosa }} {{ $data->kdDiagnosa }}</td>
             <td>Kls Tanggungan</td>
             <td>:</td>
-            <td colspan="4">Kelas {{ $dataSep->kelasRawat }}</td>
+            <td colspan="4">Kelas {{ $data->kelasRawat }}</td>
         </tr>
         <tr rowspan="2">
         <td class="catatan">Catatan</td>
             <td class="tt-dua">:</td>
-            <td class="n-catatan" colspan="4">{{ $dataSep->catatan }}</td>
+            <td class="n-catatan" colspan="4">{{ $data->catatan }}</td>
         </tr>
         <tr>
             <td>Diagnosa Utama</td>
@@ -187,31 +188,31 @@
     </table>
     <table class="table table-ttd">
         <tr>
-            <td style="height:100px" colspan="6"></td>
+            <td style="height:100px" colspan="4"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
             <td>:</td>
-            <td colspan="4" class="nilai-tindakan"></td>
+            <td class="nilai-tindakan"></td>
         </tr>
         <tr class="ttd">
             <td sytle="vertical-align: top;"></td>
-            <td style="width:20%"></td>
-            <td style="width:20%"></td>
+            <td style="width:27%"></td>
+            <td style="width:27%"></td>
             <td style="width:15%" class="ttd-pasien">Pasien/ <br>Keluarga Pasien</td>
             <td style="width:1%"></td>
-            <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
+            <td style="width:1%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:50px" colspan="6"></td>
+            <td style="height:50px" colspan="1"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>
-            <td style="width:20%"></td>
-            <td style="width:20%"></td>
+            <td style="width:27%"></td>
+            <td style="width:27%"></td>
             <td style="width:15%" class="ttd-garis"></td>
             <td class="g-gr"></td>
-            <td style="width:15%" class="ttd-garis"></td>   
+            <td style="width:1%" class="ttd-garis"></td>   
         </tr>
         <tr>
             <td style="height:5px" colspan="6"></td>
@@ -221,7 +222,7 @@
                 <i>
                     *Saya Menyetujui BPJS Kesehatan menggunakan Informasi Medis Pasien jika diperlukan 
                      <br>*SEP bukan sebagai bukti penjamin peserta
-                     <br><u><span>{{ !is_null($dataSep->informasi) ? $dataSep->informasi->prolanisPRB : '' }}</span></u>
+                     <br><u><span>{{ !is_null($data->informasi) ? $data->informasi->prolanisPRB : '' }}</span></u>
                 </i>
             </td>
             <td>Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
@@ -229,10 +230,3 @@
     </table>
 </body>
 </html>
-<script>
-    function onload(){           
-        window.print();
-        // window.location.href = "";    
-        window.close();        
-    }   
-</script>

@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label for="poli">Poliklinik</label>
-                            <select id="poli" name="poli" class="form-control form-control-sm">
+                            <select id="poli" name="kd_sub_unit" class="form-control form-control-sm">
                             </select>
                         </div>
                         <div class="form-group">
@@ -105,6 +105,7 @@
                                         <th>No BPJS</th>
                                         <td>:</td>
                                         <td><input type="text" id="v-no-kartu"></td>
+                                        <td><input name="hak_kelas" type="hidden" value="0"></td>
                                     </tr> 
                                 </table>
                             </div>

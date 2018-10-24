@@ -284,8 +284,9 @@ class SepController extends Controller
         $dataSep->namaKlinik = $data->nama_poli;
         $dataSep->antrian = $data->antrian;
         $dataSep->asalFaskes = $data->nama_faskes;
-        $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $dataSep));
-        return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
+        // $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $dataSep));
+        // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
+        return view('pdf.invoiceSep', compact('dataSep'));
     }
     
     public function noAntrianPoli($data)

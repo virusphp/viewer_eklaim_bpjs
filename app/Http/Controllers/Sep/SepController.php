@@ -277,7 +277,10 @@ class SepController extends Controller
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian, $data->nama_propinsi,$data->tgl_reg, $data->kd_poliklinik,$data->no_sjp);
         $dataSep = json_decode($req);
         $dataSep = $dataSep->response;
-        // dd($dataSep);
+        $reqPeserta = $this->cetak->getPeserta($dataSep->peserta->noKartu, $dataSep->tglSep);
+        $peserta = json_decode($reqPeserta);
+        $peserta = $peserta->response->peserta->informasi;
+        // dd($peserta);
         $dataSep->noReg = $data->no_reg;
         $dataSep->noMr = $data->no_rm;
         $dataSep->alamat = $data->alamat;
@@ -287,7 +290,7 @@ class SepController extends Controller
         $dataSep->asalFaskes = $data->nama_faskes;
         // $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $dataSep));
         // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
-        return view('pdf.invoiceSep', compact('dataSep'));
+        return view('pdf.invoiceSep', compact('dataSep', 'peserta'));
     }
     
     public function noAntrianPoli($data)

@@ -56,7 +56,8 @@
 @push('css')
 <!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-<link rel="stylesheet" href="{{ asset('selectize/css/selectize.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('selectize/css/selectize.css') }}" /> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
 
 @endpush
 @push('scripts')
@@ -69,6 +70,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 @include('simrs.sep.modals.ajax')
 @include('simrs.sep.modals.insert_sep')
@@ -85,6 +87,12 @@
             format: 'D-M-Y'
         });
     });
+
+    // $(document).ready(function() {
+    //     $("#kodeDPJP").select2({
+    //         placeholder: 'Select an option'
+    //     });
+    // });
 
     $(document).ready(function () {
         getStart();
@@ -170,14 +178,14 @@
                 $('#form-skdp').show();
                 $('#tgl_rujukan').val(res.response.tglSep).attr('readonly','true');
                 $('#ppk_rujukan').val(res.response.noSep.substr(0,8));
-                $('#diagAwal').val(res.response.diagnosa);
-                $('#tujuan').val(res.response.poli);
+                // $('#diagAwal').val(res.response.diagnosa);
+                // $('#tujuan').val(res.response.poli);
                 $('#intern_rujukan').val(res.response.noSep).attr('readonly','true');
                 $('#noRujukan').val(res.response.noSep);
                 asalRujukan();
                 katarak();
                 getSkdp();
-
+                ceNoSurat();
             }, 
             error: function() {
                 $('#frame_error').show(100);
@@ -343,36 +351,40 @@
         $('#kd_dpjp').val(kdDPJP);         
     })
 
-    // $(document).ready(function() {
-    //     var src = "{{ route('bpjs.dpjp') }}";
-    //     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    //     $('#kodeDPJP').autocomplete({
-    //         source : function (request, response) {
-    //             var jnsPel = $('#jns_pelayanan').val();
-    //             var date = new Date();
-    //             $.ajax({
-    //                 url : src,
-    //                 dataType : "json",
-    //                 data : { term: request.term, jnsPel: jnsPel},
-    //                 success: function(data) {
-    //                     var array = data.error ? [] : $.map(data, function(m) {
-    //                         return {
-    //                             id : m.kode,
-    //                             value : m.nama
-    //                         };
-    //                     });
-    //                     response(array);
-    //                 }
-    //             });
-    //         },
-    //         minLength: 3,
-    //         select : function (event, ui) {
-    //             $('#kodeDPJP').val(ui.item.value);
-    //             $('#kd_dpjp').val(ui.item.id);
-    //             return false;
-    //         }
-    //     });
-    // });
+    $(document).ready(function() {
+        var src = "{{ route('bpjs.dpjp') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#txtkodeDPJP').autocomplete({
+            source : function (request, response) {
+                var jnsPel = $('#jns_pelayanan').val();
+                var date = new Date();
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term, jnsPel: jnsPel},
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kode,
+                                value : m.nama
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            },
+            minLength: 3,
+            select : function (event, ui) {
+                $('#txtkodeDPJP').val(ui.item.value);
+                $('#kd_dpjp').val(ui.item.id);
+                return false;
+            }
+        });
+    });
+
+    $(document).on('change','#search', function() {
+        ajaxLoad();
+    })
 
     function ajaxLoad(){
             var jnsRawat = $("#jns_rawat:checked").val();

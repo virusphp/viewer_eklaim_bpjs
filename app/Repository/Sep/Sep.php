@@ -84,7 +84,6 @@ class Sep
             'no_reg' => $data['no_reg'],
             'tgl_sjp' => $data['tglSep'],
             'cob' => $data['cob'],
-            'catatan' => $data['catatan'],
             'kd_faskes' => $data['ppkRujukan'],
             'nama_faskes' => $data['namaFaskes'],
             'kd_diagnosa' => $data['diagAwal'],
@@ -96,20 +95,16 @@ class Sep
             'no_rujukan' => $data['noRujukan'],
             'asal_faskes' => $data['asalRujukan'],
             'tgl_rujukan' => $data['tglRujukan'],
-            'no_surat' => $data['noSurat'],
-            'kd_dpjp' => $data['kodeDPJP'],
-            'dokter_dpjp' => $data['dokterDPJP'],
-            'katarak' => $data['katarak'],
-            'lakalantas' => $data['lakaLantas'],
-            'penjamin' => $data['penjamin'],
-            'suplesi' => $data['suplesi'],
-            'no_sep_suplesi' => $data['noSepSuplesi'],
-            'tgl_kejadian' => $data['tglKejadian'],
-            'kd_propinsi' => $data['kdPropinsi'],
-            'kd_kabupaten' => $data['kdKabupaten'],
-            'kd_kecamatan' => $data['kdKecamatan'],
-            'keterangan' => $data['keterangan'],
-            'user' => $data['user']
+            'lakalantas' => $data['lakaLantas']
+            // 'penjamin' => $data['penjamin'],
+            // 'suplesi' => $data['suplesi'],
+            // 'no_sep_suplesi' => $data['noSepSuplesi'],
+            // 'tgl_kejadian' => $data['tglKejadian'],
+            // 'kd_propinsi' => $data['kdPropinsi'],
+            // 'kd_kabupaten' => $data['kdKabupaten'],
+            // 'kd_kecamatan' => $data['kdKecamatan'],
+            // 'keterangan' => $data['keterangan'],
+            // 'user' => $data['user']
         ]);
         
         return $simpanSep;

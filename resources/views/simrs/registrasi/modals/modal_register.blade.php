@@ -13,10 +13,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-pasien" action="" class="form-horizontal" method="POST">
-        <!-- <div id="frame_error" class="alert alert-danger">
+        <form id="form-pasien" class="form-horizontal" method="POST">
+        <div id="frame_error" class="alert alert-danger">
           
-        </div> -->
+        </div>
         <div class="row">
             <!-- Akun Pegawai -->
             <div class="col-sm-4">
@@ -99,7 +99,7 @@
                                     <tr>
                                         <th>No Telp</th>
                                         <td>:</td>
-                                        <td><input name="noTelp" type="text" id="v-no-telp"></td>
+                                        <td><input name="no_telp" type="text" id="v-no-telp"></td>
                                     </tr> 
                                     <tr>
                                         <th>No BPJS</th>

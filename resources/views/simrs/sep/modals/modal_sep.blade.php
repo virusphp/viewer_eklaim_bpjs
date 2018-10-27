@@ -141,7 +141,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa</label>
-                                <input class="form-control form-control-sm" id="diagAwal" name="diagnosa" maxLengh="3" tabindex="2" type="text" placeholder="Diagnosa Awal">
+                                <input class="form-control form-control-sm" id="diagAwal" name="diagnosa" maxLengh="6" tabindex="2" type="text" placeholder="Diagnosa Awal">
                                 <input class="form-control form-control-sm" id="kd_diagnosa" name="diagAwal" type="hidden">
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                                     <label for="no_surat">Surat Kontrol</label>
                                     <input class="btn btn-ghost-primary btn-cus" id="cari_no_surat" type="button" value="cari">
                                 </div>
-                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="6">
+                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="7">
                                 <input class="form-control form-control-sm" id="kdPoliDPJP" type="hidden" tabindex="5" readonly>
                                 <input class="form-control form-control-sm" id="noSuratLama" type="hidden" tabindex="5" readonly>
                             </div>
@@ -179,9 +179,9 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
-                                <!-- <input class="form-control form-control-sm" id="kodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Dokter DPJP"> -->
-                                <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm"></select>
-                                <input class="form-control form-control-sm" id="kd_dpjp" name="kodeDPJP" type="hidden">
+                                <input class="form-control form-control-sm" id="txtkodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Poli Dokter DPJP">
+                                <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select>
+                                <input id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
                     </div>

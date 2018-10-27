@@ -14,10 +14,9 @@
 @endsection
 @section('content')
 <div class="col-md-12">
-    <!-- <div id="frame_sep_success" class="alert alert-success">
+    <div id="frame_success" class="alert alert-success">
     </div>
-    <div id="frame_sep_error" class="alert alert-danger">
-    </div> -->
+
   <div class="card">
       <div class="card-header">
         @include('layouts.search.rjsearch')
@@ -27,13 +26,14 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
           <thead>
             <tr>
-              <th>No</th>
-              <th>No Reg</th>
-              <th>No RM</th>
-              <th>Tanggal Reg</th>
-              <th>Jenis Rawat</th>
-              <th>Cara Bayar</th>
-              <th>No SJP/SEP</th>
+                <th>No</th>
+                <th>No Reg</th>
+                <th>No RM</th>
+                <th>Nama Pasien</th>
+                <th>Tanggal Reg</th>
+                <th>Jns Rawat</th>
+                <th>Jns Pasien</th>
+                <th>No SJP/SEP</th>
             </tr>
           </thead>
           <tbody>
@@ -75,19 +75,54 @@
 
     $(document).ready(function () {
         getStart();
+        resetSuccessReg();
         $('.table').removeAttr('style');
         ajaxLoad();
     });
 
     $(document).on('click','#simpan-user', function(e) {
         var form = $('#form-pasien'),
-            url = "",
+            url = "{{ route('reg.pasien.rj') }}",
             method = 'POST';
-        console.log(form.serialize());
         // Reset validationo error
         form.find('.invalid-feedback').remove();
         form.find('input').removeClass('is-invalid');
         form.find('#asalRujukan').prop('disabled', false);   
+        
+        $.ajax({
+            url: url,
+            method: method,
+            data: form.serialize(),
+            success: function(res) {
+                res = JSON.parse(res);
+                console.log(res);
+                if(res.ok == false) {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_reg'></span>");
+                    $('#error_reg').html(res.pesan).hide()
+                        .fadeIn(1500, function() { $('#error_reg'); });
+                    setTimeout(resetAll,5000);
+                } else {
+                    $('#frame_success').show().html("<span class='text-success' id='success_reg'></span>");
+                    $('#modal-register').modal('hide');
+                    $('#success_reg').html("<ul><li>"+res.pesan+"</li><li>No Antrian :"+res.no_antrian+"</li><ul>").hide()
+                        .fadeIn(1500, function() { $('#success_reg'); });
+                    setTimeout(resetSuccessReg,5000);
+                    ajaxLoad();
+                }
+            },
+            error : function(xhr) {
+                var errors = xhr.responseJSON; 
+                // console.log(xhr);
+                errorsHtml = '<ul>';
+                $.each( errors.errors, function( key, value ) {
+                    $("#" + key)
+                            .addClass('is-invalid')
+                            .closest('.form-group')
+                            .append('<span class="invalid-feedback"><strong>' +value[0]+ '</strong></span>');
+                });
+            }
+        })
+        
     });
 
     $(document).on('click','#daftar-pasien', function() {
@@ -244,9 +279,10 @@
                     {"mData": "no"},
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
+                    {"mData": "nama_pasien"},
                     {"mData": "tgl_reg"},
                     {"mData": "jns_rawat"},
-                    {"mData": "cara_bayar"},
+                    {"mData": "kd_cara_bayar"},
                     {"mData": "no_sjp"}
                 ]
             });

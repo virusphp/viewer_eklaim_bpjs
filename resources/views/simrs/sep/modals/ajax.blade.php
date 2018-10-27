@@ -120,7 +120,7 @@ function getRujukan()
                         asalRujukan();
                         katarak();
                         getSkdp();
-
+                        
                     } else {
                         $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                         $('#error_rujukan').html('No Rujukan tidak cocok').hide()
@@ -136,6 +136,30 @@ function getRujukan()
             }
         
         });
+}
+
+function ceNoSurat()
+{
+    var noRujukan = $('#noRujukan').val(),
+        url = '{{ route('nosurat.internal.one') }}',
+        method = 'GET';
+
+    $.ajax({
+        url: url,
+        method: method,
+        data: { noRujukan: noRujukan },
+        success: function(res) {
+            if (res.length == 0) {
+                console.log('benar');
+                $('#txtkodeDPJP').removeAttr('style').attr('name', 'dokterDPJP');
+                $('#kodeDPJP').css('display', 'none').removeAttr('name');
+            } else {
+                console.log('salah');
+                $('#txtkodeDPJP').css('display', 'none').removeAttr('name');
+                $('#kodeDPJP').removeAttr('style').attr('name','dokterDPJP');
+            }
+        }
+    })
 }
 
 function getDataSep()
@@ -256,20 +280,18 @@ function asalRujukan()
         url: '{{ route('bpjs.ppkrujukan') }}',
         data : {ppk_rujukan: ppk_rujukan},
         success: function(data) {
-            d = JSON.parse(data);
-            response = d.response.faskses[0];
-            // console.log(response);
-            $('#nama_faskes').val(response.nama).attr('readonly',true);
-            $('#asalRujukan option[value='+response.jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
+            // console.log(data.response.faskes[0]); 
+            // response = d.response.faskes[0];
+            $('#nama_faskes').val(data.response.faskes[0].nama).attr('readonly',true);
+            $('#asalRujukan option[value='+data.response.faskes[0].jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
         }
     })
 }
 
-
 $('#noRujukan').keydown(function(e) {
     var rujukan = $('#noRujukan').val();
     if (rujukan.length > 18) {
-        if(e.keyCode !== 8 && e.keyCode !== 9) {
+        if(e.keyCode !== 8 && e.keyCode !== 9 && e.ctrlKeye !== true && e.keyCode !== 65) {
             e.preventDefault();
         }
     }
@@ -284,11 +306,10 @@ $('#noSurat').focusout(function() {
     }
 })
 
-
-$('#kodeDPJP').keydown(function(e) {
-    var rujukan = $('#kodeDPJP').val();
+$('#txtkodeDPJP').keydown(function(e) {
+    var rujukan = $('#txtkodeDPJP').val();
     if (rujukan.length > 18) {
-        if(e.keyCode !== 8 && e.keyCode !== 9) {
+        if(e.keyCode !== 8 && e.keyCode !== 9 && e.ctrlKeye !== true && e.keyCode !== 65) {
             e.preventDefault();
         }
     }
@@ -303,8 +324,8 @@ $('#kodeDPJP').keyup(function() {
 
 $('#diagAwal').keydown(function(e) {
     var diagnosa = $('#diagAwal').val();
-    if (diagnosa.length > 3) {
-        if(e.keyCode !== 8 && e.keyCode !== 9) {
+    if (diagnosa.length > 6) {
+        if(e.keyCode !== 8 && e.keyCode !== 9 && e.ctrlKeye !== true && e.keyCode !== 65) {
             e.preventDefault();
         }
     }
@@ -320,7 +341,7 @@ $('#diagAwal').keyup(function() {
 $('#tujuan').keydown(function(e) {
     var poli = $('#tujuan').val();
     if (poli.length > 3) {
-        if(e.keyCode !== 8 && e.keyCode !== 9) {
+        if(e.keyCode !== 8 && e.keyCode !== 9 && e.ctrlKeye !== true && e.keyCode !== 65) {
             e.preventDefault();
         }
     }

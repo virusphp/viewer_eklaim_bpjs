@@ -39,4 +39,13 @@ class RujukanController extends Controller
             return json_encode($result);
         }
     }
+
+    public function getOneNoSurat(Request $request, Rujukan $rujukan)
+    {
+        if ($request->ajax()) {
+            $req = $request->all();
+            $rujukan = $rujukan->getNoSurat($req);
+            return $rujukan;
+        }
+    }
 }

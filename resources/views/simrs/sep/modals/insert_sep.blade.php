@@ -192,7 +192,7 @@ $('#cari_no_surat').on('click', function() {
 
 $(document).on('click', '#h-no-surat', function() {
     var noSurat = $(this).data('surat');
-        $('#noSurat').val(noSurat.substring(4, 11));
+        $('#noSurat').val(noSurat.substring(5, 11));
         $('#kdPoliDPJP').val(noSurat.substring(16, 19));
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');
@@ -238,7 +238,7 @@ $(document).on('click','#h-rujukan', function() {
                 asalRujukan();
                 katarak();
                 getSkdp();
-
+                ceNoSurat();
             } else {
                 $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                 $('#error_rujukan').html('No Rujukan tidak cocok').hide()
@@ -258,7 +258,7 @@ $(document).on('click','#h-rujukan', function() {
 
 // Rujukan keyup
 $(document).on('click','#h-rujukan-rs', function() {
-    var rujukan = $(this).data('rujukan');
+    var rujukan = $(this).data('rujukanrs');
     // console.log(rujukan);
     $('#no_rujukan').val(rujukan);
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -288,7 +288,7 @@ $(document).on('click','#h-rujukan-rs', function() {
                     asalRujukan();
                     katarak();
                     getSkdp();
-
+                    ceNoSurat();
                 } else {
                     $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                     $('#error_rujukan').html('No Rujukan tidak cocok').hide()
@@ -304,7 +304,7 @@ $(document).on('click','#h-rujukan-rs', function() {
         }
     
     });
-    $('#modal-rujukan').modal('hide');
+    $('#modal-rujukan-rs').modal('hide');
     // console.log(rujukan);
 });
 

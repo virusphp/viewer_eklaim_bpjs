@@ -252,10 +252,9 @@ class SepController extends Controller
     public function printSep($noReg)
     {
         $data = $this->getDataRegistrasi($noReg);
-        // dd($data);
-        $data->alamat = $data->alamat.' Kel.'.$data->nama_kelurahan.' Kec.'.$data->nama_kecamatan.' Kab.'.$data->nama_kabupaten.' Prov.'.$data->nama_propinsi;
-        
-        if (noReg($data->no_reg) == "02") {
+        $dataPasien = $this->getDataPasien($noReg);
+        $data->alamat = $dataPasien->alamat.' Kel.'.$dataPasien->nama_kelurahan.' Kec.'.$dataPasien->nama_kecamatan.' Kab.'.$dataPasien->nama_kabupaten.' Prov.'.$dataPasien->nama_propinsi;
+        if (noReg($dataPasien->no_reg) == "02") {
             $data->nama_poli = "-";
             $data->antrian =  "-";
         } else {
@@ -263,14 +262,14 @@ class SepController extends Controller
                             ->join('sub_unit as su', function($join) {
                                 $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');  
                             })
-                            ->where('no_reg', '=', $data->no_reg)
+                            ->where('no_reg', '=', $dataPasien->no_reg)
                             ->first();
             $data->nama_poli = $poli->nama_klinik;
-            $data->kd_poliklinik = $poli->kd_poliklinik;
-            $antrian = $this->noAntrianPoli($data);
+            $dataPasien->kd_poliklinik = $poli->kd_poliklinik;
+            $antrian = $this->noAntrianPoli($dataPasien);
+            // dd($antrian);
             $data->antrian = isset($antrian) != 0 ? $antrian[0]->noantrian : "-";
         }
-        // dd($data);
         // dd($antrian)
         $req = $this->cetak->cariSep($data->no_sjp);
         // dd($req);
@@ -280,14 +279,14 @@ class SepController extends Controller
         $reqPeserta = $this->cetak->getPeserta($dataSep->peserta->noKartu, $dataSep->tglSep);
         $peserta = json_decode($reqPeserta);
         $peserta = $peserta->response->peserta->informasi;
-        // dd($peserta);
-        $dataSep->noReg = $data->no_reg;
-        $dataSep->noMr = $data->no_rm;
+        $dataSep->noReg = $dataPasien->no_reg;
+        $dataSep->noMr = $dataPasien->no_rm;
         $dataSep->alamat = $data->alamat;
         $dataSep->kdDiagnosa = $data->kd_diagnosa;
         $dataSep->namaKlinik = $data->nama_poli;
         $dataSep->antrian = $data->antrian;
         $dataSep->asalFaskes = $data->nama_faskes;
+        // dd($dataSep);
         // $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $dataSep));
         // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
         return view('pdf.invoiceSep', compact('dataSep', 'peserta'));
@@ -315,11 +314,20 @@ class SepController extends Controller
     {
         // dd($noReg);
         $data = DB::table('registrasi as r')
-                    ->select('r.no_reg','r.tgl_reg','r.no_rm','p.alamat','sb.no_sjp','sb.cob','sb.kd_diagnosa','sb.nama_faskes','kl.nama_kelurahan',
-                            'kc.nama_kecamatan','kb.nama_kabupaten','pr.nama_propinsi')
+                    ->select('sb.no_sjp','sb.cob','sb.kd_diagnosa','sb.nama_faskes')
                     ->join('sep_bpjs as sb', function($join) {
                         $join->on('r.no_reg', '=', 'sb.no_reg');
                     })
+                ->where('r.no_reg', $noReg)->first();
+        return $data;
+    }
+
+    public function getDataPasien($noReg)
+    {
+        // dd($noReg);
+        $data = DB::table('registrasi as r')
+                    ->select('r.no_reg','r.tgl_reg','r.no_rm','p.alamat','kl.nama_kelurahan',
+                            'kc.nama_kecamatan','kb.nama_kabupaten','pr.nama_propinsi')
                     ->join('pasien as p', function($join) {
                         $join->on('r.no_rm', '=', 'p.no_rm');
                     })

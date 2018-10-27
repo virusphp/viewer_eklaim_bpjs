@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/cekhistory','BpjsController@getcekHistory')->name('bpjs.cekhistory');
         Route::get('/rujukan/internal','RujukanController@getRujukanInternal')->name('rujukan.internal');
         Route::get('/rujukan/nosurat','RujukanController@getNoSurat')->name('nosurat.internal');
+        Route::get('/rujukan/nosurat/one','RujukanController@getOneNoSurat')->name('nosurat.internal.one');
 
 
         Route::get('/bpjs/provinsi','BpjsController@getProvinsi')->name('bpjs.provinsi');
@@ -64,6 +65,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('reg/rawatjalan/search', 'RegRawatJalanController@search')->name('reg.rj.search');
         Route::get('reg/pasien/search', 'RegRawatJalanController@searchPasien')->name('reg.pasien.search');
         Route::get('reg/pasien/kartu', 'RegRawatJalanController@getKartu')->name('reg.pasien.kartu');
+        Route::post('reg/pasien/rawatjalan', 'RegRawatJalanController@sendpasien')->name('reg.pasien.rj');
     });
 
     // Group Route Registrasi
@@ -81,7 +83,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('simrs/poli/harga', 'PoliController@getHarga')->name('simrs.poli.harga');
         Route::get('simrs/poli/dokter', 'PoliController@getDokter')->name('simrs.poli.dokter');
         Route::get('simrs/jenispasien', 'CaraBayarController@getJnsPasien')->name('simrs.carabayar');
-
         // Rujukan
     });
 

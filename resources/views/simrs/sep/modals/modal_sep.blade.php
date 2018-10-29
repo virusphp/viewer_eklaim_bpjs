@@ -312,10 +312,9 @@
                     <td>No</td>
                     <td>No Rujukan</td>
                     <td>Tgl Rujukan</td>
-                    <td>No Kartu</td>
                     <td>Nama</td>
-                    <td>PPK Perujuk</td>
                     <td>Sub Speliasis</td>
+                    <td>Ppk Perujuk</td>
                 </tr>
             </thead>
             <tbody>
@@ -344,7 +343,6 @@
                     <td>No</td>
                     <td>No Rujukan</td>
                     <td>Tgl Rujukan</td>
-                    <td>No Kartu</td>
                     <td>Nama</td>
                     <td>PPK Perujuk</td>
                 </tr>
@@ -372,12 +370,11 @@
         <table id="tbl-nosurat" class="table table-responsive-sm table-bordered table-striped table-sm">
             <thead>
                  <tr>
-                    <th>No</th>
-                    <th>No Reg</th>
-                    <th>No Surat</th>
-                    <th>No Rujukan</th>
-                    <th>Jenis Surat</th>
-                    <th>Dokter</th>
+                    <td>No</td>
+                    <td>No Reg</td>
+                    <td>Kd Poli Dpjp</td>
+                    <td>No Rujukan</td>
+                    <td>Dokter</td>
                 </tr>
             </thead>
             <tbody>
@@ -407,10 +404,9 @@
                     <td>No</td>
                     <td>No Rujukan</td>
                     <td>Tgl Rujukan</td>
-                    <td>No Kartu</td>
                     <td>Nama</td>
-                    <td>PPK Perujuk</td>
                     <td>Sub Speliasis</td>
+                    <td>Ppk Perujuk</td>
                 </tr>
             </thead>
             <tbody>

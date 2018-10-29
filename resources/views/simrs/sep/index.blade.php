@@ -145,7 +145,6 @@
                 {"mData": "no"},
                 {"mData": "noSep"},
                 {"mData": "tglSep"},
-                {"mData": "noKartu"},
                 {"mData": "namaPeserta"},
                 {"mData": "ppkPerujuk"}
             ]
@@ -342,8 +341,6 @@
             }
         });
     });
-
-    
 
     // // cari dbjp
     $('#kodeDPJP').on('change',function() {

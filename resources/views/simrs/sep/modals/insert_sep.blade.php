@@ -80,10 +80,9 @@ $('#cari_rujukan').on('click', function() {
             {"mData": "no"},
             {"mData": "noKunjungan"},
             {"mData": "tglKunjungan"},
-            {"mData": "noKartu"},
             {"mData": "nama"},
-            {"mData": "ppkPerujuk"},
-            {"mData": "poli"}            
+            {"mData": "poli"},
+            {"mData": "ppkPerujuk"}
         ]
     
     });
@@ -128,10 +127,9 @@ $('#cari_rujukan_rs').on('click', function() {
             {"mData": "no"},
             {"mData": "noKunjungan"},
             {"mData": "tglKunjungan"},
-            {"mData": "noKartu"},
             {"mData": "nama"},
-            {"mData": "ppkPerujuk"},
-            {"mData": "poli"}            
+            {"mData": "poli"},
+            {"mData": "ppkPerujuk"}       
         ]
     
     });
@@ -174,9 +172,8 @@ $('#cari_no_surat').on('click', function() {
         "columns": [
             {"mData": "no"},
             {"mData": "noSurat"},
-            {"mData": "noReg"},
+            {"mData": "kdPoliDpjp"},
             {"mData": "noRujukan"},
-            {"mData": "jnsSurat"},
             {"mData": "namaDokter"}
         ]
     
@@ -191,9 +188,11 @@ $('#cari_no_surat').on('click', function() {
 });
 
 $(document).on('click', '#h-no-surat', function() {
-    var noSurat = $(this).data('surat');
-        $('#noSurat').val(noSurat.substring(5, 11));
-        $('#kdPoliDPJP').val(noSurat.substring(16, 19));
+    var noSurat = $(this).data('surat'),
+        kdDpjp = $(this).val();
+        noDpjp = noSurat.split('/');
+        $('#noSurat').val(noDpjp[0].substring(noDpjp[0].length - 6));
+        $('#kdPoliDPJP').val(kdDpjp);
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');
         

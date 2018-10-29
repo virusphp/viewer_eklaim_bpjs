@@ -82,29 +82,19 @@ class Sep
         // dd($data);
         $simpanSep = DB::table('sep_bpjs')->insert([
             'no_reg' => $data['no_reg'],
-            'tgl_sjp' => $data['tglSep'],
-            'cob' => $data['cob'],
-            'kd_faskes' => $data['ppkRujukan'],
-            'nama_faskes' => $data['namaFaskes'],
-            'kd_diagnosa' => $data['diagAwal'],
-            'nama_diagnosa' => $data['diagnosa'],
-            'kd_poli' => $data['tujuan'],
-            'nama_poli' => $data['poli'],
-            'kd_kelas_rawat' => $data['klsRawat'],
-            'nama_kelas_rawat' => $data['namaKelas'],
-            'no_rujukan' => $data['noRujukan'],
-            'asal_faskes' => $data['asalRujukan'],
-            'tgl_rujukan' => $data['tglRujukan'],
-            'lakalantas' => $data['lakaLantas']
-            // 'penjamin' => $data['penjamin'],
-            // 'suplesi' => $data['suplesi'],
-            // 'no_sep_suplesi' => $data['noSepSuplesi'],
-            // 'tgl_kejadian' => $data['tglKejadian'],
-            // 'kd_propinsi' => $data['kdPropinsi'],
-            // 'kd_kabupaten' => $data['kdKabupaten'],
-            // 'kd_kecamatan' => $data['kdKecamatan'],
-            // 'keterangan' => $data['keterangan'],
-            // 'user' => $data['user']
+            'COB' => $data['cob'],
+            'Kd_Faskes' => $data['ppkRujukan'],
+            'Nama_Faskes' => $data['namaFaskes'],
+            'Kd_Diagnosa' => $data['diagAwal'],
+            'Nama_Diagnosa' => $data['diagnosa'],
+            'Kd_poli' => $data['tujuan'],
+            'Nama_Poli' => $data['poli'],
+            'Kd_Kelas_Rawat' => $data['klsRawat'],
+            'Nama_kelas_rawat' => $data['namaKelas'],
+            'No_Rujukan' => $data['noRujukan'],
+            'Asal_Faskes' => $data['asalRujukan'],
+            'Tgl_Rujukan' => $data['tglRujukan'],
+            'Lakalantas' => $data['lakaLantas']
         ]);
         
         return $simpanSep;

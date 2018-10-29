@@ -252,7 +252,9 @@ class SepController extends Controller
     public function printSep($noReg)
     {
         $data = $this->getDataRegistrasi($noReg);
+        // dd($data);
         $dataPasien = $this->getDataPasien($noReg);
+        // dd($dataPasien);
         $data->alamat = $dataPasien->alamat.' Kel.'.$dataPasien->nama_kelurahan.' Kec.'.$dataPasien->nama_kecamatan.' Kab.'.$dataPasien->nama_kabupaten.' Prov.'.$dataPasien->nama_propinsi;
         if (noReg($dataPasien->no_reg) == "02") {
             $data->nama_poli = "-";

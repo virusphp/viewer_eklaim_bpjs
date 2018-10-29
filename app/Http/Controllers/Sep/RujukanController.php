@@ -26,9 +26,9 @@ class RujukanController extends Controller
                     'no' => $no++,
                     'noSurat' => '
                         <div class="btn-group">
-                            <button data-surat="'.$val->no_rujukan.'" id="h-no-surat" class="btn btn-sencodary btn-xs btn-cus">'.$val->no_rujukan.'</button>
+                            <button data-surat="'.$val->no_rujukan.'" id="h-no-surat" value="'.$val->kd_poli_dpjp.'" class="btn btn-sencodary btn-xs btn-cus">'.$val->no_rujukan.'</button>
                         </div> ',
-                    'noReg' => $val->no_reg,
+                    'kdPoliDpjp' => $val->kd_poli_dpjp,
                     'noRujukan' => $val->no_rujukan_bpjs,
                     'jnsSurat' => $val->jenis_surat,
                     'namaDokter' => $val->kd_dokter

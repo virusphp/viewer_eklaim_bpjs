@@ -260,7 +260,7 @@ class BpjsController extends Controller
                         'tglKunjungan' => $val->tglKunjungan,
                         'noKartu' => $val->peserta->noKartu,
                         'nama' => $val->peserta->nama,
-                        'ppkPerujuk' => $val->provPerujuk->kode,
+                        'ppkPerujuk' => $val->provPerujuk->nama,
                         'poli' => $val->poliRujukan->kode
                     ];
                 }

@@ -38,7 +38,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/rujukan/nosurat','RujukanController@getNoSurat')->name('nosurat.internal');
         Route::get('/rujukan/nosurat/one','RujukanController@getOneNoSurat')->name('nosurat.internal.one');
 
-
         Route::get('/bpjs/provinsi','BpjsController@getProvinsi')->name('bpjs.provinsi');
         Route::get('/bpjs/kabupaten','BpjsController@getKabupaten')->name('bpjs.kabupaten');
         Route::get('/bpjs/kecamatan','BpjsController@getKecamatan')->name('bpjs.kecamatan');

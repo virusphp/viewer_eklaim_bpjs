@@ -18,6 +18,7 @@ class Rujukan
                     ->select('sri.no_rujukan','sri.no_reg','sri.no_rujukan_bpjs','sri.jenis_surat','sri.kd_dokter', 'su.kd_poli_dpjp')
                     ->join('Sub_Unit as su', 'sri.kd_sub_unit','=','su.kd_sub_unit')
                     ->where('no_rujukan_bpjs', '=', $noSurat['noRujukan'])
+                    ->orderBy('sri.no_rujukan', 'desc')
                     ->get();
         return $data;
     }

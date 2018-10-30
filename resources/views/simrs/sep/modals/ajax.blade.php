@@ -288,6 +288,100 @@ function asalRujukan()
     })
 }
 
+function autonumber(nilai)
+{
+  nilai = nilai.toString();
+  var spas = "", 
+      start = 0, 
+      max = 6 - nilai.length;
+  for(; start < max; start++)
+    spas += "0";
+  return spas + nilai;
+}
+
+function formatReg(no_reg) 
+{
+    return no_reg.substring(0,2); 
+}
+
+function katarak()
+{
+    if($('#kd_poli').val() === 'MAT') {
+        $('#form-katarak').show();
+    } else {
+        $('#form-katarak').hide();
+    }
+}
+
+function resetSuccessSep() {
+        $('#frame_sep_success').hide();
+        $('#frame_sep_error').hide();
+        $('success_sep').remove();
+        $('error_sep').remove();
+}
+
+function resetAll(){
+    $('#frame_error').hide();
+    $('#error_rujukan').remove();
+}
+
+function getDiagnosa(kode, nama)
+{
+    $.ajax({
+        type : 'get',
+        url : '{{ route('bpjs.diagnosa') }}',
+        data: {kode:kode, nama:nama},
+        success: function(data) {
+            $('#kd_diagnosa').html(data);
+        }
+    })
+}
+
+function getPoli(kode, nama)
+{
+    $.ajax({
+        type : 'get',
+        url : '{{ route('bpjs.poli') }}',
+        data: {kode:kode, nama:nama},
+        success: function(data) {
+            $('#kd_poli').html(data);
+        }
+    })
+}
+
+function getSkdp()
+{
+    var internal = $('#intern_rujukan').val();
+    if (internal !== 0) {
+        $.ajax({
+            url : '{{ route('rujukan.internal') }}',
+            type: 'get',
+            data: {internal: internal},
+            success: function(data) {
+                if (data.length > 0) {
+                    $('#form-skdp').show();
+                    $('#noSurat').val("000000");
+                    $('#kodeDPJP').attr('disabled', true); 
+                }
+            }
+        })
+    }
+
+}
+
+// Penjamin KLL
+function getProvinsi()
+{
+    $.ajax({
+        type: 'get',
+        url: '{{ route('bpjs.provinsi') }}',
+        data: {},
+        success: function(data) {
+            $("#provinsi").html(data);
+        }
+    })
+}
+
 $('#noRujukan').keydown(function(e) {
     var rujukan = $('#noRujukan').val();
     if (rujukan.length > 18) {
@@ -419,100 +513,6 @@ $('#c_penjamin').click(function() {
         $('#form-penjamin2').hide(500);
     }
 })  
-
-function autonumber(nilai)
-{
-  nilai = nilai.toString();
-  var spas = "", 
-      start = 0, 
-      max = 6 - nilai.length;
-  for(; start < max; start++)
-    spas += "0";
-  return spas + nilai;
-}
-
-function formatReg(no_reg) 
-{
-    return no_reg.substring(0,2); 
-}
-
-function katarak()
-{
-    if($('#kd_poli').val() === 'MAT') {
-        $('#form-katarak').show();
-    } else {
-        $('#form-katarak').hide();
-    }
-}
-
-function resetSuccessSep() {
-        $('#frame_sep_success').hide();
-        $('#frame_sep_error').hide();
-        $('success_sep').remove();
-        $('error_sep').remove();
-}
-
-function resetAll(){
-    $('#frame_error').hide();
-    $('#error_rujukan').remove();
-}
-
-function getDiagnosa(kode, nama)
-{
-    $.ajax({
-        type : 'get',
-        url : '{{ route('bpjs.diagnosa') }}',
-        data: {kode:kode, nama:nama},
-        success: function(data) {
-            $('#kd_diagnosa').html(data);
-        }
-    })
-}
-
-function getPoli(kode, nama)
-{
-    $.ajax({
-        type : 'get',
-        url : '{{ route('bpjs.poli') }}',
-        data: {kode:kode, nama:nama},
-        success: function(data) {
-            $('#kd_poli').html(data);
-        }
-    })
-}
-
-function getSkdp()
-{
-    var internal = $('#intern_rujukan').val();
-    if (internal !== 0) {
-        $.ajax({
-            url : '{{ route('rujukan.internal') }}',
-            type: 'get',
-            data: {internal: internal},
-            success: function(data) {
-                if (data.length > 0) {
-                    $('#form-skdp').show();
-                    $('#noSurat').val("000000");
-                    $('#kodeDPJP').attr('disabled', true); 
-                }
-            }
-        })
-    }
-
-}
-
-// Penjamin KLL
-function getProvinsi()
-{
-    $.ajax({
-        type: 'get',
-        url: '{{ route('bpjs.provinsi') }}',
-        data: {},
-        success: function(data) {
-            $("#provinsi").html(data);
-        }
-    })
-}
 
 // Format date
 function formatDate(date) {

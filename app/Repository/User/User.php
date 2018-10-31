@@ -35,6 +35,11 @@ class User
         return $data;
     }
 
+    public function getUser($id)
+    {
+        return DB::table('user_login_sep')->where('id_user', $id)->first();
+    }
+
     public function getFoto($req)
     {
         // dd($req->kd);
@@ -49,6 +54,21 @@ class User
             'nama_pegawai' => $data['nama_pegawai'],
             'password' => bcrypt($data['password']),
             'role' => $data['role']
+        ]);
+        
+        if ($result) {
+            $res = $this->getPesan('simpan');
+        } else {
+            $res = $this->getPesan('error');
+        }
+        return $res;
+    }
+
+    public function getUpdate($data, $id)
+    {
+        // dd($data->password, $id);
+        $result = DB::table('user_login_sep')->where('id_user', $id)->update([
+            'password' => bcrypt($data['password']),
         ]);
         
         if ($result) {

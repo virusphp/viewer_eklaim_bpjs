@@ -12,10 +12,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            /* margin-left: -40px; */
-            /* margin-r2ght: -40px; */
-            /* margin-top: -50px;
-            margin-bottom: -50px; */
+            margin-top: 5px;
         }       
         /* table .table-ttd .ttd, .table-ttd {
             border: 1px solid;
@@ -45,21 +42,26 @@
         #sep-image {
             width: 5%;
             vertical-align: top;
+            margin-top: 5px;
+
         }
         .avatar-view {
             width: 170px;
             height: 25px;
+            margin-top: 5px;
         }
         #sep-title {
             margin-top: 1px;
             padding-left: 5em;
             /* width: 100%; */
-            font-size: 20px;
+            font-size: 17px;
+            margin-top: 5px;
         }
         #sep-title-2 {
             padding-left: 6.6em;
             /* width: 100%; */
-            font-size: 20px;
+            font-size: 17px;
+            margin-top: 5px;
         }
        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
             width: 15%;

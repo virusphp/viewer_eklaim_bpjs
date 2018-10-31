@@ -86,4 +86,62 @@ class UserController extends Controller
             return $result;
         }
     }
+
+    public function getEdit($id, User $user)
+    {
+        $user = $user->getUser($id);
+        return view('simrs.user.edit', compact('user'));
+    }
+
+    public function getUpdate(Request $request, $id, User $user)
+    {
+        $this->validate($request, [
+            'password' => 'required|min:3|confirmed:password_confirmation'
+        ],
+        [
+            'password.required' => 'Password harus di isi ya gaes!!',
+            'password.min' => 'Password harus lebih dari 3 digit',
+            'password.confirmed' => 'Password confirmasi harus di isi'
+        ]);
+
+       $user = $user->getUpdate($request, $id);
+       if ($user) {
+           $notif = $this->getPesan('update');
+       }
+       return redirect()->route('home')->with($notif);
+    }
+
+    public function getPesan($nilai)
+    {
+        switch ($nilai) {
+            case 'create' :
+                $notif = [
+                    'alert-type' => 'success',
+                    'message' => 'User berhasil di buat!'
+                ];
+                break;
+            case 'update' :
+                $notif = [
+                    'alert-type' => 'success',
+                    'message' => 'Berhasil Ganti Password!'
+                ];
+                break;
+            case 'delete' :
+                $notif = [
+                    'alert-type' => 'success',
+                    'message' => 'User berhasil di Hapus!'
+                ];
+                break;
+            case 'error' :
+                $notif = [
+                    'alert-type' => 'warning',
+                    'message' => 'Terjadi kesalahan silahkan ulangi!'
+                ];
+                break;
+            default :
+                $notif = false;
+                break;
+        }
+        return $notif;
+    }
 }

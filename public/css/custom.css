@@ -1,3 +1,4 @@
+
 .modal-lg {
     max-width: 1286px;
 }
@@ -122,4 +123,8 @@ input#v-alamat, #v-alamat-reg, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir
 
 input#v-alamat-reg {
     width: 300px;
+}
+
+.pesan-error {
+    color: red;
 }

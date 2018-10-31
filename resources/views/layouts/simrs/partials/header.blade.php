@@ -1,5 +1,5 @@
 <header class="app-header navbar">
-
+      <?php $user = Auth::user(); ?> 
       <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,7 +20,7 @@
       </ul>
       <ul class="nav navbar-nav ml-auto"> 
           <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-              <span class="semi-bold">{{Auth::user()->nama_pegawai}}</span>
+              <span class="semi-bold">{{ $user->nama_pegawai}}</span>
           </div>       
           <li class="nav-item dropdown">
        
@@ -32,8 +32,8 @@
               <div class="dropdown-header text-center">
                 <strong></strong>
               </div>           
-              <a class="dropdown-item" href="#">
-                <i class="fa fa-user"></i> {{Auth::user()->role}}
+              <a class="dropdown-item" href="{{ route('user.edit.profil', $user->id_user) }}">
+                <i class="fa fa-user"></i> {{ $user->role}}
               </a>            
               <div class="divider"></div>            
               <a class="dropdown-item" href="{{ route('logout') }}"

@@ -69,8 +69,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 
     // Group Route Registrasi
     Route::group(['namespace' => 'User'], function() {
-        Route::get('user/pegawai/foto', 'UserController@getFoto')->name('user.foto');
         Route::get('user', 'UserController@index')->name('user.index');
+        Route::get('user/pegawai/foto', 'UserController@getFoto')->name('user.foto');
+        Route::get('user/pegawai/edit/{pegawai}', 'UserController@getEdit')->name('user.edit.profil');
+        Route::put('user/pegawai/update/{pegawai}', 'UserController@getUpdate')->name('user.update.profil');
         Route::get('user/search', 'UserController@search')->name('user.search');
         Route::get('user/pegawai','UserController@pegawai')->name('user.pegawai');
         Route::post('user/simpan','UserController@simpanUser')->name('user.simpan');

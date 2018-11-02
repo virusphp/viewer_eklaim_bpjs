@@ -128,3 +128,12 @@ input#v-alamat-reg {
 .pesan-error {
     color: red;
 }
+
+/* span .select2-selection {
+    width: 250px;
+} */
+
+span .select2-container {
+    width: 250px;
+}
+

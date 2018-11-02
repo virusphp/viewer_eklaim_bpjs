@@ -55,7 +55,7 @@
     <script src="{{ asset('core-ui/js/custom-tooltips.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('core-ui/moment/min/moment.min.js') }}"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
-    <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script> -->
     <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
     @stack('scripts')
     <script type="text/javascript">

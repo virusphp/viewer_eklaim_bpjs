@@ -65,11 +65,11 @@
 <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
-<script type="text/javascript" src="{{ asset('selectize/js/standalone/selectize.min.js') }}" ></script>
+<!-- <script type="text/javascript" src="{{ asset('selectize/js/standalone/selectize.min.js') }}" ></script> -->
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 @include('simrs.sep.modals.ajax')
@@ -94,6 +94,7 @@
     //     });
     // });
 
+
     $(document).ready(function () {
         getStart();
         resetSuccessSep();
@@ -108,6 +109,7 @@
         $('#edit-modal-sep span').remove();
         $('#tgl_rujukan').val(); 
         $('#tgl_rujukan').attr('readonly', false); 
+        $("#kodeDPJP").val([]).trigger("change")
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');
     });

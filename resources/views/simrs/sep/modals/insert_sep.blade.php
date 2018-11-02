@@ -238,6 +238,7 @@ $(document).on('click','#h-rujukan', function() {
                 katarak();
                 getSkdp();
                 ceNoSurat();
+                $('.select2').removeAttr('style');
             } else {
                 $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");
                 $('#error_rujukan').html('No Rujukan tidak cocok').hide()

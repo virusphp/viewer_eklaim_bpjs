@@ -178,7 +178,9 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
+                                <div>
+                                    <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
+                                </div>
                                 <input class="form-control form-control-sm" id="txtkodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Poli Dokter DPJP">
                                 <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select>
                                 <input id="kd_dpjp" name="kodeDPJP" type="hidden">

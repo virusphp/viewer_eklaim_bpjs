@@ -153,10 +153,16 @@ function ceNoSurat()
                 console.log('benar');
                 $('#txtkodeDPJP').removeAttr('style').attr('name', 'dokterDPJP');
                 $('#kodeDPJP').css('display', 'none').removeAttr('name');
+                $("#kodeDPJP").val([]).trigger("change")
+                $(".selection").css('display','none');
             } else {
                 console.log('salah');
                 $('#txtkodeDPJP').css('display', 'none').removeAttr('name');
                 $('#kodeDPJP').removeAttr('style').attr('name','dokterDPJP');
+                $(".selection").removeAttr('style');
+                $("#kodeDPJP").select2({
+                    placeholder: 'Select an option'
+                });
             }
         }
     })

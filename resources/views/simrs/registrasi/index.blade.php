@@ -142,6 +142,7 @@
             url = '{{ route('reg.pasien.search') }}',
             method = 'GET';
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        // console.log(noRm);
         $.ajax({
             method: method,
             url : url,

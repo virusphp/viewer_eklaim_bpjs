@@ -12,11 +12,9 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 5px;
+            /* margin-top: 5px; */
         }       
-        /* table .table-ttd .ttd, .table-ttd {
-            border: 1px solid;
-        }    */
+      
         .ttd-garis{
             border-bottom: 2px solid;
         }
@@ -28,40 +26,45 @@
 
         body {
             font-family: "Arial";
-            font-size:12px;
-            height: 8px;
+            font-size:13px;
+            height: 5px;
             padding: 2px;
         }
         td {            
             font-family: "Arial";
-            font-size:12px;
-            height: 8px;
+            font-size:13px;
+            height: 5px;
             padding: 1px;
+        }
+
+        i , i strong {
+            font-size: 11px;
+            vertical-align: top;
         }
      
         #sep-image {
             width: 5%;
             vertical-align: top;
-            margin-top: 5px;
+            /* margin-top: 5px; */
 
         }
         .avatar-view {
             width: 170px;
             height: 25px;
-            margin-top: 5px;
+            /* margin-top: 5px; */
         }
         #sep-title {
             margin-top: 1px;
             padding-left: 5em;
             /* width: 100%; */
             font-size: 17px;
-            margin-top: 5px;
+            /* margin-top: 5px; */
         }
         #sep-title-2 {
             padding-left: 6.6em;
             /* width: 100%; */
             font-size: 17px;
-            margin-top: 5px;
+            /* margin-top: 5px; */
         }
        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
             width: 15%;
@@ -89,7 +92,7 @@
     </style>
 </head>
 <body id="sep-content" onload="printSep()">
-    <table class="table table-borderless table-header">
+    <table class="table table-borderless table-header" >
         <tr>
             <td id="sep-image" rowspan="2"><img class="img-responsive avatar-view"  src="{{ asset('img/logo-bpjs.png') }}"></td>
             <td id="sep-title">
@@ -103,7 +106,7 @@
             <td colspan="2"></td>                            
         </tr>                       
     </table>   
-    <table class="table table-content">
+    <table class="table table-content" >
         <tr>
             <td>No. SEP</td>
             <td>:</td>
@@ -187,7 +190,7 @@
             <td colspan="4"></td>
         </tr>        
     </table>
-    <table class="table table-ttd">
+    <table class="table table-ttd" >
         <tr>
             <td style="height:115px" colspan="6"></td>
         </tr>
@@ -214,9 +217,6 @@
             <td style="width:15%" class="ttd-garis"></td>
             <td class="g-gr"></td>
             <td style="width:15%" class="ttd-garis"></td>   
-        </tr>
-        <tr>
-            <td style="height:5px" colspan="6"></td>
         </tr>
         <tr>
             <td colspan="5"> 

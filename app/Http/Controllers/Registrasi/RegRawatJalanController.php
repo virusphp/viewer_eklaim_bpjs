@@ -41,6 +41,7 @@ class RegRawatJalanController extends Controller
 
     public function searchPasien(Request $req, Pasien $ps)
     {
+        // dd($req->all());
         if ($req->ajax()) {
             $pasien = $ps->getPasien($req);
             // dd($pasien);

@@ -52,7 +52,8 @@ function caraBayar($nilai)
 		3 => 'Asuransi Lain',
 		8 => 'BPJS',
 		9 => 'UMUM',
-		1 => 'UMUM'
+		1 => 'UMUM',
+		4 => 'Keringan Dispensasi'
 	];
 
 	return $cara_bayar[$nilai];

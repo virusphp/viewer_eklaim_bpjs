@@ -10,6 +10,24 @@
       <a href="{{ route('sep.index') }}">SEP</a>
     </li>
     <li class="breadcrumb-item active">Index</li>
+    <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group">
+            <div class="col-md-5 col-form-label form-inline">
+                <div class="form-check form-check-inline mr-1">
+                    <input class="form-check-input" type="radio" id="fktp" value="1" name="fktp" checked>
+                    <label class="form-check-label" for="inline-radio1">Fktp 1</label>
+                </div>
+                <div class="form-check form-check-inline mr-1">
+                    <input class="form-check-input" type="radio" id="fktp" value="2" name="fktp">
+                    <label class="form-check-label" for="inline-radio2">Fktp 2</label>
+                </div>
+            </div>
+            <input name="cek-no-kartu" id="cek-no-kartu" value="" class="form-control" placeholder="Cari..." type="text">
+            <a id="cek-history-peserta" class="btn btn-sm">
+                <i class="icons tengah font-3xl icon-credit-card"></i>
+            </a>
+        </div>
+    </li>
 </ol>
 @endsection
 @section('content')
@@ -381,6 +399,67 @@
         });
     });
 
+    // cari HISTORY
+    $('#cek-history-peserta').on('click', function() {
+        $(this).addClass('edit-item-trigger-clicked');
+
+        var no_kartu = $('#cek-no-kartu').val(),
+            akhir = moment().format("YYYY-MM-DD"),
+            _token = $('meta[name="csrf-token"]').attr('content');
+        if(no_kartu.length < 9) return;
+
+        var options = {
+            'backdrop': 'static'
+        };
+        if ($('#fktp:checked').val() == 2) {
+            var url = '{{ route('bpjs.listrujukan.rs') }}';
+        } else {
+            var url = '{{ route('bpjs.listrujukan') }}';
+        }
+        console.log($('#fktp:checked').val());
+
+      
+        $('#tbl-rujukan').dataTable({
+            "Processing": true,
+            "ServerSide": true,
+            "sDom" : "<t<p i>>",
+            "iDisplayLength": 3,
+            "bDestroy": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+                "sSearch": "Search Data :  ",
+                "sZeroRecords": "Tidak ada data",
+                "sEmptyTable": "Data tidak tersedia",
+                "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
+            },
+            "ajax": {
+                "url": url,
+                "type": "GET",
+                "data": {                   
+                    // '_token': _token,
+                    'no_kartu': no_kartu
+                }
+            },
+            "columns": [
+                {"mData": "no"},
+                {"mData": "noKunjungan"},
+                {"mData": "tglKunjungan"},
+                {"mData": "nama"},
+                {"mData": "poli"},
+                {"mData": "ppkPerujuk"}
+            ]
+        
+        });
+        oTable = $('#tbl-history').DataTable();  
+        $('#no_kartu').keyup(function(){
+            oTable.search($(this).val()).draw() ;
+            $('.table').removeAttr('style');
+        }); 
+        
+        $('#modal-rujukan').modal(options);
+    });
+
     $(document).on('change','#search', function() {
         ajaxLoad();
     })
@@ -393,6 +472,7 @@
             // $.fn.dataTable.ext.errMode = 'throw';
             $('#mytable').dataTable({
                 "Processing": true,
+                "responsive": true,
                 "ServerSide": true,
                 "sDom" : "<t<p i>>",
                 "iDisplayLength": 25,
@@ -420,11 +500,11 @@
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_reg"},
+                    {"width": "10%", "mData": "tgl_reg"},
                     {"mData": "jns_rawat"},
-                    {"mData": "kd_cara_bayar"},
+                    {"width": "5%", "mData": "kd_cara_bayar"},
                     {"mData": "no_sjp"},
-                    {"mData": "aksi"}            
+                    {"width": "15%", "mData": "aksi"}            
                 ]
             });
             oTable = $('#mytable').DataTable();  

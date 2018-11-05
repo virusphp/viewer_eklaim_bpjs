@@ -22,7 +22,7 @@
                     <label class="form-check-label" for="inline-radio2">Fktp 2</label>
                 </div>
             </div>
-            <input name="cek-no-kartu" id="cek-no-kartu" value="" class="form-control" placeholder="Cari..." type="text">
+            <input name="cek-no-kartu" id="cek-no-kartu" value="" class="form-control" placeholder="Scan No Kartu..." type="text">
             <a id="cek-history-peserta" class="btn btn-sm">
                 <i class="icons tengah font-3xl icon-credit-card"></i>
             </a>

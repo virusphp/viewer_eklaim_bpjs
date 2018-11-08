@@ -46,7 +46,8 @@
                     </div>
                     <div class="form-group">
                         <label for="city">Hak Kelas</label>
-                        <input class="form-control form-control-sm" id="kelas" name="namaKelas" type="text" placeholder="kelas" readonly>
+                        <input class="form-control form-control-sm" id="kelas" name="klsRawat" type="text" placeholder="kelas" readonly>
+                        <select id="hak_kelas" name="klsRawat" class="form-control form-control-sm"></select>
                     </div>
                     <div class="form-group">
                         <label for="aktif">Peserta</label>

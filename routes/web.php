@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     // Group Route Master
     Route::group(['namespace' => 'Sep'], function() {
         // autocompleted
+        Route::get('/bpjs/kelas','BpjsController@getKelas')->name('bpjs.kelas');
         Route::get('/bpjs/diagnosa','BpjsController@getDiagnosa')->name('bpjs.diagnosa');
         Route::get('/bpjs/poli','BpjsController@getPoli')->name('bpjs.poli');
         Route::get('/bpjs/dpjp','BpjsController@getDpjp')->name('bpjs.dpjp');

@@ -101,6 +101,7 @@ class BpjsController extends Controller
         }
     }
 
+
     public function getSep(Request $req)
     {
         // dd($req->sep);
@@ -172,7 +173,7 @@ class BpjsController extends Controller
             $data = json_decode($faskes);
             // dd($data);
             if ($data->response != null) {
-                $faskes = $data->response->faskses;
+                $faskes = $data->response->faskes;
             } else {
                 $faskes = [];
             }
@@ -238,6 +239,34 @@ class BpjsController extends Controller
             $prov.= "<option value='$d[kode]'>$d[nama]</option>";
         }
         return $prov;
+    }
+
+    public function getKelas()
+    {
+        $kelas = $this->Kelas();
+        $data = AmbilKelas(); 
+        // dd($data);
+        $kelas="<option value='0'>-- Pilih Kelas--</pilih>";
+        foreach($data as $key => $val)
+        {
+            $kelas.= "<option value='$key'>$val</option>";
+        }
+        return $kelas;
+    }
+
+    public function Kelas()
+    {
+        try { 
+            $url = $this->api_url . "referensi/kelasrawat";
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        }
     }
 
     public function getListRujukan(Request $req)

@@ -62,14 +62,33 @@ function getEditItem(data)
     $('#tglSep').val(data.tglSep);
     if($('#jns_pelayanan').val() == 2) {
         $('#nama_pelayanan').val('Rawat Jalan');
+        $('#hak_kelas').css('display', 'none').removeAttr('name');
+        $('#kelas').removeAttr('style').attr('name','klsRawat');
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
+        getKelas();
     }
     // getPRujukanppkpkAsal();
     getPeserta();
     getHistory();
 }
 
+function getKelas()
+{
+    $('#kelas').css('display', 'none').removeAttr('name');
+    var url = '{{ route('bpjs.kelas') }}',
+        method = 'GET';
+    $.ajax({
+        url: url,
+        method: method,
+        data: {},
+        success: function(res) {
+            console.log(res);
+            $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
+            $('#hak_kelas').html(res);
+        }
+    }) 
+}
 
 //get data edit SEP
 function getEditSep(data)
@@ -159,7 +178,8 @@ function ceNoSurat()
                 console.log('salah');
                 $('#txtkodeDPJP').css('display', 'none').removeAttr('name');
                 $('#kodeDPJP').removeAttr('style').attr('name','dokterDPJP');
-                $(".selection").removeAttr('style');
+                $(".select2").removeAttr('style');
+                $("span .select2-container").removeAttr('style');
                 $("#kodeDPJP").select2({
                     placeholder: 'Select an option'
                 });
@@ -204,7 +224,8 @@ function getDataSep()
                 $('#nama_pelayanan').val('Rawat Jalan');
             } else {
                 $('#nama_pelayanan').val('Rawat Inap');
-                $('#tujuan').attr('readonly','true');
+                // $('#tujuan').attr('readonly','true');
+                getSkdp();
                 $('#kd_poli').val("000");
                 $('#noRujukan').val(response.No_Rujukan);
             }
@@ -264,14 +285,15 @@ function getHistory()
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
             // ini SPO
-            } else if ($('#jns_pelayanan').val() == 1 && response.jnsPelayanan == 2) {
-                $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
-                $('#noRujukan').val(response.noSep).attr('readonly',true);
-                $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
-                $('#ppk_rujukan').val(response.noSep.substr(0,8)).attr('readonly',true);
+            } else if ($('#jns_pelayanan').val() == 1) {
+                // $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
+                // $('#noRujukan').val(response.noSep).attr('readonly',true);
+                // $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
+                // $('#ppk_rujukan').val(response.noSep.substr(0,8)).attr('readonly',true);
                 $('#tgl_rujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
+                ceNoSurat();
             } 
         }
     })
@@ -415,10 +437,10 @@ $('#txtkodeDPJP').keydown(function(e) {
     }
 });
 
-$('#kodeDPJP').keyup(function() {
+$('#txtkodeDPJP').keyup(function() {
     if(this.value.length > 1) return;
     if ($(this).val().length == 0) {
-        $('#kd_dpjp').val("");
+        $('#kd_dpjp').val("00000");
     }
 });
 

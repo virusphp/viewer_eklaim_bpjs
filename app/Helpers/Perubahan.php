@@ -43,7 +43,8 @@ function formatTgl($nilai)
 
 function jenisRawat($nilai)
 {
-	return $nilai = 1 ? 'R Jalan' : $nilai = 2 ? 'R Inap' : 'IGD';
+	// dd(($nilai == 1) ? "R Jalan" : (($nilai == 2) ? "R Inap" : "IGD"));
+	return ($nilai == 1) ? "R Jalan" : (($nilai == 2) ? "R Inap" : "IGD");
 }
 
 function caraBayar($nilai)
@@ -58,3 +59,15 @@ function caraBayar($nilai)
 
 	return $cara_bayar[$nilai];
 }
+
+function AmbilKelas()
+{
+	$cara_bayar = [
+		1 => 'Kelas I',
+		2 => 'Kelas II',
+		3 => 'Kelas III'
+	];
+
+	return $cara_bayar;
+}
+

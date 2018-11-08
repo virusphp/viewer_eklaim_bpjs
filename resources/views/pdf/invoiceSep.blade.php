@@ -12,7 +12,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            /* margin-top: 5px; */
+            margin-bottom: 2px;
         }       
       
         .ttd-garis{
@@ -30,6 +30,7 @@
             height: 5px;
             padding: 2px;
         }
+
         td {            
             font-family: "Arial";
             font-size:13px;
@@ -45,26 +46,28 @@
         #sep-image {
             width: 5%;
             vertical-align: top;
-            /* margin-top: 5px; */
+            /* margin-bottom: 5px; */
 
         }
+
         .avatar-view {
             width: 170px;
             height: 25px;
             /* margin-top: 5px; */
         }
+
         #sep-title {
             margin-top: 1px;
             padding-left: 5em;
             /* width: 100%; */
             font-size: 17px;
-            /* margin-top: 5px; */
+            /* margin-bottom: 5px; */
         }
         #sep-title-2 {
             padding-left: 6.6em;
             /* width: 100%; */
             font-size: 17px;
-            /* margin-top: 5px; */
+            /* margin-bottom: 5px; */
         }
        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
             width: 15%;

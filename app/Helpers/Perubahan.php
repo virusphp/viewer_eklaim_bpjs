@@ -71,3 +71,14 @@ function AmbilKelas()
 	return $cara_bayar;
 }
 
+function namaKelas($nilai)
+{
+	$namaKelas = [
+		1 => 'Kelas I',
+		2 => 'Kelas II',
+		3 => 'Kelas III'
+	];
+
+	return $namaKelas[$nilai];
+}
+

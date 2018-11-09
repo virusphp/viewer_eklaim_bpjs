@@ -197,14 +197,14 @@ class SepController extends Controller
         }
     }
 
-    public function sepInsert(Request $req)
+    public function sepInsert(SepRequest $req)
     {
         if ($req->ajax()) {
             $data = $req->all();
             if ($data['penjamin'] != 0) {
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
-            $data['tglSep'] = date('Y-m-d');
+            // $data['tglSep'] = date('Y-m-d');
             // $datetime = new DateTime('tomorrow');
             // $data['tglSep'] = $datetime->format('Y-m-d');
             $data['ppkPelayanan'] = '1105R001';
@@ -212,8 +212,9 @@ class SepController extends Controller
             $data['user'] = 'udin admin';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
+                $data['namaKelas'] = namaKelas($data['klsRawat']);
             }
-            // dd($data);
+            dd($data);
             $result = $this->conn->saveSep($data);
             return $result;
         }

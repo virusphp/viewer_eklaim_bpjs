@@ -213,7 +213,7 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
             }
-            dd($data);
+            // dd($data);
             $result = $this->conn->saveSep($data);
             return $result;
         }

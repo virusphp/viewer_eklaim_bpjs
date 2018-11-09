@@ -205,15 +205,15 @@ class SepController extends Controller
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
             $data['tglSep'] = date('Y-m-d');
-            $datetime = new DateTime('tomorrow');
-            $data['tglSep'] = $datetime->format('Y-m-d');
+            // $datetime = new DateTime('tomorrow');
+            // $data['tglSep'] = $datetime->format('Y-m-d');
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
             $data['user'] = 'udin admin';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
             }
-            // dd($data);
+            dd($data);
             $result = $this->conn->saveSep($data);
             return $result;
         }

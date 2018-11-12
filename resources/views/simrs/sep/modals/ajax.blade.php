@@ -293,6 +293,8 @@ function getHistory()
                 $('#tgl_rujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
+                $('#kd_poli').val("000");
+                $('#tujuan').val("000").attr('readonly', true);
                 ceNoSurat();
             } 
         }

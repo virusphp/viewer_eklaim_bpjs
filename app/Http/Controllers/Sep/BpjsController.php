@@ -38,11 +38,43 @@ class BpjsController extends Controller
         } 
     }
 
+    public function getRujukanPeserta(Request $req)
+    {
+        // return $req->rujukan;
+        try {
+            $url = $this->api_url . "rujukan/peserta/".$req->no_kartu;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
     public function getRujukanRS(Request $req)
     {
         //  dd($req->rujukan);
         try {
             $url = $this->api_url . "rujukan/rs/".$req->rujukan;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function getRujukanRSPeserta(Request $req)
+    {
+        //  dd($req->rujukan);
+        try {
+            $url = $this->api_url . "rujukan/rs/peserta/".$req->rujukan;
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;
@@ -100,7 +132,6 @@ class BpjsController extends Controller
             }
         }
     }
-
 
     public function getSep(Request $req)
     {
@@ -266,6 +297,70 @@ class BpjsController extends Controller
             if ($e->hasResponse()) {
                 $result = Psr7\str($e->getResponse());
             }
+        }
+    }
+
+    public function getCekRujukan(Request $req)
+    {
+        //  dd($req->all());
+         if ($req->ajax()) {
+            $no = 1;
+            $rujukan = $this->getRujukanPeserta($req);
+            $data = json_decode($rujukan);
+            // dd($data);
+            if ($data->response == null) {
+                $query = [];
+            } else {
+                foreach($data->response as $val) {
+                    $query[] = [
+                        'no' => $no++,
+                        'noKunjungan' => '
+                            <div class="btn-group">
+                                <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                            </div> ',
+                        'tglKunjungan' => $val->tglKunjungan,
+                        'noKartu' => $val->peserta->noKartu,
+                        'nama' => $val->peserta->nama,
+                        'ppkPerujuk' => $val->provPerujuk->nama,
+                        'poli' => $val->poliRujukan->kode
+                    ];
+                }
+            }
+            $result = isset($query) ? ['data' => $query] : ['data' => 0];
+            // dd($result);
+            return json_encode($result);
+        }
+    }
+
+    public function getCekRujukanRS(Request $req)
+    {
+        //  dd($req->all());
+         if ($req->ajax()) {
+            $no = 1;
+            $rujukan = $this->getRujukanRSPeserta($req);
+            $data = json_decode($rujukan);
+            // dd($data);
+            if ($data->response == null) {
+                $query = [];
+            } else {
+                foreach($data->response as $val) {
+                    $query[] = [
+                        'no' => $no++,
+                        'noKunjungan' => '
+                            <div class="btn-group">
+                                <button data-rujukan="'.$val->noKunjungan.'" id="h-rujukan" class="btn btn-sencodary btn-xs btn-cus">'.$val->noKunjungan.'</button>
+                            </div> ',
+                        'tglKunjungan' => $val->tglKunjungan,
+                        'noKartu' => $val->peserta->noKartu,
+                        'nama' => $val->peserta->nama,
+                        'ppkPerujuk' => $val->provPerujuk->nama,
+                        'poli' => $val->poliRujukan->kode
+                    ];
+                }
+            }
+            $result = isset($query) ? ['data' => $query] : ['data' => 0];
+            // dd($result);
+            return json_encode($result);
         }
     }
 

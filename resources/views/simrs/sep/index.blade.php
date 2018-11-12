@@ -124,10 +124,12 @@
         var alertas = $('#form-sep'),
             tgl_reg = '{{ date('Y-m-d') }}';
         
-        $('#edit-modal-sep span').remove();
-        $('#tgl_rujukan').val(); 
-        $('#tgl_rujukan').attr('readonly', false); 
+        $("#edit-modal-sep span").remove();
+        $("#tgl_rujukan").val(); 
+        $("#tgl_rujukan").attr('readonly', false); 
         $("#kodeDPJP").val([]).trigger("change")
+        $("#asalRujukan").val([1]);
+        $("#tujuan").removeAttr("readonly");
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');
     });
@@ -412,9 +414,9 @@
             'backdrop': 'static'
         };
         if ($('#fktp:checked').val() == 2) {
-            var url = '{{ route('bpjs.listrujukan.rs') }}';
+            var url = '{{ route('bpjs.cek.rujukan.rs') }}';
         } else {
-            var url = '{{ route('bpjs.listrujukan') }}';
+            var url = '{{ route('bpjs.cek.rujukan') }}';
         }
         console.log($('#fktp:checked').val());
 
@@ -437,7 +439,7 @@
                 "url": url,
                 "type": "GET",
                 "data": {                   
-                    // '_token': _token,
+                    '_token': _token,
                     'no_kartu': no_kartu
                 }
             },

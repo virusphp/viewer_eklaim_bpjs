@@ -86,6 +86,7 @@ function getKelas()
             console.log(res);
             $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
             $('#hak_kelas').html(res);
+            
         }
     }) 
 }
@@ -250,7 +251,8 @@ function getPeserta()
                 response = d.response.peserta;
                 $('#kelas').val(response.hakKelas.keterangan);
                 $('#aktif').val(response.statusPeserta.keterangan);
-
+                $('#hak_kelas option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
+                
                 if ($('#jns_pelayanan').val() == 1) {
                     $('#nama_faskes').val(response.provUmum.nmProvider);
                     $('#ppk_rujukan').val(response.provUmum.kdProvider);

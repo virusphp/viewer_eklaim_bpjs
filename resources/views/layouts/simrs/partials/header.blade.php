@@ -15,7 +15,7 @@
           <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Settings</a>
+          <a class="nav-link" href="{{ route('user.edit.profil', $user->id_user) }}">Settings</a>
         </li>
       </ul>
       <ul class="nav navbar-nav ml-auto"> 

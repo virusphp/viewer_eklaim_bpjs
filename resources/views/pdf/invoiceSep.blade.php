@@ -226,7 +226,7 @@
                 <i>
                     *Saya Menyetujui BPJS Kesehatan menggunakan Informasi Medis Pasien jika diperlukan 
                      <br>*SEP bukan sebagai bukti penjamin peserta
-                     <br><strong>{{ !is_null($peserta->prolanisPRB) ? '*Peserta '.$peserta->prolanisPRB : '' }}</strong>
+                     <br><strong>{{ !is_null($informasi->prolanisPRB) ? '*Peserta '.$informasi->prolanisPRB : '' }}</strong>
                 </i>
             </td>
             <td>Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>

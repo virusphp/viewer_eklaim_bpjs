@@ -33,12 +33,10 @@
         {{-- @include('layouts.simrs.partials.breadcrumb') --}}
         @yield('breadcrumb')
 
-        <div class="container-fluid">
-            <div class="animated fadeIn">
-                <div class="row">
-                    @yield('content')
-                </div>
-            </div>
+        <div class="container">
+          <div class="row">
+              @yield('content')
+          </div>
         </div>
       </main>
     </div>

@@ -31,7 +31,6 @@ function getStart()
         return this.defaultSelected;
     });
 
-   
     //     if (sep.length !== null) {
     //         $('#edit-item').attr('disabled', 'disabled');
     //     }
@@ -67,6 +66,7 @@ function getEditItem(data)
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
         getKelas();
+        // $("#txtkodeDPJP").select2();
     }
     // getPRujukanppkpkAsal();
     getPeserta();

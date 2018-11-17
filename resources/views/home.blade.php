@@ -10,8 +10,9 @@
 @endsection
 
 @section('content')
-<div class="card">
-  <div class="card-header text-center">
+<div class="col align-self-center">
+<div class="card text-center">
+  <div class="card-header">
     Pengumuman
   </div>
   <div class="card-body">
@@ -21,8 +22,7 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="card text-center">
+ <div class="card text-center">
     <div class="card-header">
       Selamat Ulang Tahun
     </div>
@@ -38,9 +38,7 @@
     </div>
   </div>
 </div>
-
-
-
+ 
 
 @endsection
 @push('css')

@@ -254,8 +254,8 @@ function getPeserta()
                 $('#hak_kelas option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
                 
                 if ($('#jns_pelayanan').val() == 1) {
-                    $('#nama_faskes').val(response.provUmum.nmProvider);
-                    $('#ppk_rujukan').val(response.provUmum.kdProvider);
+                    // $('#nama_faskes').val(response.provUmum.nmProvider);
+                    // $('#ppk_rujukan').val(response.provUmum.kdProvider);
                     // $('#tgl_rujukan').attr('readonly', false);
                 }
             }
@@ -288,10 +288,11 @@ function getHistory()
                 $('#noSurat').val("000000");
             // ini SPO
             } else if ($('#jns_pelayanan').val() == 1) {
-                // $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
+                $("#asalRujukan").val([2]);
+                $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
                 // $('#noRujukan').val(response.noSep).attr('readonly',true);
-                // $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
-                // $('#ppk_rujukan').val(response.noSep.substr(0,8)).attr('readonly',true);
+                $('#nama_faskes').val("RSUD KRATON");
+                $('#ppk_rujukan').val("1105R001");
                 $('#tgl_rujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");

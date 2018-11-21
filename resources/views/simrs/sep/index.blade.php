@@ -402,7 +402,7 @@
     });
 
     // cari HISTORY
-    $('#cek-history-peserta').on('click', function() {
+    $('#cek-no-kartu').on('change', function() {
         $(this).addClass('edit-item-trigger-clicked');
 
         var no_kartu = $('#cek-no-kartu').val(),

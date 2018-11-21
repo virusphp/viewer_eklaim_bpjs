@@ -10,34 +10,38 @@
 @endsection
 
 @section('content')
-<div class="col align-self-center">
-<div class="card text-center">
-  <div class="card-header">
-    Pengumuman
-  </div>
-  <div class="card-body">
-    RSUD Kraton adalah Rumah sakit umum daerah Kabupaten Pekalongan
-    ini adalah layanan Sistem Informasi Rumah Sakit minipack yang di desain
-    dengan minimum service serta modul modul yang terintegrasi secara langsung
-  </div>
-</div>
-
- <div class="card text-center">
+  <div class="card text-center">
     <div class="card-header">
-      Selamat Ulang Tahun
+      Pengumuman
     </div>
     <div class="card-body">
-      @foreach($pegawai_ultah as $pg)
-        <img src="{{ asset('images/pegawai/'.$pg->kd_pegawai.'.jpg') }}" width="149" height="200" alt="{{ $pg->nama_pegawai }}">
-          <p>
-            <strong>{{ $pg->nama_pegawai }}</strong> <br>
-            {{ tanggal($pg->tgl_lahir) }} <br>
-            {{ $pg->unit_kerja }}
-          </p>
-      @endforeach
+      RSUD Kraton adalah Rumah sakit umum daerah Kabupaten Pekalongan
+      ini adalah layanan Sistem Informasi Rumah Sakit minipack yang di desain
+      dengan minimum service serta modul modul yang terintegrasi secara langsung
     </div>
   </div>
-</div>
+
+  <div class="col align-self-center">
+    <div class="row">
+      @foreach($pegawai_ultah as $pg)
+      <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-header">
+              Selamat Ulang Tahun
+            </div>
+            <div class="card-body">
+                <img src="{{ asset('images/pegawai/'.$pg->kd_pegawai.'.jpg') }}" width="149" height="200" alt="{{ $pg->nama_pegawai }}">
+                  <p>
+                    <strong>{{ $pg->nama_pegawai }}</strong> <br>
+                    {{ tanggal($pg->tgl_lahir) }} <br>
+                    {{ $pg->unit_kerja }}
+                  </p>
+            </div>
+          </div>
+        </div>
+        @endforeach
+    </div>
+  </div>
  
 
 @endsection

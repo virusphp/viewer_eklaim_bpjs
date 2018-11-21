@@ -58,6 +58,11 @@ class Registrasi
                         ['r.tgl_reg','=',$tgl],
                         ['r.no_rm','LIKE',$keywords]
                     ]);
+                    $query->orWhere([
+                        ['r.jns_rawat','=',$request->jns_rawat],
+                        ['r.tgl_reg','=',$tgl],
+                        ['p.nama_pasien','LIKE',$keywords]
+                    ]);
                 } else {
                     $term = $request->get('search');
                     $keywords = '%'. $term .'%';
@@ -66,6 +71,12 @@ class Registrasi
                         ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
                         ['r.tgl_reg','=',$tgl],
                         ['r.no_rm','LIKE',$keywords]
+                    ]);
+                    $query->orWhere([
+                        ['r.jns_rawat','=',$request->jns_rawat],
+                        ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
+                        ['r.tgl_reg','=',$tgl],
+                        ['p.nama_pasien','LIKE',$keywords]
                     ]);
                 }
             })        

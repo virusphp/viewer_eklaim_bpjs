@@ -53,6 +53,7 @@ class UserController extends Controller
             $pegawai[0]->foto = $filename;
             $pegawai[0]->tgl_lahir = tanggal($pegawai[0]->tgl_lahir);
             header("Content-type: image/jpeg");
+            // dd($pegawai);
             return $pegawai;
         }
     }

@@ -403,6 +403,14 @@
 
     // cari HISTORY
     $('#cek-no-kartu').on('change', function() {
+        pencarian();
+    });
+
+    $('#cek-history-peserta').on('click', function() {
+        pencarian();
+    });
+
+    function pencarian() {
         $(this).addClass('edit-item-trigger-clicked');
 
         var no_kartu = $('#cek-no-kartu').val(),
@@ -460,7 +468,7 @@
         }); 
         
         $('#modal-rujukan').modal(options);
-    });
+    }
 
     $(document).on('change','#search', function() {
         ajaxLoad();

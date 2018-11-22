@@ -27,7 +27,8 @@ class User
         $data = DB::table('pegawai')->select('kd_pegawai','nama_pegawai', 'alamat', 'tgl_lahir', 'tempat_lahir','unit_kerja','foto')
                 ->where(function($query) use ($kode) {
                     if ($kode) {
-                        $keywords = '%'. $kode . '%';
+                        $keywords = $kode . '%';
+                        // $query->orWhere('nama_pegawai', '=', $kode);
                         $query->orWhere('nama_pegawai', 'like', $keywords);
                     }
                 })

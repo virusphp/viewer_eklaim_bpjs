@@ -83,6 +83,7 @@
 <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <!-- <script type="text/javascript" src="{{ asset('selectize/js/standalone/selectize.min.js') }}" ></script> -->
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> -->
@@ -126,7 +127,10 @@
         
         $("#edit-modal-sep span").remove();
         $("#tgl_rujukan").val(); 
+        // $("#txtkodeDPJP").val();
         $("#tgl_rujukan").attr('readonly', false); 
+        // $("#kodeDPJP").select2("destroy");
+        // $("#txtkodeDPJP").select2("destroy");
         $("#kodeDPJP").val([]).trigger("change")
         $("#asalRujukan").val([1]);
         $("#tujuan").removeAttr("readonly");
@@ -207,6 +211,7 @@
                 katarak();
                 getSkdp();
                 ceNoSurat();
+                getDokterDpjp();
             }, 
             error: function() {
                 $('#frame_error').show(100);
@@ -370,36 +375,42 @@
         $('#kd_dpjp').val(kdDPJP);         
     })
 
-    $(document).ready(function() {
-        var src = "{{ route('bpjs.dpjp') }}";
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('#txtkodeDPJP').autocomplete({
-            source : function (request, response) {
-                var jnsPel = $('#jns_pelayanan').val();
-                var date = new Date();
-                $.ajax({
-                    url : src,
-                    dataType : "json",
-                    data : { term: request.term, jnsPel: jnsPel},
-                    success: function(data) {
-                        var array = data.error ? [] : $.map(data, function(m) {
-                            return {
-                                id : m.kode,
-                                value : m.nama
-                            };
-                        });
-                        response(array);
-                    }
-                });
-            },
-            minLength: 3,
-            select : function (event, ui) {
-                $('#txtkodeDPJP').val(ui.item.value);
-                $('#kd_dpjp').val(ui.item.id);
-                return false;
-            }
-        });
-    });
+    //  $('#txtkodeDPJP').on('change',function() {
+    //     var kdDPJP = $(this).val();
+    //     $('#kd_dpjp').val(kdDPJP);         
+    // })
+
+    // $(document).ready(function() {
+    //     var src = "{{ route('bpjs.dpjp') }}";
+    //     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    //     $('#txtkodeDPJP').autocomplete({
+    //         source : function (request, response) {
+    //             var jnsPel = $('#jns_pelayanan').val();
+    //             var date = new Date();
+    //             $.ajax({
+    //                 url : src,
+    //                 dataType : "json",
+    //                 data : { term: request.term, jnsPel: jnsPel},
+    //                 success: function(data) {
+    //                     console.log(data);
+    //                     // var array = data.error ? [] : $.map(data, function(m) {
+    //                     //     return {
+    //                     //         id : m.kode,
+    //                     //         value : m.nama
+    //                     //     };
+    //                     // });
+    //                     // response(array);
+    //                 }
+    //             });
+    //         },
+    //         minLength: 3,
+    //         select : function (event, ui) {
+    //             $('#txtkodeDPJP').val(ui.item.value);
+    //             $('#kd_dpjp').val(ui.item.id);
+    //             return false;
+    //         }
+    //     });
+    // });
 
     // cari HISTORY
     $('#cek-no-kartu').on('change', function() {

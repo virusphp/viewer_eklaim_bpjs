@@ -3,6 +3,7 @@
 // Start Modal 
 function getStart()
 {
+    
     $('#asalRujukan').prop('disabled', false);
     $('#frame_error').hide();
     // $('#tgl_rujukan').attr('readonly', true);
@@ -22,7 +23,7 @@ function getStart()
     $('#form-katarak').hide();
     $('#noSurat').val("000000");
     $('#kd_dpjp').val("000000");
-    $('#kodeDPJP').val("");
+    // $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
@@ -66,7 +67,7 @@ function getEditItem(data)
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
         getKelas();
-        // $("#txtkodeDPJP").select2();
+        getDokterDpjp();
     }
     // getPRujukanppkpkAsal();
     getPeserta();
@@ -86,7 +87,6 @@ function getKelas()
             console.log(res);
             $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
             $('#hak_kelas').html(res);
-            
         }
     }) 
 }
@@ -170,17 +170,20 @@ function ceNoSurat()
         data: { noRujukan: noRujukan },
         success: function(res) {
             if (res.length == 0) {
-                console.log('benar');
-                $('#txtkodeDPJP').removeAttr('style').attr('name', 'dokterDPJP');
-                $('#kodeDPJP').css('display', 'none').removeAttr('name');
-                $("#kodeDPJP").val([]).trigger("change")
-                $(".selection").css('display','none');
+            //     console.log('benar');
+            //     $('#txtkodeDPJP').removeAttr('style').attr('name', 'dokterDPJP');
+            //     $('#kodeDPJP').css('display', 'none').removeAttr('name');
+            //     $("#kodeDPJP").val([]).trigger("change")
+            //     $("#kodeDPJP .selection").css('display','none');
+                $("#kodeDPJP").select2({
+                    placeholder: 'Select an option'
+                });
             } else {
-                console.log('salah');
-                $('#txtkodeDPJP').css('display', 'none').removeAttr('name');
-                $('#kodeDPJP').removeAttr('style').attr('name','dokterDPJP');
-                $(".select2").removeAttr('style');
-                $("span .select2-container").removeAttr('style');
+            //     console.log('salah');
+            //     $('#txtkodeDPJP').css('display', 'none').removeAttr('name');
+            //     $('#kodeDPJP').removeAttr('style').attr('name','dokterDPJP');
+            //     $("#kodeDPJP .select2").removeAttr('style');
+            //     $("#kodeDPJP span .select2-container").removeAttr('style');
                 $("#kodeDPJP").select2({
                     placeholder: 'Select an option'
                 });
@@ -358,6 +361,15 @@ function resetAll(){
     $('#error_rujukan').remove();
 }
 
+function getSRI() {
+    $("#asalRujukan").val([2]);
+    $("#tujuan").val("");
+    $("#kd_poli").val("000");
+    $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
+    $('#nama_faskes').val("RSUD KRATON");
+    $('#ppk_rujukan').val("1105R001");
+}
+
 function getDiagnosa(kode, nama)
 {
     $.ajax({
@@ -394,12 +406,25 @@ function getSkdp()
                 if (data.length > 0) {
                     $('#form-skdp').show();
                     $('#noSurat').val("000000");
-                    $('#kodeDPJP').attr('disabled', true); 
+                    
                 }
             }
         })
     }
 
+}
+
+function getDokterDpjp()
+{
+    $.ajax({
+        type: 'get',
+        url: '{{ route('bpjs.dpjp') }}',
+        data: {},
+        success: function(data) {
+            // console.log(data);
+            $("#kodeDPJP").html(data);
+        }
+    })
 }
 
 // Penjamin KLL

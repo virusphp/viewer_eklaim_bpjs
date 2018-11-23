@@ -137,6 +137,14 @@ select[dokterDPJP] {
     width: 100%;
 }
 
+select #kodeDPJP {
+    width: 100%;
+}
+
+select[txtkodeDPJP] {
+    width: 100%;
+}
+
 span .select2 .select2-container .select2-container--default .select2-container--disabled .select2-container--focus {
     width: 100%;
 }
@@ -152,9 +160,9 @@ a.btn i.tengah {
 .card-body #mytable_wrapper {
    
 }
-.ui-autocomplete-input {
+/* .ui-autocomplete-input {
     z-index: 1;
-}
+} */
 
 #tgl_rujukan {
     position: relative; 
@@ -179,4 +187,13 @@ a.btn i.tengah {
     padding: 1px;
     max-height: 300px;
     overflow: auto;
+}
+
+.app-body .main {
+    background-color: blueviolet;
+    font-weight: 500;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #7e03cfa1
 }

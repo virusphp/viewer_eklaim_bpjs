@@ -195,6 +195,12 @@ $(document).on('click', '#h-no-surat', function() {
         $('#kdPoliDPJP').val(kdDpjp);
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');
+        if (noDpjp[1] == "SRI") {
+            getSRI();
+        }
+        if ($('#jns_pelayanan').val() == 1) {
+            $('#noRujukan').val(noDpjp[0].substring(noDpjp[0].length - 6)).attr('readonly', true);
+        }
         
     var kdPoliDPJP = $('#kdPoliDPJP').val(),
         jnsPel = $('#jns_pelayanan').val(),

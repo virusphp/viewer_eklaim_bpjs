@@ -215,16 +215,23 @@ class BpjsController extends Controller
     public function getDpjp(Request $req)
     {
         if ($req->ajax()) {
-            $kode = $req->all();
-            $dpjp = $this->Dpjp($kode);
+            $dpjp = $this->dokter();
             $data = json_decode($dpjp);
-            if ($data->response != null) {
-                $dpjp = $data->response->list;
+            if ($data != null) {
+                $dokter="<option value='00000'>--Silahkan Pilih Dokter Dpjp--</pilih>";
+                foreach($data as $d)
+                {
+                    $dokter.= "<option value='$d->kode'>$d->nama</option>";
+                }
             } else {
-                $dpjp = [];
+                $dokter = [];
             }
-            return $dpjp;
+            return $dokter;
         }
+    }
+
+    public function dokter() {
+        return DB::table('dokter_dpjp')->get();
     }
 
     public function getListDpjp(Request $req)

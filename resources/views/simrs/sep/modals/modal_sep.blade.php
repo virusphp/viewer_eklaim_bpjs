@@ -1,5 +1,5 @@
 <!-- Attachment Modal -->
-<div class="modal fade" id="modal-sep" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+<div class="modal fade" id="modal-sep" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -182,9 +182,12 @@
                                 <div>
                                     <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
                                 </div>
-                                <input class="form-control form-control-sm" id="txtkodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Poli Dokter DPJP">
-                                <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select>
-                                <input id="kd_dpjp" name="kodeDPJP" type="hidden">
+                                <!-- <input class="form-control form-control-sm" id="txtkodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Poli Dokter DPJP"> -->
+                                <!-- <select id="txtkodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select> -->
+                                <div class="input-groups">
+                                 <select id="kodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select>
+                                </div>
+                                  <input id="kd_dpjp" name="kodeDPJP" type="hidden">
                             </div>
                         </div>
                     </div>

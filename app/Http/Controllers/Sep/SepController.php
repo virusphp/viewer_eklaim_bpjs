@@ -121,7 +121,21 @@ class SepController extends Controller
                 $query->noKartu = $noKartu->no_kartu;
                 $query->tglSep = $noKartu->tgl_reg;
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
+            } else {
+                $query = DB::table('rawat_darurat as rd')->select('rd.no_reg','rd.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
+                    ->join('pasien as p', function($join) {
+                        $join->on('rd.no_rm','=','p.no_rm');
+                    })
+                    ->join('pegawai as pg', function($join) {
+                        $join->on('rd.kd_dokter', '=','pg.kd_pegawai');
+                    })
+                    ->where('rd.no_reg', '=', $request->no_reg)
+                    ->first();
+                $query->jnsPelayanan = "2";
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = $noKartu->tgl_reg;
             }
+
             return response()->json($query);
         }
     }
@@ -199,6 +213,7 @@ class SepController extends Controller
 
     public function sepInsert(SepRequest $req)
     {
+        // dd($req->all());
         if ($req->ajax()) {
             $data = $req->all();
             if ($data['penjamin'] != 0) {

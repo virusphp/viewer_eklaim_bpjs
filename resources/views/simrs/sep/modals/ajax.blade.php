@@ -25,6 +25,7 @@ function getStart()
     $('#kd_dpjp').val("000000");
     // $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
+    $('#asalRujukan').prop('selectedIndex',0);
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
     });
@@ -71,7 +72,6 @@ function getEditItem(data)
     }
     // getPRujukanppkpkAsal();
     getPeserta();
-    getHistory();
 }
 
 function getKelas()
@@ -108,6 +108,7 @@ function getEditSep(data)
     $('#tglSep').val(data.tglSep);
     getPeserta();
     getDataSep();
+    getHistory();
 }
 
 function getRujukan()
@@ -319,7 +320,9 @@ function asalRujukan()
             // console.log(data.response.faskes[0]); 
             // response = d.response.faskes[0];
             $('#nama_faskes').val(data.response.faskes[0].nama).attr('readonly',true);
-            $('#asalRujukan option[value='+data.response.faskes[0].jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
+            $('#asalRujukan').val(data.response.faskes[0].jenis_faskes).attr('disabled','true').find("option[selected]").val(data.response.faskes[0].jenis_faskes);
+            // $('#asalRujukan').val(data.response.faskes[0].jenis_faskes);
+            // $('#asalRujukan option[value='+data.response.faskes[0].jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
         }
     })
 }

@@ -132,7 +132,7 @@
         // $("#kodeDPJP").select2("destroy");
         // $("#txtkodeDPJP").select2("destroy");
         $("#kodeDPJP").val([]).trigger("change")
-        $("#asalRujukan").val([1]);
+        
         $("#tujuan").removeAttr("readonly");
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');

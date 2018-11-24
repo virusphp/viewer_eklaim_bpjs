@@ -131,7 +131,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="diagnosa">PPK Asal Rujukan</label>
+                                <label for="diagnosa">PPK Rujukan / Perujuk</label>
                                 <input class="form-control form-control-sm" id="nama_faskes" name="namaFaskes" type="text" placeholder="PPK Asal Rujukan">
                                 <!-- <input class="form-control form-control-sm" id="tgl_rujukan" name="tglRujukan" type="hidden">  -->
                                 <input type="hidden" class="form-control form-control-sm" id="ppk_rujukan" name="ppkRujukan" >

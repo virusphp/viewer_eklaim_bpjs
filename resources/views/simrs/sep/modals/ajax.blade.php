@@ -69,6 +69,7 @@ function getEditItem(data)
         $('#nama_pelayanan').val('Rawat Inap');
         getKelas();
         getDokterDpjp();
+        getHistory();
     }
     // getPRujukanppkpkAsal();
     getPeserta();

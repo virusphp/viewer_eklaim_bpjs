@@ -154,7 +154,6 @@ class BpjsController extends Controller
         $jns_faskes = "1";
         $dataAwal = $this->ppkRujukan($req->ppk_rujukan, $jns_faskes);
         $rujukan = json_decode($dataAwal);
-        // dd($rujukan);
         if ($rujukan->response == null) {
             $jns_faskes = "2";
             $data  = $this->ppkRujukan($req->ppk_rujukan, $jns_faskes);

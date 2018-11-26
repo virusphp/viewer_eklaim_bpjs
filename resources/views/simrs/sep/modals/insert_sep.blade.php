@@ -287,8 +287,13 @@ $(document).on('click','#h-rujukan-rs', function() {
                     $('#ppk_rujukan').val(response.provPerujuk.kode);
                     $('#diagAwal').val(response.diagnosa.nama);
                     $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
-                    $('#tujuan').val(response.poliRujukan.nama);
-                    $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                    if ($('#jns_pelayanan').val() == 1) {
+                        $('#tujuan').val("000");
+                        $('#kd_poli').val("000").attr('readonly',true);
+                    } else {
+                        $('#kd_poli').val(response.poliRujukan.kode).attr('readonly','true');
+                        $('#tujuan').val(response.poliRujukan.nama);
+                    }
                     $('#intern_rujukan').val(response.noKunjungan).attr('readonly','true');
                     $('#noRujukan').val(response.noKunjungan);
                     asalRujukan();

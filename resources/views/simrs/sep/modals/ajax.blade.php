@@ -4,7 +4,8 @@
 function getStart()
 {
     
-    $('#asalRujukan').prop('disabled', false);
+    // $('#asalRujukan').find("option[selected]").removeAttr('selected');
+    $('#asalRujukan').prop('selectedIndex',0);
     $('#frame_error').hide();
     // $('#tgl_rujukan').attr('readonly', true);
     $('#ppk_rujukan').val("");
@@ -25,7 +26,6 @@ function getStart()
     $('#kd_dpjp').val("000000");
     // $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
-    $('#asalRujukan').prop('selectedIndex',0);
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
     });
@@ -219,7 +219,7 @@ function getDataSep()
             $('#tujuan').val(response.Nama_Poli);
             $('#kd_poli').val(response.Kd_Poli).attr('readonly','true');
             $('#catatan').val(response.catatan);
-            $('#asalRujukan option[value='+response.Asal_Faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
+            // $('#asalRujukan option[value='+response.Asal_Faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
             $('#nama_faskes').val(response.Nama_Faskes).attr('readonly', 'true');
             $('#noSuratLama').val(response.no_surat);
             $('noSurat').val(response.no_surat);
@@ -293,8 +293,13 @@ function getHistory()
                 $('#noSurat').val("000000");
             // ini SPO
             } else if ($('#jns_pelayanan').val() == 1) {
-                $("#asalRujukan").val([2]);
-                $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
+
+                $("#asalRujukan option").each(function(){
+                    if($(this).val()==2){ 
+                        $(this).prop("selected", true).attr('selected',true).closest('#asalRujukan');
+                    }
+                });
+                // $('#asalRujukan option[value='+2+']').attr('selected','selected').closest('#asalRujukan');
                 // $('#noRujukan').val(response.noSep).attr('readonly',true);
                 $('#nama_faskes').val("RSUD KRATON");
                 $('#ppk_rujukan').val("1105R001");
@@ -318,11 +323,14 @@ function asalRujukan()
         url: '{{ route('bpjs.ppkrujukan') }}',
         data : {ppk_rujukan: ppk_rujukan},
         success: function(data) {
-            // console.log(data.response.faskes[0]); 
+            console.log(data.response.faskes[0]); 
             // response = d.response.faskes[0];
             $('#nama_faskes').val(data.response.faskes[0].nama).attr('readonly',true);
-            $('#asalRujukan').val(data.response.faskes[0].jenis_faskes).attr('disabled','true').find("option[selected]").val(data.response.faskes[0].jenis_faskes);
-            // $('#asalRujukan').val(data.response.faskes[0].jenis_faskes);
+            $("#asalRujukan option").each(function(){
+                if($(this).val()==data.response.faskes[0].jenis_faskes){ 
+                    $(this).prop("selected", true).attr('selected',true).closest('#asalRujukan').attr('disabled','true');
+                }
+            });
             // $('#asalRujukan option[value='+data.response.faskes[0].jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
         }
     })

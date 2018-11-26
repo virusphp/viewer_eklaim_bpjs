@@ -127,12 +127,9 @@
         
         $("#edit-modal-sep span").remove();
         $("#tgl_rujukan").val(); 
-        // $("#txtkodeDPJP").val();
         $("#tgl_rujukan").attr('readonly', false); 
-        // $("#kodeDPJP").select2("destroy");
-        // $("#txtkodeDPJP").select2("destroy");
+        $('#asalRujukan').find("option[selected]").removeAttr('selected');
         $("#kodeDPJP").val([]).trigger("change")
-        
         $("#tujuan").removeAttr("readonly");
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');

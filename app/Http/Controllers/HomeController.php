@@ -37,6 +37,7 @@ class HomeController extends Controller
                 // dd($val);
                 file_put_contents(public_path("images/pegawai")."\\".($filename = $val->kd_pegawai.".jpg"), $val->foto);
                 $dataPegawai[$key] = $val;
+                // dd($dataPegawai);
                 unset($val->foto);
             }
         } 

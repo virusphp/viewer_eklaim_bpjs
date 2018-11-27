@@ -113,7 +113,6 @@
     //     });
     // });
 
-
     $(document).ready(function () {
         getStart();
         resetSuccessSep();

@@ -254,13 +254,15 @@ function getPeserta()
             d = JSON.parse(data);
             if (d.response !== null) {
                 response = d.response.peserta;
+                var noReg = $('#no_reg').val().substr(0,2);
                 $('#kelas').val(response.hakKelas.keterangan);
                 $('#aktif').val(response.statusPeserta.keterangan);
                 $('#hak_kelas option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
-                
-                if ($('#jns_pelayanan').val() == 1) {
-                    // $('#nama_faskes').val(response.provUmum.nmProvider);
-                    // $('#ppk_rujukan').val(response.provUmum.kdProvider);
+
+                if ( $('#jns_pelayanan').val() == 2 && noReg == "03" ) {
+                    // console.log(response.provUmum.nmProvider);
+                    $('#nama_faskes').val(response.provUmum.nmProvider);
+                    $('#ppk_rujukan').val(response.provUmum.kdProvider);
                     // $('#tgl_rujukan').attr('readonly', false);
                 }
             }

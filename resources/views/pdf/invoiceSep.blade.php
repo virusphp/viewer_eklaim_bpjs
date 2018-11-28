@@ -21,20 +21,20 @@
        
         th {
             height: 15px;
-            padding: 2px;
+            padding: 1px;
         }
 
         body {
             font-family: "Calibri";
-            font-size:13px;
-            height: 5px;
+            font-size:14px;
+            height: 1px;
             padding: 2px;
         }
 
         td {            
             font-family: "Calibri";
-            font-size:13px;
-            height: 5px;
+            font-size:14px;
+            height: 1px;
             padding: 1px;
         }
 
@@ -86,6 +86,12 @@
         }
         .blanked {
             width: 35%;
+        }
+
+        .kanan {
+            font-size: 11px;
+            clear: right;
+            /* float: right; */
         }
         /* Set Page */
         /* @page {
@@ -195,7 +201,7 @@
     </table>
     <table class="table table-ttd" >
         <tr>
-            <td style="height:115px" colspan="6"></td>
+            <td style="height:110px" colspan="6"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
@@ -211,7 +217,7 @@
             <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:35px" colspan="6"></td>
+            <td style="height:25px" colspan="6"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>
@@ -229,7 +235,7 @@
                      <br><strong>{{ !is_null($informasi->prolanisPRB) ? '*Peserta '.$informasi->prolanisPRB : '' }}</strong>
                 </i>
             </td>
-            <td>Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
+            <td class="kanan" colspan="1">Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
         </tr>
     </table>
 </body>

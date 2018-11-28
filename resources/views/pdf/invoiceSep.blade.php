@@ -25,14 +25,14 @@
         }
 
         body {
-            font-family: "Arial";
+            font-family: "Calibri";
             font-size:13px;
             height: 5px;
             padding: 2px;
         }
 
         td {            
-            font-family: "Arial";
+            font-family: "Calibri";
             font-size:13px;
             height: 5px;
             padding: 1px;
@@ -60,7 +60,7 @@
             margin-top: 1px;
             padding-left: 5em;
             /* width: 100%; */
-            font-size: 17px;
+            font-size: 19px;
             /* margin-bottom: 5px; */
         }
         #sep-title-2 {

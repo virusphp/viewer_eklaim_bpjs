@@ -195,7 +195,7 @@ $(document).on('click', '#h-no-surat', function() {
         $('#kdPoliDPJP').val(kdDpjp);
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');
-        if (noDpjp[1] == "SRI") {
+        if (noDpjp[1] == "SRI" && $('#jns_pelayanan') == 1) {
             getSRI();
         }
         if ($('#jns_pelayanan').val() == 1) {

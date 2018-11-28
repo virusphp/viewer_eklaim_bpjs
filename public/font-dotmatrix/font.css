@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'DOTMATRI';
+	src: url('./DOTMATRI.eot');
+	src: local('DOTMATRI'), url('./DOTMATRI.woff') format('woff'), url('./DOTMATRI.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_507">Text with this font applied</p> */
+.fontsforweb_fontid_507 {
+	font-family: 'DOTMATRI' !important;
+}
+
+/* Font downloaded from FontsForWeb.com */

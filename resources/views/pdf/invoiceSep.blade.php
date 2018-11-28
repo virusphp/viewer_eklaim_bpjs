@@ -18,28 +18,39 @@
         .ttd-garis{
             border-bottom: 2px solid;
         }
-       
+        
+        .table-content {
+            border-spacing: 0;
+            /* width: 100%; */
+        }
+        
         th {
             height: 15px;
             padding: 1px;
         }
+        
+        @font-face {
+            font-family: 'DOTMATRI';
+            src: {{ asset('font-dotmatrix/DOTMATRI.ttf') }};
+            src: local('DOTMATRI'), url('./DOTMATRI.woff') format('woff'), url('./DOTMATRI.ttf') format('truetype');
+        }
 
         body {
-            font-family: "Calibri";
-            font-size:14px;
-            height: 1px;
-            padding: 2px;
+            /* margin: 10px; */
+            font-family: "Consolas";
+            font-size:13px;
+            padding: 1px;
         }
 
         td {            
-            font-family: "Calibri";
-            font-size:14px;
-            height: 1px;
+            font-family: "Consolas";
+            font-size:13px;
+            /* font-weight: 500; */
             padding: 1px;
         }
 
         i , i strong {
-            font-size: 11px;
+            font-size: 10px;
             vertical-align: top;
         }
      
@@ -72,28 +83,38 @@
        #tgl-sep .tgl-sep, #tgl-sep .tgl-lahir, .no-rm, .tindakan, .ttd-pasien{
             width: 15%;
         }
-        #tgl-sep .nilai-tgl-sep, .nilai-no-rm, .ttd-dokter, .g-2 .ttd-garis, #v-noSep{
+        #tgl-sep .nilai-tgl-sep, .nilai-no-rm, .ttd-dokter, .g-2 .ttd-garis, #v-noSep, {
             width: 35%;
         }
         #tgl-sep .nilai-tgl-lahir, .kel-pas, .g-1{
             width: 20%;
         }
-        #tgl-sep .jns-kel, #tgl-sep .nilai-jns-kel{
+        #tgl-sep .jns-kel, #tgl-sep .nilai-jns-kel {
             width: 10%;
         }
+
+        .asal-fks {
+            width: 18%;
+        }
+        
+        .nilai-poli {
+            width: 30%;
+        }
+
         .no-rm, .nilai-no-rm, .alamat-p, .nilai-alamat-p, .tt-dua, .asal-fks, .nama-fks, .diagnosa, .nilai-diagnosa, .catatan, .n-catatan{
             vertical-align: top;
         }
+
         .blanked {
             width: 35%;
         }
 
         .kanan {
             font-size: 11px;
-            clear: right;
+            /* clear: right; */
             /* float: right; */
         }
-        /* Set Page */
+        /* Set fotn */
         /* @page {
             margin-top: 0.3em;
             margin-left: 0.6em;
@@ -115,7 +136,7 @@
             <td colspan="2"></td>                            
         </tr>                       
     </table>   
-    <table class="table table-content" >
+    <table class="table table-content">
         <tr>
             <td>No. SEP</td>
             <td>:</td>
@@ -156,7 +177,7 @@
         <tr>
             <td>Poli Tujuan</td>
             <td>:</td>
-            <td>{{ $dataSep->poli }}</td>
+            <td class="nilai-poli">{{ $dataSep->poli }}</td>
             <td>Peserta</td>
             <td>:</td>
             <td colspan="4">{{ $dataSep->peserta->jnsPeserta }}</td>
@@ -199,9 +220,9 @@
             <td colspan="4"></td>
         </tr>        
     </table>
-    <table class="table table-ttd" >
+    <table class="table table-ttd">
         <tr>
-            <td style="height:110px" colspan="6"></td>
+            <td style="height:120px" colspan="6"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
@@ -217,7 +238,7 @@
             <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:25px" colspan="6"></td>
+            <td style="height:45px" colspan="6"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>

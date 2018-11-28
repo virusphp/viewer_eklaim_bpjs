@@ -36,7 +36,7 @@
         }
 
         body {
-            /* margin: 10px; */
+            margin: 15px;
             font-family: "Consolas";
             font-size:13px;
             padding: 1px;
@@ -98,7 +98,7 @@
         }
         
         .nilai-poli {
-            width: 30%;
+            width: 33%;
         }
 
         .no-rm, .nilai-no-rm, .alamat-p, .nilai-alamat-p, .tt-dua, .asal-fks, .nama-fks, .diagnosa, .nilai-diagnosa, .catatan, .n-catatan{
@@ -222,7 +222,7 @@
     </table>
     <table class="table table-ttd">
         <tr>
-            <td style="height:120px" colspan="6"></td>
+            <td style="height:110px" colspan="6"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>
@@ -238,7 +238,7 @@
             <td style="width:15%" class="ttd-dokter">Dokter <br>DPJP</td>   
         </tr>
         <tr>
-            <td style="height:45px" colspan="6"></td>
+            <td style="height:30px" colspan="6"></td>
         </tr>
         <tr class="ttd-ttd">
             <td sytle="vertical-align: top;"></td>

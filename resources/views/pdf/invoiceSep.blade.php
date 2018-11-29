@@ -24,10 +24,10 @@
             /* width: 100%; */
         }
         
-        th {
+        /* th {
             height: 15px;
             padding: 1px;
-        }
+        } */
         
         @font-face {
             font-family: 'DOTMATRI';
@@ -36,15 +36,15 @@
         }
 
         body {
-            margin: 15px;
-            font-family: "Consolas";
-            font-size:13px;
+            margin: 10px 5px 5px 10px;
+            font-family: "Calibri";
+            font-size:14px;
             padding: 1px;
         }
 
         td {            
-            font-family: "Consolas";
-            font-size:13px;
+            font-family: "Calibri";
+            font-size:14px;
             /* font-weight: 500; */
             padding: 1px;
         }
@@ -222,7 +222,7 @@
     </table>
     <table class="table table-ttd">
         <tr>
-            <td style="height:110px" colspan="6"></td>
+            <td style="height:105px" colspan="6"></td>
         </tr>
         <tr>
             <td class="tindakan">Tindakan/ Operasi</td>

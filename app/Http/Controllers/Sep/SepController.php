@@ -277,6 +277,9 @@ class SepController extends Controller
         if (noReg($dataPasien->no_reg) == "02") {
             $data->nama_poli = "-";
             $data->antrian =  "-";
+        } else if (noReg($dataPasien->no_reg) == "03") {
+            $data->nama_poli = "INSTALASI GAWAT DARURAT";
+            $data->antrian =  "-";
         } else {
             $poli =  DB::table('rawat_jalan as rj')->select('su.nama_sub_unit as nama_klinik','rj.kd_poliklinik')
                             ->join('sub_unit as su', function($join) {

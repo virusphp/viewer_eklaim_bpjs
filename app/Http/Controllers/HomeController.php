@@ -30,7 +30,8 @@ class HomeController extends Controller
     {
         $bulan = date('m');
         $hari = date('d');
-        $pegawai = $this->user->getUltahPegawai($hari, $bulan);
+        $pegawai = $this->user->getUltahPegawai($hari, $bulan);  
+      
         if ($pegawai->count() != 0) {
             $dataPegawai = [];
             foreach ($pegawai as $key => $val) {
@@ -40,7 +41,10 @@ class HomeController extends Controller
                 // dd($dataPegawai);
                 unset($val->foto);
             }
-        } 
+        } else {
+            $dataPegawai = [];
+        }
+    
         return $dataPegawai;
     }
 }

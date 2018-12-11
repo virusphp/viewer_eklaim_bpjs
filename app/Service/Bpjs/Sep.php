@@ -54,6 +54,7 @@ class Sep
 
     public function saveSep($data)
     {
+        
         try {
             $url = $this->api_url . "sep/insert";
             $response = $this->client->post($url, ['body' => $data]);
@@ -70,10 +71,12 @@ class Sep
 
     public function updateSep($data)
     {
+       
         try {
             $url = $this->api_url . "sep/update";
             $response = $this->client->put($url, ['body' => $data]);
-            return $response;
+            $result = $response->getBody();
+            return $result;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {

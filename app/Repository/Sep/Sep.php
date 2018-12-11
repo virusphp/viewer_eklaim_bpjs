@@ -45,12 +45,26 @@ class Sep
 
     public function updateSep($data)
     {
-        $req = json_encode($this->mapSepUpdate($data));
-        $result = $this->conn->updateSep($req);
-        if ($result) {
-            $this->updateBpjs($data);
+        DB::beginTransaction();
+        try{
+            $req = json_encode($this->mapSepUpdate($data));
+            // dd($req);
+            $result = $this->conn->updateSep($req);
+            if ($result) {
+                $res = json_decode($result);
+                if ($res->response != null) {
+                    $this->updateBpjs($data);
+                } else {
+                    DB::rollback();
+                    return $result;
+                }
+                DB::commit();
+            }
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $result;
         }
-        return $result;
     }
 
     public function simpanSep($data)
@@ -104,25 +118,20 @@ class Sep
     {
         $updateSep = DB::table('sep_bpjs')->where('no_reg', '=', $data['no_reg'])
             ->update([
-                'kd_diagnosa' => $data['diagAwal'],
-                'nama_diagnosa' => $data['diagnosa'],
-                'kd_poli' => $data['tujuan'],
-                'nama_poli' => $data['poli'],
-                'catatan' => $data['catatan'],
-                'no_surat' => $data['noSurat'],
-                'kd_dpjp' => $data['kodeDPJP'],
-                'dokter_dpjp' => $data['dokterDPJP'],
-                'katarak' => $data['katarak'],
-                'lakalantas' => $data['lakaLantas'],
-                'penjamin' => $data['penjamin'],
-                'suplesi' => $data['suplesi'],
-                'no_sep_suplesi' => $data['noSepSuplesi'],
-                'tgl_kejadian' => $data['tglKejadian'],
-                'kd_propinsi' => $data['kdPropinsi'],
-                'kd_kabupaten' => $data['kdKabupaten'],
-                'kd_kecamatan' => $data['kdKecamatan'],
-                'keterangan' => $data['keterangan'],
-                'user' => $data['user']
+                'no_reg' => $data['no_reg'],
+                'COB' => $data['cob'],
+                'Kd_Faskes' => $data['ppkRujukan'],
+                'Nama_Faskes' => $data['namaFaskes'],
+                'Kd_Diagnosa' => $data['diagAwal'],
+                'Nama_Diagnosa' => $data['diagnosa'],
+                'Kd_poli' => $data['tujuan'],
+                'Nama_Poli' => $data['poli'],
+                'Kd_Kelas_Rawat' => $data['klsRawat'],
+                'Nama_kelas_rawat' => $data['namaKelas'],
+                'No_Rujukan' => $data['noRujukan'],
+                'Asal_Faskes' => $data['asalRujukan'],
+                'Tgl_Rujukan' => $data['tglRujukan'],
+                'Lakalantas' => $data['lakaLantas']
             ]);
 
         return $updateSep;
@@ -203,6 +212,9 @@ class Sep
     public function mapSepUpdate($data)
     {
         $res['noSep'] = $data['noSep'];
+        $res['tglSep'] = $data['tglSep'];
+        $res['ppkPelayanan'] = $data['ppkPelayanan'];
+        $res['jnsPelayanan'] = $data['jnsPelayanan'];
         $res['klsRawat'] = $data['klsRawat'];
         $res['noMR'] = $data['noMR'];
         $res['rujukan'] = [
@@ -214,8 +226,10 @@ class Sep
         $res['catatan'] = $data['catatan'];
         $res['diagAwal'] = $data['diagAwal'];
         $res['poli'] = [
+            'tujuan' => $data['tujuan'],
             'eksekutif' => $data['eksekutif']
         ];
+
         $res['cob'] = [
             'cob' => $data['cob']
         ];
@@ -224,18 +238,13 @@ class Sep
            'katarak' => $data['katarak'] 
         ];
 
-        $res['skdp'] = [
-            'noSurat' => $data['noSurat'],
-            'kodeDPJP' => $data['kodeDPJP']
-        ];
-
         $lokasiLaka = [
             'kdPropinsi' => $data['kdPropinsi'],
             'kdKabupaten' => $data['kdKabupaten'],
             'kdKecamatan' => $data['kdKecamatan']
         ];
 
-        $suplesi = [
+         $suplesi = [
             'suplesi' => $data['suplesi'],
             'noSepSuplesi' => $data['noSepSuplesi'],
             'lokasiLaka' => $lokasiLaka
@@ -247,22 +256,27 @@ class Sep
             'keterangan' => $data['keterangan'],
             'suplesi' => $suplesi
         ];
-        
+
         $res['jaminan'] = [
             'lakaLantas' => $data['lakaLantas'],
             'penjamin' => $penjamin
         ]; 
+        
+        $res['skdp'] = [
+            'noSurat' => $data['noSurat'],
+            'kodeDPJP' => $data['kodeDPJP']
+        ];
 
         $res['noTelp'] = $data['noTelp'];
         $res['user'] = $data['user'];
 
         $result = [
-            't_sep' => $res 
-         ];
- 
-         $request = [
-             'request' => $result
-         ];
+           't_sep' => $res 
+        ];
+
+        $request = [
+            'request' => $result
+        ];
 
          return $request;
     }

@@ -95,7 +95,8 @@ function getKelas()
 //get data edit SEP
 function getEditSep(data)
 {
-    $('#noRujukan').val(data.noRujukan).attr('readonly','true');
+    $('#noRujukan').focus();
+    $('#noRujukan').val(data.noRujukan).attr('readonly', true);
     $('#jns_pelayanan').val(data.jnsPelayanan);
     $('#nama_pasien').val(data.nama_pasien);
     $('#no_ktp').val(data.nik);
@@ -106,12 +107,38 @@ function getEditSep(data)
     $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
     $('#noSep').val(data.noSep);
+
+    dataSep(data.noSep);
     $('#tglSep').val(data.tglSep);
+    if($('#jns_pelayanan').val() == 2) {
+        $('#nama_pelayanan').val('Rawat Jalan');
+        $('#hak_kelas').css('display', 'none').removeAttr('name');
+        $('#kelas').removeAttr('style').attr('name','klsRawat');
+    } else {
+        $('#nama_pelayanan').val('Rawat Inap');
+    }     
+    getKelas();
+    getDokterDpjp();
+    // getPRujukanppkpkAsal();
     getPeserta();
     getDataSep();
     getHistory();
 }
 
+ // iki PR
+function dataSep(noSEP)
+{
+    $.ajax({
+        type: 'get',
+        url: '{{ route('bpjs.sep') }}',
+        data : {sep: noSEP},
+        success: function(data) {
+            d = JSON.parse(data).response
+            $("#catatan").val(d.catatan)
+        }
+    })
+}
+// iki PR
 function getRujukan()
 {
     var rujukan = $('#noRujukan').val();
@@ -325,7 +352,7 @@ function asalRujukan()
         url: '{{ route('bpjs.ppkrujukan') }}',
         data : {ppk_rujukan: ppk_rujukan},
         success: function(data) {
-            console.log(data.response.faskes[0]); 
+            // console.log(data.response.faskes[0]); 
             // response = d.response.faskes[0];
             $('#nama_faskes').val(data.response.faskes[0].nama).attr('readonly',true);
             $("#asalRujukan option").each(function(){

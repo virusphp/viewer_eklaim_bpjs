@@ -151,6 +151,9 @@ class SepController extends Controller
             ->where('r.no_reg','=',$request->no_reg)
             ->first();
             // dd($noKartu);
+            // if ($noKartu) {
+            //     $noRujukan = DB::table('sep_bpjs')->select('no_rujukan')->where('no_reg', '=', $request->no_reg)->first();
+            // }
 
             $datetime = new DateTime($noKartu->tgl_reg);
             $noKartu->tgl_reg = $datetime->format('Y-m-d');
@@ -224,7 +227,7 @@ class SepController extends Controller
             // $data['tglSep'] = $datetime->format('Y-m-d');
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
-            $data['user'] = 'admin';
+            $data['user'] = 'Admin OSS';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);

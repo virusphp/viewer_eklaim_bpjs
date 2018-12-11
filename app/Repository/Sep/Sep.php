@@ -108,7 +108,9 @@ class Sep
             'No_Rujukan' => $data['noRujukan'],
             'Asal_Faskes' => $data['asalRujukan'],
             'Tgl_Rujukan' => $data['tglRujukan'],
-            'Lakalantas' => $data['lakaLantas']
+            'Lakalantas' => $data['lakaLantas'],
+            'no_surat_kontrol' => $data['noSurat'],
+            'kd_dpjp' => $data['kodeDPJP']
         ]);
         
         return $simpanSep;

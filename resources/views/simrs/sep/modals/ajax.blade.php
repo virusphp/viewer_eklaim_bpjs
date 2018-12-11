@@ -239,6 +239,7 @@ function getDataSep()
             if ($('#jns_pelayanan').val() == 2) {
                 getSkdp();
             }
+            $('#noRujukan').val(response.No_Rujukan).attr('readonly', 'true');
             $('#tgl_rujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
             $('#ppk_rujukan').val(response.Kd_Faskes);
             $('#diagAwal').val(response.Nama_Diagnosa);

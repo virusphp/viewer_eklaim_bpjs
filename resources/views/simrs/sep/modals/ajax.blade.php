@@ -23,6 +23,7 @@ function getStart()
     $('#form-penjamin2').hide();
     $('#form-katarak').hide();
     $('#noSurat').val("000000");
+    $('#noSuratLama').val("000000")
     $('#kd_dpjp').val("000000");
     // $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
@@ -121,8 +122,8 @@ function getEditSep(data)
     getDokterDpjp();
     // getPRujukanppkpkAsal();
     getPeserta();
-    getDataSep();
     getHistory();
+    getDataSep();
 }
 
  // iki PR
@@ -236,8 +237,16 @@ function getDataSep()
         },
         success: function(response) {
             console.log(response);
-            if ($('#jns_pelayanan').val() == 2) {
+           
+            if($('#jns_pelayanan').val() == 2) {
                 getSkdp();
+                $('#nama_pelayanan').val('Rawat Jalan');
+            } else {
+                $('#nama_pelayanan').val('Rawat Inap');
+                // $('#tujuan').attr('readonly','true');
+                getSkdp();
+                $('#kd_poli').val("000");
+                $('#noRujukan').val(response.No_Rujukan);
             }
             $('#noRujukan').val(response.No_Rujukan).attr('readonly', 'true');
             $('#tgl_rujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
@@ -249,22 +258,16 @@ function getDataSep()
             $('#catatan').val(response.catatan);
             // $('#asalRujukan option[value='+response.Asal_Faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
             $('#nama_faskes').val(response.Nama_Faskes).attr('readonly', 'true');
-            $('#noSuratLama').val(response.no_surat);
-            $('noSurat').val(response.no_surat);
+            $('#noSuratLama').val(response.no_surat_kontrol).attr('readonly', 'true');
+            $('#noSurat').val(response.no_surat_kontrol);
+            $('#noSuratLama').prop('type', 'text');
+            $('#noSurat').prop('type', 'hidden');
+           
             $('#kd_dpjp').val(response.kd_dpjp).attr('readonly', 'true');
-            $('#kodeDPJP').val(response.dokter_dpjp);
+            $('#kodeDPJP').val(response.kd_dpjp);
             $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
-            if($('#jns_pelayanan').val() == 2) {
-                $('#nama_pelayanan').val('Rawat Jalan');
-            } else {
-                $('#nama_pelayanan').val('Rawat Inap');
-                // $('#tujuan').attr('readonly','true');
-                getSkdp();
-                $('#kd_poli').val("000");
-                $('#noRujukan').val(response.No_Rujukan);
-            }
+            console.log(response.no_surat_kontrol)
         }
-
     })
 }
 

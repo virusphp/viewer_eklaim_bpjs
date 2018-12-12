@@ -172,9 +172,9 @@
                                     <label for="no_surat">Surat Kontrol</label>
                                     <input class="btn btn-ghost-primary btn-cus" id="cari_no_surat" type="button" value="cari">
                                 </div>
-                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="7">
-                                <input class="form-control form-control-sm" id="kdPoliDPJP" type="hidden" tabindex="5" readonly>
-                                <input class="form-control form-control-sm" id="noSuratLama" type="hidden" tabindex="5" readonly>
+                                <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" maxlength="7">
+                                <input class="form-control form-control-sm" id="kdPoliDPJP" type="hidden">
+                                <input class="form-control form-control-sm" id="noSuratLama" name="noSuratLama" type="hidden">
                             </div>
                         </div>
                         <div class="col-sm-8">

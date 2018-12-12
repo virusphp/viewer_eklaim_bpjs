@@ -256,7 +256,7 @@ class SepController extends Controller
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
             $data['klsRawat'] = '3';
-            $data['user'] = 'admin';
+            $data['user'] = 'Admin OSS';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);

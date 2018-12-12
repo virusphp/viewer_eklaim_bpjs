@@ -120,6 +120,11 @@
         ajaxLoad();
     });
 
+
+    $('#noSurat').on('change', function(){
+        return event.charCode >= 48 && event.charCode <= 57
+    })
+
     $('#modal-sep').on('hidden.bs.modal', function() {
         var alertas = $('#form-sep'),
             tgl_reg = '{{ date('Y-m-d') }}';
@@ -130,6 +135,8 @@
         $('#asalRujukan').find("option[selected]").removeAttr('selected');
         $("#kodeDPJP").val([]).trigger("change")
         $("#tujuan").removeAttr("readonly");
+        $('#noSuratLama').prop('type','hidden');
+        $('#noSurat').prop('type','text');
         alertas.validate().resetForm();
         alertas.find('.error').removeClass('error');
     });

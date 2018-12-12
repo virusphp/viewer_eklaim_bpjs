@@ -45,6 +45,7 @@ class Sep
 
     public function updateSep($data)
     {
+        // dd($data);
         DB::beginTransaction();
         try{
             $req = json_encode($this->mapSepUpdate($data));
@@ -133,7 +134,9 @@ class Sep
                 'No_Rujukan' => $data['noRujukan'],
                 'Asal_Faskes' => $data['asalRujukan'],
                 'Tgl_Rujukan' => $data['tglRujukan'],
-                'Lakalantas' => $data['lakaLantas']
+                'Lakalantas' => $data['lakaLantas'],
+                'no_surat_kontrol' => $data['noSuratLama'],
+                'kd_dpjp' => $data['kodeDPJP']
             ]);
 
         return $updateSep;
@@ -265,7 +268,7 @@ class Sep
         ]; 
         
         $res['skdp'] = [
-            'noSurat' => $data['noSurat'],
+            'noSurat' => $data['noSuratLama'],
             'kodeDPJP' => $data['kodeDPJP']
         ];
 

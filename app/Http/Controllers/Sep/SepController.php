@@ -248,14 +248,15 @@ class SepController extends Controller
 
     public function sepUpdate(SepRequest $req)
     {
+        // dd($req->all());
         if ($req->ajax()) {
             $data = $req->all();
             if ($data['penjamin'] != 0) {
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
+
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
-            $data['klsRawat'] = '3';
             $data['user'] = 'Admin OSS';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';

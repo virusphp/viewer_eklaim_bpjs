@@ -61,7 +61,7 @@ function getEditItem(data)
     $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
     $('#noSep').val(data.noSep);
-    $('#tglSep').val(data.tglSep);
+    $('#tglSep').val(data.tglSep); 
     if($('#jns_pelayanan').val() == 2) {
         $('#nama_pelayanan').val('Rawat Jalan');
         $('#hak_kelas').css('display', 'none').removeAttr('name');
@@ -111,19 +111,21 @@ function getEditSep(data)
 
     dataSep(data.noSep);
     $('#tglSep').val(data.tglSep);
+    
     if($('#jns_pelayanan').val() == 2) {
         $('#nama_pelayanan').val('Rawat Jalan');
         $('#hak_kelas').css('display', 'none').removeAttr('name');
         $('#kelas').removeAttr('style').attr('name','klsRawat');
     } else {
-        $('#nama_pelayanan').val('Rawat Inap');
+        $('#nama_pelayanan').val('Rawat Inap'); 
+        getKelas();
     }     
-    getKelas();
+    getHistory();
+    getDataSep();
     getDokterDpjp();
     // getPRujukanppkpkAsal();
     getPeserta();
-    getHistory();
-    getDataSep();
+  
 }
 
  // iki PR
@@ -266,7 +268,7 @@ function getDataSep()
             $('#kd_dpjp').val(response.kd_dpjp).attr('readonly', 'true');
             $('#kodeDPJP').val(response.kd_dpjp);
             $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
-            console.log(response.no_surat_kontrol)
+            // console.log(response.no_surat_kontrol)
         }
     })
 }

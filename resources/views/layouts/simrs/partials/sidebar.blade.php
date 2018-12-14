@@ -8,7 +8,6 @@
         </li>
         <?php $user = Auth::user()->role; ?>
         <!-- Registrasi -->
-        @if( $user == 'developer')
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">
             <i class="nav-icon icon-pencil"></i> Registrasi</a>
@@ -19,7 +18,6 @@
             </li>
           </ul>
         </li>
-        @endif
         <!-- SEP -->
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">

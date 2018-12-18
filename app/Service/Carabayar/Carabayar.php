@@ -32,4 +32,20 @@ class CaraBayar
             }
         } 
     }
+
+    public function getBayar($kode)
+    {
+        // dd($kode);
+        try {
+            $url = $this->api_url . "getbayar/".$kode;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
 }

@@ -8,7 +8,7 @@ use App\Service\Carabayar\CaraBayar;
 
 class CarabayarController extends Controller
 {
-    public function getJnsPasien(Request $req, CaraBayar $cb)
+    public function getJnsPasienBack(Request $req, CaraBayar $cb)
     {
         if ($req->ajax()) {
             $dataBayar = $cb->getCaraBayar();
@@ -20,6 +20,19 @@ class CarabayarController extends Controller
                 $carabayar.= "<option value='$d->kd_cara_bayar'>$d->keterangan</option>";
             }
             return $carabayar;
+        }
+    }
+
+    public function getJnsPasien(Request $req, CaraBayar $cb)
+    {
+        // dd($req->all());
+        if ($req->ajax()) {
+            $kode = $req->get('term');
+            $caraBayar = $cb->getBayar($kode);
+            $data = json_decode($caraBayar);
+            // dd($data);
+            $data = $data->hasil->carabayar;
+            return $data;
         }
     }
 }

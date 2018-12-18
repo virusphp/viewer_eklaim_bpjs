@@ -7,12 +7,12 @@
         <form action="">
             <div class="controls">
             <div class="input-group">
-                <select id="cara_bayar" name="cara_bayar" class="form-control">
+                <!-- <select id="cara_bayar" name="cara_bayar" class="form-control">
                     <option value="">Pilih</option> 
                     @foreach($cara_bayar as $data)
                         <option value="{{ $data->kd_cara_bayar }}">{{ $data->keterangan }}</option> 
                     @endforeach
-                </select>
+                </select> -->
             </div>
             </div>
         </form>

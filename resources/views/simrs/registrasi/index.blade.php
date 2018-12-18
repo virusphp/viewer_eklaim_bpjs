@@ -51,7 +51,7 @@
 @push('css')
 <!-- <link rel="stylesheet" href="{{ asset('core-u/css/bootstrap.min.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-<link rel="stylesheet" href="{{ asset('selectize/css/selectize.css') }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
 
 @endpush
 @push('scripts')
@@ -59,12 +59,9 @@
 <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
-<script type="text/javascript" src="{{ asset('selectize/js/standalone/selectize.min.js') }}" ></script>
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 @include('simrs.registrasi.modals.ajax')
 <script type="text/javascript">
     $(function () {
@@ -77,8 +74,29 @@
         getStart();
         resetSuccessReg();
         $('.table').removeAttr('style');
-        ajaxLoad();
+        ajaxLoad(); 
+        
+        $('input').bind('keypress', function (eInner) {
+            if (eInner.keyCode == 13) //if its a enter key
+            {
+                var tabindex = $(this).attr('tabindex');
+                tabindex++; //increment tabindex
+                //after increment of tabindex ,make the next element focus
+                $('[tabindex=' + tabindex + ']').focus();
+
+                //Just to print some msgs to see everything is working
+                $('#Msg').text($(this).id + " tabindex: " + tabindex 
+                + " next element: " +  $('[tabindex=' + tabindex + ']').id);
+                return false; // to cancel out Onenter page postback in asp.net
+            }
+        });
     });
+
+    $('#simpan-user').keypress(function(event) {
+        if (event.keyCode === 13) {
+            $(this).click();
+        }
+    })
 
     $(document).on('click','#simpan-user', function(e) {
         var form = $('#form-pasien'),
@@ -157,12 +175,30 @@
                 $('#v-no-telp').val(res.no_telp).attr('readonly', true);
                 $('#no_rm').attr('readonly', true);
                 $('#poli').attr('readonly', false);
-                getPoli();
-                getJnsPasien();
+                // getPoli();
+                // getJnsPasien();
                 getNoKartu();
+                // $("#poli").select2({
+                //     placeholder: 'Select an option'
+                // });
+                // $("#jnsPasien").select2({
+                //     placeholder: 'Select an option'
+                // });
+                
+                // $('#poli').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur', function () {
+                //     $(this).prop('tabindex', tabindex)
+                // })
+
+                // $('#jnsPasien').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur', function () {
+                //     $(this).prop('tabindex', tabindex)
+                // })
             } 
         })
     });
+
+    function select2Focus() {
+        $(this).closest('.select2').prev('select').select2('open');
+    }
 
     function getNoKartu()
     {
@@ -179,7 +215,7 @@
         })
     }
 
-    $(document).on('change', '#poli', function() {
+    $(document).on('change', '#poli2', function() {
         var kdPoli = $(this).val(),
             method = 'GET',
             url = '{{ route('simrs.poli.harga') }}',
@@ -233,6 +269,44 @@
             }
         })
     }
+
+    // cari nama_poliklinik
+    $(document).ready(function() {
+        var src = "{{ route('simrs.poli') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#nama_poli').autocomplete({
+            source : function (request, response) {
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term },
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kd_sub_unit,
+                                value : m.nama_sub_unit,
+                                harga : m.harga,
+                                kdTarif : m.kd_tarif,
+                                rekP : m.Rek_P
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            },
+            minLength: 4,
+            selectFirst: true,
+            select : function (event, ui) {
+                $(this).val(ui.item.value);
+                $('#poli').val(ui.item.id);
+                $('#tarif').val(ui.item.harga);
+                $('#kd_tarif').val(ui.item.kdTarif);
+                $('#rek_p').val(ui.item.rekP);
+                getDokter();
+                return true;
+            }
+        });
+   });
     
     function getJnsPasien() {
         var token = $('meta[name="csrf-token"]').attr('content'),
@@ -247,6 +321,37 @@
             }
         })
     }
+
+    // cari cara bayar
+    $(document).ready(function() {
+        var src = "{{ route('simrs.carabayar') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#nama_bayar').autocomplete({
+            source : function (request, response) {
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term },
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kd_cara_bayar,
+                                value : m.keterangan
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            },
+            minLength: 4,
+            selectFirst: true,
+            select : function (event, ui) {
+                $(this).val(ui.item.value);
+                $('#jnsPasien').val(ui.item.id);
+                return true;
+            }
+        });
+   });
 
     function ajaxLoad(){
             var caraBayar = $("#cara_bayar").val();

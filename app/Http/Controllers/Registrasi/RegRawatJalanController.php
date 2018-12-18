@@ -8,6 +8,7 @@ use App\Repository\Registrasi\Registrasi;
 use App\Service\Pasien\Pasien;
 use App\Service\Registrasi\Registrasi as Daftar;
 Use DateTime;
+use Auth;
 
 class RegRawatJalanController extends Controller
 {
@@ -89,7 +90,7 @@ class RegRawatJalanController extends Controller
             'Rek_P' => $data->Rek_P,
             'hak_kelas' => $data->hak_kelas,
             'no_telp' => $data->no_telp,
-            'user_id' => '000003'
+            'user_id' => Auth::user()->kd_pegawai
         ];
     }
 }

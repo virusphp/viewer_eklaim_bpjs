@@ -12,7 +12,7 @@
     <li class="breadcrumb-item active">Index</li>
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
-            <div class="col-md-6 col-form-label form-inline">
+            <div class="col-md-5 col-form-label form-inline">
                 <div class="form-check form-check-inline mr-1">
                     <input class="form-check-input" type="radio" id="fktp" value="1" name="fktp" checked>
                     <label class="form-check-label" for="inline-radio1">Faskes 1</label>
@@ -24,7 +24,10 @@
             </div>
             <input name="cek-no-kartu" id="cek-no-kartu" value="" class="form-control" placeholder="Scan No Kartu..." type="text">
             <a id="cek-history-peserta" class="btn btn-sm">
-                <i class="icons tengah font-3xl icon-credit-card"></i>
+                <i class="icons tengah font-4xl icon-credit-card"></i>
+            </a>
+            <a id="daftar-pasien" class="btn btn-sm">
+                <i class="icons tengah font-4xl icon-user-follow"></i>
             </a>
         </div>
     </li>
@@ -68,6 +71,7 @@
 </div>
 
 @include('simrs.sep.modals.modal_sep')
+@include('simrs.sep.modals.modal_register')
 
 
 @endsection
@@ -115,20 +119,43 @@
 
     $(document).ready(function () {
         getStart();
+        r_getStart();
         resetSuccessSep();
+        r_resetSuccessReg();
         $('.table').removeAttr('style');
         ajaxLoad();
-    });
 
+        $('input').bind('keypress', function (eInner) {
+            if (eInner.keyCode == 13) //if its a enter key
+            {
+                var tabindex = $(this).attr('tabindex');
+                tabindex++; //increment tabindex
+                //after increment of tabindex ,make the next element focus
+                $('[tabindex=' + tabindex + ']').focus();
+
+                //Just to print some msgs to see everything is working
+                $('#Msg').text($(this).id + " tabindex: " + tabindex 
+                + " next element: " +  $('[tabindex=' + tabindex + ']').id);
+                return false; // to cancel out Onenter page postback in asp.net
+            }
+        });
+    });
 
     $('#noSurat').on('change', function(){
         return event.charCode >= 48 && event.charCode <= 57
     })
 
+    $('#modal-register').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+        
+        $('#no_rm').attr('readonly', false);
+    });
+
     $('#modal-sep').on('hidden.bs.modal', function() {
         var alertas = $('#form-sep'),
-            tgl_reg = '{{ date('Y-m-d') }}';
-        
+        tgl_reg = '{{ date('Y-m-d') }}';
+
+        $('#no_rm').attr('readonly', false);
         $("#edit-modal-sep span").remove();
         $("#tgl_rujukan").val(); 
         $("#tgl_rujukan").attr('readonly', false); 
@@ -138,6 +165,7 @@
         $('#noSuratLama').prop('type','hidden');
         $('#noSurat').prop('type','text');
         alertas.validate().resetForm();
+
         alertas.find('.error').removeClass('error');
     });
 
@@ -489,7 +517,7 @@
     })
 
     function ajaxLoad(){
-            var jnsRawat = $("#jns_rawat:checked").val();
+            var jnsRawat = $("input[name=jns_rawat]:checked").val();
             var caraBayar = $("#cara_bayar").val();
             var tglReg = $("#tgl_reg_filter").val();
             var search = $("#search").val();
@@ -538,4 +566,6 @@
             }); 
         }   
 </script>
+@include('simrs.sep.modals.register_pasien')
+@include('simrs.sep.modals.ajax_register')
 @endpush

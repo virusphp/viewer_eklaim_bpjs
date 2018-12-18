@@ -18,10 +18,26 @@ class Poli
         $this->api_url = config('bpjs.api.endpoint');   
     }
     
-    public function getPoli()
+    public function getPoliback()
     {
         try {
             $url = $this->api_url . "getalltarifkarcis";
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
+    public function getPoli($kode)
+    {
+        // dd($kode);
+        try {
+            $url = $this->api_url . "getkarcis/".$kode;
             $response = $this->client->get($url);
             $result = $response->getBody();
             return $result;

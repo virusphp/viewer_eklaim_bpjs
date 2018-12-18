@@ -21,6 +21,17 @@
         $('#no_rm').attr('readonly', false);
     });
 
+    $('#nama_poli').keyup(function() {
+        if(this.value.length > 1) return;
+        if ($(this).val().length == 0) {
+            $('#poli').val("");
+            $('#tarif').val("");
+            $('#kd_tarif').val("");
+            $('#rek_p').val("");
+            $("#kdDokter").val([]).trigger("change")
+        }
+    });
+
     function resetAll(){
         $('#frame_error').hide();
         $('#error_reg').remove();

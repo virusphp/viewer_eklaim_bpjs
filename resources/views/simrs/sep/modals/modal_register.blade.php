@@ -13,8 +13,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-pasien" class="form-horizontal" method="POST">
-        <div id="frame_error" class="alert alert-danger">
+        <form id="r_form-pasien" class="form-horizontal" method="POST">
+        <div id="r_frame_error" class="alert alert-danger">
           
         </div>
         <div class="row">
@@ -28,32 +28,32 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="no_rm">No Rekam Medis</label>
-                            <input class="form-control form-control-sm" tabindex="1" id="no_rm" name="no_rm" type="text" placeholder="No Reka Medis" autofocus>
+                            <input class="form-control form-control-sm" tabindex="1" id="r_no_rm" name="no_rm" type="text" placeholder="No Reka Medis" autofocus>
                             <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                         </div>
                         <div class="form-group">
                             <label for="poli">Poliklinik</label>
-                            <input id="nama_poli" tabindex="2" type="text" class="form-control form-control-sm" >
-                            <input id="poli" name="kd_sub_unit" type="hidden">
+                            <input id="r_nama_poli" tabindex="2" type="text" class="form-control form-control-sm" >
+                            <input id="r_poli" name="kd_sub_unit" type="hidden">
                             <!-- <select id="poli" tabindex="2" name="kd_sub_unit" class="form-control form-control-sm">
                             </select> -->
                         </div>
                         <div class="form-group">
                             <label for="tarif">tarif</label>
-                            <input class="form-control form-control-sm" id="tarif" name="tarif" type="text" placeholder="Tarif">
-                            <input class="form-control form-control-sm" id="kd_tarif" name="kd_tarif" type="hidden" placeholder="Tarif">
-                            <input class="form-control form-control-sm" id="rek_p" name="Rek_P" type="hidden" placeholder="Tarif">
+                            <input class="form-control form-control-sm" id="r_tarif" name="tarif" type="text" placeholder="Tarif">
+                            <input class="form-control form-control-sm" id="r_kd_tarif" name="kd_tarif" type="hidden" placeholder="Tarif">
+                            <input class="form-control form-control-sm" id="r_rek_p" name="Rek_P" type="hidden" placeholder="Tarif">
                         </div>
                         <div class="form-group">
                             <label for="dokter">dokter</label>
-                            <select id="kdDokter" name="kd_pegawai" class="form-control form-control-sm">
+                            <select id="r_kdDokter" name="kd_pegawai" class="form-control form-control-sm">
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="jnsPasien">Jenis Pasien</label>
                             <!-- <select id="jnsPasien" tabindex="3" name="kd_cara_bayar" class="form-control form-control-sm"> -->
-                            <input id="nama_bayar" tabindex="3" type="text" class="form-control form-control-sm" >
-                            <input id="jnsPasien" type="hidden" name="kd_cara_bayar">
+                            <input id="r_nama_bayar" tabindex="3" type="text" class="form-control form-control-sm" >
+                            <input id="r_jnsPasien" type="hidden" name="kd_cara_bayar">
                             </select>
                         </div>
                     </div>
@@ -122,9 +122,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <input id="simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="4" value="Simpan">
+        <input id="r_simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="4" value="Simpan">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+

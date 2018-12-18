@@ -8,7 +8,7 @@ use App\Service\Poli\Poli;
 
 class PoliController extends Controller
 {
-    public function getPoli(Request $req, Poli $poli)
+    public function getPoliback(Request $req, Poli $poli)
     {
         if ($req->ajax()) {
             $dataPoli = $poli->getPoli();
@@ -19,6 +19,19 @@ class PoliController extends Controller
                 $poli.= "<option value='$d[kd_sub_unit]'>$d[nama_sub_unit]</option>";
             }
             return $poli;
+        }
+    }
+
+    public function getPoli(Request $req, Poli $poli)
+    {
+        // dd($req->all());
+        if ($req->ajax()) {
+            $kode = $req->get('term');
+            $poli = $poli->getPoli($kode);
+            $data = json_decode($poli);
+            // dd($data);
+            $diagAwal = $data->hasil->poli;
+            return $diagAwal;
         }
     }
 

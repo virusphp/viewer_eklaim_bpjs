@@ -304,17 +304,17 @@ class SepController extends Controller
         }
         // dd($antrian)
         $req = $this->cetak->cariSep($data->no_sjp);
-        // dd($req);
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian, $data->nama_propinsi,$data->tgl_reg, $data->kd_poliklinik,$data->no_sjp);
         $dataSep = json_decode($req);
         $dataSep = $dataSep->response;
+        // dd($dataSep);
         $reqPeserta = $this->cetak->getPeserta($dataSep->peserta->noKartu, $dataSep->tglSep);
         $peserta = json_decode($reqPeserta);
         $informasi = $peserta->response->peserta->informasi;
         $dataSep->noReg = $dataPasien->no_reg;
         $dataSep->noMr = $dataPasien->no_rm;
         $dataSep->alamat = $data->alamat;
-        $dataSep->kdDiagnosa = $data->kd_diagnosa;
+        // $dataSep->kdDiagnosa = $data->kd_diagnosa;
         $dataSep->namaKlinik = $data->nama_poli;
         $dataSep->antrian = $data->antrian;
         $dataSep->asalFaskes = $peserta->response->peserta->provUmum->nmProvider;
@@ -346,12 +346,16 @@ class SepController extends Controller
     public function getDataRegistrasi($noReg)
     {
         // dd($noReg);
+        // $data = DB::table('registrasi as r')
+        //             ->select('sb.no_sjp','sb.cob','sb.kd_diagnosa','sb.nama_faskes')
+        //             ->join('sep_bpjs as sb', function($join) {
+        //                 $join->on('r.no_reg', '=', 'sb.no_reg');
+        //             })
+        //         ->where('r.no_reg', $noReg)->first();
+
         $data = DB::table('registrasi as r')
-                    ->select('sb.no_sjp','sb.cob','sb.kd_diagnosa','sb.nama_faskes')
-                    ->join('sep_bpjs as sb', function($join) {
-                        $join->on('r.no_reg', '=', 'sb.no_reg');
-                    })
-                ->where('r.no_reg', $noReg)->first();
+                ->select('r.no_sjp')
+            ->where('r.no_reg', $noReg)->first();
         return $data;
     }
 

@@ -201,7 +201,7 @@
         <tr>
             <td rowspan="2" class="diagnosa">Diagnosa Awal</td>
             <td rowspan="2" class="tt-dua">:</td>
-            <td rowspan="2" class="nilai-diagnosa">{{ $dataSep->diagnosa }} {{ $dataSep->kdDiagnosa }}</td>
+            <td rowspan="2" class="nilai-diagnosa">{{ $dataSep->diagnosa }}</td>
             <td>Kls Tanggungan</td>
             <td>:</td>
             <td colspan="4">Kelas {{ $dataSep->kelasRawat }}</td>

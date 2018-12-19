@@ -119,26 +119,24 @@
 
     $(document).ready(function () {
         getStart();
-        r_getStart();
         resetSuccessSep();
-        r_resetSuccessReg();
         $('.table').removeAttr('style');
         ajaxLoad();
 
-        $('input').bind('keypress', function (eInner) {
-            if (eInner.keyCode == 13) //if its a enter key
-            {
-                var tabindex = $(this).attr('tabindex');
-                tabindex++; //increment tabindex
-                //after increment of tabindex ,make the next element focus
-                $('[tabindex=' + tabindex + ']').focus();
+        // $('input').bind('keypress', function (eInner) {
+        //     if (eInner.keyCode == 13) //if its a enter key
+        //     {
+        //         var tabindex = $(this).attr('tabindex');
+        //         tabindex++; //increment tabindex
+        //         //after increment of tabindex ,make the next element focus
+        //         $('[tabindex=' + tabindex + ']').focus();
 
-                //Just to print some msgs to see everything is working
-                $('#Msg').text($(this).id + " tabindex: " + tabindex 
-                + " next element: " +  $('[tabindex=' + tabindex + ']').id);
-                return false; // to cancel out Onenter page postback in asp.net
-            }
-        });
+        //         //Just to print some msgs to see everything is working
+        //         $('#Msg').text($(this).id + " tabindex: " + tabindex 
+        //         + " next element: " +  $('[tabindex=' + tabindex + ']').id);
+        //         return false; // to cancel out Onenter page postback in asp.net
+        //     }
+        // });
     });
 
     $('#noSurat').on('change', function(){
@@ -566,6 +564,4 @@
             }); 
         }   
 </script>
-@include('simrs.sep.modals.register_pasien')
-@include('simrs.sep.modals.ajax_register')
 @endpush

@@ -9,7 +9,7 @@
         $('#r_tarif').attr('readonly', true);
         $('#r_kdDokter').attr('readonly', true);
         $('#r_jnsPasien').attr('readonly', true);
-        var form = $('#form-pasien')
+        var form = $('#r_form-pasien')
             // Reset validationo error
             form.find('.invalid-feedback').remove();
             form.find('input').removeClass('is-invalid');

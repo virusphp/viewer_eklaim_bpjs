@@ -91,6 +91,15 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('simrs/poli/dokter', 'PoliController@getDokter')->name('simrs.poli.dokter');
         Route::get('simrs/jenispasien', 'CaraBayarController@getJnsPasien')->name('simrs.carabayar');
         // Rujukan
+        // Route::get('/cobatanggal', function() {
+        //     $dt1 = strtotime("2018/09/20");
+        //     $dt2 = strtotime("2018/12/19");
+        //     $diff = abs($dt2-$dt1);
+        //     $telat = $diff/86400; // 86400 detik sehari
+        //     echo $telat;
+        // });
     });
+
+   
 
 });

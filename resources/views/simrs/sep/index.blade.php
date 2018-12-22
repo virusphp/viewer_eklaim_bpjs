@@ -96,7 +96,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 @include('simrs.sep.modals.ajax')
+@include('simrs.sep.modals.ajax_register')
 @include('simrs.sep.modals.insert_sep')
+@include('simrs.sep.modals.register_pasien')
 @include('simrs.sep.modals.update_sep')
 <script type="text/javascript">
     $(function () {
@@ -119,7 +121,9 @@
 
     $(document).ready(function () {
         getStart();
+        r_getStart();
         resetSuccessSep();
+        r_resetSuccessReg();
         $('.table').removeAttr('style');
         ajaxLoad();
 
@@ -146,14 +150,13 @@
     $('#modal-register').on('hidden.bs.modal', function(){
         $(this).find('form')[0].reset();
         
-        $('#no_rm').attr('readonly', false);
+        $('#r_no_rm').attr('readonly', false);
     });
 
     $('#modal-sep').on('hidden.bs.modal', function() {
         var alertas = $('#form-sep'),
         tgl_reg = '{{ date('Y-m-d') }}';
 
-        $('#no_rm').attr('readonly', false);
         $("#edit-modal-sep span").remove();
         $("#tgl_rujukan").val(); 
         $("#tgl_rujukan").attr('readonly', false); 

@@ -1,5 +1,14 @@
 <script type="text/javascript">
 
+     $(document).on('click','#daftar-pasien', function() {
+        $(this).addClass('edit-item-trigger-clicked');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            options = {
+                'backdrop' : 'static'
+            };
+
+        $('#modal-register').modal(options);
+    });
     $('#r_simpan-user').keypress(function(event) {
         if (event.keyCode === 13) {
             $(this).click();
@@ -49,16 +58,6 @@
             }
         })
         
-    });
-
-    $(document).on('click','#daftar-pasien', function() {
-        $(this).addClass('edit-item-trigger-clicked');
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
-            options = {
-                'backdrop' : 'static'
-            };
-
-        $('#modal-register').modal(options);
     });
 
     // cari pasien

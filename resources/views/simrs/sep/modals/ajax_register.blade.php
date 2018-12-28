@@ -15,12 +15,6 @@
             form.find('input').removeClass('is-invalid');
     }
 
-    // $('.modal').on('hidden.bs.modal', function(){
-    //     $(this).find('form')[0].reset();
-        
-        
-    // });
-
     $('#r_nama_poli').keyup(function() {
         if(this.value.length > 1) return;
         if ($(this).val().length == 0) {
@@ -41,4 +35,25 @@
         $('#r_frame_success').hide();
         $('#r_success_reg').remove();
     }
+
+    // Hak kelas Peserta
+    function getHakKelas()
+    {
+        var no_kartu = $('#v-no-kartu').val(),
+            tgl_sep = moment().format("YYYY-MM-DD");
+        if (no_kartu.length < 1) return;
+        $.ajax({
+            type: 'get',
+            url: '{{ route('bpjs.peserta') }}',
+            data: {no_kartu:no_kartu, tgl_sep:tgl_sep},
+            success: function(data) {
+                d = JSON.parse(data);
+                if (d.response !== null) {
+                    response = d.response.peserta;
+                    $('#v-hak-kelas').val(response.hakKelas.kode).attr('readonly', true);
+                    $('#v-nama-kartu').val(response.nama).attr('readonly', true);
+                }
+            }
+        })
+    } 
 </script>

@@ -3,7 +3,6 @@
 // Start Modal 
 function getStart()
 {
-    
     // $('#asalRujukan').find("option[selected]").removeAttr('selected');
     $('#asalRujukan').prop('selectedIndex',0);
     $('#frame_error').hide();
@@ -25,7 +24,6 @@ function getStart()
     $('#noSurat').val("000000");
     $('#noSuratLama').val("000000")
     $('#kd_dpjp').val("000000");
-    // $('#kodeDPJP').val("");
     $('#ket_kill').val("0");
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
@@ -86,7 +84,6 @@ function getKelas()
         method: method,
         data: {},
         success: function(res) {
-            console.log(res);
             $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
             $('#hak_kelas').html(res);
         }
@@ -123,7 +120,6 @@ function getEditSep(data)
     getHistory();
     getDataSep();
     getDokterDpjp();
-    // getPRujukanppkpkAsal();
     getPeserta();
   
 }
@@ -141,6 +137,7 @@ function dataSep(noSEP)
         }
     })
 }
+
 // iki PR
 function getRujukan()
 {
@@ -238,8 +235,7 @@ function getDataSep()
             noSep: noSep, noReg: noReg
         },
         success: function(response) {
-            console.log(response);
-           
+            // console.log(response);
             if($('#jns_pelayanan').val() == 2) {
                 getSkdp();
                 $('#nama_pelayanan').val('Rawat Jalan');
@@ -268,7 +264,6 @@ function getDataSep()
             $('#kd_dpjp').val(response.kd_dpjp).attr('readonly', 'true');
             $('#kodeDPJP').val(response.kd_dpjp);
             $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
-            // console.log(response.no_surat_kontrol)
         }
     })
 }
@@ -366,7 +361,6 @@ function asalRujukan()
                     $(this).prop("selected", true).attr('selected',true).closest('#asalRujukan').attr('disabled','true');
                 }
             });
-            // $('#asalRujukan option[value='+data.response.faskes[0].jenis_faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
         }
     })
 }
@@ -468,7 +462,6 @@ function getDokterDpjp()
         url: '{{ route('bpjs.dpjp') }}',
         data: {},
         success: function(data) {
-            // console.log(data);
             $("#kodeDPJP").html(data);
         }
     })

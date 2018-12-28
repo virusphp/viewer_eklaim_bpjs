@@ -79,7 +79,7 @@
                 $('#v-jns-kel').val(res.jns_kel).attr('readonly', true);
                 $('#v-tgl-lahir').val(res.tgl_lahir).attr('readonly', true);
                 $('#v-tmpt-lahir').val(res.tempat_lahir).attr('readonly', true);
-                $('#v-no-telp').val(res.no_telp).attr('readonly', true);
+                $('#v-no-telp').val(res.no_telp);
                 $('#r_no_rm').attr('readonly', true);
                 $('#r_poli').attr('readonly', false);
                 getNoKartu();
@@ -101,10 +101,19 @@
             url: url,
             data: { noRm: noRm },
             success: function(res) {
-                $('#v-no-kartu').val(res.no_kartu).attr('readonly',true);
+                $('#v-no-kartu').val(res.no_kartu);
+                $('#v-kd-penjamin').val(res.kd_penjamin);
+                $('#v-jns-penjamin').val(res.nama_penjamin);
+                getHakKelas();
             }
         })
     }
+
+
+    $(document).on('change', '#v-no-kartu', function() {
+        console.log($(this).val());
+        getHakKelas();
+    })
 
     $(document).on('change', '#r_poli2', function() {
         var kdPoli = $(this).val(),
@@ -239,6 +248,37 @@
             select : function (event, ui) {
                 $(this).val(ui.item.value);
                 $('#r_jnsPasien').val(ui.item.id);
+                return true;
+            }
+        });
+   });
+
+    // cari cara bayar
+    $(document).ready(function() {
+        var src = "{{ route('simrs.jenispenjamin') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#v-jns-penjamin').autocomplete({
+            source : function (request, response) {
+                $.ajax({
+                    url : src,
+                    dataType : "json",
+                    data : { term: request.term },
+                    success: function(data) {
+                        var array = data.error ? [] : $.map(data, function(m) {
+                            return {
+                                id : m.kd_penjamin,
+                                value : m.nama_penjamin
+                            };
+                        });
+                        response(array);
+                    }
+                });
+            }, 
+            minLength: 3,
+            selectFirst: true,
+            select : function (event, ui) {
+                $(this).val(ui.item.value);
+                $('#v-kd-penjamin').val(ui.item.id);
                 return true;
             }
         });

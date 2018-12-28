@@ -26,8 +26,9 @@ class Pasien
 
     public function getKartu($req)
     {
-        $data = DB::table('penjamin_pasien')
-                  ->select('no_rm','no_kartu')
+        $data = DB::table('penjamin_pasien as pp')
+                  ->select('pp.no_rm','pp.no_kartu','pp.kd_penjamin', 'p.nama_penjamin')
+                  ->join('penjamin as p', 'pp.kd_penjamin', '=', 'p.kd_penjamin')
                   ->where('no_rm', $req->noRm)->first();
         return $data;
     }

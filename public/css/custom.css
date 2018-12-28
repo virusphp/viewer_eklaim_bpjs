@@ -116,13 +116,9 @@
 }
 
 input#v-alamat, #v-alamat-reg, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, #v-no-rm, #v-nama-pasien,
-#v-no-telp, #v-jns-kel, #v-no-kartu, *:focus{
+#v-no-telp, #v-jns-kel, #v-no-kartu, #v-hak-kelas, *:focus{
     outline: none;
     border: 0px solid;
-}
-
-input#v-alamat-reg {
-    width: 300px;
 }
 
 .pesan-error {

@@ -49,4 +49,20 @@ class Pasien
         return response()->json($res); 
     }
 
+    public function getJnsPenjamin($kode)
+    {
+         // dd($kode);
+         try {
+            $url = $this->api_url . "getjnspenjamin/".$kode;
+            $response = $this->client->get($url);
+            $result = $response->getBody();
+            return $result;
+        } catch (RequestException $e) {
+            $result = Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $result = Psr7\str($e->getResponse());
+            }
+        } 
+    }
+
 }

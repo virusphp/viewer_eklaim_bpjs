@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('simrs/poli/harga', 'PoliController@getHarga')->name('simrs.poli.harga');
         Route::get('simrs/poli/dokter', 'PoliController@getDokter')->name('simrs.poli.dokter');
         Route::get('simrs/jenispasien', 'CaraBayarController@getJnsPasien')->name('simrs.carabayar');
+        Route::get('simrs/jenispenjamin', 'PenjaminController@getJnsPenjamin')->name('simrs.jenispenjamin');
         // Rujukan
         // Route::get('/cobatanggal', function() {
         //     $dt1 = strtotime("2018/09/20");

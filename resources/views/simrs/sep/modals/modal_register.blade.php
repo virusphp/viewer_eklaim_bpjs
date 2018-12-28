@@ -69,49 +69,111 @@
                     <div class="card-body">
                         <div class="form-group clearfix">
                             <div class="col-sm-12">
-                                <table>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label for="v-no-rm">No RM</label>
+                                        <input class="form-control form-control-sm" id="v-no-rm" type="text" placeholder="No Rekam Medis">
+                                    </div>
+                                    <div class="form-group col-sm-8">
+                                        <label for="v-nama-pasien">Nama</label>
+                                        <input class="form-control form-control-sm" id="v-nama-pasien" type="text" placeholder="Nama Pasien">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label for="v-alamat-reg">Alamat</label>
+                                        <input class="form-control form-control-sm" id="v-alamat-reg" type="text" placeholder="Alamat Pasien">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="v-jns-kel">Kelamin</label>
+                                        <input class="form-control form-control-sm" id="v-jns-kel" type="text" placeholder="Jenis Kelamin">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label for="v-tmpt-lahir">Tempat Lahir</label>
+                                        <input class="form-control form-control-sm" id="v-tmpt-lahir" type="text" placeholder="Tempat Lahir">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="v-tgl-lahir">Tgl Lahir</label>
+                                        <input class="form-control form-control-sm" id="v-tgl-lahir" type="text" placeholder="Tanggal Lahir">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="v-no-telp">No Telp</label>
+                                    <input class="form-control form-control-sm" name="no_telp" id="v-no-telp" type="text" tabindex="4" placeholder="No Telp">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label for="v-no-kartu">No BPJS</label>
+                                        <input class="form-control form-control-sm" name="noKartu" id="v-no-kartu" type="text" tabindex="5" placeholder="No BPJS">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="v-jns-penjamin">Jenis Kartu</label>
+                                        <input class="form-control form-control-sm" id="v-jns-penjamin" type="text" tabindex="6" placeholder="Jenis Penjamin">
+                                        <input name="kdPenjamin" id="v-kd-penjamin" type="hidden">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label for="v-nama-kartu">Nama From BPJS</label>
+                                        <input class="form-control form-control-sm" id="v-nama-kartu" type="text" placeholder="Nama Bpjs">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                    <label for="v-hak-kelas">Hak Kelas</label>
+                                    <input class="form-control form-control-sm" name="hakKelas" id="v-hak-kelas" type="text" placeholder="Hak Kelas">
+                                    </div>
+                                </div>
+                                <!-- <table>
                                     <tr>
                                         <th>No RM</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-no-rm"></td>
+                                        <td><input type="text" id="v-no-rm" class="form-control"></td>
                                     </tr>
                                     <tr>
                                         <th>Nama</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-nama-pasien"></td>
+                                        <td><input type="text" id="v-nama-pasien" class="form-control"></td>
                                     </tr> 
                                     <tr>
                                         <th>Alamat</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-alamat-reg"></td>
+                                        <td><input type="text" id="v-alamat-reg" class="form-control"></td>
                                     </tr> 
                                     <tr>
                                         <th>Kelamin</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-jns-kel"></td>
+                                        <td><input type="text" id="v-jns-kel" class="form-control"></td>
                                     </tr> 
                                     <tr>
                                         <th>Tgl Lahir</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-tgl-lahir"></td>
+                                        <td><input type="text" id="v-tgl-lahir" class="form-control"></td>
                                     </tr> 
                                     <tr>
                                         <th>Tmpt Lahir</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-tmpt-lahir"></td>
+                                        <td><input type="text" id="v-tmpt-lahir" class="form-control"></td>
                                     </tr> 
                                     <tr>
                                         <th>No Telp</th>
                                         <td>:</td>
-                                        <td><input name="no_telp" type="text" id="v-no-telp"></td>
+                                        <td><input name="no_telp" type="text" id="v-no-telp" class="form-control" tabindex="4"></td>
                                     </tr> 
                                     <tr>
                                         <th>No BPJS</th>
                                         <td>:</td>
-                                        <td><input type="text" id="v-no-kartu"></td>
-                                        <td><input name="hak_kelas" type="hidden" value="0"></td>
+                                        <td><input type="text" id="v-no-kartu" name="noKartu" class="form-control" tabindex="5"></td>
                                     </tr> 
-                                </table>
+                                    <tr>
+                                        <th colspan="1">Hak Kelas</th>
+                                        <td>:</td>
+                                        <td><input id="v-hak-kelas" name="hakKelas" type="text" class="form-control col-md-3" tabindex="6"></td>
+                                        <th colspan="1">PBI</th>
+                                        <td>:</td>
+                                        <td><input id="v-hak-kelas" name="hakKelas" type="text" class="form-control col-md-6" tabindex="6"></td>
+                                    </tr> 
+                                </table> -->
                             </div>
                         </div>
                     </div>
@@ -122,7 +184,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <input id="r_simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="4" value="Simpan">
+        <input id="r_simpan-user" type="button" class="btn btn-sm btn-primary" tabindex="7" value="Simpan">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

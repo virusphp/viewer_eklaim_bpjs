@@ -37,15 +37,6 @@ $(document).on('click', '#print-sep', function() {
         url = '{{ url('admin/sep/print') }}/'+no_reg; 
         console.log(no_reg);
         var w = window.open(url, "_blank", "width=850, height=600");
-        // var w = window.open(url, "popupWindow", "width=850, height=600");
-        // setTimeout(() => {
-        //     w.print();
-        // }, 0);
-        // setTimeout(() => {
-        //    w.document.close();
-        //    w.close(); 
-        // }, 0);
-        // w.document.onfocus = function () { setTimeout(function () { w.document.close();w.close(); },w.close(), 0); }
 });
 
 // Rujukan cari
@@ -199,7 +190,7 @@ $(document).on('click', '#h-no-surat', function() {
             getSRI();
         }
         if ($('#jns_pelayanan').val() == 1) {
-            $('#noRujukan').val(noDpjp[0].substring(noDpjp[0].length - 6)).attr('readonly', true);
+            // $('#noRujukan').val(noDpjp[0].substring(noDpjp[0].length - 6)).attr('readonly', true);
         }
         
     var kdPoliDPJP = $('#kdPoliDPJP').val(),
@@ -211,7 +202,7 @@ $(document).on('click', '#h-no-surat', function() {
         url: url,
         data: { term: kdPoliDPJP, jnsPel: jnsPel },
         success: function(res) {
-            console.log(res);
+            // console.log(res);
             $('#kodeDPJP').html(res);
             // di sini
         }
@@ -259,13 +250,11 @@ $(document).on('click','#h-rujukan', function() {
     
     });
     $('#modal-rujukan').modal('hide');
-    // console.log(rujukan);
 });
 
 // Rujukan keyup
 $(document).on('click','#h-rujukan-rs', function() {
     var rujukan = $(this).data('rujukanrs');
-    // console.log(rujukan);
     $('#no_rujukan').val(rujukan);
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -316,7 +305,6 @@ $(document).on('click','#h-rujukan-rs', function() {
     
     });
     $('#modal-rujukan-rs').modal('hide');
-    // console.log(rujukan);
 });
 
 // CETAK SEP

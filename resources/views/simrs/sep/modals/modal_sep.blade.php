@@ -169,7 +169,7 @@
                             <div class="form-group">
                                 <div>
                                     <!-- <label for="no_rujukan">No Rujukan</label> -->
-                                    <label for="no_surat">Surat Kontrol</label>
+                                    <label for="no_surat">No Surat / SKDP</label>
                                     <input class="btn btn-ghost-primary btn-cus" id="cari_no_surat" type="button" value="cari">
                                 </div>
                                 <input class="form-control form-control-sm" id="noSurat" name="noSurat" type="text" tabindex="5" placeholder="Ketik no surat kontrol" maxlength="7">
@@ -180,7 +180,7 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <div>
-                                    <label for="kd_dpjp">DPJP Pemberi Surat SKDP</label>
+                                    <label for="kd_dpjp">DPJP Pemberi Surat / SKDP</label>
                                 </div>
                                 <!-- <input class="form-control form-control-sm" id="txtkodeDPJP" name="dokterDPJP" type="text" tabindex="6" placeholder="Ketik Nama Poli Dokter DPJP"> -->
                                 <!-- <select id="txtkodeDPJP" name="dokterDPJP" class="form-control form-control-sm" tabindex="6"></select> -->
@@ -377,7 +377,7 @@
             <thead>
                  <tr>
                     <td>No</td>
-                    <td>No Reg</td>
+                    <td>No Surat</td>
                     <td>Kd Poli Dpjp</td>
                     <td>No Rujukan</td>
                     <td>Dokter</td>

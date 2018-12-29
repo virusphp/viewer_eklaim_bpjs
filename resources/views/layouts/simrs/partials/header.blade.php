@@ -17,6 +17,9 @@
     <li class="nav-item px-3">
       <a class="nav-link" href="{{ route('user.edit.profil', $user->id_user) }}">Settings</a>
     </li>
+    <li class="nav-item px-3">
+      <button id="guide" class="btn btn-outline-info">Guide</button>
+    </li>
     <!-- <li class="nav-item px-3">
       <select name="color" id="c-color" class="form-control">
         <option value="-">Pilih Warna</option>

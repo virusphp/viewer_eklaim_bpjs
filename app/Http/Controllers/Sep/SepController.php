@@ -234,7 +234,7 @@ class SepController extends Controller
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
-            $result = $this->conn->saveSep($data);
+            // $result = $this->conn->saveSep($data);
             return $result;
         }
     }

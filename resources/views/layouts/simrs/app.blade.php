@@ -41,6 +41,7 @@
       </main>
     </div>
     @include('layouts.simrs.partials.footer')
+    @include('layouts.simrs.partials.modal_guide')
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('core-ui/jquery/jquery.min.js') }}"></script>
     <!-- <script src="//code.jquery.com/jquery-1.12.4.js"></script> -->
@@ -74,6 +75,16 @@
             }
           })
         })
+
+    $(document).on('click', '#guide', function(e) {
+      // e.preventDefault();
+      $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+      options = {
+        'backdrop' : 'static'
+      },
+
+      $('#modal-guide').modal(options);
+    });
     </script>
   </body>
 </html>

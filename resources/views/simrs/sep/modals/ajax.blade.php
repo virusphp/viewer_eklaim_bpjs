@@ -64,6 +64,7 @@ function getEditItem(data)
         $('#nama_pelayanan').val('Rawat Jalan');
         $('#hak_kelas').css('display', 'none').removeAttr('name');
         $('#kelas').removeAttr('style').attr('name','klsRawat');
+        $('#poli-tujuan b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
         getKelas();

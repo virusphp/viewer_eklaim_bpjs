@@ -36,7 +36,7 @@ class HomeController extends Controller
             $dataPegawai = [];
             foreach ($pegawai as $key => $val) {
                 // dd($val);
-                file_put_contents(public_path("images/pegawai")."\\".($filename = $val->kd_pegawai.".jpg"), $val->foto);
+                file_put_contents(public_path("images/pegawai").DIRECTORY_SEPARATOR.($filename = $val->kd_pegawai.".jpg"), $val->foto);
                 $dataPegawai[$key] = $val;
                 // dd($dataPegawai);
                 unset($val->foto);

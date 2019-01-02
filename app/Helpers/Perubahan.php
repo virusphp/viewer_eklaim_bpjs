@@ -47,6 +47,12 @@ function jenisRawat($nilai)
 	return ($nilai == 1) ? "R Jalan" : (($nilai == 2) ? "R Inap" : "IGD");
 }
 
+function jenisPelayanan($nilai)
+{
+	// dd(($nilai == 1) ? "R Jalan" : (($nilai == 2) ? "R Inap" : "IGD"));
+	return ($nilai == 1) ? "R INAP" : "R JALAN" ;
+}
+
 function caraBayar($nilai)
 {
 	$cara_bayar = [

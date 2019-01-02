@@ -58,6 +58,10 @@
                         <input class="form-control form-control-sm" id="nama_pelayanan" type="text" placeholder="Jenis Pelayanan" readonly>
                         <input class="form-control form-control-sm" id="jns_pelayanan" name="jnsPelayanan" type="hidden">
                     </div>
+                    <!-- <div class="form-group">
+                        <label for="poli_tujuan">Poli Tujuan</label>
+                        <input class="form-control form-control-sm" id="poli_tujuan" type="text" placeholder="Poli Tujuan" readonly>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -67,6 +71,7 @@
                   <div class="card-header">
                     <strong>Pembuatan SEP</strong>
                     <small>Data insert SEP </small>
+                    <small class="float-right" id="poli-tujuan"><b></b></small>
                   </div>
                   <div class="card-body">
                    <div class="row">
@@ -350,6 +355,7 @@
                     <td>No Rujukan</td>
                     <td>Tgl Rujukan</td>
                     <td>Nama</td>
+                    <td>Jenis Pelayanan</td>
                     <td>PPK Perujuk</td>
                 </tr>
             </thead>

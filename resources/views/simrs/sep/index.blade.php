@@ -152,7 +152,8 @@
         var alertas = $('#form-sep'),
         tgl_reg = '{{ date('Y-m-d') }}';
 
-        $("#edit-modal-sep span").remove();
+        $("#edit-modal-sep span").remove(); 
+        $("#poli-tujuan b span").remove();
         $("#tgl_rujukan").val(); 
         $("#tgl_rujukan").attr('readonly', false); 
         $('#asalRujukan').find("option[selected]").removeAttr('selected');
@@ -199,6 +200,7 @@
                 {"mData": "noSep"},
                 {"mData": "tglSep"},
                 {"mData": "namaPeserta"},
+                {"mData": "jnsPelayanan"},
                 {"mData": "ppkPerujuk"}
             ]
         

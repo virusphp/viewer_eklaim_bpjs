@@ -451,6 +451,7 @@ class BpjsController extends Controller
                         'tglSep' => $val->tglSep,
                         'noKartu' => $val->noKartu,
                         'namaPeserta' => $val->namaPeserta,
+                        'jnsPelayanan' => jenisPelayanan($val->jnsPelayanan),
                         'ppkPerujuk' => substr($val->ppkPelayanan, 0,10)
                     ];
                 }

@@ -107,9 +107,12 @@ class SepController extends Controller
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
-                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir')
+                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir', 'su.nama_sub_unit')
                     ->join('pasien as p', function($join) {
                         $join->on('rj.no_rm','=','p.no_rm');
+                    })
+                    ->join('sub_unit as su', function($join) {
+                        $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
                     })
                     ->join('pegawai as pg', function($join) {
                             $join->on('rj.kd_dokter','=','pg.kd_pegawai');

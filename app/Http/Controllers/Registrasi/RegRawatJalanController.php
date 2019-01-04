@@ -63,13 +63,14 @@ class RegRawatJalanController extends Controller
 
     public function sendpasien(Request $req, Daftar $daftar)
     {
-        if ($req->ajax()) {
-            // dd($tgl_reg->format('Y-m-d'),$tgl_reg->format('h:i:s'));
-            $data = $this->remap($req);
-            // dd($data);
-            $result = $daftar->sendregister($data);
-            return $result;
-        }
+        dd($req->all());
+        // if ($req->ajax()) {
+        //     // dd($tgl_reg->format('Y-m-d'),$tgl_reg->format('h:i:s'));
+        //     $data = $this->remap($req);
+        //     // dd($data);
+        //     $result = $daftar->sendregister($data);
+        //     return $result;
+        // }
     }
 
     public function remap($data)

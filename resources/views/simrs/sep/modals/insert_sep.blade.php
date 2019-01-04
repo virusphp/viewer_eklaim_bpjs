@@ -183,12 +183,14 @@ $(document).on('click', '#h-no-surat', function() {
         kdDpjp = $(this).val();
         noDpjp = noSurat.split('/');
         $('#noSurat').val(noDpjp[0].substring(noDpjp[0].length - 6));
-        $('#kdPoliDPJP').val(kdDpjp);
+        $('#kdPoliDPJP').val(noDpjp[2]);
+        // console.log(noDpjp[2]);
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');
         if (noDpjp[1] == "SRI" && $('#jns_pelayanan') == 1) {
             getSRI();
         }
+        
         if ($('#jns_pelayanan').val() == 1) {
             // $('#noRujukan').val(noDpjp[0].substring(noDpjp[0].length - 6)).attr('readonly', true);
         }
@@ -205,6 +207,9 @@ $(document).on('click', '#h-no-surat', function() {
             // console.log(res);
             $('#kodeDPJP').html(res);
             // di sini
+            if (noDpjp[2] == "IHD") {
+                getDokterDpjp();
+            }
         }
     })
 });

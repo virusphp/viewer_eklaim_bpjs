@@ -27,6 +27,12 @@
               <a class="nav-link" href="{{ route('sep.index') }}">
                 <i class="nav-icon icon-puzzle"></i> Pembuatan SEP</a>
             </li>
+            @if( $user == 'developer' || $user == 'superadmin')
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('sep.pulang.index') }}">
+                <i class="nav-icon icon-puzzle"></i> Update Pulang SEP</a>
+            </li>
+            @endif
           </ul>
         </li>
         @if( $user == 'developer' || $user == 'superadmin')

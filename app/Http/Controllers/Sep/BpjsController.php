@@ -237,6 +237,7 @@ class BpjsController extends Controller
     {
         if ($req->ajax()) {
             $kode = $req->all();
+            // dd($kode);
             $dpjp = $this->Dpjp($kode);
             $data = json_decode($dpjp);
             if ($data->response != null) {

@@ -373,7 +373,7 @@
                     "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
                 },           
                 "ajax": {
-                    "url": "{{ route('reg.rj.search')}}",
+                    "url": "{{ route('reg.ri.search')}}",
                     "type": "GET",
                     "data": {                   
                         'kd_cara_bayar': caraBayar,

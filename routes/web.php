@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/sep/print/{sep}','SepController@printSep')->name('sep.print');
 
         Route::get('/update/plg/sep','UpdatePlgSepController@index')->name('sep.pulang.index');
+        Route::get('/update/search', 'UpdatePlgSepController@search')->name('reg.ri.search');
     });
 
     // Group Route Registrasi

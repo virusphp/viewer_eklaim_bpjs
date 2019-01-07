@@ -230,7 +230,7 @@ class SepController extends Controller
             // $data['tglSep'] = $datetime->format('Y-m-d');
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
-            $data['user'] = 'Admin OSS';
+            $data['user'] = 'Admin';
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);

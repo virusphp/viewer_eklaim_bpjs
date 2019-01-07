@@ -183,7 +183,7 @@ $(document).on('click', '#h-no-surat', function() {
         kdDpjp = $(this).val();
         noDpjp = noSurat.split('/');
         $('#noSurat').val(noDpjp[0].substring(noDpjp[0].length - 6));
-        $('#kdPoliDPJP').val(noDpjp[2]);
+        $('#kdPoliDPJP').val(kdDpjp);
         // console.log(noDpjp[2]);
         $('#kodeDPJP').attr('disabled', false);
         $('#modal-nosurat').modal('hide');

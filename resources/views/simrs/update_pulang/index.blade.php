@@ -27,7 +27,7 @@
     </div>
   <div class="card">
       <div class="card-header">
-        
+      @include('layouts.search.rjsearch')
       </div>
       <div class="card-body">
       
@@ -72,7 +72,7 @@
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-@include('simrs.sep.modals.ajax')
+@include('simrs.update_pulang.modals.ajax')
 
 <script type="text/javascript">
     $(function () {
@@ -88,24 +88,13 @@
     });
 
     $(document).ready(function () {
-        getStart();
         resetSuccessSep();
         $('.table').removeAttr('style');
         ajaxLoad();
       
     });
 
-    $('#noSurat').on('change', function(){
-        return event.charCode >= 48 && event.charCode <= 57
-    })
-
-    $('#modal-register').on('hidden.bs.modal', function(){
-        $(this).find('form')[0].reset();
-        
-        $('#r_no_rm').attr('readonly', false);
-    });
-
-    $('#modal-sep').on('hidden.bs.modal', function() {
+    $('#modal-update-pulang').on('hidden.bs.modal', function() {
         var alertas = $('#form-sep'),
         tgl_reg = '{{ date('Y-m-d') }}';
 
@@ -123,93 +112,17 @@
         alertas.find('.error').removeClass('error');
     });
 
-    // // cari dbjp
-    $('#kodeDPJP').on('change',function() {
-        var kdDPJP = $(this).val();
-        $('#kd_dpjp').val(kdDPJP);         
-    })
-
-    // cari HISTORY
-    $('#cek-no-kartu').on('change', function() {
-        pencarian();
-    });
-
-    $('#cek-history-peserta').on('click', function() {
-        pencarian();
-    });
-
-    function pencarian() {
-        $(this).addClass('edit-item-trigger-clicked');
-
-        var no_kartu = $('#cek-no-kartu').val(),
-            akhir = moment().format("YYYY-MM-DD"),
-            _token = $('meta[name="csrf-token"]').attr('content');
-        if(no_kartu.length < 9) return;
-
-        var options = {
-            'backdrop': 'static'
-        };
-        if ($('#fktp:checked').val() == 2) {
-            var url = '{{ route('bpjs.cek.rujukan.rs') }}';
-        } else {
-            var url = '{{ route('bpjs.cek.rujukan') }}';
-        }
-        console.log($('#fktp:checked').val());
-      
-        $('#tbl-rujukan').dataTable({
-            "Processing": true,
-            "ServerSide": true,
-            "sDom" : "<t<p i>>",
-            "iDisplayLength": 3,
-            "bDestroy": true,
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ ",
-                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
-                "sSearch": "Search Data :  ",
-                "sZeroRecords": "Tidak ada data",
-                "sEmptyTable": "Data tidak tersedia",
-                "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
-            },
-            "ajax": {
-                "url": url,
-                "type": "GET",
-                "data": {                   
-                    '_token': _token,
-                    'no_kartu': no_kartu
-                }
-            },
-            "columns": [
-                {"mData": "no"},
-                {"mData": "noKunjungan"},
-                {"mData": "tglKunjungan"},
-                {"mData": "nama"},
-                {"mData": "poli"},
-                {"mData": "ppkPerujuk"}
-            ]
-        
-        });
-        oTable = $('#tbl-history').DataTable();  
-        $('#no_kartu').keyup(function(){
-            oTable.search($(this).val()).draw() ;
-            $('.table').removeAttr('style');
-        }); 
-        
-        $('#modal-rujukan').modal(options);
-    }
-
     $(document).on('change','#search', function() {
         ajaxLoad();
     })
 
     function ajaxLoad(){
-            var jnsRawat = $("input[name=jns_rawat]:checked").val();
             var caraBayar = $("#cara_bayar").val();
             var tglReg = $("#tgl_reg_filter").val();
             var search = $("#search").val();
             // $.fn.dataTable.ext.errMode = 'throw';
             $('#mytable').dataTable({
                 "Processing": true,
-                "responsive": true,
                 "ServerSide": true,
                 "sDom" : "<t<p i>>",
                 "iDisplayLength": 25,
@@ -223,10 +136,9 @@
                     "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
                 },           
                 "ajax": {
-                    "url": "{{ route('sep.search')}}",
+                    "url": "{{ route('reg.ri.search')}}",
                     "type": "GET",
                     "data": {                   
-                        'jns_rawat': jnsRawat,
                         'kd_cara_bayar': caraBayar,
                         'tgl_reg': tglReg,
                         'search' : search
@@ -237,11 +149,11 @@
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"width": "10%", "mData": "tgl_reg"},
+                    {"mData": "tgl_reg"},
                     {"mData": "jns_rawat"},
-                    {"width": "5%", "mData": "kd_cara_bayar"},
+                    {"mData": "kd_cara_bayar"},
                     {"mData": "no_sjp"},
-                    {"width": "15%", "mData": "aksi"}            
+                    {"mData": "aksi"}
                 ]
             });
             oTable = $('#mytable').DataTable();  

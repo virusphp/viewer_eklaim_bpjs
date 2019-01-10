@@ -228,7 +228,7 @@ $(document).on('click','#h-rujukan', function() {
             d = JSON.parse(data);
             response = d.response.rujukan;
             if ($('#no_kartu').val() == response.peserta.noKartu) {
-                $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly','true');
+                $('#tglRujukan').val(response.tglKunjungan).attr('readonly','true');
                 $('#ppk_rujukan').val(response.provPerujuk.kode);
                 $('#diagAwal').val(response.diagnosa.nama);
                 $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
@@ -277,7 +277,7 @@ $(document).on('click','#h-rujukan-rs', function() {
             } else {
                 response = d.response.rujukan;
                 if ($('#no_kartu').val() === response.peserta.noKartu) {
-                    $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly','true');
+                    $('#tglRujukan').val(response.tglKunjungan).attr('readonly','true');
                     $('#ppk_rujukan').val(response.provPerujuk.kode);
                     $('#diagAwal').val(response.diagnosa.nama);
                     $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');

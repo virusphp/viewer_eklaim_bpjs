@@ -65,7 +65,7 @@ class SepController extends Controller
     public function buatSep(Request $request)
     { 
         if ($request->ajax()) {
-             $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu')
+             $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','kd_asal_pasien')
             ->join('penjamin_pasien as pp', function($join){
                 $join->on('r.no_rm', '=','pp.no_rm')
                     ->on('r.kd_penjamin','=','pp.kd_penjamin');
@@ -77,6 +77,7 @@ class SepController extends Controller
             ->where('r.no_reg','=',$request->no_reg)
             ->first();
             // dd($noKartu);
+
             $datetime = new DateTime($noKartu->tgl_reg);
             $noKartu->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
@@ -107,6 +108,7 @@ class SepController extends Controller
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
+                $rj = DB::table('rujukan')->select('kd_instansi')->where('no_reg', $request->no_reg)->first();
                 $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir', 'su.nama_sub_unit')
                     ->join('pasien as p', function($join) {
                         $join->on('rj.no_rm','=','p.no_rm');
@@ -119,7 +121,8 @@ class SepController extends Controller
                     })
                     ->where('rj.no_reg','=',$request->no_reg)
                     ->first();
-                // dd($query);
+                $query->kdInstansi = trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi);
+                $query->asalPasien = trim($noKartu->kd_asal_pasien) == "" ? "" : trim($noKartu->kd_asal_pasien);
                 $query->jnsPelayanan = '2';
                 $query->noKartu = $noKartu->no_kartu;
                 $query->tglSep = $noKartu->tgl_reg;
@@ -234,6 +237,17 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
+
+                $message = [
+                    'asalPasien.required' => 'Asal pasien tidak boleh kosong!',
+                    'namaInstansi.required' => 'Nama Instansi tidak boelh kosong!'
+                ];
+                
+                $this->validate($req, [
+                    'asalPasien' => 'required',
+                    'namaInstansi' => 'required'
+                ], $message);
+                
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
@@ -306,7 +320,7 @@ class SepController extends Controller
             $data->antrian = isset($antrian) != 0 ? $antrian[0]->noantrian : "-";
         }
         // dd($antrian)
-        $req = $this->cetak->cariSep($data->no_sjp);
+        $req = $this->cetak->cariSep(trim($data->no_sjp));
         unset($data->nama_kecamatan,$data->nama_kelurahan,$data->nama_kabupaten, $antrian, $data->nama_propinsi,$data->tgl_reg, $data->kd_poliklinik,$data->no_sjp);
         $dataSep = json_decode($req);
         $dataSep = $dataSep->response;

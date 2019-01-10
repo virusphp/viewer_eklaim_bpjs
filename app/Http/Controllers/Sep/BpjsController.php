@@ -453,6 +453,7 @@ class BpjsController extends Controller
                         'noKartu' => $val->noKartu,
                         'namaPeserta' => $val->namaPeserta,
                         'jnsPelayanan' => jenisPelayanan($val->jnsPelayanan),
+                        'namaPoli' => $val->poli,
                         'ppkPerujuk' => substr($val->ppkPelayanan, 0,10)
                     ];
                 }

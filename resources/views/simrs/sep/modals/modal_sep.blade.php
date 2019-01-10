@@ -25,21 +25,30 @@
                   <div class="card-header">
                     <strong>Profil</strong>
                     <small>Pasien</small>
+                    <small class="float-right" id="status-prb"><b></b></small>
                   </div>
                   <div class="card-body">
                     <div class="form-group">
                         <label for="vat">No Registrasi</label>
                         <input class="form-control form-control-sm" id="no_reg" name="no_reg" type="text" placeholder="No Registrasi" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="company">No KTP</label>
-                      <input class="form-control form-control-sm" id="no_ktp" type="text" placeholder="No KTP" readonly>
                       <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                     </div>
-                    <div class="form-group">
-                      <label for="street">Nama Pasien</label>
-                      <input class="form-control form-control-sm" id="nama_pasien" type="text" placeholder="Nama Pasien" readonly>
+                    <!-- start Row -->
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                <label for="street">Nama Pasien</label>
+                                <input class="form-control form-control-sm" id="nama_pasien" type="text" placeholder="Nama Pasien" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label for="company">No KTP</label>
+                                <input class="form-control form-control-sm" id="no_ktp" type="text" placeholder="No KTP" readonly>
+                            </div>
+                        </div>
                     </div>
+                    <!-- end Row -->
                     <div class="form-group">
                       <label for="vat">Tanggal Lahir</label>
                       <input class="form-control form-control-sm" id="tgl_lahir" type="text" placeholder="Tanggal Lahir" readonly>
@@ -53,11 +62,17 @@
                         <label for="aktif">Peserta</label>
                         <input class="form-control form-control-sm" id="aktif" type="text" placeholder="Aktif/NON Aktif" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="city">Jenis Pelayanan</label>
-                        <input class="form-control form-control-sm" id="nama_pelayanan" type="text" placeholder="Jenis Pelayanan" readonly>
+                    <div class="form-group" id="data-asal-pasien">
+                        <label for="asal_pasien">Asal Pasien</label>
+                        <select id="asalPasien" name="asalPasien" class="form-control form-control-sm"></select>
+                        <input class="form-control form-control-sm" id="iiasal_pasien" name="asal" type="hidden">
+                    </div>
+                    <div class="form-group" id="data-instansi">
+                        <label for="nama_instansi">Nama Instansi</label>
+                        <select id="namaInstansi" name="namaInstansi" class="form-control form-control-sm"></select>
                         <input class="form-control form-control-sm" id="jns_pelayanan" name="jnsPelayanan" type="hidden">
                     </div>
+
                     <!-- <div class="form-group">
                         <label for="poli_tujuan">Poli Tujuan</label>
                         <input class="form-control form-control-sm" id="poli_tujuan" type="text" placeholder="Poli Tujuan" readonly>
@@ -70,7 +85,7 @@
                 <div class="card">
                   <div class="card-header">
                     <strong>Pembuatan SEP</strong>
-                    <small>Data insert SEP </small>
+                    <small id="nama_pelayanan"><b></b></small>
                     <small class="float-right" id="poli-tujuan"><b></b></small>
                   </div>
                   <div class="card-body">
@@ -103,7 +118,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </span>
                                         </div>                        
-                                        <input class="form-control form-control-sm" id="tgl_rujukan" 
+                                        <input class="form-control form-control-sm" id="tglRujukan" 
                                                 value="{{ date('Y-m-d')}}" 
                                                 placeholder="Tanggal Kejadian" name="tglRujukan"
                                                 type="text"
@@ -356,6 +371,7 @@
                     <td>Tgl Rujukan</td>
                     <td>Nama</td>
                     <td>Jenis Pelayanan</td>
+                    <td>Nama Poli</td>
                     <td>PPK Perujuk</td>
                 </tr>
             </thead>

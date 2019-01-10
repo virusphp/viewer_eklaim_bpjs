@@ -103,7 +103,7 @@
         $('#dtgl_kejadian').datetimepicker({
             format: 'D-M-Y'
         });
-        $('#dtgl_rujukan').datetimepicker({
+        $('#tglRujukan').datetimepicker({
             format: 'D-M-Y'
         });
     });
@@ -154,8 +154,10 @@
 
         $("#edit-modal-sep span").remove(); 
         $("#poli-tujuan b span").remove();
-        $("#tgl_rujukan").val(); 
-        $("#tgl_rujukan").attr('readonly', false); 
+        $("#status-prb b span").remove();
+        $("#nama_pelayanan b span").remove();
+        $("#tglRujukan").val(); 
+        $("#tglRujukan").attr('readonly', false); 
         $('#asalRujukan').find("option[selected]").removeAttr('selected');
         $("#kodeDPJP").val([]).trigger("change")
         $("#tujuan").removeAttr("readonly");
@@ -189,7 +191,7 @@
                 "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
             },
             "ajax": {
-                "url": "{{ route('bpjs.history')}}",
+                "url": "/admin/bpjs/history",
                 "type": "GET",
                 "data": {                   
                     no_kartu: no_kartu, akhir: akhir
@@ -201,6 +203,7 @@
                 {"mData": "tglSep"},
                 {"mData": "namaPeserta"},
                 {"mData": "jnsPelayanan"},
+                {"mData": "namaPoli"},
                 {"mData": "ppkPerujuk"}
             ]
         
@@ -230,7 +233,7 @@
                 res = JSON.parse(response);
                 // console.log(res);
                 $('#form-skdp').show();
-                $('#tgl_rujukan').val(res.response.tglSep).attr('readonly','true');
+                $('#tglRujukan').val(res.response.tglSep).attr('readonly','true');
                 $('#ppk_rujukan').val(res.response.noSep.substr(0,8));
                 // $('#diagAwal').val(res.response.diagnosa);
                 // $('#tujuan').val(res.response.poli);
@@ -270,7 +273,7 @@
                 } else {
                     response = d.response.rujukan;
                     if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan);
+                        $('#tglRujukan').val(response.tglKunjungan);
                         $('#ppk_rujukan').val(response.provPerujuk.kode);
                         $('#diagAwal').val(response.diagnosa.nama);
                         $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');

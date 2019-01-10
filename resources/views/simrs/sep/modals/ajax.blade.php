@@ -25,13 +25,16 @@ function getStart()
     $('#noSuratLama').val("000000")
     $('#kd_dpjp').val("000000");
     $('#ket_kill').val("0");
+
+    $('#data-asal-pasien').hide();
+    $('#data-instansi').hide();
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
     });
     $('#kecamatan option').prop('selected', function() {
         return this.defaultSelected;
     });
-
+    
     //     if (sep.length !== null) {
     //         $('#edit-item').attr('disabled', 'disabled');
     //     }
@@ -59,12 +62,17 @@ function getEditItem(data)
     $('#noTelp').val(data.no_telp);
     $('#no_kartu').val(data.noKartu);
     $('#noSep').val(data.noSep);
-    $('#tglSep').val(data.tglSep); 
+    $('#tglSep').val(data.tglSep);
     if($('#jns_pelayanan').val() == 2) {
-        $('#nama_pelayanan').val('Rawat Jalan');
+        $('#nama_pelayanan b').append('<span>Rawat Jalan</span>');
         $('#hak_kelas').css('display', 'none').removeAttr('name');
         $('#kelas').removeAttr('style').attr('name','klsRawat');
         $('#poli-tujuan b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
+        // $('#status-prb b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
+        $('#data-asal-pasien').show();
+        $('#data-instansi').show();
+        getAsalPasien(data.asalPasien);
+        getNamaInstansi(data.kdInstansi)
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
         getKelas();
@@ -87,6 +95,40 @@ function getKelas()
         success: function(res) {
             $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
             $('#hak_kelas').html(res);
+        }
+    }) 
+}
+
+function getAsalPasien(data)
+{
+    var url = '{{ route('simrs.asalpasien') }}',
+        method = 'GET';
+    $.ajax({
+        url: url,
+        method: method,
+        data: {},
+        success: function(res) {
+            $('#asalPasien').html(res);
+            $('#asalPasien option[value='+data+']').attr('selected','selected').closest('#asal_pasien');
+        }
+    }) 
+}
+
+function getNamaInstansi(data)
+{
+    var url = '{{ route('simrs.namainstansi') }}',
+        method = 'GET';
+    $.ajax({
+        url: url,
+        method: method,
+        data: {},
+        success: function(res) {
+            console.log(data);
+            $('#namaInstansi').html(res);
+            $('#namaInstansi option[value='+data+']').attr('selected','selected').closest('#nama_instansi');
+            $("#namaInstansi").select2({
+                placeholder: 'Select an option'
+            });
         }
     }) 
 }
@@ -159,7 +201,7 @@ function getRujukan()
                 } else {
                     response = d.response.rujukan;
                     if ($('#no_kartu').val() === response.peserta.noKartu) {
-                        $('#tgl_rujukan').val(response.tglKunjungan).attr('readonly', 'true');
+                        $('#tglRujukan').val(response.tglKunjungan).attr('readonly', 'true');
                         $('#ppk_rujukan').val(response.provPerujuk.kode);
                         $('#diagAwal').val(response.diagnosa.nama);
                         $('#kd_diagnosa').val(response.diagnosa.kode).attr('readonly','true');
@@ -248,7 +290,7 @@ function getDataSep()
                 $('#noRujukan').val(response.No_Rujukan);
             }
             $('#noRujukan').val(response.No_Rujukan).attr('readonly', 'true');
-            $('#tgl_rujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
+            $('#tglRujukan').val(response.Tgl_Rujukan).attr('readonly', 'true');
             $('#ppk_rujukan').val(response.Kd_Faskes);
             $('#diagAwal').val(response.Nama_Diagnosa);
             $('#kd_diagnosa').val(response.Kd_Diagnosa).attr('readonly','true');
@@ -287,7 +329,9 @@ function getPeserta()
                 $('#kelas').val(response.hakKelas.keterangan);
                 $('#aktif').val(response.statusPeserta.keterangan+' '+response.jenisPeserta.keterangan);
                 $('#hak_kelas option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
-
+                if (response.informasi.prolanisPRB !== null) {
+                    $('#status-prb b').append('<span>Informasi Peserta : '+response.informasi.prolanisPRB+'</span>');
+                } 
                 if ( $('#jns_pelayanan').val() == 2 && noReg == "03" ) {
                     // console.log(response.provUmum.nmProvider);
                     $('#nama_faskes').val(response.provUmum.nmProvider);
@@ -319,7 +363,7 @@ function getHistory()
                 $('#noRujukan').val(response.noSep).attr('readonly',true);
                 $('#nama_faskes').val(response.ppkPelayanan).attr('readonly',true);
                 $('#ppk_rujukan').val(response.noSep.substr(0,8)).attr('readonly',true);
-                $('#tgl_rujukan').val(response.tglSep);
+                $('#tglRujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
             // ini SPO
@@ -334,7 +378,7 @@ function getHistory()
                 // $('#noRujukan').val(response.noSep).attr('readonly',true);
                 $('#nama_faskes').val("RSUD KRATON");
                 $('#ppk_rujukan').val("1105R001");
-                $('#tgl_rujukan').val(response.tglSep);
+                $('#tglRujukan').val(response.tglSep);
                 $('#form-skdp').show();
                 $('#noSurat').val("000000");
                 $('#kd_poli').val("000");

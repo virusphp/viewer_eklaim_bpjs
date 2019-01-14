@@ -29,9 +29,9 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     if ($data['jnsPelayanan'] == '2') {
-                        $this->simpanBpjs($data);
                         $this->simpanRujukan($data);
                     }
+                    $this->simpanBpjs($data);
                 } else {
                     DB::rollback();
                     return $result;
@@ -58,9 +58,9 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     if ($data['jnsPelayanan'] == '2') {
-                        $this->updateBpjs($data);
                         $this->simpanRujukan($data);
                     }
+                    $this->updateBpjs($data);
                 } else {
                     DB::rollback();
                     return $result;

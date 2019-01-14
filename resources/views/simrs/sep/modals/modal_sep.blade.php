@@ -55,8 +55,8 @@
                     </div>
                     <div class="form-group">
                         <label for="city">Hak Kelas</label>
-                        <input class="form-control form-control-sm" id="kelas" name="klsRawat" type="text" placeholder="kelas" readonly>
-                        <select id="hak_kelas" name="klsRawat" class="form-control form-control-sm"></select>
+                        <!-- <input class="form-control form-control-sm" id="kelas" name="klsRawat" type="text" placeholder="kelas" readonly> -->
+                        <select id="klsRawat" name="klsRawat" class="form-control form-control-sm"></select>
                     </div>
                     <div class="form-group">
                         <label for="aktif">Peserta</label>
@@ -340,6 +340,7 @@
                     <td>Tgl Rujukan</td>
                     <td>Nama</td>
                     <td>Sub Speliasis</td>
+                    <td>Pelayanan</td>
                     <td>Ppk Perujuk</td>
                 </tr>
             </thead>
@@ -434,6 +435,7 @@
                     <td>Tgl Rujukan</td>
                     <td>Nama</td>
                     <td>Sub Speliasis</td>
+                    <td>Pelayanan</td>
                     <td>Ppk Perujuk</td>
                 </tr>
             </thead>

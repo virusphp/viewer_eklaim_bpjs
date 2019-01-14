@@ -284,7 +284,7 @@ class BpjsController extends Controller
         $kelas = $this->Kelas();
         $data = AmbilKelas(); 
         // dd($data);
-        $kelas="<option value='0'>-- Pilih Kelas--</pilih>";
+        $kelas="<option value=''>-- Pilih Kelas--</pilih>";
         foreach($data as $key => $val)
         {
             $kelas.= "<option value='$key'>$val</option>";
@@ -392,6 +392,7 @@ class BpjsController extends Controller
                         'noKartu' => $val->peserta->noKartu,
                         'nama' => $val->peserta->nama,
                         'ppkPerujuk' => $val->provPerujuk->nama,
+                        'pelayanan' => $val->pelayanan->nama,
                         'poli' => $val->poliRujukan->kode
                     ];
                 }
@@ -422,6 +423,7 @@ class BpjsController extends Controller
                         'noKartu' => $val->peserta->noKartu,
                         'nama' => $val->peserta->nama,
                         'ppkPerujuk' => $val->provPerujuk->kode,
+                        'pelayanan' => $val->pelayanan->nama,
                         'poli' => $val->poliRujukan->kode
                     ];
                 }

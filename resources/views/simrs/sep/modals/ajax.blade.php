@@ -6,7 +6,8 @@ function getStart()
     // $('#asalRujukan').find("option[selected]").removeAttr('selected');
     $('#asalRujukan').prop('selectedIndex',0);
     $('#frame_error').hide();
-    // $('#tgl_rujukan').attr('readonly', true);
+    $('#klsRawat').attr('readonly', false);
+    $('#klsRawat').attr('disabled', false);
     $('#ppk_rujukan').val("");
     $('#diagAwal').val("");
     $('#tujuan').val("");
@@ -65,8 +66,9 @@ function getEditItem(data)
     $('#tglSep').val(data.tglSep);
     if($('#jns_pelayanan').val() == 2) {
         $('#nama_pelayanan b').append('<span>Rawat Jalan</span>');
-        $('#hak_kelas').css('display', 'none').removeAttr('name');
-        $('#kelas').removeAttr('style').attr('name','klsRawat');
+        // $('#hak_kelas').css('display', 'none').removeAttr('name');
+        // $('#kelas').removeAttr('style').attr('name','klsRawat');
+        $('#klsRawat').attr('disabled','true');
         $('#poli-tujuan b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
         // $('#status-prb b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
         $('#data-asal-pasien').show();
@@ -75,17 +77,16 @@ function getEditItem(data)
         getNamaInstansi(data.kdInstansi)
     } else {
         $('#nama_pelayanan').val('Rawat Inap');
-        getKelas();
         getDokterDpjp();
         getHistory();
     }
+    getKelas();
     // getPRujukanppkpkAsal();
     getPeserta();
 }
 
 function getKelas()
 {
-    $('#kelas').css('display', 'none').removeAttr('name');
     var url = '{{ route('bpjs.kelas') }}',
         method = 'GET';
     $.ajax({
@@ -93,8 +94,8 @@ function getKelas()
         method: method,
         data: {},
         success: function(res) {
-            $('#hak_kelas').removeAttr('style').attr('name','klsRawat');
-            $('#hak_kelas').html(res);
+            $('#klsRawat').removeAttr('style').attr('name','klsRawat');
+            $('#klsRawat').html(res);
         }
     }) 
 }
@@ -326,9 +327,9 @@ function getPeserta()
             if (d.response !== null) {
                 response = d.response.peserta;
                 var noReg = $('#no_reg').val().substr(0,2);
-                $('#kelas').val(response.hakKelas.keterangan);
+                // $('#kelas').val(response.hakKelas.keterangan);
                 $('#aktif').val(response.statusPeserta.keterangan+' '+response.jenisPeserta.keterangan);
-                $('#hak_kelas option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
+                $('#klsRawat option[value='+response.hakKelas.kode+']').attr('selected','selected').closest('#hak_kelas');
                 if (response.informasi.prolanisPRB !== null) {
                     $('#status-prb b').append('<span>Informasi Peserta : '+response.informasi.prolanisPRB+'</span>');
                 } 

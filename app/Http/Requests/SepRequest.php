@@ -27,6 +27,7 @@ class SepRequest extends FormRequest
             'jnsPelayanan' => 'required',
             'noKartu' => 'required|min:8',
             'noMR' => 'required',
+            'klsRawat' => 'required',
             'cob' => 'required',
             'no_reg' => 'required',
             'noRujukan' => 'required',
@@ -65,7 +66,9 @@ class SepRequest extends FormRequest
             'catatan.required' => 'Catatan Tidak boleh null',
             'noSurat.required' => 'No Surat tidak boleh harus kosong!',
             'noTelp.required' => 'No Telp tidak boleh harus unit!',
-            'kodeDPJP.required' => 'Kode DPJP tidak boleh kosong!'
+            'kodeDPJP.required' => 'Kode DPJP tidak boleh kosong!',
+            'klsRawat.required' => 'Kelas Rawat tidak boleh kosong!',
+            'tglRujukan.required' => 'TglRujukan tidak boleh kosong!'
         ];
     }
 }

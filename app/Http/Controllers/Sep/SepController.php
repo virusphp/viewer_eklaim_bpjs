@@ -242,7 +242,7 @@ class SepController extends Controller
                     'asalPasien.required' => 'Asal pasien tidak boleh kosong!',
                     'namaInstansi.required' => 'Nama Instansi tidak boelh kosong!'
                 ];
-                
+
                 $this->validate($req, [
                     'asalPasien' => 'required',
                     'namaInstansi' => 'required'

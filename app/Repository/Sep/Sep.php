@@ -29,7 +29,7 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     $this->simpanBpjs($data);
-                    if ($data['jnsPelayanan'] == "2") {
+                    if ($data['jnsPelayanan'] == '2') {
                         $this->simpanRujukan($data);
                     }
                 } else {
@@ -58,7 +58,7 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     $this->updateBpjs($data);
-                    if ($data['jnsPelayanan'] == "2") {
+                    if ($data['jnsPelayanan'] == '2') {
                         $this->simpanRujukan($data);
                     }
                 } else {

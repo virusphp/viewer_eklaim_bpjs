@@ -73,9 +73,9 @@ $('#cari_rujukan').on('click', function() {
             {"mData": "tglKunjungan"},
             {"mData": "nama"},
             {"mData": "poli"},
+            {"mData": "pelayanan"},
             {"mData": "ppkPerujuk"}
         ]
-    
     });
     oTable = $('#tbl-rujukan').DataTable();  
     $('#no_kartu').keyup(function(){
@@ -120,6 +120,7 @@ $('#cari_rujukan_rs').on('click', function() {
             {"mData": "tglKunjungan"},
             {"mData": "nama"},
             {"mData": "poli"},
+            {"mData": "pelayanan"},
             {"mData": "ppkPerujuk"}       
         ]
     
@@ -322,6 +323,7 @@ $(document).on('click','#cetak-sep', function(e) {
     form.find('.invalid-feedback').remove();
     form.find('input').removeClass('is-invalid');
     form.find('#asalRujukan').prop('disabled', false);
+    form.find('#klsRawat').prop('disabled', false);
     $.ajax({
         method : method,
         url : '{{ route('sep.insert') }}',

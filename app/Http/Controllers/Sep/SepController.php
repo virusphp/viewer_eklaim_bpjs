@@ -280,7 +280,7 @@ class SepController extends Controller
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
-            // dd($data);
+            dd($data);
             $result = $this->conn->updateSep($data);
             return $result;
         }

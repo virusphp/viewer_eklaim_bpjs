@@ -28,10 +28,10 @@ class Sep
             if ($result) {
                 $res = json_decode($result);
                 if ($res->response != null) {
-                    if ($data['jnsPelayanan'] == '2') {
+                    $this->simpanBpjs($data);
+                    if ($data['jnsPelayanan'] == 2) {
                         $this->simpanRujukan($data);
                     }
-                    $this->simpanBpjs($data);
                 } else {
                     DB::rollback();
                     return $result;
@@ -57,10 +57,10 @@ class Sep
             if ($result) {
                 $res = json_decode($result);
                 if ($res->response != null) {
-                    if ($data['jnsPelayanan'] == '2') {
+                    $this->updateBpjs($data);
+                    if ($data['jnsPelayanan'] == 2) {
                         $this->simpanRujukan($data);
                     }
-                    $this->updateBpjs($data);
                 } else {
                     DB::rollback();
                     return $result;
@@ -116,7 +116,6 @@ class Sep
 
     public function simpanBpjs($data)
     {
-        // dd($data);
         $simpanSep = DB::table('sep_bpjs')->insert([
             'no_reg' => $data['no_reg'],
             'COB' => $data['cob'],
@@ -136,6 +135,7 @@ class Sep
             'kd_dpjp' => $data['kodeDPJP']
         ]);
         
+        // dd($data);
         return $simpanSep;
     }
 

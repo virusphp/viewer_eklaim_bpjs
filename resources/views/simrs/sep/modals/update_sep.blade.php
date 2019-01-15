@@ -36,9 +36,9 @@ $(document).on('click','#update-sep', function(e) {
     
     // Reset validationo error
     form.find('.invalid-feedback').remove();
-    form.find('input').removeClass('is-invalid');  
+    form.find('input').removeClass('is-invalid');
     form.find('#asalRujukan').prop('disabled', false);
-    
+    form.find('#klsRawat').prop('disabled', false);
     $.ajax({
         method: method,
         url: url,

@@ -149,13 +149,13 @@ class SepController extends Controller
     public function editSep(Request $request)
     {
         if ($request->ajax()) {
-            $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu')
-            ->join('penjamin_pasien as pp', function($join){
-                $join->on('r.no_rm', '=','pp.no_rm')
-                    ->on('r.kd_penjamin','=','pp.kd_penjamin');
-            })
-            ->where('r.no_reg','=',$request->no_reg)
-            ->first();
+            $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','kd_asal_pasien')
+                ->join('penjamin_pasien as pp', function($join){
+                    $join->on('r.no_rm', '=','pp.no_rm')
+                        ->on('r.kd_penjamin','=','pp.kd_penjamin');
+                })
+                ->where('r.no_reg','=',$request->no_reg)
+                ->first();
             // dd($noKartu);
             // if ($noKartu) {
             //     $noRujukan = DB::table('sep_bpjs')->select('no_rujukan')->where('no_reg', '=', $request->no_reg)->first();
@@ -196,20 +196,23 @@ class SepController extends Controller
                 // $query->noRujukan = ($query->no_rujukan == '-' ? '' : $query->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
-                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','rjk.no_rujukan as noRujukan')
+                $rj = DB::table('rujukan')->select('kd_instansi')->where('no_reg', $request->no_reg)->first();
+                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir', 'su.nama_sub_unit')
                     ->join('pasien as p', function($join) {
                         $join->on('rj.no_rm','=','p.no_rm');
                     })
-                    ->join('rujukan as rjk', function($join) {
-                        $join->on('rj.no_reg', '=', 'rjk.no_reg')
-                            ->on('rj.no_rm', '=', 'rjk.no_rm');
+                    ->join('sub_unit as su', function($join) {
+                        $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
                     })
                     ->join('pegawai as pg', function($join) {
                             $join->on('rj.kd_dokter','=','pg.kd_pegawai');
                     })
                     ->where('rj.no_reg','=',$request->no_reg)
                     ->first();
+
                 $query->noSep = $noKartu->no_sjp;
+                $query->kdInstansi = trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi);
+                $query->asalPasien = trim($noKartu->kd_asal_pasien) == "" ? "" : trim($noKartu->kd_asal_pasien);
                 $query->jnsPelayanan = '2';
                 $query->noKartu = $noKartu->no_kartu;
                 $query->tglSep = $noKartu->tgl_reg;
@@ -248,7 +251,6 @@ class SepController extends Controller
                     'namaInstansi' => 'required'
                 ], $message);
 
-                // $this->simpanRujukan($data);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
@@ -257,21 +259,7 @@ class SepController extends Controller
         }
     }
 
-    public function simpanRujukan($data)
-    {
-        $uRujukan = DB::table('Rujukan')
-                    ->where('no_reg', '=', $data['no_reg'])
-                    ->update([
-                        'kd_instansi' => $data['namaInstansi']
-                    ]);
-        $updateReg = DB::table('Registrasi')
-                    ->where('no_reg', '=', $data['no_reg'])
-                    ->update([
-                        'kd_asal_pasien', '=', $data['asalPasien']
-                    ]);
-
-        return $uRujukan;
-    }
+    
 
     public function sepEdit(Request $req) 
     {
@@ -295,7 +283,7 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
-                // $this->simpanRujukan($data);
+
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);

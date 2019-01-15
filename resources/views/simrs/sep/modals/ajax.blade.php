@@ -155,12 +155,16 @@ function getEditSep(data)
     
     if($('#jns_pelayanan').val() == 2) {
         $('#nama_pelayanan').val('Rawat Jalan');
-        $('#hak_kelas').css('display', 'none').removeAttr('name');
-        $('#kelas').removeAttr('style').attr('name','klsRawat');
+        $('#klsRawat').attr('disabled','true');
+        $('#poli-tujuan b').append('<span>Poli Tujuan : '+data.nama_sub_unit+'</span>');
+        $('#data-asal-pasien').show();
+        $('#data-instansi').show();
+        getAsalPasien(data.asalPasien);
+        getNamaInstansi(data.kdInstansi)
     } else {
         $('#nama_pelayanan').val('Rawat Inap'); 
-        getKelas();
     }     
+    getKelas();
     getHistory();
     getDataSep();
     getDokterDpjp();

@@ -247,13 +247,30 @@ class SepController extends Controller
                     'asalPasien' => 'required',
                     'namaInstansi' => 'required'
                 ], $message);
-                
+
+                $this->simpanRujukan($data);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
             $result = $this->conn->saveSep($data);
             return $result;
         }
+    }
+
+    public function simpanRujukan($data)
+    {
+        $uRujukan = DB::table('Rujukan')
+                    ->where('no_reg', '=', $data['no_reg'])
+                    ->update([
+                        'kd_instansi' => $data['namaInstansi']
+                    ]);
+        $updateReg = DB::table('Registrasi')
+                    ->where('no_reg', '=', $data['no_reg'])
+                    ->update([
+                        'kd_asal_pasien', '=', $data['asalPasien']
+                    ]);
+
+        return $uRujukan;
     }
 
     public function sepEdit(Request $req) 
@@ -278,9 +295,10 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
+                $this->simpanRujukan($data);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
-            dd($data);
+            // dd($data);
             $result = $this->conn->updateSep($data);
             return $result;
         }

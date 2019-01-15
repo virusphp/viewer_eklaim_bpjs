@@ -29,9 +29,6 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     $this->simpanBpjs($data);
-                    if ($data['jnsPelayanan'] == 2) {
-                        $this->simpanRujukan($data);
-                    }
                 } else {
                     DB::rollback();
                     return $result;
@@ -58,9 +55,6 @@ class Sep
                 $res = json_decode($result);
                 if ($res->response != null) {
                     $this->updateBpjs($data);
-                    if ($data['jnsPelayanan'] == 2) {
-                        $this->simpanRujukan($data);
-                    }
                 } else {
                     DB::rollback();
                     return $result;
@@ -74,21 +68,7 @@ class Sep
         }
     }
 
-    public function simpanRujukan($data)
-    {
-        $uRujukan = DB::table('Rujukan')
-                    ->where('no_reg', '=', $data['no_reg'])
-                    ->update([
-                        'kd_instansi' => $data['namaInstansi']
-                    ]);
-        $updateReg = DB::table('Registrasi')
-                    ->where('no_reg', '=', $data['no_reg'])
-                    ->update([
-                        'kd_asal_pasien', '=', $data['asalPasien']
-                    ]);
-
-        return $uRujukan;
-    }
+    
 
     public function simpanSep($data)
     {

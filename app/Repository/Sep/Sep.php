@@ -68,8 +68,6 @@ class Sep
         }
     }
 
-    
-
     public function simpanSep($data)
     {
         $updateSep = DB::table('Registrasi')
@@ -92,7 +90,6 @@ class Sep
 
         return $updateSep;
     }
-
 
     public function simpanBpjs($data)
     {

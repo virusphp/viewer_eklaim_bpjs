@@ -248,7 +248,7 @@ class SepController extends Controller
                     'namaInstansi' => 'required'
                 ], $message);
 
-                $this->simpanRujukan($data);
+                // $this->simpanRujukan($data);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
@@ -295,7 +295,7 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
-                $this->simpanRujukan($data);
+                // $this->simpanRujukan($data);
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);

@@ -166,8 +166,6 @@ class BpjsController extends Controller
         return response()->json($rujukan);
     }
 
-   
-
     public function ppkRujukan($kode, $jns)
     {
         try { 
@@ -192,7 +190,6 @@ class BpjsController extends Controller
             $diagAwal = $data->response->diagnosa;
             return $diagAwal;
         }
-      
     }
 
     public function getFaskes(Request $req)
@@ -309,7 +306,6 @@ class BpjsController extends Controller
 
     public function getCekRujukan(Request $req)
     {
-        //  dd($req->all());
          if ($req->ajax()) {
             $no = 1;
             $rujukan = $this->getRujukanPeserta($req);
@@ -341,7 +337,6 @@ class BpjsController extends Controller
 
     public function getCekRujukanRS(Request $req)
     {
-        //  dd($req->all());
          if ($req->ajax()) {
             $no = 1;
             $rujukan = $this->getRujukanRSPeserta($req);
@@ -373,7 +368,6 @@ class BpjsController extends Controller
 
     public function getListRujukan(Request $req)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $no = 1;
             $rujukan = $this->listRujukan($req);
@@ -436,7 +430,6 @@ class BpjsController extends Controller
 
     public function getHistory(Request $req)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $no = 1;
             $rujukan = $this->monHistory($req);
@@ -468,7 +461,6 @@ class BpjsController extends Controller
 
     public function getcekHistory(Request $req)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $histori = $this->monHistory($req);
             $data = json_decode($histori, true);
@@ -497,6 +489,7 @@ class BpjsController extends Controller
             }
         } 
     }
+    
     public function getKabupaten(Request $req)
     {
         $kd_prov = $req->kd_prov;

@@ -20,7 +20,9 @@ class SepController extends Controller
     {
         $this->conn = new Sep();
         $this->cetak = new cetak();
+        $this->reg = new Registrasi();
     }
+
     public function index()
     {
         return view('simrs.sep.index');
@@ -28,7 +30,6 @@ class SepController extends Controller
 
     public function search(Request $request, Registrasi $reg)
     {
-        // dd($request->all());
         if ($request->ajax()) {
             $no = 1;
             $data = $reg->getSearch($request);
@@ -65,83 +66,38 @@ class SepController extends Controller
     public function buatSep(Request $request)
     { 
         if ($request->ajax()) {
-             $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','kd_asal_pasien')
-            ->join('penjamin_pasien as pp', function($join){
-                $join->on('r.no_rm', '=','pp.no_rm')
-                    ->on('r.kd_penjamin','=','pp.kd_penjamin');
-            })
-            // ->join('rujukan as rjk', function($join) {
-            //     $join->on('r.no_reg','=','rjk.no_reg')
-            //         ->on('r.no_rm','=','rjk.no_rm');
-            // })
-            ->where('r.no_reg','=',$request->no_reg)
-            ->first();
-            // dd($noKartu);
+            $regPasien = $this->reg->getRegister($request->no_reg);
 
-            $datetime = new DateTime($noKartu->tgl_reg);
-            $noKartu->tgl_reg = $datetime->format('Y-m-d');
+            $datetime = new DateTime($regPasien->tgl_reg);
+            $regPasien->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
             if ($jenis_rawat == '02') {
 
-                $query = DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
-                    ->join('pasien as p', function($join) {
-                        $join->on('ri.no_rm','=','p.no_rm');
-                    })
-                    ->join('pegawai as pg', function($join) {
-                        $join->on('ri.kd_dokter','=','pg.kd_pegawai');
-                    })
-                    ->join('tempat_tidur as tt',function($join){
-                        $join->on('ri.kd_tempat_tidur','=','tt.kd_tempat_tidur')
-                            ->join('kamar as k', function($join) {
-                                $join->on('tt.kd_kamar','=','k.kd_kamar')
-                                    ->join('sub_unit as su',function($join) {
-                                        $join->on('k.kd_sub_unit','=','su.kd_sub_unit');
-                                    });
-                            });
-                    })
-                    ->where('ri.no_reg','=',$request->no_reg)
-                    ->first();
+                $query = $this->reg->getRawatInap($request->no_reg);
                 // dd($query);
+
                 $query->jnsPelayanan = '1';
-                $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = $noKartu->tgl_reg;
+                $query->noKartu = $regPasien->no_kartu;
+                $query->tglSep = $regPasien->tgl_reg;
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
-                $rj = DB::table('rujukan')->select('kd_instansi')->where('no_reg', $request->no_reg)->first();
-                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir', 'su.nama_sub_unit')
-                    ->join('pasien as p', function($join) {
-                        $join->on('rj.no_rm','=','p.no_rm');
-                    })
-                    ->join('sub_unit as su', function($join) {
-                        $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
-                    })
-                    ->join('pegawai as pg', function($join) {
-                            $join->on('rj.kd_dokter','=','pg.kd_pegawai');
-                    })
-                    ->where('rj.no_reg','=',$request->no_reg)
-                    ->first();
+                $rj = $this->reg->getRujukan($request->no_reg);
+                $query = $this->reg->getRawatJalan($request->no_reg);
+
                 $query->kdInstansi = trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi);
-                $query->asalPasien = trim($noKartu->kd_asal_pasien) == "" ? "" : trim($noKartu->kd_asal_pasien);
+                $query->asalPasien = trim($regPasien->kd_asal_pasien) == "" ? "" : trim($regPasien->kd_asal_pasien);
                 $query->jnsPelayanan = '2';
-                $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = $noKartu->tgl_reg;
+                $query->noKartu = $regPasien->no_kartu;
+                $query->tglSep = $regPasien->tgl_reg;
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else {
-                $query = DB::table('rawat_darurat as rd')->select('rd.no_reg','rd.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
-                    ->join('pasien as p', function($join) {
-                        $join->on('rd.no_rm','=','p.no_rm');
-                    })
-                    ->join('pegawai as pg', function($join) {
-                        $join->on('rd.kd_dokter', '=','pg.kd_pegawai');
-                    })
-                    ->where('rd.no_reg', '=', $request->no_reg)
-                    ->first();
+                $query = $this->reg->getRawatDarurat($request->no_reg);
+                
                 $query->jnsPelayanan = "2";
-                $query->noKartu = $noKartu->no_kartu;
-                $query->tglSep = $noKartu->tgl_reg;
+                $query->noKartu = $regPasien->no_kartu;
+                $query->tglSep = $regPasien->tgl_reg;
             }
-
             return response()->json($query);
         }
     }
@@ -149,45 +105,15 @@ class SepController extends Controller
     public function editSep(Request $request)
     {
         if ($request->ajax()) {
-            $noKartu = DB::table('registrasi as r')->select('r.tgl_reg','r.no_sjp','pp.no_kartu','kd_asal_pasien')
-                ->join('penjamin_pasien as pp', function($join){
-                    $join->on('r.no_rm', '=','pp.no_rm')
-                        ->on('r.kd_penjamin','=','pp.kd_penjamin');
-                })
-                ->where('r.no_reg','=',$request->no_reg)
-                ->first();
-            // dd($noKartu);
-            // if ($noKartu) {
-            //     $noRujukan = DB::table('sep_bpjs')->select('no_rujukan')->where('no_reg', '=', $request->no_reg)->first();
-            // }
+            $noKartu = $this->reg->getRegister($request->no_reg);
 
             $datetime = new DateTime($noKartu->tgl_reg);
             $noKartu->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
             if ($jenis_rawat == '02') {
 
-                $query = DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
-                    ->join('pasien as p', function($join) {
-                        $join->on('ri.no_rm','=','p.no_rm');
-                    })
-                    ->join('pegawai as pg', function($join) {
-                        $join->on('ri.kd_dokter','=','pg.kd_pegawai');
-                    })
-                    // ->join('rujukan as rjk', function($join) {
-                    //     $join->on('ri.no_reg', '=', 'rjk.no_reg')
-                    //         ->on('ri.no_rm', '=', 'rjk.no_rm');
-                    // })
-                    ->join('tempat_tidur as tt',function($join){
-                        $join->on('ri.kd_tempat_tidur','=','tt.kd_tempat_tidur')
-                            ->join('kamar as k', function($join) {
-                                $join->on('tt.kd_kamar','=','k.kd_kamar')
-                                    ->join('sub_unit as su',function($join) {
-                                        $join->on('k.kd_sub_unit','=','su.kd_sub_unit');
-                                    });
-                            });
-                    })
-                    ->where('ri.no_reg','=', $request->no_reg)
-                    ->first();
+                $query = $this->reg->getRawatInap($request->no_reg);
+
                 // dd($query);
                 $query->noSep = $noKartu->no_sjp;
                 $query->jnsPelayanan = '1';
@@ -196,19 +122,9 @@ class SepController extends Controller
                 // $query->noRujukan = ($query->no_rujukan == '-' ? '' : $query->no_rujukan);
             } else if ($jenis_rawat == '01') {
             
-                $rj = DB::table('rujukan')->select('kd_instansi')->where('no_reg', $request->no_reg)->first();
-                $query = DB::table('rawat_jalan as rj')->select('rj.no_reg','rj.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir', 'su.nama_sub_unit')
-                    ->join('pasien as p', function($join) {
-                        $join->on('rj.no_rm','=','p.no_rm');
-                    })
-                    ->join('sub_unit as su', function($join) {
-                        $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');
-                    })
-                    ->join('pegawai as pg', function($join) {
-                            $join->on('rj.kd_dokter','=','pg.kd_pegawai');
-                    })
-                    ->where('rj.no_reg','=',$request->no_reg)
-                    ->first();
+                $rj = $this->reg->getRujukan($request->no_reg);
+
+                $query = $this->reg->getRawatJalan($request->no_reg);
 
                 $query->noSep = $noKartu->no_sjp;
                 $query->kdInstansi = trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi);
@@ -218,6 +134,13 @@ class SepController extends Controller
                 $query->tglSep = $noKartu->tgl_reg;
                 // $query->noRujukan = ($query->no_rujukan == '-' ? '' : $query->no_rujukan);
                 // dd($query);
+            } else {
+                $query = $this->reg->getRawatDarurat($request->no_reg);
+                // dd($query); 
+                $query->noSep = $noKartu->no_sjp;
+                $query->jnsPelayanan = "2";
+                $query->noKartu = $noKartu->no_kartu;
+                $query->tglSep = $noKartu->tgl_reg;
             }
             return response()->json($query);
         }
@@ -225,15 +148,12 @@ class SepController extends Controller
 
     public function sepInsert(SepRequest $req)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $data = $req->all();
             if ($data['penjamin'] != 0) {
                 $data['penjamin'] = implode(",",$data['penjamin']);
             }
-            // $data['tglSep'] = date('Y-m-d');
-            // $datetime = new DateTime('tomorrow');
-            // $data['tglSep'] = $datetime->format('Y-m-d');
+
             $data['ppkPelayanan'] = '1105R001';
             $data['tglKejadian'] = date('Y-m-d', strtotime($data['tglKejadian']));
             $data['user'] = 'Admin';
@@ -263,7 +183,6 @@ class SepController extends Controller
 
     public function sepEdit(Request $req) 
     {
-        // dd($req->noReg);
         $data = DB::table('sep_bpjs')->where([['no_reg', '=', $req->noReg], ['no_sjp', '=', $req->noSep]])->first();
         return response()->json($data);
     }
@@ -283,7 +202,6 @@ class SepController extends Controller
             if ($data['jnsPelayanan'] == "2") {
                 $data['klsRawat'] = '3';
                 $data['namaKelas'] = namaKelas($data['klsRawat']);
-
             }
             $data['namaKelas'] = namaKelas($data['klsRawat']);
             // dd($data);
@@ -302,7 +220,6 @@ class SepController extends Controller
     public function printSep($noReg)
     {
         $data = $this->getDataRegistrasi($noReg);
-        // dd($data);
         $dataPasien = $this->getDataPasien($noReg);
         // dd($dataPasien);
         $data->alamat = $dataPasien->alamat.' Kel.'.$dataPasien->nama_kelurahan.' Kec.'.$dataPasien->nama_kecamatan.' Kab.'.$dataPasien->nama_kabupaten.' Prov.'.$dataPasien->nama_propinsi;
@@ -313,12 +230,13 @@ class SepController extends Controller
             $data->nama_poli = "INSTALASI GAWAT DARURAT";
             $data->antrian =  "-";
         } else {
-            $poli =  DB::table('rawat_jalan as rj')->select('su.nama_sub_unit as nama_klinik','rj.kd_poliklinik')
+            $poli = DB::table('rawat_jalan as rj')->select('su.nama_sub_unit as nama_klinik','rj.kd_poliklinik')
                             ->join('sub_unit as su', function($join) {
                                 $join->on('rj.kd_poliklinik', '=', 'su.kd_sub_unit');  
                             })
                             ->where('no_reg', '=', $dataPasien->no_reg)
                             ->first();
+
             $data->nama_poli = $poli->nama_klinik;
             $dataPasien->kd_poliklinik = $poli->kd_poliklinik;
             $antrian = $this->noAntrianPoli($dataPasien);
@@ -351,31 +269,15 @@ class SepController extends Controller
     public function noAntrianPoli($data)
     {
         if (!empty($data->kd_poliklinik)) {
-              $result = DB::select("
-            SELECT noantrian FROM (
-                SELECT
-                ROW_NUMBER() OVER (ORDER BY rj.no_reg ASC) AS noantrian, rj.no_reg, rj.kd_poliklinik
-                FROM dbo.Registrasi as r inner join dbo.Rawat_Jalan as rj on r.no_reg=rj.no_reg where rj.kd_poliklinik='".$data->kd_poliklinik."' and r.tgl_reg = '".formatTgl($data->tgl_reg)."'
-            )  AS regis_pasien
-            WHERE no_reg = '".$data->no_reg."'
-            ");
+              $result = $this->reg->getNoAntrian($data->no_reg, $data->kd_poliklinik, $data->tgl_reg);
         } else {
             $result = [];
         }
-      
         return $result;
     }
 
     public function getDataRegistrasi($noReg)
     {
-        // dd($noReg);
-        // $data = DB::table('registrasi as r')
-        //             ->select('sb.no_sjp','sb.cob','sb.kd_diagnosa','sb.nama_faskes')
-        //             ->join('sep_bpjs as sb', function($join) {
-        //                 $join->on('r.no_reg', '=', 'sb.no_reg');
-        //             })
-        //         ->where('r.no_reg', $noReg)->first();
-
         $data = DB::table('registrasi as r')
                 ->select('r.no_sjp')
             ->where('r.no_reg', $noReg)->first();
@@ -384,7 +286,6 @@ class SepController extends Controller
 
     public function getDataPasien($noReg)
     {
-        // dd($noReg);
         $data = DB::table('registrasi as r')
                     ->select('r.no_reg','r.tgl_reg','r.no_rm','p.alamat','kl.nama_kelurahan',
                             'kc.nama_kecamatan','kb.nama_kabupaten','pr.nama_propinsi')
@@ -413,8 +314,6 @@ class SepController extends Controller
                     ->select('r.no_reg','r.no_rm','r.jns_rawat','r.tgl_reg','p.nama_pasien','p.alamat','p.tgl_lahir',
                              'sb.no_sjp','sb.nama_faskes','sb.nama_diagnosa','sb.kd_diagnosa','sb.catatan',
                              'sb.cob','sb.nama_kelas_rawat','pp.no_kartu','kl.nama_kelurahan','kc.nama_kecamatan','kb.nama_kabupaten','pr.nama_propinsi')
-                // ->select('sb.*', 'r.no_rm', 'r.jns_rawat', 'p.nama_pasien','p.alamat', 'p.tgl_lahir', 'pp.no_kartu', 
-                //         'kl.nama_kelurahan','kc.nama_kecamatan', 'kb.nama_kabupaten','pr.nama_propinsi')
                     ->join('sep_bpjs as sb', function($join) {
                         $join->on('r.no_reg', '=', 'sb.no_reg');
                     })

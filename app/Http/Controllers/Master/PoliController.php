@@ -24,7 +24,6 @@ class PoliController extends Controller
 
     public function getPoli(Request $req, Poli $poli)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $kode = $req->get('term');
             $poli = $poli->getPoli($kode);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Registrasi;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repository\Registrasi\Registrasi;
+use App\Repository\Sep\Registrasi;
 use App\Service\Pasien\Pasien;
 use App\Service\Registrasi\Registrasi as Daftar;
 Use DateTime;
@@ -45,7 +45,6 @@ class RegRawatJalanController extends Controller
         // dd($req->all());
         if ($req->ajax()) {
             $pasien = $ps->getPasien($req);
-            // dd($pasien);
             if ($pasien) {
                 $res = json_decode($pasien)[0];
             }
@@ -63,14 +62,14 @@ class RegRawatJalanController extends Controller
 
     public function sendpasien(Request $req, Daftar $daftar)
     {
-        dd($req->all());
-        // if ($req->ajax()) {
-        //     // dd($tgl_reg->format('Y-m-d'),$tgl_reg->format('h:i:s'));
-        //     $data = $this->remap($req);
-        //     // dd($data);
-        //     $result = $daftar->sendregister($data);
-        //     return $result;
-        // }
+        // dd($req->all());
+        if ($req->ajax()) {
+            // dd($tgl_reg->format('Y-m-d'),$tgl_reg->format('h:i:s'));
+            $data = $this->remap($req);
+            // dd($data);
+            $result = $daftar->sendregister($data);
+            return $result;
+        }
     }
 
     public function remap($data)

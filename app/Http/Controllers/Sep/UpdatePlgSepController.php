@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Sep;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repository\Registrasi\Registrasi;
+use App\Repository\Sep\Registrasi;
 Use DateTime;
 
 class UpdatePlgSepController extends Controller
@@ -14,6 +14,9 @@ class UpdatePlgSepController extends Controller
         return view('simrs.update_pulang.index');
     } 
 
+    /**
+     * 
+     */
     public function search(Request $request, Registrasi $ri)
     {
         if ($request->ajax()) {
@@ -24,7 +27,7 @@ class UpdatePlgSepController extends Controller
                 if ($q->no_sjp <= 15) {
                     $button = '<button type="button" class="btn btn-sm btn-warning" id="edit-item" disabled>Update Pulang</button>';
                 } else {
-                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-item" data-item="'.$q->no_reg.'">Update Pulang</button>';
+                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="update-pulang" data-sep="'.$q->no_sjp.'">Update Pulang</button>';
                 }
                 $query[] = [
                     'no' => $no++,

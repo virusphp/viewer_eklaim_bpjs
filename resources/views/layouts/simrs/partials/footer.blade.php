@@ -5,6 +5,6 @@
     </div>
     <div class="ml-auto">
       <span>Modified by</span>
-      <a href="http://epasien.rsudkraton.com">IT RSUD Kraton | Version 1.0.2</a>
+      <a href="http://epasien.rsudkraton.id">IT RSUD Kraton | Version 1.0.3</a>
     </div>
   </footer>

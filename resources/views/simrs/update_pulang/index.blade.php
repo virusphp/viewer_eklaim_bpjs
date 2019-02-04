@@ -27,7 +27,7 @@
     </div>
   <div class="card">
       <div class="card-header">
-      @include('layouts.search.rjsearch')
+      @include('layouts.search.risearch')
       </div>
       <div class="card-body">
       
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-@include('simrs.sep.modals.modal_register')
+@include('simrs.update_pulang.modals.modal_pulang_sep')
 
 @endsection
 @push('css')
@@ -76,13 +76,10 @@
 
 <script type="text/javascript">
     $(function () {
+        $('#dtglPulang').datetimepicker({
+            format: 'D-M-Y'
+        });
         $('#datetimepicker').datetimepicker({
-            format: 'D-M-Y'
-        });
-        $('#dtgl_kejadian').datetimepicker({
-            format: 'D-M-Y'
-        });
-        $('#dtgl_rujukan').datetimepicker({
             format: 'D-M-Y'
         });
     });
@@ -91,25 +88,55 @@
         resetSuccessSep();
         $('.table').removeAttr('style');
         ajaxLoad();
-      
     });
 
-    $('#modal-update-pulang').on('hidden.bs.modal', function() {
-        var alertas = $('#form-sep'),
-        tgl_reg = '{{ date('Y-m-d') }}';
-
-        $("#edit-modal-sep span").remove(); 
-        $("#poli-tujuan b span").remove();
-        $("#tgl_rujukan").val(); 
-        $("#tgl_rujukan").attr('readonly', false); 
-        $('#asalRujukan').find("option[selected]").removeAttr('selected');
-        $("#kodeDPJP").val([]).trigger("change")
-        $("#tujuan").removeAttr("readonly");
-        $('#noSuratLama').prop('type','hidden');
-        $('#noSurat').prop('type','text');
-        alertas.validate().resetForm();
-
+    $('#modal-pulang-sep').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        // $('#tglPulang').val("").datepicker('update','');
+        // $('#tglPulang').datepicker({
+        //     clearBtn: true
+        // });
         alertas.find('.error').removeClass('error');
+    });
+
+    $(document).on('click','#update-pulang', function() {
+        $(this).addClass('edit-item-trigger-clicked');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            noSep = $(this).data('sep'),
+            options = {
+                'backdrop' : 'static'
+            };
+           $('#noSep').val(noSep);
+        $('#modal-pulang-sep').modal(options);
+    });
+
+    $(document).on('click','#update-pulang', function(e) {
+        var form = $('#form-update-pulang'),
+            method = 'POST',
+            url = "sep/pulang";
+
+        $.ajax({
+            method: method,
+            url: url,
+            data: form.serialize(),
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data.response !== null) {
+                    $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
+                    $('#success_sep').html("Pasien berhasil di pulangkan!").hide()
+                    .fadeIn(1500, function() { $('#success_sep'); });
+                    setTimeout(resetSuccessSep,5000);
+                    ajaxLoad();
+                    $('#modal-pulang-sep').modal('hide');
+                } else {
+                    $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
+                    $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
+                    .fadeIn(1500, function() { $('#error_sep'); });
+                    setTimeout(resetAll,5000);
+                }
+            }
+        })
     });
 
     $(document).on('change','#search', function() {
@@ -136,7 +163,7 @@
                     "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
                 },           
                 "ajax": {
-                    "url": "{{ route('reg.ri.search')}}",
+                    "url": "{{ route('sep.ri.search')}}",
                     "type": "GET",
                     "data": {                   
                         'kd_cara_bayar': caraBayar,

@@ -85,7 +85,7 @@ class SepController extends Controller
                 $rj = $this->reg->getRujukan($request->no_reg);
                 $query = $this->reg->getRawatJalan($request->no_reg);
 
-                $query->kdInstansi = trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi);
+                $query->kdInstansi = (!isset($rj) ? "" : (trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi)));
                 $query->asalPasien = trim($regPasien->kd_asal_pasien) == "" ? "" : trim($regPasien->kd_asal_pasien);
                 $query->jnsPelayanan = '2';
                 $query->noKartu = $regPasien->no_kartu;

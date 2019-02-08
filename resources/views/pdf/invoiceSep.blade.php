@@ -28,26 +28,53 @@
             height: 15px;
             padding: 1px;
         } */
-        
+        @page {
+            margin-top: 10px;
+            martin-right: 5px;
+            margin-left: 5px;
+            margin-bottom: 10px;
+        }
+
         @font-face {
             font-family: 'DOTMATRI';
             src: {{ asset('font-dotmatrix/DOTMATRI.ttf') }};
             src: local('DOTMATRI'), url('./DOTMATRI.woff') format('woff'), url('./DOTMATRI.ttf') format('truetype');
         }
 
+        @media print {
+            body {
+                font-size: 11pt;
+                font-family: "Arial";
+            }
+        }
+
+        @media screen {
+            body {
+                font-size: 11pt;
+                font-family: "Arial";
+            }
+        }
+        
         body {
+            background : #ffffff;
+            color: #000000;
             margin: 10px 5px 5px 10px;
-            font-family: "Calibri";
-            font-size:14px;
+            font-family: "Arial";
+            font-size:11px;
+            padding: 1px;
+        }
+        
+        table tr td {
+            font-size: 11pt;
+            font-family:'Arial';
             padding: 1px;
         }
 
-        td {            
-            font-family: "Calibri";
+        /* td {            
+            font-family: "Courir";
             font-size:14px;
-            /* font-weight: 500; */
             padding: 1px;
-        }
+        } */
 
         i , i strong {
             font-size: 10px;

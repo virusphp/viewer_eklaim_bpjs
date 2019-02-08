@@ -92,8 +92,11 @@ class SepController extends Controller
                 $query->tglSep = $regPasien->tgl_reg;
                 // $query->noRujukan = ($noKartu->no_rujukan == '-' ? '' : $noKartu->no_rujukan);
             } else {
+                $rj = $this->reg->getRujukan($request->no_reg);
                 $query = $this->reg->getRawatDarurat($request->no_reg);
-                
+
+                $query->kdInstansi = (!isset($rj) ? "" : (trim($rj->kd_instansi) == "" ? "" : trim($rj->kd_instansi)));
+                $query->asalPasien = trim($regPasien->kd_asal_pasien) == "" ? "" : trim($regPasien->kd_asal_pasien);
                 $query->jnsPelayanan = "2";
                 $query->noKartu = $regPasien->no_kartu;
                 $query->tglSep = $regPasien->tgl_reg;

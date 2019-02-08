@@ -77,14 +77,6 @@ class Sep
                         'kd_instansi' => $data['namaInstansi']
                     ]);
 
-        // if(!$uRujukan) {
-        //     DB::table('Rujukan')
-        //     ->insert([
-        //         'no_reg' => $data['no_reg'],
-        //         'kd_instansi' => $data['namaInstansi']
-        //     ]);
-        // }
-
         $updateReg = DB::table('Registrasi')
                     ->where('no_reg', '=', $data['no_reg'])
                     ->update([

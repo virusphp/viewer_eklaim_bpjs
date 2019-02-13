@@ -67,7 +67,7 @@ class SepController extends Controller
     { 
         if ($request->ajax()) {
             $regPasien = $this->reg->getRegister($request->no_reg);
-
+            // dd($regPasien);
             $datetime = new DateTime($regPasien->tgl_reg);
             $regPasien->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);

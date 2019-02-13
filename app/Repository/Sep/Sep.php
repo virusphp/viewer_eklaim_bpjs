@@ -77,6 +77,22 @@ class Sep
                         'kd_instansi' => $data['namaInstansi']
                     ]);
 
+        if (!$uRujukan){
+            $uRujukan = DB::table('Rujukan')
+                    ->insert([
+                        'no_rujukan' => '-',
+                        'no_reg' => $data['no_reg'],
+                        'no_RM' => $data['noMR'],
+                        'tgl_rujukan' => $data['tglKejadian'],
+                        'jns_rujukan' => '0',
+                        'kd_instansi' => '1105R001',
+                        'nama_pengirim' => '-',
+                        'kd_ICD' => '-',
+                        'kd_SMF' => '-',
+                        'Diagnosa_Sementara' => $data['diagAwal']
+                    ]);
+        }
+
         $updateReg = DB::table('Registrasi')
                     ->where('no_reg', '=', $data['no_reg'])
                     ->update([

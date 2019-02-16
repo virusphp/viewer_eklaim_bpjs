@@ -77,7 +77,7 @@ class Sep
                         'kd_instansi' => $data['namaInstansi']
                     ]);
 
-        if (!$uRujukan){
+        if (is_null($uRujukan)){
             $uRujukan = DB::table('Rujukan')
                     ->insert([
                         'no_rujukan' => '-',

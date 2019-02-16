@@ -72,7 +72,7 @@ $('#cari_rujukan').on('click', function() {
             {"mData": "noKunjungan"},
             {"mData": "tglKunjungan"},
             {"mData": "nama"},
-            {"mData": "poli"},
+            {"width": "2%","mData": "poli"},
             {"mData": "pelayanan"},
             {"mData": "ppkPerujuk"}
         ]

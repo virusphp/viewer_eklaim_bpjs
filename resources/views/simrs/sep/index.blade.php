@@ -497,6 +497,7 @@
                 {"mData": "tglKunjungan"},
                 {"mData": "nama"},
                 {"mData": "poli"},
+                {"mData": "pelayanan"},
                 {"mData": "ppkPerujuk"}
             ]
         

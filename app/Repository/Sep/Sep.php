@@ -83,7 +83,7 @@ class Sep
                         'no_rujukan' => '-',
                         'no_reg' => $data['no_reg'],
                         'no_RM' => $data['noMR'],
-                        'tgl_rujukan' => $data['tglKejadian'],
+                        'tgl_rujukan' => $data['tglRujukan'],
                         'jns_rujukan' => '0',
                         'kd_instansi' => '1105R001',
                         'nama_pengirim' => '-',

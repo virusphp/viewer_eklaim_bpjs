@@ -137,6 +137,7 @@ function getNamaInstansi(data)
 //get data edit SEP
 function getEditSep(data)
 {
+    // console.log(data)
     $('#noRujukan').focus();
     $('#noRujukan').val(data.noRujukan).attr('readonly', true);
     $('#jns_pelayanan').val(data.jnsPelayanan);
@@ -163,6 +164,7 @@ function getEditSep(data)
         getNamaInstansi(data.kdInstansi)
     } else {
         $('#nama_pelayanan').val('Rawat Inap'); 
+        // getDataSepInap();
     }     
     getKelas();
     getHistory();
@@ -265,6 +267,27 @@ function ceNoSurat()
                     placeholder: 'Select an option'
                 });
             }
+        }
+    })
+}
+
+// Belum Di pake
+function getDataSepInap()
+{
+    var noSep = $('#noSep').val(),
+        noReg = $('#no_reg').val(),
+        url = '{{ route('sep.inap.edit') }}',
+        method = 'GET';
+    if (noSep.length < 1) return;
+    $.ajax({
+        method: method,
+        url: url,
+        data: {
+            noSep: noSep, noReg: noReg
+        },
+        success: function(response) {
+            // console.log(response);
+            $('#edit-modal-sep').append('<span>'+response.no_SJP+'</span>');
         }
     })
 }

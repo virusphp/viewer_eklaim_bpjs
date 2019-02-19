@@ -20,7 +20,8 @@ class Registrasi
 
     public function getRawatInap($noReg)
     {
-        return DB::table('rawat_inap as ri')->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
+        return DB::table('rawat_inap as ri')
+            ->select('ri.no_reg','ri.no_rm','p.alamat','p.nama_pasien','p.no_telp','p.nik','p.tgl_lahir','pg.nama_pegawai')
             ->join('pasien as p', function($join) {
                 $join->on('ri.no_rm','=','p.no_rm');
             })

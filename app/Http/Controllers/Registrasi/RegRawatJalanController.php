@@ -64,7 +64,6 @@ class RegRawatJalanController extends Controller
     {
         // dd($req->all());
         if ($req->ajax()) {
-            // dd($tgl_reg->format('Y-m-d'),$tgl_reg->format('h:i:s'));
             $data = $this->remap($req);
             // dd($data);
             $result = $daftar->sendregister($data);

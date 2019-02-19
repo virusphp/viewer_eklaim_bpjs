@@ -113,16 +113,17 @@ class SepController extends Controller
             $datetime = new DateTime($noKartu->tgl_reg);
             $noKartu->tgl_reg = $datetime->format('Y-m-d');
             $jenis_rawat = noReg($request->no_reg);
+            // dd($jenis_rawat);
             if ($jenis_rawat == '02') {
 
                 $query = $this->reg->getRawatInap($request->no_reg);
 
-                // dd($query);
                 $query->noSep = $noKartu->no_sjp;
                 $query->jnsPelayanan = '1';
                 $query->noKartu = $noKartu->no_kartu;
                 $query->tglSep = $noKartu->tgl_reg;
                 // $query->noRujukan = ($query->no_rujukan == '-' ? '' : $query->no_rujukan);
+                // dd($query);
             } else if ($jenis_rawat == '01') {
             
                 $rj = $this->reg->getRujukan($request->no_reg);
@@ -149,6 +150,12 @@ class SepController extends Controller
         }
     }
 
+    /**
+     * SepInsert Function
+     *
+     * @param SepRequest $req
+     * @return void
+     */
     public function sepInsert(SepRequest $req)
     {
         if ($req->ajax()) {
@@ -182,11 +189,15 @@ class SepController extends Controller
         }
     }
 
-    
-
     public function sepEdit(Request $req) 
     {
         $data = DB::table('sep_bpjs')->where([['no_reg', '=', $req->noReg], ['no_sjp', '=', $req->noSep]])->first();
+        return response()->json($data);
+    }
+
+    public function sepInapEdit(Request $req) 
+    {
+        $data = DB::table('Registrasi')->where('no_reg', '=', $req->noReg)->first();
         return response()->json($data);
     }
 

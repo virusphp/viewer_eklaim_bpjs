@@ -46,9 +46,7 @@ class UserController extends Controller
         if ($req->ajax()) {
             $request = $req->get('term');
             $pegawai = $user->getPegawai($request);
-            // dd($pegawai);
             file_put_contents(public_path("images/user")."\\".($filename = $pegawai[0]->kd_pegawai.".jpg"), $pegawai[0]->foto);
-            // dd($filename);
             // $pegawai[0]->foto = chunk_split(base64_encode($pegawai[0]->foto));
             $pegawai[0]->foto = $filename;
             $pegawai[0]->tgl_lahir = tanggal($pegawai[0]->tgl_lahir);
@@ -70,7 +68,6 @@ class UserController extends Controller
 
     public function simpanUser(Request $req, User $user)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $data = $req->all();
             $result = $user->simpanUser($data);
@@ -80,7 +77,6 @@ class UserController extends Controller
 
     public function deleteUser(Request $req, User $user)
     {
-        // dd($req->all());
         if ($req->ajax()) {
             $data = $req->all();
             $result = $user->deleteUser($data);

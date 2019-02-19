@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/sep/perubahan','SepController@editSep')->name('sep.ubah');
         Route::post('/sep/insert','SepController@sepInsert')->name('sep.insert');
         Route::get('/sep/edit','SepController@sepEdit')->name('sep.edit');
+        Route::get('/sepInap/edit','SepController@sepInapEdit')->name('sep.inap.edit');
         Route::put('/sep/update','SepController@sepUpdate')->name('sep.update');
         Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
         Route::get('/sep/print/{sep}','SepController@printSep')->name('sep.print');

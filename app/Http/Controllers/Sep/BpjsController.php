@@ -239,7 +239,6 @@ class BpjsController extends Controller
             $data = json_decode($dpjp);
             if ($data->response != null) {
                 $dpjp = $data->response->list;
-                // dd($dpjp);
                 $dokter="<option value='00000'>--Silahkan Pilih Dokter/Kota--</pilih>";
                 foreach($dpjp as $d)
                 {
@@ -331,7 +330,6 @@ class BpjsController extends Controller
                 }
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
-            // dd($result);
             return json_encode($result);
         }
     }
@@ -393,7 +391,6 @@ class BpjsController extends Controller
                 }
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
-            // dd($result);
             return json_encode($result);
         }
     }
@@ -424,7 +421,6 @@ class BpjsController extends Controller
                 }
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
-            // dd($result);
             return json_encode($result);
         }
     }
@@ -455,7 +451,6 @@ class BpjsController extends Controller
                 }
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
-            // dd($result);
             return json_encode($result);
         }
     }
@@ -470,7 +465,6 @@ class BpjsController extends Controller
             } else {
                 $result = $data['response']['histori'][0];
             }
-            // dd($result);
             return response()->json($result);
         }
     }
@@ -509,7 +503,6 @@ class BpjsController extends Controller
         $kd_kab = $req->kd_kab;
         $kecamatan = $this->Kecamatan($kd_kab);
         $data = json_decode($kecamatan, true);
-        // dd($data['response']);
         $kec="<option value='0'>--Silahkan Pilih Kecamatan/Kota--</pilih>";
         foreach($data['response']['list'] as $d)
         {

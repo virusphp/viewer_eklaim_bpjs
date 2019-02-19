@@ -84,7 +84,7 @@ class Sep
                     'no_reg' => $data['no_reg'],
                     'no_RM' => $data['noMR'],
                     'tgl_rujukan' => $data['tglRujukan'],
-                    'kd_instansi' => '1105R001',
+                    'kd_instansi' => '1105R001  ',
                     'nama_pengirim' => '-',
                     'kd_ICD' => '-',
                     'Diagnosa_Sementara' => $data['diagAwal']
@@ -97,7 +97,7 @@ class Sep
                         'kd_asal_pasien' => $data['asalPasien']
                     ]);
 
-        return $uRujukan;
+        return $updateReg;
     }
 
     public function simpanSep($data)
@@ -119,6 +119,13 @@ class Sep
                         ->update([
                             'no_sjp' => $data['sep']
                         ]);
+                        
+        if (!$updateSepBpjs) {
+            $updateSepBpjs = DB::table('sep')->insert([
+                'no_reg' => $data['no_reg'],
+                'no_sjp' => $data['sep']
+            ]);
+        }
 
         return $updateSep;
     }
@@ -144,12 +151,12 @@ class Sep
             'kd_dpjp' => $data['kodeDPJP']
         ]);
         
-        // dd($data);
         return $simpanSep;
     }
 
     public function updateBpjs($data)
     {
+        // dd($data);
         $updateSep = DB::table('sep_bpjs')->where('no_reg', '=', $data['no_reg'])
             ->update([
                 'no_reg' => $data['no_reg'],

@@ -30,7 +30,6 @@ class CarabayarController extends Controller
             $kode = $req->get('term');
             $caraBayar = $cb->getBayar($kode);
             $data = json_decode($caraBayar);
-            // dd($data);
             $data = $data->hasil->carabayar;
             return $data;
         }

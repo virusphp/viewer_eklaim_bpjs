@@ -15,8 +15,12 @@ class UpdatePlgSepController extends Controller
     } 
 
     /**
-     * 
-     */
+     * search function
+     *
+     * @param Request $request
+     * @param Registrasi $ri
+     * @return void
+     */ 
     public function search(Request $request, Registrasi $ri)
     {
         if ($request->ajax()) {

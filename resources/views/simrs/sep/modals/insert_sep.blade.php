@@ -239,7 +239,9 @@ $(document).on('click','#h-rujukan', function() {
                 $('#noRujukan').val(response.noKunjungan);
                 asalRujukan();
                 katarak();
-                getSkdp();
+                if ($('#kd_poli').val() != "IGD") {
+                    getSkdp();
+                }
                 ceNoSurat();
                 $('.select2').removeAttr('style');
             } else {
@@ -293,7 +295,9 @@ $(document).on('click','#h-rujukan-rs', function() {
                     $('#noRujukan').val(response.noKunjungan);
                     asalRujukan();
                     katarak();
-                    getSkdp();
+                    if ($('#kd_poli').val() != "IGD") {
+                        getSkdp();
+                    }
                     ceNoSurat();
                 } else {
                     $('#frame_error').show().html("<span class='text-danger' id='error_rujukan'></span>");

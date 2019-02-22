@@ -189,6 +189,7 @@ class SepController extends Controller
         }
     }
 
+
     public function sepEdit(Request $req) 
     {
         $data = DB::table('sep_bpjs')->where([['no_reg', '=', $req->noReg], ['no_sjp', '=', $req->noSep]])->first();

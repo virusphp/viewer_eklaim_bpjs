@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repository\Sep\Registrasi;
 Use DateTime;
+use App\Repository\Sep\Sep;
 
 class UpdatePlgSepController extends Controller
 {
+    protected $conn; 
+
+    public function __construct()
+    {
+        $this->conn = new Sep();
+      
+    }
+
     public function index()
     {
         return view('simrs.update_pulang.index');
@@ -31,7 +40,7 @@ class UpdatePlgSepController extends Controller
                 if ($q->no_sjp <= 15) {
                     $button = '<button type="button" class="btn btn-sm btn-warning" id="edit-item" disabled>Update Pulang</button>';
                 } else {
-                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="update-pulang" data-sep="'.$q->no_sjp.'">Update Pulang</button>';
+                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-pulang" data-sep="'.$q->no_sjp.'">Update Pulang</button>';
                 }
                 $query[] = [
                     'no' => $no++,
@@ -47,6 +56,16 @@ class UpdatePlgSepController extends Controller
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             return json_encode($result);
+        }
+    }
+
+    public function simpanPulang(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $req->all();
+            $data['ppkPelayanan'] = ppk($data['noSep']);
+            $result = $this->conn->simpanPulang($data);
+            return $result;
         }
     }
 }

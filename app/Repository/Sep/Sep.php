@@ -69,6 +69,52 @@ class Sep
         }
     }
 
+    public function simpanPulang($data)
+    {
+        DB::beginTransaction();
+        try{
+            $req = json_encode($this->mapPlgSep($data));
+            $result = $this->conn->savePlgSep($req);
+            if ($result) {
+                $res = json_decode($result);
+                if ($res->response != null) {
+                    $this->simpanPlg($data);
+                } else {
+                    DB::rollback();
+                    return $result;
+                }
+                DB::commit();
+            }
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $result;
+        }
+    }
+
+    public function updatePulang($data)
+    {
+        DB::beginTransaction();
+        try{
+            $req = json_encode($this->mapPlgSep($data));
+            $result = $this->conn->savePlgSep($req);
+            if ($result) {
+                $res = json_decode($result);
+                if ($res->response != null) {
+                    $this->updatePlg($data);
+                } else {
+                    DB::rollback();
+                    return $result;
+                }
+                DB::commit();
+            }
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $result;
+        }
+    }
+
     public function simpanRujukan($data)
     {
         $uRujukan = DB::table('Rujukan')
@@ -152,6 +198,28 @@ class Sep
         ]);
         
         return $simpanSep;
+    }
+
+    public function simpanPlg($data)
+    {
+        $simpanPlg = DB::table('SEP_PULANG')->insert([
+            'no_reg' => $data['noReg'],
+            'no_sep' => $data['noSep'],
+            'tgl_pulang' => $data['tglPulang'],
+            'user' => $data['user']
+        ]);
+        return $simpanPlg;
+    }
+
+    public function updatePlg($data)
+    {
+        $simpanPlg = DB::table('SEP_PULANG')->where('no_reg', '=', $data['noReg'])
+            ->update([
+                'tgl_pulang' => $data['tglPulang'],
+                'user' => $data['user']
+            ]);
+            
+        return $simpanPlg;
     }
 
     public function updateBpjs($data)
@@ -243,6 +311,22 @@ class Sep
 
         $result = [
            't_sep' => $res 
+        ];
+
+        $request = [
+            'request' => $result
+        ];
+
+        return $request;
+    }
+
+    public function mapPlgSep($data)
+    {
+        $res['noSep'] = $data['noSep'];
+        $res['tglPlg'] = $data['tglPulang'];
+        $res['ppkPelayanan'] = $data['ppkPelayanan'];
+        $result = [
+            't_sep' => $res
         ];
 
         $request = [

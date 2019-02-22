@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 
         // Route::get('/page/{slug}', 'PagesController@index')->name('page.index');
         Route::put('/sep/pulang','UpdatePlgSepController@postPulang')->name('sep.pulang');
+        Route::post('/sep/pulang','UpdatePlgSepController@simpanPulang')->name('sep.pulang');
         Route::get('/update/plg/sep','UpdatePlgSepController@index')->name('sep.pulang.index');
         Route::get('/update/search', 'UpdatePlgSepController@search')->name('sep.ri.search');
     });

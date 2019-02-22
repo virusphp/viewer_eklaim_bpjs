@@ -99,21 +99,23 @@
         alertas.find('.error').removeClass('error');
     });
 
-    $(document).on('click','#update-pulang', function() {
+    $(document).on('click','#edit-pulang', function() {
         $(this).addClass('edit-item-trigger-clicked');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
             noSep = $(this).data('sep'),
+            noReg = $(this).val(),
             options = {
                 'backdrop' : 'static'
             };
            $('#noSep').val(noSep);
+           $('#noReg').val(noReg);
         $('#modal-pulang-sep').modal(options);
     });
 
     $(document).on('click','#update-pulang', function(e) {
         var form = $('#form-update-pulang'),
             method = 'POST',
-            url = "sep/pulang";
+            url = "/admin/sep/pulang";
 
         $.ajax({
             method: method,

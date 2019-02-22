@@ -36,6 +36,11 @@ function noReg($nilai)
 	return substr($nilai, 0, 2);
 }
 
+function ppk($nilai)
+{
+	return substr($nilai, 0, 8);
+}
+
 function formatTgl($nilai)
 {
 	return date('Y-m-d', strtotime($nilai));

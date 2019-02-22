@@ -126,10 +126,11 @@ function getNamaInstansi(data)
         success: function(res) {
             console.log(data);
             $('#namaInstansi').html(res);
-            $('#namaInstansi option[value='+data+']').attr('selected','selected').closest('#nama_instansi');
-            $("#namaInstansi").select2({
+            $('#namaInstansi').select2({
                 placeholder: 'Select an option'
             });
+            $('#namaInstansi option[value='+data+']').attr('selected','selected').closest('#nama_instansi');
+            
         }
     }) 
 }

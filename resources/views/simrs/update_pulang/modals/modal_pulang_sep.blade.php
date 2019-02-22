@@ -31,6 +31,7 @@
                                 <div class="form-group">
                                     <label for="vat">No SEP</label>
                                     <input class="form-control form-control-sm" id="noSep" name="noSep" tabindex="1" type="text" placeholder="No Sep" readonly>
+                                    <input class="form-control form-control-sm" id="noReg" name="noReg" tabindex="1" type="hidden" readonly>
                                     <input class="form-control form-control-sm" name="_token" type="hidden" value="{{ csrf_token() }}">
                                 </div>
                                 <div class="form-group">

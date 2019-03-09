@@ -126,10 +126,19 @@ function getNamaInstansi(data)
         success: function(res) {
             console.log(data);
             $('#namaInstansi').html(res);
-            $('#namaInstansi option[value='+data+']').attr('selected','selected').closest('#nama_instansi');
-            $('#namaInstansi').select2({
-                placeholder: 'Select an option'
-            });
+            if(data)
+            {
+                $('#namaInstansi option[value='+data+']').attr('selected','selected').closest('#nama_instansi');
+                $('#namaInstansi').select2({
+                    placeholder: 'Select an option'
+                });
+            } else {
+                $('#namaInstansi').select2({
+                    placeholder: 'Select an option'
+                });
+
+            }
+           
         }
     }) 
 }

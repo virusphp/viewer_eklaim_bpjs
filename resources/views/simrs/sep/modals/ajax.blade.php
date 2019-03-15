@@ -29,6 +29,8 @@ function getStart()
 
     $('#data-asal-pasien').hide();
     $('#data-instansi').hide();
+    $('#provinsi').val('0');
+    $('#provinsi').prop('selectedIndex',0);
     $('#kabupaten option').prop('selected', function() {
         return this.defaultSelected;
     });
@@ -39,7 +41,6 @@ function getStart()
     //     if (sep.length !== null) {
     //         $('#edit-item').attr('disabled', 'disabled');
     //     }
-
     var form = $('#form-sep');
     // Reset validationo error
     form.find('.invalid-feedback').remove();
@@ -136,7 +137,6 @@ function getNamaInstansi(data)
                 $('#namaInstansi').select2({
                     placeholder: 'Select an option'
                 });
-
             }
            
         }
@@ -333,7 +333,7 @@ function getDataSep()
             $('#kd_diagnosa').val(response.Kd_Diagnosa).attr('readonly','true');
             $('#tujuan').val(response.Nama_Poli);
             $('#kd_poli').val(response.Kd_Poli).attr('readonly','true');
-            $('#catatan').val(response.catatan);
+            // $('#catatan').val(response.catatan);
             // $('#asalRujukan option[value='+response.Asal_Faskes+']').attr('selected','selected').closest('#asalRujukan').attr('disabled','true');
             $('#nama_faskes').val(response.Nama_Faskes).attr('readonly', 'true');
             $('#noSuratLama').val(response.no_surat_kontrol).attr('readonly', 'true');

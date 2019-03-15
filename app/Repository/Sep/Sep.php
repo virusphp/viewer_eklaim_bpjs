@@ -225,8 +225,29 @@ class Sep
     public function updateBpjs($data)
     {
         // dd($data);
-        $updateSep = DB::table('sep_bpjs')->where('no_reg', '=', $data['no_reg'])
-            ->update([
+        $cek =  DB::table('sep_bpjs')->where('no_reg', '=', $data['no_reg'])->first();
+        if($cek) {
+            $updateSep = DB::table('sep_bpjs')->where('no_reg', '=', $data['no_reg'])
+                ->update([
+                    'no_reg' => $data['no_reg'],
+                    'COB' => $data['cob'],
+                    'Kd_Faskes' => $data['ppkRujukan'],
+                    'Nama_Faskes' => $data['namaFaskes'],
+                    'Kd_Diagnosa' => $data['diagAwal'],
+                    'Nama_Diagnosa' => $data['diagnosa'],
+                    'Kd_poli' => $data['tujuan'],
+                    'Nama_Poli' => $data['poli'],
+                    'Kd_Kelas_Rawat' => $data['klsRawat'],
+                    'Nama_kelas_rawat' => $data['namaKelas'],
+                    'No_Rujukan' => $data['noRujukan'],
+                    'Asal_Faskes' => $data['asalRujukan'],
+                    'Tgl_Rujukan' => $data['tglRujukan'],
+                    'Lakalantas' => $data['lakaLantas'],
+                    'no_surat_kontrol' => $data['noSuratLama'],
+                    'kd_dpjp' => $data['kodeDPJP']
+                ]);
+        } else {
+            $updateSep = DB::table('sep_bpjs')->insert([
                 'no_reg' => $data['no_reg'],
                 'COB' => $data['cob'],
                 'Kd_Faskes' => $data['ppkRujukan'],
@@ -244,6 +265,7 @@ class Sep
                 'no_surat_kontrol' => $data['noSuratLama'],
                 'kd_dpjp' => $data['kodeDPJP']
             ]);
+        }
 
         return $updateSep;
     }

@@ -35,6 +35,16 @@
             @endif
           </ul>
         </li>
+        <li class="nav-item nav-dropdown">
+          <a class="nav-link nav-dropdown-toggle" href="#master">
+            <i class="nav-icon icon-pencil"></i> Manajement Bed</a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('bed.index') }}">
+                <i class="nav-icon icon-puzzle"></i> Post Bed</a>
+            </li>
+          </ul>
+        </li>
         @if( $user == 'developer' || $user == 'superadmin')
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#master">

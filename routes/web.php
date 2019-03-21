@@ -92,6 +92,14 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::delete('user/delete','UserController@deleteUser')->name('user.delete');
     });
 
+    Route::group(['namespace' => 'Bed'], function(){
+        Route::get('bed', 'BedController@index')->name('bed.index');
+        Route::get('bed/search', 'BedController@search')->name('bed.search');
+        Route::get('bed/post', 'BedController@postBed')->name('bed.post');
+        Route::get('bed/update', 'BedController@updateBed')->name('bed.update');
+        Route::get('bed/delete', 'BedController@deleteBed')->name('bed.delete');
+    });
+
     Route::group(['namespace' => 'Master'], function() {
         Route::get('simrs/poli', 'PoliController@getPoli')->name('simrs.poli');
         Route::get('simrs/poli/harga', 'PoliController@getHarga')->name('simrs.poli.harga');

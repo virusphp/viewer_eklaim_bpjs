@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Service\Bed\ServiceBed;
 use App\Repository\Bed\Bed;
+ini_set('max_execution_time', 800);
 
 class BedManagement extends Command
 {

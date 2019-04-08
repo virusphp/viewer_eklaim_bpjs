@@ -15,8 +15,9 @@ class Rujukan
     public function getNoSurat($noSurat)
     {
         $data = DB::table('Surat_Rujukan_Internal as sri')
-                    ->select('sri.no_rujukan','sri.no_reg','sri.no_rujukan_bpjs','sri.jenis_surat','sri.kd_dokter', 'su.kd_poli_dpjp')
+                    ->select('sri.no_rujukan','sri.no_reg','sri.no_rujukan_bpjs','sri.jenis_surat','p.nama_pegawai', 'su.kd_poli_dpjp')
                     ->join('Sub_Unit as su', 'sri.kd_sub_unit','=','su.kd_sub_unit')
+                    ->join('Pegawai as p', 'sri.kd_dokter','=', 'p.kd_pegawai')
                     ->where('no_rujukan_bpjs', '=', $noSurat['noRujukan'])
                     ->orderBy('sri.no_rujukan', 'desc')
                     ->get();

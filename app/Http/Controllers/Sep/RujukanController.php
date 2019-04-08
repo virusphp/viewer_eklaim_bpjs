@@ -31,7 +31,7 @@ class RujukanController extends Controller
                     'kdPoliDpjp' => $val->kd_poli_dpjp,
                     'noRujukan' => $val->no_rujukan_bpjs,
                     'jnsSurat' => $val->jenis_surat,
-                    'namaDokter' => $val->kd_dokter
+                    'namaDokter' => $val->nama_pegawai
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];

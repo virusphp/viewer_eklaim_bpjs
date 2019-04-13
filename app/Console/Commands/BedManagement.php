@@ -41,7 +41,7 @@ class BedManagement extends Command
      * Execute the console command.
      *
      * @return mixed
-     */
+     */ 
     public function handle()
     {
        $data = json_decode($this->bed->getSearch());

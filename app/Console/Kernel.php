@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('update:bed')->daily();
+        $schedule->command('siranap:update')->daily();
     }
 
     /**

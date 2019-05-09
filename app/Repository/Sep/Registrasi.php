@@ -102,13 +102,15 @@ class Registrasi
                 if (($request->search == null) && ($request->kd_cara_bayar == null)) {
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.tgl_reg','=',$tgl]
+                        ['r.tgl_reg','=',$tgl],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                 } else if ($request->search == null) {
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
                         ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
-                        ['r.tgl_reg','=',$tgl]
+                        ['r.tgl_reg','=',$tgl],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                 } else if ($request->kd_cara_bayar == null) {
                     $term = $request->get('search');
@@ -116,12 +118,14 @@ class Registrasi
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
                         ['r.tgl_reg','=',$tgl],
-                        ['r.no_rm','LIKE',$keywords]
+                        ['r.no_rm','LIKE',$keywords],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
                         ['r.tgl_reg','=',$tgl],
-                        ['p.nama_pasien','LIKE',$keywords]
+                        ['p.nama_pasien','LIKE',$keywords],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                 } else {
                     $term = $request->get('search');
@@ -130,13 +134,15 @@ class Registrasi
                         ['r.jns_rawat','=',$request->jns_rawat],
                         ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
                         ['r.tgl_reg','=',$tgl],
-                        ['r.no_rm','LIKE',$keywords]
+                        ['r.no_rm','LIKE',$keywords],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
                         ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
                         ['r.tgl_reg','=',$tgl],
-                        ['p.nama_pasien','LIKE',$keywords]
+                        ['p.nama_pasien','LIKE',$keywords],
+                        ['r.status_keluar', '!=', 2]
                     ]);
                 }
             })        

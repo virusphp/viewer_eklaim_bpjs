@@ -471,7 +471,7 @@ class BpjsController extends Controller
 
     public function monHistory($req)
     {
-        $tglAwal = date_format(date_sub(date_create($req->akhir), date_interval_create_from_date_string('30 days')), 'Y-m-d');
+        $tglAwal = date_format(date_sub(date_create($req->akhir), date_interval_create_from_date_string('60 days')), 'Y-m-d');
         try {
             $url = $this->api_url . "mon/hislayanan/nokartu/".$req->no_kartu."/"."tglawal/".$tglAwal."/"."tglakhir/".$req->akhir;
             $response = $this->client->get($url);

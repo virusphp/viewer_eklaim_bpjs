@@ -3,7 +3,7 @@
 function resetSuccessSep() {
         $('#frame_sep_success').hide();
         $('#frame_sep_error').hide();
-        $('#frame_error').remove();
+        $('#frame_error').hide();
 }
 
 function resetAll(){

@@ -38,7 +38,7 @@
               <th>No Reg</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tanggal Reg</th>
+              <th>Tanggal Masuk</th>
               <th>Jns Rawat</th>
               <th>Jns Pasien</th>
               <th>No SJP/SEP</th>
@@ -123,9 +123,9 @@
             data: form.serialize(),
             dataType: "json",
             success: function(data) {
-                console.log(data);
+                console.log(data.metaData.message);
                 if (data.response !== null) {
-                    $('#frame_sep_success').show().html("<span class='text-success' id='success_sep'></span>");
+                    $('#frame_success').show().html("<span class='text-success' id='success_sep'></span>");
                     $('#success_sep').html("Pasien berhasil di pulangkan!").hide()
                     .fadeIn(1500, function() { $('#success_sep'); });
                     setTimeout(resetSuccessSep,5000);
@@ -133,7 +133,7 @@
                     $('#modal-pulang-sep').modal('hide');
                 } else {
                     $('#frame_error').show().html("<span class='text-danger' id='error_sep'></span>");
-                    $('#error_sep').html(data.metaData.message+" Silahkan lengkapi").hide()
+                    $('#error_sep').html("No Sep: "+$('#noSep').val()+" "+data.metaData.message).hide()
                     .fadeIn(1500, function() { $('#error_sep'); });
                     setTimeout(resetAll,5000);
                 }
@@ -182,7 +182,7 @@
                     {"mData": "jns_rawat"},
                     {"mData": "kd_cara_bayar"},
                     {"mData": "no_sjp"},
-                    {"mData": "aksi"}
+                    {"mData": "aksi", "width": "3%"}
                 ]
             });
             oTable = $('#mytable').DataTable();  

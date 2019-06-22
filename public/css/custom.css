@@ -153,8 +153,8 @@ a.btn i.tengah {
     margin-top: 2px;
 }
 
-.card-body #mytable_wrapper {
-   
+.card-body #mytable_wrapper{
+    width: 1092px; 
 }
 /* .ui-autocomplete-input {
     z-index: 1;
@@ -191,5 +191,6 @@ a.btn i.tengah {
 }
 
 .table-bordered th, .table-bordered td {
-    border: 1px solid #7e03cfa1
+    border: 1px solid #7e03cfa1;
 }
+

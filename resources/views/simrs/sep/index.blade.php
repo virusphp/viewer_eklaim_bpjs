@@ -46,7 +46,6 @@
         @include('layouts.search.search')
       </div>
       <div class="card-body">
-      
         <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
           <thead>
             <tr>
@@ -119,8 +118,8 @@
         r_getStart();
         resetSuccessSep();
         r_resetSuccessReg();
-        $('.table').removeAttr('style');
         ajaxLoad();
+        $('table .table').removeAttr('style');
 
         // $('input').bind('keypress', function (eInner) {
         //     if (eInner.keyCode == 13) //if its a enter key

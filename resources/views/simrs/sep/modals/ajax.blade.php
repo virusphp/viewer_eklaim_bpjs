@@ -3,6 +3,8 @@
 // Start Modal 
 function getStart()
 {
+    // Pemanis Table
+    $('#mytable').removeAttr('style');
     // $('#asalRujukan').find("option[selected]").removeAttr('selected');
     $('#asalRujukan').prop('selectedIndex',0);
     $('#frame_error').hide();

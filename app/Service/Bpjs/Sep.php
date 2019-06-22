@@ -14,10 +14,12 @@ class Sep
 {
     protected $client = null;
     protected $api_url;
+    protected $header;
 
     public function __construct()
     {
         $this->client = new Client(['cookies' => true, 'verify' => false]);    
+        $this->header = array('Content-Type' => 'Application/json');  
         $this->api_url = config('bpjs.api.endpoint');   
     }
 
@@ -90,9 +92,10 @@ class Sep
         $data = file_get_contents("php://input");
         // dd($data);
         try {
-            $url = $this->api_url . "SEP/Delete";
+            $url = $this->api_url . "sep/delete";
             $response = $this->client->delete($url, ['headers' => $this->headers, 'body' => $data]);
-            return $response;
+            $result = $response->getBody();
+            return $result;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {
@@ -103,11 +106,13 @@ class Sep
 
     public function updatePulang($data)
     {
-        $data = file_get_contents("php://input");
+        // $data = file_get_contents("php://input");
+        // dd($data);
         try {
-            $url = $this->api_url . "Sep/updtglplg";
-            $response = $this->client->put($url, ['headers' => $this->headers, 'body' => $data]);
-            return $response;
+            $url = $this->api_url . "sep/updtglplg";
+            $response = $this->client->put($url, ['headers' => $this->header, 'body' => $data]);
+            $result = $response->getBody();
+            return $result;
         } catch (RequestException $e) {
             return Psr7\str($e->getRequest());
             if ($e->hasResponse()) {

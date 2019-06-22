@@ -38,25 +38,32 @@ class UpdatePlgSepController extends Controller
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_reg);
                 if ($q->no_sjp <= 15) {
-                    $button = '<button type="button" class="btn btn-sm btn-warning" id="edit-item" disabled>Update Pulang</button>';
+                    $button = '<button type="button" class="btn btn-sm btn-warning" id="edit-item" disabled>Update</button>';
                 } else {
-                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-pulang" data-sep="'.$q->no_sjp.'">Update Pulang</button>';
+                    $button = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-warning" id="edit-pulang" data-sep="'.$q->no_sjp.'">Update</button>';
                 }
                 $query[] = [
                     'no' => $no++,
                     'no_reg' => $q->no_reg,
                     'no_rm' => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
-                    'tgl_reg' => $tgl->format('Y-m-d'),
+                    'tgl_reg' => $tgl->format('d-m-Y'),
                     'jns_rawat' => jenisRawat($q->jns_rawat),
-                    'no_sjp' => $q->no_sjp,
                     'kd_cara_bayar' => caraBayar($q->kd_cara_bayar),
+                    'no_sjp' => $q->no_sjp,
                     'aksi' => $button
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             return json_encode($result);
         }
+    }
+
+    // belum di pake
+    public function getTanggalPulang($noSep) 
+    {
+        $data = $this->conn->tanggalPulang($noSep);
+        $response = json_decode($data);
     }
 
     public function simpanPulang(Request $req)

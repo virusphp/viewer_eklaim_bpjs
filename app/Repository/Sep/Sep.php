@@ -74,7 +74,7 @@ class Sep
         DB::beginTransaction();
         try{
             $req = json_encode($this->mapPlgSep($data));
-            $result = $this->conn->savePlgSep($req);
+            $result = $this->conn->updatePulang($req);
             if ($result) {
                 $res = json_decode($result);
                 if ($res->response != null) {
@@ -88,7 +88,7 @@ class Sep
             return $result;
         } catch (\Exception $e) {
             DB::rollback();
-            return $result;
+            return $e->getMessage();
         }
     }
 
@@ -97,7 +97,7 @@ class Sep
         DB::beginTransaction();
         try{
             $req = json_encode($this->mapPlgSep($data));
-            $result = $this->conn->savePlgSep($req);
+            $result = $this->conn->updatePulang($req);
             if ($result) {
                 $res = json_decode($result);
                 if ($res->response != null) {
@@ -111,8 +111,14 @@ class Sep
             return $result;
         } catch (\Exception $e) {
             DB::rollback();
-            return $result;
+            return $e->getMessage();
         }
+    }
+
+    public function tanggalPulang($data)
+    {
+        $result = $this->conn->cariSep($data);
+        return $result;
     }
 
     public function simpanRujukan($data)

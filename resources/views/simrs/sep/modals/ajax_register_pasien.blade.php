@@ -109,7 +109,6 @@
         })
     }
 
-
     $(document).on('change', '#v-no-kartu', function() {
         console.log($(this).val());
         getHakKelas();

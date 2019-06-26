@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7;
 use Guzzle\Http\Message\Response;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use App\Repository\Pasien\Pasien;
 
 class BpjsController extends Controller
 {
@@ -452,6 +453,20 @@ class BpjsController extends Controller
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             return json_encode($result);
+        }
+    }
+
+    public function getHistoryPeserta(Request $req, Pasien $pasien)
+    {
+        if ($req->ajax()) {
+            $noKartu = $pasien->getKartu($req);
+            $noKartu->akhir = $req->akhir;
+            unset($noKartu->kd_penjamin, $noKartu->nama_penjamin);
+            $history = $this->monHistory($noKartu);
+            $data = json_decode($history);
+            $data->metaData->noKartu = $noKartu->no_kartu;
+            $data->metaData->noRm = $noKartu->no_rm;
+            return response()->json($data);
         }
     }
 

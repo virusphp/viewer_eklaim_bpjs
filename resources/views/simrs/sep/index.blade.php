@@ -12,17 +12,11 @@
     <li class="breadcrumb-item active">Index</li>
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
+            {{-- @include('simrs.sep.partials.radio_faskes') --}}
             <div class="col-md-5 col-form-label form-inline">
-                <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="fktp" value="1" name="fktp" checked>
-                    <label class="form-check-label" for="inline-radio1">Faskes 1</label>
-                </div>
-                <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="fktp" value="2" name="fktp">
-                    <label class="form-check-label" for="inline-radio2">Faskes 2</label>
-                </div>
+                History Peserta Bpjs
             </div>
-            <input name="cek-no-kartu" id="cek-no-kartu" value="" class="form-control" placeholder="Scan No Kartu..." type="text">
+            <input name="cek_no_rm" id="cek-no-rm" value="" class="form-control" placeholder="Scan No RM..." type="text">
             <a id="cek-history-peserta" class="btn btn-sm">
                 <i class="icons tengah font-4xl icon-credit-card"></i>
             </a>
@@ -70,8 +64,6 @@
 </div>
 
 @include('simrs.sep.modals.modal_sep')
-@include('simrs.sep.modals.modal_register')
-
 
 @endsection
 @push('css')
@@ -92,7 +84,6 @@
 @include('simrs.sep.modals.ajax')
 @include('simrs.sep.modals.ajax_register')
 @include('simrs.sep.modals.insert_sep')
-@include('simrs.sep.modals.register_pasien')
 @include('simrs.sep.modals.update_sep')
 <script type="text/javascript">
     $(function () {
@@ -167,7 +158,11 @@
         alertas.find('.error').removeClass('error');
     });
 
-    // cari SKO
+    $('#modal-history-peserta').on('hidden.bs.modal', function() {
+        $("#tabel-history-peserta #isi-history tr").remove(); 
+    });
+
+    // cari SKO sdf
     $('#cari_sko').on('click', function() {
         $(this).addClass('edit-item-trigger-clicked');
         var options = {
@@ -440,12 +435,60 @@
     //     });
     // });
 
-    // cari HISTORY
+    // cari history
+    $('#cek-history-peserta').on('click', function() {
+        historyPeserta();
+    })
+
+    function historyPeserta() {
+        $(this).addClass('edit-item-trigger-clicked');
+
+         var noRm = $('#cek-no-rm').val(),
+             akhir = moment().format("YYYY-MM-DD");
+             method = "GET",
+             url = "/admin/bpjs/history/peserta",
+             _token = $('meta[name="csrf-token"]').attr('content');
+        if(no_rm.length < 6) return;
+
+        $.ajax({
+            method: method,
+            url: url,
+            data : {noRm: noRm, akhir: akhir},
+            success: function(response){
+                console.log(response.metaData.code == 200)
+                if (response.metaData.code == 200) {
+                    console.log("masuk sini")
+                    $('#modal-history-peserta #v-no-rm').val(response.metaData.noRm)
+                    $('#modal-history-peserta #v-no-kartu').val(response.metaData.noKartu)
+                    var history = '';
+                    $.each(response.response.histori, function(key, val){
+                        history += '<tr>';
+                        history += '<td>'+val.noSep+'</td>';
+                        history += '<td>'+val.tglSep+'</td>';
+                        history += '<td>'+((val.jnsPelayanan = 2) ? 'R Jalan' : 'R Inap')+'</td>';
+                        history += '<td>'+val.poli+'</td>';
+                        history += '<td>'+val.noRujukan+'</td>';
+                        history += '<td>'+val.ppkPelayanan+'</td>';
+                        history += '</tr>';
+                    });
+                    $('#tabel-history-peserta tbody').append(history);
+                } 
+            }
+        })
+
+        var options = {
+            'backdrop': 'static'
+        };
+
+        $('#modal-history-peserta').modal(options);
+    }
+
+    // cari Rujukan Terakhir
     $('#cek-no-kartu').on('change', function() {
         pencarian();
     });
 
-    $('#cek-history-peserta').on('click', function() {
+    $('#cek-x').on('click', function() {
         pencarian();
     });
 

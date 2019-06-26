@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/rujukan/rs','BpjsController@getRujukanRS')->name('bpjs.rujukan.rs');
 
         Route::get('/bpjs/history','BpjsController@getHistory')->name('bpjs.history');
+        Route::get('/bpjs/history/peserta','BpjsController@getHistoryPeserta')->name('bpjs.history.peserta');
         Route::get('/bpjs/cekhistory','BpjsController@getcekHistory')->name('bpjs.cekhistory');
         Route::get('/rujukan/internal','RujukanController@getRujukanInternal')->name('rujukan.internal');
         Route::get('/rujukan/nosurat','RujukanController@getNoSurat')->name('nosurat.internal');

@@ -26,13 +26,11 @@
                         <div class="form-group clearfix">
                             <div class="col-sm-12">
                                 <div class="row">
-                                    <div class="form-group col-sm-10">
+                                    <div class="form-group col-sm-10" id="x-no-rm">
                                         <label for="v-no-rm">No RM</label>
-                                        <input class="form-control form-control-sm" id="v-no-rm" type="text" placeholder="No Rekam Medis">
                                     </div>
-                                    <div class="form-group col-sm-10">
+                                    <div class="form-group col-sm-10" id="x-no-kartu">
                                         <label for="v-no-kartu">No Kartu</label>
-                                        <input class="form-control form-control-sm" id="v-no-kartu" type="text" placeholder="No Rekam Medis">
                                     </div>
                                 </div>
                             </div>

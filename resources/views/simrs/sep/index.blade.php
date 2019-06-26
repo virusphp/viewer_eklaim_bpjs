@@ -160,6 +160,8 @@
 
     $('#modal-history-peserta').on('hidden.bs.modal', function() {
         $("#tabel-history-peserta #isi-history tr").remove(); 
+        $("#x-no-rm p").remove(); 
+        $("#x-no-kartu p").remove(); 
     });
 
     // cari SKO sdf
@@ -458,8 +460,8 @@
                 console.log(response.metaData.code == 200)
                 if (response.metaData.code == 200) {
                     console.log("masuk sini")
-                    $('#modal-history-peserta #v-no-rm').val(response.metaData.noRm)
-                    $('#modal-history-peserta #v-no-kartu').val(response.metaData.noKartu)
+                    $('#x-no-rm').append('<p id="v-no-rm">'+response.metaData.noRm+'</p>')
+                    $('#x-no-kartu').append('<p id="v-no-kartu">'+response.metaData.noKartu+'</p>')
                     var history = '';
                     $.each(response.response.histori, function(key, val){
                         history += '<tr>';

@@ -61,12 +61,13 @@ function jenisPelayanan($nilai)
 function caraBayar($nilai)
 {
 	$cara_bayar = [
-		3 => 'Asuransi Lain',
-		8 => 'BPJS',
-		9 => 'UMUM',
 		1 => 'UMUM',
+		3 => 'Asuransi Lain',
 		4 => 'Keringan Dispensasi',
-		6 => 'Gratis Dispensasi'
+		5 => 'Keringan Tidak Mampu',
+		6 => 'Gratis Dispensasi',
+		8 => 'BPJS',
+		9 => 'UMUM'
 	];
 
 	return $cara_bayar[$nilai];

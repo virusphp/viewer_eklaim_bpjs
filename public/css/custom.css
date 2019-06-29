@@ -116,7 +116,7 @@
 }
 
 input#v-alamat, #v-alamat-reg, #v-nama, #v-username, #v-tgl-lahir, #v-tmpt-lahir, #v-unit-kerja, #v-no-rm, #v-nama-pasien,
-#v-no-telp, #v-jns-kel, #v-no-kartu, #v-hak-kelas, #v-no-rujukan, #v-no-sep, #v-poli, #v-faskes, *:focus{
+#v-no-telp, #v-jns-kel, #v-no-kartu, #v-hak-kelas, #v-no-rujukan, #v-no-sep, #v-poli, #v-faskes{
     outline: none;
     border: 0px solid;
     font-size: 10.5px;
@@ -146,8 +146,8 @@ span .select2 .select2-container .select2-container--default .select2-container-
     width: 100%;
 }
 
-#tabel-history-peserta #isi-hisotry tr>td {
-    font-size: 11px;
+#tabel-history-peserta #isi-hisotry {
+    /* font-size: 12px; */
 }
 
 .select2-selection .select2-selection--single {
@@ -198,4 +198,3 @@ a.btn i.tengah {
 .table-bordered th, .table-bordered td {
     border: 1px solid #7e03cfa1;
 }
-

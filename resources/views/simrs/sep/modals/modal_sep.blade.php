@@ -334,3 +334,5 @@
 @include('simrs.sep.modals.partials.register_pasien')
 <!-- modal History -->
 @include('simrs.sep.modals.modal_history')
+<!-- Modal Pulang Sep -->
+@include('simrs.sep.modals.modal_pulang_sep')

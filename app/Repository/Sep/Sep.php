@@ -209,7 +209,6 @@ class Sep
     public function simpanPlg($data)
     {
         $simpanPlg = DB::table('SEP_PULANG')->insert([
-            'no_reg' => $data['noReg'],
             'no_sep' => $data['noSep'],
             'tgl_pulang' => $data['tglPulang'],
             'user' => $data['user']
@@ -351,7 +350,7 @@ class Sep
     public function mapPlgSep($data)
     {
         $res['noSep'] = $data['noSep'];
-        $res['tglPlg'] = $data['tglPulang'];
+        $res['tglPulang'] = $data['tglPulang'];
         $res['ppkPelayanan'] = $data['ppkPelayanan'];
         $result = [
             't_sep' => $res

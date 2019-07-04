@@ -477,12 +477,15 @@ function katarak()
 function resetSuccessSep() {
         $('#frame_sep_success').hide();
         $('#frame_sep_error').hide();
-        $('success_sep').remove();
-        $('error_sep').remove();
+        $('#success_sep').remove();
+        $('#error_sep').remove();
+        $('#frame_error').hide()
+        $('#frame-pulang-error').hide()
 }
 
 function resetAll(){
     $('#frame_error').hide();
+    $('#frame-pulang-error').hide()
     $('#error_rujukan').remove();
 }
 

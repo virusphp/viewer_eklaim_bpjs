@@ -1,6 +1,6 @@
 <!-- modal User -->
 <div class="modal fade" id="modal-history-peserta" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-info" role="document">
+  <div class="modal-dialog modal-lg modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header">
       <div class="col-md-6">
@@ -15,7 +15,7 @@
       <div class="modal-body">
         <div class="row">
             <!-- Akun Pegawai -->
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="card">
                     <div class="card-header">
                         <strong>Data</strong>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <!-- Detail Pegawai -->
-            <div id="data-user" class="col-sm-10">
+            <div id="data-user" class="col-sm-9">
                 <div class="card">
                     <div class="card-header">
                         <strong>Daetail</strong>

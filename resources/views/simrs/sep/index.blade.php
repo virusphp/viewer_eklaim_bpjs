@@ -96,6 +96,9 @@
         $('#tglRujukan').datetimepicker({
             format: 'D-M-Y'
         });
+        $('#dtglPulang').datetimepicker({
+            format: 'D-M-Y'
+        });
     });
 
     // $(document).ready(function() {
@@ -216,7 +219,6 @@
     // Rujukan keyup
     $(document).on('click','#h-sep', function() {
         var sep = $(this).data('sep');
-        console.log(sep);
         $('#no_rujukan').val(sep);
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
             url = '{{ route('bpjs.sep') }}',
@@ -437,6 +439,51 @@
     //     });
     // });
 
+    // Pulangkan Pasien
+    $(document).on('click','#h-sep-p', function() {
+        $(this).addClass('edit-item-trigger-clicked');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'),
+            noSep = $(this).data('sep'),
+            noReg = $(this).val(),
+            options = {
+                'backdrop' : 'static'
+            }; 
+            console.log(noReg);
+           $('#noSep-pulang').val(noSep);
+           $('#noReg-pulang').val(noReg);
+        $('#modal-pulang-sep').modal(options);
+        $('#modal-history-peserta').modal('hide');
+    })
+
+    $(document).on('click','#update-pulang', function(e) {
+        var form = $('#form-update-pulang'),
+            method = 'POST',
+            url = "/admin/sep/pulang";
+
+        $.ajax({
+            method: method,
+            url: url,
+            data: form.serialize(),
+            dataType: "json",
+            success: function(data) {
+                console.log(data.metaData.message);
+                if (data.response !== null) {
+                    $('#frame_success').show().html("<span class='text-success' id='success_sep'></span>");
+                    $('#success_sep').html("Pasien berhasil di pulangkan!").hide()
+                    .fadeIn(1500, function() { $('#success_sep'); });
+                    setTimeout(resetSuccessSep,5000);
+                    ajaxLoad();
+                    $('#modal-pulang-sep').modal('hide');
+                } else {
+                    $('#frame-pulang-error').show().html("<span class='text-danger' id='error_sep'></span>");
+                    $('#error_sep').html("No Sep: "+$('#noSep').val()+" "+data.metaData.message).hide()
+                    .fadeIn(1500, function() { $('#error_sep'); });
+                    setTimeout(resetAll,5000);
+                }
+            }
+        })
+    });
+
     // cari history
     $('#cek-history-peserta').on('click', function() {
         historyPeserta();
@@ -465,9 +512,9 @@
                     var history = '';
                     $.each(response.response.histori, function(key, val){
                         history += '<tr>';
-                        history += '<td>'+val.noSep+'</td>';
+                        history += '<td><div class="btn-group"><button data-sep="'+val.noSep+'" id="h-sep-p" class="btn btn-sencodary btn-xs btn-cus">'+ val.noSep +'</div></td>';
                         history += '<td>'+val.tglSep+'</td>';
-                        history += '<td>'+((val.jnsPelayanan = 2) ? 'R Jalan' : 'R Inap')+'</td>';
+                        history += '<td>'+((val.jnsPelayanan == 2) ? 'R Jalan' : 'R Inap')+'</td>';
                         history += '<td>'+val.poli+'</td>';
                         history += '<td>'+val.noRujukan+'</td>';
                         history += '<td>'+val.ppkPelayanan+'</td>';

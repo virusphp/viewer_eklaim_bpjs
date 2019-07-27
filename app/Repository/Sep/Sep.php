@@ -218,7 +218,7 @@ class Sep
 
     public function updatePlg($data)
     {
-        $simpanPlg = DB::table('SEP_PULANG')->where('no_reg', '=', $data['noReg'])
+        $simpanPlg = DB::table('SEP_PULANG')->where('no_sep', '=', $data['noSep'])
             ->update([
                 'tgl_pulang' => $data['tglPulang'],
                 'user' => $data['user']

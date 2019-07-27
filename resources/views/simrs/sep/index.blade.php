@@ -13,8 +13,8 @@
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
             {{-- @include('simrs.sep.partials.radio_faskes') --}}
-            <div class="col-md-5 col-form-label form-inline">
-                History Peserta Bpjs
+            <div class="col-md-6 col-form-label form-inline">
+                Update Pulang Peserta Bpjs
             </div>
             <input name="cek_no_rm" id="cek-no-rm" value="" class="form-control" placeholder="Scan No RM..." type="text">
             <a id="cek-history-peserta" class="btn btn-sm">
@@ -486,7 +486,21 @@
 
     // cari history
     $('#cek-history-peserta').on('click', function() {
-        historyPeserta();
+        var noRm = $('#cek-no-rm').val();
+        if (noRm.length > 5) {
+            historyPeserta();
+        } else {
+            alert('No RM Kurang dari 6 digit');
+        }
+    })
+
+    $(document).on('change','#cek-no-rm', function() {
+        // var noRm = $('#cek-no-rm').val();
+        // if (noRm.length > 5) {
+        //     historyPeserta();
+        // } else {
+        //     alert('No RM Kurang dari 6 digit');
+        // }
     })
 
     function historyPeserta() {

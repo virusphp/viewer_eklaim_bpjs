@@ -65,7 +65,7 @@
                     <div class="form-group" id="data-asal-pasien">
                         <label for="asal_pasien">Asal Pasien</label>
                         <select id="asalPasien" name="asalPasien" class="form-control form-control-sm"></select>
-                        <input class="form-control form-control-sm" id="iiasal_pasien" name="asal" type="hidden">
+                        <input class="form-control form-control-sm" id="asal_pasien" name="asal" type="hidden">
                     </div>
                     <div class="form-group" id="data-instansi">
                         <label for="nama_instansi">Nama Instansi</label>

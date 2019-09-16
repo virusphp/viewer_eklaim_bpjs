@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Group Route Master
-    Route::group(['namespace' => 'Sep'], function() {
+    Route::group(['namespace' => 'Klaim'], function() {
         // autocompleted
         Route::get('/bpjs/kelas','BpjsController@getKelas')->name('bpjs.kelas');
         Route::get('/bpjs/diagnosa','BpjsController@getDiagnosa')->name('bpjs.diagnosa');
@@ -54,16 +54,21 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/ppkrujukan','BpjsController@getPpkRujukan')->name('bpjs.ppkrujukan');
         Route::get('/bpjs/sep','BpjsController@getSep')->name('bpjs.sep'); 
         
-        Route::get('/sep','SepController@index')->name('sep.index');
-        Route::get('/sep/search','SepController@search')->name('sep.search');
-        Route::get('/sep/pembuatan','SepController@buatSep')->name('sep.buat');
-        Route::get('/sep/perubahan','SepController@editSep')->name('sep.ubah');
-        Route::post('/sep/insert','SepController@sepInsert')->name('sep.insert');
-        Route::get('/sep/edit','SepController@sepEdit')->name('sep.edit');
-        Route::get('/sepInap/edit','SepController@sepInapEdit')->name('sep.inap.edit');
-        Route::put('/sep/update','SepController@sepUpdate')->name('sep.update');
-        Route::post('/sep/simpansep','SepController@simpanSep')->name('sep.simpan');
-        Route::get('/sep/print/{sep}','SepController@printSep')->name('sep.print');
+        Route::get('/sep','KlaimBpjsController@index')->name('sep.index');
+        Route::get('/sep/search','KlaimBpjsController@search')->name('sep.search');
+        Route::get('/sep/pembuatan','KlaimBpjsController@buatSep')->name('sep.buat');
+        Route::get('/sep/perubahan','KlaimBpjsController@editSep')->name('sep.ubah');
+        Route::post('/sep/insert','KlaimBpjsController@sepInsert')->name('sep.insert');
+        Route::get('/sep/edit','KlaimBpjsController@sepEdit')->name('sep.edit');
+        Route::get('/sepInap/edit','KlaimBpjsController@sepInapEdit')->name('sep.inap.edit');
+        Route::put('/sep/update','KlaimBpjsController@sepUpdate')->name('sep.update');
+        Route::post('/sep/simpansep','KlaimBpjsController@simpanSep')->name('sep.simpan');
+        Route::get('/sep/print/{sep}','KlaimBpjsController@printSep')->name('sep.print');
+        Route::get('/rujukan/print/{sep}','KlaimBpjsController@printRujukan')->name('rujukan.print');
+
+        Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
+        Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');
+        Route::get('/verifikasi/surat/print/{tgl}/{surat}/{rujukan}','VerifikasiController@printSurat')->name('surat.print');
 
         // Route::get('/page/{slug}', 'PagesController@index')->name('page.index');
         Route::put('/sep/pulang','UpdatePlgSepController@postPulang')->name('sep.pulang');

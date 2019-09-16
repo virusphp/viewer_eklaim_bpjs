@@ -17,18 +17,7 @@
     </div>
     <!-- Cara Bayar -->
     <div class="col-md-3 col-offset-3">
-    <form action="">
-        <div class="controls">
-        <div class="input-group">
-            <select id="cara_bayar" name="cara_bayar" class="form-control">
-                <option value="">Pilih</option> 
-                @foreach($cara_bayar as $data)
-                    <option value="{{ $data->kd_cara_bayar }}">{{ $data->keterangan }}</option> 
-                @endforeach
-            </select>
-        </div>
-        </div>
-    </form>
+    
     </div>
     <div class="col-md-3 col-offset-3">
         <div class="form-group">
@@ -39,7 +28,7 @@
                     </span>
                 </div>                        
                 <input class="form-control" id="tgl_reg_filter" 
-                        value="{{ date('d-m-Y')}}" 
+                        value="{{ date('d-m-Y') }}" 
                         placeholder="Tanggal Kwitansi" name="tgl_reg"
                         type="text"/>
                 <div class="input-group-append">                    

@@ -13,7 +13,13 @@
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
+ Route::middleware('auth:api')->get('/user', function (Request $request) {
      return $request->user();
  });
-*/
+
+ Route::group(['middleware' => ['cors']], function() {
+    Route::get('verifikasi', 'Api\ClaimSepController@index');
+    Route::post('verifikasi/create', 'Api\ClaimSepController@create');
+    Route::put('verifikasi/update/{no_reg}', 'Api\ClaimSepController@update');
+    Route::delete('verifikasi/delete/{no_reg}', 'Api\ClaimSepController@delete');
+ });

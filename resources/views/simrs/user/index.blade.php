@@ -1,4 +1,4 @@
-@extends('layouts.simrs.app')
+@extends('layouts.verifikasi.app')
 
 @section('breadcrumb')
 <ol class="breadcrumb">

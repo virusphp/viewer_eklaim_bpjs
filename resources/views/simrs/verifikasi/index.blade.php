@@ -1,0 +1,162 @@
+@extends('layouts.verifikasi.app')
+
+@section('breadcrumb')
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      Master
+    </li>
+
+    <li class="breadcrumb-item">
+      <a href="{{ route('sep.index') }}">Viewer</a>
+    </li>
+    <li class="breadcrumb-item active">Index</li>
+    <li class="breadcrumb-menu d-md-down-none">
+    </li>
+</ol>
+@endsection
+@section('content')
+<div class="col-md-12">
+    <div id="frame_sep_success" class="alert alert-success">
+        <!-- success message -->
+    </div>
+    <div id="frame_sep_error" class="alert alert-danger">
+        <!-- success message -->
+    </div>
+  <div class="card">
+      <div class="card-header">
+        @include('layouts.search.search')
+      </div>
+      <div class="card-body">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>No Reg</th>
+              <th>No RM</th>
+              <th>Nama Pasien</th>
+              <th>Tanggal Reg</th>
+              <th>Sep</th>
+              <th>Rujukan</th>
+              <th>Billing</th>
+              <th>Assign</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+          </tbody>
+        </table>
+       
+      </div>
+  </div>
+</div>
+
+@include('simrs.verifikasi.modals.modal_sep')
+
+@endsection
+@push('css')
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+
+@endpush
+@push('scripts')
+
+<script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+@include('simrs.verifikasi.modals.ajax')
+@include('simrs.verifikasi.modals.ajax_register')
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'D-M-Y'
+        });
+        $('#dtgl_kejadian').datetimepicker({
+            format: 'D-M-Y'
+        });
+        $('#tglRujukan').datetimepicker({
+            format: 'D-M-Y'
+        });
+        $('#dtglPulang').datetimepicker({
+            format: 'D-M-Y'
+        });
+    });
+
+    $(document).ready(function () {
+        getStart();
+        r_getStart();
+        resetSuccessSep();
+        r_resetSuccessReg();
+        ajaxLoad();
+        $('table .table').removeAttr('style');
+    });
+    
+    $(document).on('click', '#print-sep', function() {
+        var print = $(this),
+            no_reg = print.data('print'),
+            url = '{{ url('admin/sep/print') }}/'+no_reg; 
+        window.open(url, "_blank", "width=850, height=600");
+    });
+    
+    $(document).on('click', '#print-rujukan', function() {
+        var print = $(this),
+            noSep = print.data('rujukan');
+            url = '{{ url('admin/rujukan/print') }}/'+noSep;
+        window.open(url, "_blank", "width=850, height=600");
+    })
+
+    function ajaxLoad(){
+            var jnsRawat = $("input[name=jns_rawat]:checked").val();
+            var caraBayar = $("#cara_bayar").val();
+            var tglReg = $("#tgl_reg_filter").val();
+            var search = $("#search").val();
+            // $.fn.dataTable.ext.errMode = 'throw';
+            $('#mytable').dataTable({
+                "Processing": true,
+                "responsive": true,
+                "ServerSide": true,
+                "sDom" : "<t<p i>>",
+                "iDisplayLength": 25,
+                "bDestroy": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ ",
+                    "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries",
+                    "sSearch": "Search Data :  ",
+                    "sZeroRecords": "Tidak ada data",
+                    "sEmptyTable": "Data tidak tersedia",
+                    "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
+                },           
+                "ajax": {
+                    "url": "{{ route('sep.search')}}",
+                    "type": "GET",
+                    "data": {                   
+                        'jns_rawat': jnsRawat,
+                        'kd_cara_bayar': caraBayar,
+                        'tgl_reg': tglReg,
+                        'search' : search
+                    }
+                },
+                "columns": [
+                    {"mData": "no"},
+                    {"mData": "no_reg"},
+                    {"mData": "no_rm"},
+                    {"mData": "nama_pasien"},
+                    {"width": "10%", "mData": "tgl_reg"},
+                    {"width": "5%", "mData": "sep"},
+                    {"width": "5%","mData": "rujukan"},
+                    {"width": "5%","mData": "billing"},
+                    {"width": "5%","mData": "assign"}
+                ]
+            });
+            oTable = $('#mytable').DataTable();  
+            $('#searchInput').keyup(function(){
+                oTable.search($(this).val()).draw() ;
+                $('.table').removeAttr('style');
+            }); 
+        }   
+</script>
+@endpush

@@ -71,6 +71,16 @@ class Registrasi
             ->first();
     }
 
+    public function getDataRegistrasi($noReg)
+    {
+        $data = DB::table('registrasi as r')
+                ->select('r.no_sjp')
+            ->where('r.no_reg', $noReg)->first();
+        return $data;
+    }
+
+    
+
     public function getNoAntrian($noReg, $kdPoli, $tglReg)
     {
         return DB::select("
@@ -99,50 +109,35 @@ class Registrasi
             })
             ->where(function($query) use ($request) {
                 $tgl = date('Y-m-d', strtotime($request->tgl_reg));
-                if (($request->search == null) && ($request->kd_cara_bayar == null)) {
+                if ($request->search == null) {
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
+                        ['r.kd_cara_bayar','=', 8],
                         ['r.tgl_reg','=',$tgl],
-                        ['r.status_keluar', '!=', 2]
-                    ]);
-                } else if ($request->search == null) {
-                    $query->orWhere([
-                        ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
-                        ['r.tgl_reg','=',$tgl],
-                        ['r.status_keluar', '!=', 2]
-                    ]);
-                } else if ($request->kd_cara_bayar == null) {
-                    $term = $request->get('search');
-                    $keywords = '%'. $term .'%';
-                    $query->orWhere([
-                        ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.tgl_reg','=',$tgl],
-                        ['r.no_rm','LIKE',$keywords],
-                        ['r.status_keluar', '!=', 2]
-                    ]);
-                    $query->orWhere([
-                        ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.tgl_reg','=',$tgl],
-                        ['p.nama_pasien','LIKE',$keywords],
-                        ['r.status_keluar', '!=', 2]
+                        ['r.status_keluar', '!=', 2],
+                        ['r.no_sjp', '!=', '-'],
+                        ['r.no_sjp', '!=', null]
                     ]);
                 } else {
                     $term = $request->get('search');
                     $keywords = '%'. $term .'%';
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
+                        ['r.kd_cara_bayar','=',8],
                         ['r.tgl_reg','=',$tgl],
                         ['r.no_rm','LIKE',$keywords],
-                        ['r.status_keluar', '!=', 2]
+                        ['r.status_keluar', '!=', 2],
+                        ['r.no_sjp', '!=', '-'],
+                        ['r.no_sjp', '!=', null]
                     ]);
                     $query->orWhere([
                         ['r.jns_rawat','=',$request->jns_rawat],
-                        ['r.kd_cara_bayar','=',$request->kd_cara_bayar],
+                        ['r.kd_cara_bayar','=',8],
                         ['r.tgl_reg','=',$tgl],
                         ['p.nama_pasien','LIKE',$keywords],
-                        ['r.status_keluar', '!=', 2]
+                        ['r.status_keluar', '!=', 2],
+                        ['r.no_sjp', '!=', '-'],
+                        ['r.no_sjp', '!=', null]
                     ]);
                 }
             })        

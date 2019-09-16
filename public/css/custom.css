@@ -146,10 +146,6 @@ span .select2 .select2-container .select2-container--default .select2-container-
     width: 100%;
 }
 
-#tabel-history-peserta #isi-hisotry {
-    /* font-size: 12px; */
-}
-
 .select2-selection .select2-selection--single {
     width: 100%;
 }
@@ -161,9 +157,6 @@ a.btn i.tengah {
 .card-body #mytable_wrapper{
     width: 1092px; 
 }
-/* .ui-autocomplete-input {
-    z-index: 1;
-} */
 
 #tgl_rujukan {
     position: relative; 
@@ -197,4 +190,15 @@ a.btn i.tengah {
 
 .table-bordered th, .table-bordered td {
     border: 1px solid #7e03cfa1;
+}
+
+.img-verifid {
+    border-radius: 4.2rem;
+    max-width: 150px;
+    height: auto;
+}
+
+.centering {
+    display: block;
+    text-align: center;
 }

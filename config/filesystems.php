@@ -48,6 +48,13 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'remote' => [
+            'driver' => 'local',
+            'username' => 'samba',
+            'password' => 'samba123',
+            'root'   => '11.11.11.2',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

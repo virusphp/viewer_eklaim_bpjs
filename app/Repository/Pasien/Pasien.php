@@ -1,15 +1,35 @@
 <?php
 
 namespace App\Repository\Pasien;
-use GuzzleHttp\Client;
 use DB;
-use GuzzleHttp\Psr7;
-use Guzzle\Http\Message\Response;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\ClientException;
+
 class Pasien
 {
     protected $conn = "sqlsrv";
+
+    public function getDataPasien($noReg)
+    {
+        $data = DB::table('registrasi as r')
+                    ->select('r.no_reg','r.tgl_reg','r.no_rm','p.alamat','kl.nama_kelurahan',
+                            'kc.nama_kecamatan','kb.nama_kabupaten','pr.nama_propinsi')
+                    ->join('pasien as p', function($join) {
+                        $join->on('r.no_rm', '=', 'p.no_rm');
+                    })
+                    ->join('kelurahan as kl', function($join) {
+                        $join->on('p.kd_kelurahan', '=', 'kl.kd_kelurahan');
+                    })
+                    ->join('kecamatan as kc', function($join) {
+                        $join->on('kl.kd_kecamatan','=','kc.kd_kecamatan');
+                    })
+                    ->join('kabupaten as kb', function($join) {
+                        $join->on('kc.kd_kabupaten','=','kb.kd_kabupaten');
+                    })
+                    ->join('propinsi as pr', function($join) {
+                        $join->on('kb.kd_propinsi','=','pr.kd_propinsi');
+                    })
+                ->where('r.no_reg', $noReg)->first();
+        return $data;
+    }
 
     public function getPegawai($kode)
     {

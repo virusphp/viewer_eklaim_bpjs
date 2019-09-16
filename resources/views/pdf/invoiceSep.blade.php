@@ -82,7 +82,7 @@
         }
      
         #sep-image {
-            width: 5%;
+            width: 250px;
             vertical-align: top;
             /* margin-bottom: 5px; */
 
@@ -95,8 +95,7 @@
         }
 
         #sep-title {
-            margin-top: 1px;
-            padding-left: 5em;
+            padding-left: 10px;
             /* width: 100%; */
             font-size: 19px;
             /* margin-bottom: 5px; */
@@ -149,19 +148,21 @@
     </style>
 </head>
 <body id="sep-content" onload="printSep()">
-    <table class="table table-borderless table-header" >
+    <table class="table table-borderless table-header">
         <tr>
-            <td id="sep-image" rowspan="2"><img class="img-responsive avatar-view"  src="{{ asset('img/logo-bpjs.png') }}"></td>
-            <td id="sep-title">
-                SURAT ELEGIBILITAS PESERTA 
+            <td id="sep-image" rowspan="2">
+                <img class="img-responsive avatar-view" src="{{ asset('img/logo-bpjs.png') }}">
+            </td>
+            <td id="sep-title" colspan="2">
+                <p id="sep-title">SURAT ELEGIBILITAS PESERTA </p> 
             </td> 
         </tr> 
         <tr>
-            <td id="sep-title-2">RSUD KRATON Pekalongan</td>
+            <td width="3%"></td>
+            <td id="sep-title-2">
+                <p id="sep-title-2">RSUD KRATON Pekalongan</p> 
+            </td>
         </tr> 
-        <tr style="width:50px">
-            <td colspan="2"></td>                            
-        </tr>                       
     </table>   
     <table class="table table-content">
         <tr>
@@ -175,10 +176,10 @@
         <tr id="tgl-sep">
             <td class="tgl-sep">Tanggal SEP</td>
             <td>:</td>
-            <td class="nilai-tgl-sep">{{ $dataSep->tglSep }}</td>
+            <td class="nilai-tgl-sep">{{ tanggal($dataSep->tglSep) }}</td>
             <td class="tgl-lahir">Tanggal Lahir</td>
             <td>:</td>
-            <td class="nilai-tgl-lahir">{{ $dataSep->peserta->tglLahir }}</td>
+            <td class="nilai-tgl-lahir">{{ tanggal($dataSep->peserta->tglLahir) }}</td>
             <td class="jns-kel">Jns Kel</td>
             <td>:</td>
             <td class="nilai-jns-kel">{{ $dataSep->peserta->kelamin }}</td>
@@ -283,7 +284,7 @@
                      <br><strong>{{ !is_null($informasi->prolanisPRB) ? '*Peserta '.$informasi->prolanisPRB : '' }}</strong>
                 </i>
             </td>
-            <td class="kanan" colspan="1">Dicetak Oleh : {{ Auth::user()->nama_pegawai }}</td>
+            <td class="kanan" colspan="1">Dicetak Oleh : RSUD Kraton</td>
         </tr>
     </table>
 </body>

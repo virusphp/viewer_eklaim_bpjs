@@ -18,8 +18,8 @@
  });
 
  Route::group(['middleware' => ['cors']], function() {
-    Route::get('verifikasi', 'Api\ClaimSepController@index');
-    Route::post('verifikasi/create', 'Api\ClaimSepController@create');
-    Route::put('verifikasi/update/{no_reg}', 'Api\ClaimSepController@update');
-    Route::delete('verifikasi/delete/{no_reg}', 'Api\ClaimSepController@delete');
+    Route::get('eclaim', 'Api\ClaimSepController@index');
+    Route::post('eclaim/create', 'Api\ClaimSepController@create');
+    Route::put('eclaim/update/{no_reg}', 'Api\ClaimSepController@update');
+    Route::delete('eclaim/delete/{no_reg}', 'Api\ClaimSepController@delete');
  });

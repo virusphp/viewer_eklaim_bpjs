@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Klaim;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repository\Sep\Registrasi;
+use App\Repository\Sep\Eklaim;
 use App\Service\Bpjs\Sep as cetak;
 use App\Service\Bpjs\Rujukan;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class KlaimBpjsController extends Controller
     {
         $this->cetak = new cetak();
         $this->rujukan = new rujukan();
-        $this->reg = new Registrasi();
+        $this->eklaim = new Eklaim();
     }
 
     public function index()
@@ -29,40 +29,35 @@ class KlaimBpjsController extends Controller
         return view('simrs.verifikasi.index');
     }
 
-    public function search(Request $request, Registrasi $reg)
+    public function search(Request $request)
     {
         if ($request->ajax()) {
             $no = 1;
-            $data = $reg->getSearch($request);
+            $data = $this->eklaim->getView($request);
+            // dd($data);
             foreach($data as $q) {
-                $tgl = new DateTime($q->tgl_reg);
-                // dd(empty($q->no_sjp), $q->no_sjp == "");
-                if ($q->no_sjp <= 15) {
-                    $button = ' <button type="button" class="btn btn-sm btn-primary" id="print-sep" disabled>Cek</button>';
-                    $skdp = ' <a target="_blank" class="btn btn-sm btn-primary" id="print-skpd">Cek</a>';
-                } else {
-                    $sep = ' <a target="_blank" class="btn btn-sm btn-primary" data-print="'.$q->no_reg.'" id="print-sep">Cek</a>';
-                    $rujukan = ' <a target="_blank" class="btn btn-sm btn-success" data-rujukan="'.$q->no_sjp.'" id="print-rujukan">Cek</a>';
-                    $billing = ' <a target="_blank" class="btn btn-sm btn-info" data-billing="'.$q->no_reg.'" id="print-billing">Cek</a>';
-                    $assign = ' <a href="'.route('detail.peserta', $q->no_reg).'" class="btn btn-sm btn-secondary" data-assign="'.$q->no_reg.'" id="print-assign">Cek</a>';
-                }
+                $tgl = new DateTime($q->tgl_sep);
+                $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
+                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-success" id="viewer-eklaim">Show</button>';
                 $query[] = [
                     'no' => $no++,
                     'no_reg' => $q->no_reg,
                     'no_rm' => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
-                    'tgl_reg' => $tgl->format('d-m-Y'),
-                    'sep' => $sep,
-                    'rujukan' => $rujukan,
-                    'billing' => $billing,
-                    'assign' => $assign
-
+                    'tgl_sep' => $tgl->format('d-m-Y'),
+                    'sep' => $q->no_sep,
+                    'action' => $btnAction,
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
             // dd($result);
             return json_encode($result);
         } 
+    }
+
+    public function getDestination($tanggal)
+    {
+        return 'storage/verifikasi/'.tanggalPdf($tanggal).'/';
     }
 
     public function printSep2($noReg)

@@ -323,16 +323,16 @@
 <!-- /Attachment Modal -->
 
 <!-- modal Rujukan-->
-@include('simrs.verifikasi.modals.partials.rujukan_puskesmas')
+{{-- @include('simrs.verifikasi.modals.partials.rujukan_puskesmas') --}}
 <!-- modal Rujukan RS-->
-@include('simrs.verifikasi.modals.partials.rujukan_rs')
+{{-- @include('simrs.verifikasi.modals.partials.rujukan_rs') --}}
 <!-- modal Sep -->
-@include('simrs.verifikasi.modals.partials.rujukan_sko')
+{{-- @include('simrs.verifikasi.modals.partials.rujukan_sko') --}}
 <!-- modal no surat -->
-@include('simrs.verifikasi.modals.partials.surat_sko')
+{{-- @include('simrs.verifikasi.modals.partials.surat_sko') --}}
 <!-- modal no surat -->
 @include('simrs.verifikasi.modals.partials.register_pasien')
 <!-- modal History -->
-@include('simrs.verifikasi.modals.modal_history')
+{{-- @include('simrs.verifikasi.modals.modal_history') --}}
 <!-- Modal Pulang Sep -->
-@include('simrs.verifikasi.modals.modal_pulang_sep')
+{{-- @include('simrs.verifikasi.modals.modal_pulang_sep') --}}

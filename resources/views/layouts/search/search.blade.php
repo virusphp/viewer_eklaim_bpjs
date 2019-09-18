@@ -27,9 +27,9 @@
                         <i class="fa fa-calendar"></i>
                     </span>
                 </div>                        
-                <input class="form-control" id="tgl_reg_filter" 
+                <input class="form-control" id="tgl_sep_filter" 
                         value="{{ date('d-m-Y') }}" 
-                        placeholder="Tanggal Kwitansi" name="tgl_reg"
+                        placeholder="Tanggal Kwitansi" name="tgl_sep"
                         type="text"/>
                 <div class="input-group-append">                    
                     <button type="submit" class="btn btn-primary" onclick="ajaxLoad()">

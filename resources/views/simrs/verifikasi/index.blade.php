@@ -16,12 +16,12 @@
 @endsection
 @section('content')
 <div class="col-md-12">
-    <div id="frame_sep_success" class="alert alert-success">
+    {{-- <div id="frame_sep_success" class="alert alert-success">
         <!-- success message -->
     </div>
     <div id="frame_sep_error" class="alert alert-danger">
-        <!-- success message -->
-    </div>
+        <!-- success message --> --}}
+    {{-- </div> --}}
   <div class="card">
       <div class="card-header">
         @include('layouts.search.search')
@@ -34,11 +34,9 @@
               <th>No Reg</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tanggal Reg</th>
+              <th>Tanggal SEP</th>
               <th>Sep</th>
-              <th>Rujukan</th>
-              <th>Billing</th>
-              <th>Assign</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +48,8 @@
   </div>
 </div>
 
-@include('simrs.verifikasi.modals.modal_sep')
+{{-- @include('simrs.verifikasi.modals.partials.register_pasien') --}}
+@include('simrs.verifikasi.modals.modal_viewer')
 
 @endsection
 @push('css')
@@ -69,7 +68,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 @include('simrs.verifikasi.modals.ajax')
-@include('simrs.verifikasi.modals.ajax_register')
+{{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -87,32 +86,42 @@
     });
 
     $(document).ready(function () {
-        getStart();
-        r_getStart();
-        resetSuccessSep();
-        r_resetSuccessReg();
+        // getStart();
+        // r_getStart();
+        // resetSuccessSep();
+        // r_resetSuccessReg();
         ajaxLoad();
         $('table .table').removeAttr('style');
     });
     
-    $(document).on('click', '#print-sep', function() {
-        var print = $(this),
-            no_reg = print.data('print'),
-            url = '{{ url('admin/sep/print') }}/'+no_reg; 
-        window.open(url, "_blank", "width=850, height=600");
-    });
+    // $(document).on('click', '#print-sep', function() {
+    //     var print = $(this),
+    //         no_reg = print.data('print'),
+    //         url = '{{ url('admin/sep/print') }}/'+no_reg; 
+    //     window.open(url, "_blank", "width=850, height=600");
+    // });
     
-    $(document).on('click', '#print-rujukan', function() {
-        var print = $(this),
-            noSep = print.data('rujukan');
-            url = '{{ url('admin/rujukan/print') }}/'+noSep;
-        window.open(url, "_blank", "width=850, height=600");
-    })
+    // $(document).on('click', '#print-rujukan', function() {
+    //     var print = $(this),
+    //         noSep = print.data('rujukan');
+    //         url = '{{ url('admin/rujukan/print') }}/'+noSep;
+    //     window.open(url, "_blank", "width=850, height=600");
+    // })
+
+    $(document).on('click', '#viewer-eklaim', function(e) {
+      // e.preventDefault();
+      var viewer = $(this).val();
+      $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+      options = {
+        'backdrop' : 'static'
+      },
+      $('#id-viewer').attr('src', viewer)
+      $('#modal-viewer').modal(options);
+    });
 
     function ajaxLoad(){
             var jnsRawat = $("input[name=jns_rawat]:checked").val();
-            var caraBayar = $("#cara_bayar").val();
-            var tglReg = $("#tgl_reg_filter").val();
+            var tglSep = $("#tgl_sep_filter").val();
             var search = $("#search").val();
             // $.fn.dataTable.ext.errMode = 'throw';
             $('#mytable').dataTable({
@@ -135,8 +144,7 @@
                     "type": "GET",
                     "data": {                   
                         'jns_rawat': jnsRawat,
-                        'kd_cara_bayar': caraBayar,
-                        'tgl_reg': tglReg,
+                        'tgl_sep': tglSep,
                         'search' : search
                     }
                 },
@@ -145,11 +153,9 @@
                     {"mData": "no_reg"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"width": "10%", "mData": "tgl_reg"},
-                    {"width": "5%", "mData": "sep"},
-                    {"width": "5%","mData": "rujukan"},
-                    {"width": "5%","mData": "billing"},
-                    {"width": "5%","mData": "assign"}
+                    {"mData": "tgl_sep"},
+                    {"mData": "sep"},
+                    {"mData": "action"},
                 ]
             });
             oTable = $('#mytable').DataTable();  

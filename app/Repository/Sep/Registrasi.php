@@ -101,7 +101,7 @@ class Registrasi
     public function getSearch($request)
     {
         // dd($request->all());
-        $tgl = date('Y-m-d', strtotime($request->tgl_reg));
+        // $tgl = date('Y-m-d', strtotime($request->tgl_reg));
         $data = DB::table('registrasi as r')
             ->select('r.no_reg','r.no_rm','r.tgl_reg','r.kd_cara_bayar','r.jns_rawat','r.no_sjp','p.nama_pasien')
             ->join('pasien as p', function($join) {

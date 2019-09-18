@@ -28,7 +28,7 @@ class ClaimSep
     public function simpan($request)
     {
         $data = $this->handleFile($request);
-        dd(substr($data['no_reg'], 0, 2));
+        // dd(substr($data['no_reg'], 0, 2));
         $simpan = DB::table('sep_claim')
             ->insert([
                 'no_reg'        => $data['no_reg'],

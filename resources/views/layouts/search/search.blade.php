@@ -2,15 +2,15 @@
     <div class="col-md-3 col-offset-3">
         <div class="col-md-12 col-form-label form-inline">
             <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat1" value="1" name="jns_rawat" checked>
+                <input class="form-check-input" type="radio" id="jns_rawat1" value="01" name="jns_rawat" checked>
                 <label class="form-check-label" for="jns_rawat1">Rawat Jalan</label>
             </div>
             <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat2" value="2" name="jns_rawat">
+                <input class="form-check-input" type="radio" id="jns_rawat2" value="02" name="jns_rawat">
                 <label class="form-check-label" for="jns_rawat2">Rawat Inap</label>
             </div>
             <div class="form-check form-check-inline mr-1">
-                <input class="form-check-input" type="radio" id="jns_rawat3" value="3" name="jns_rawat">
+                <input class="form-check-input" type="radio" id="jns_rawat3" value="03" name="jns_rawat">
                 <label class="form-check-label" for="jns_rawat3">IGD</label>
             </div>
         </div>

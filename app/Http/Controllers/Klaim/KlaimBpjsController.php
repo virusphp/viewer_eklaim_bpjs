@@ -34,6 +34,7 @@ class KlaimBpjsController extends Controller
         if ($request->ajax()) {
             $no = 1;
             $data = $this->eklaim->getView($request);
+            // dd($request->all());
             // dd($data);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);

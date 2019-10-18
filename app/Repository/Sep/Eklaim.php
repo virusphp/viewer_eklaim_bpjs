@@ -7,10 +7,12 @@ Class Eklaim
 {
     public function getView($request)
     {
-        // dd($request->search);
+        // $data  = DB::table('penjamin_pasien')->where('no_rm', "427466")->get();
+        // dd($data);
         $data = DB::table('sep_claim as sc')
-            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','sc.file_claim', 'p.nama_pasien')
+            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','sc.file_claim', 'p.nama_pasien', 'pp.no_kartu')
             ->join('pasien as p','sc.no_rm','=','p.no_rm')
+            ->join('penjamin_pasien as pp', 'sc.no_rm', '=', 'pp.no_rm')
             ->where(function ($query) use ($request) {
                 $tgl = date('Y-m-d', strtotime($request->tgl_sep));
                 if ($request->search == null) {

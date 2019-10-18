@@ -112,7 +112,7 @@
 
 /* Custome Form_group */
 .card .card-body {
-    padding: 0.2rem;
+    padding: 0.5rem;
 }
 .card-body .form-group, .form-group label {
     margin-bottom: 0.2rem;
@@ -187,12 +187,12 @@ a.btn i.tengah {
 }
 
 .app-body .main {
-    background-color: #09b3bb;
+    background-color: #2ab388;
     font-weight: 500;
 }
 
 .table-bordered th, .table-bordered td {
-    border: 1px solid #7e03cfa1;
+    border: 1px solid #2ab388;
 }
 
 .img-verifid {
@@ -204,4 +204,11 @@ a.btn i.tengah {
 .centering {
     display: block;
     text-align: center;
+}
+
+.img-thumb {
+    border-radius: 4.2rem;
+    max-width: 150px;
+    max-height: 200px;
+    height: auto;
 }

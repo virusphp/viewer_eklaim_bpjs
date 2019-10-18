@@ -39,14 +39,16 @@ class KlaimBpjsController extends Controller
                 $tgl = new DateTime($q->tgl_sep);
                 $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-success" id="viewer-eklaim">Show</button>';
+                // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
-                    'no' => $no++,
-                    'no_reg' => $q->no_reg,
-                    'no_rm' => $q->no_rm,
+                    'no'          => $no++,
+                    'no_kartu'      => $q->no_kartu,
+                    'no_rm'       => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
-                    'tgl_sep' => $tgl->format('d-m-Y'),
-                    'sep' => $q->no_sep,
-                    'action' => $btnAction,
+                    'tgl_sep'     => $tgl->format('d-m-Y'),
+                    'sep'         => $q->no_sep,
+                    'action'      => $btnAction,
+                    // 'checked' => $btnCheck,
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];

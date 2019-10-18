@@ -31,12 +31,13 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>No Reg</th>
+              <th>No Kartu</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
               <th>Tanggal SEP</th>
               <th>Sep</th>
               <th>View</th>
+              {{-- <th>Periksa</th> --}}
             </tr>
           </thead>
           <tbody>
@@ -150,12 +151,13 @@
                 },
                 "columns": [
                     {"mData": "no"},
-                    {"mData": "no_reg"},
+                    {"mData": "no_kartu"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
                     {"mData": "tgl_sep"},
                     {"mData": "sep"},
                     {"mData": "action"},
+                    // {"mData": "checked"},
                 ]
             });
             oTable = $('#mytable').DataTable();  

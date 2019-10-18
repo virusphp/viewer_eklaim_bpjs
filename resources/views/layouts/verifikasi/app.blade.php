@@ -18,6 +18,7 @@
     <link href="{{ asset('core-ui/css/simple-line-icons.css') }}" rel="stylesheet">
     <!-- Main styles for this application-->
     <link href="{{ asset('core-ui/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bg.css') }}" rel="stylesheet">
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('core-ui/datepicker/css/bootstrap-datetimepicker.min.css') }}" />
     <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->

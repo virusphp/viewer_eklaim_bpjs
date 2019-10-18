@@ -6,7 +6,7 @@
         <div class="col-md-4 col-md-offset-4">
             <h1 class="text-center login-title">RSUD KRATON</h1>
             <hr>
-            <p class="text-center daiwabo">Mini SIMRS</p>
+            <p class="text-center daiwabo">E-Klaim SIRM Mini</p>
             <div class="account-wall">
                <img class="profile-img" src="{{ asset('img/logo.png') }}">
                <form class="form-signin" method="POST" action="{{ route('login.post') }}">

@@ -17,6 +17,8 @@
     <link href="{{ asset('core-ui/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('core-ui/css/simple-line-icons.css') }}" rel="stylesheet">
     <!-- Main styles for this application-->
+    <link href="{{ asset('icheck/skins/all.css') }}?v=1.0.2" rel="stylesheet">
+    {{-- <link href="{{ asset('icheck/css/custom.css') }}?v=1.0.2" rel="stylesheet"> --}}
     <link href="{{ asset('core-ui/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bg.css') }}" rel="stylesheet">
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
@@ -57,6 +59,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
     <!-- <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script> -->
     <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('icheck/icheck.js') }}?v=1.0.2"></script>
+    <script src="{{ asset('icheck/icheck.min.js') }}?v=1.0.2"></script>
     @stack('scripts')
     <script type="text/javascript">
         $(document).ready(function() {

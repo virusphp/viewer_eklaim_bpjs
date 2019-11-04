@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/ppkrujukan','BpjsController@getPpkRujukan')->name('bpjs.ppkrujukan');
         Route::get('/bpjs/sep','BpjsController@getSep')->name('bpjs.sep'); 
         
+        // VERIFIKASI OKE BEROH
         Route::get('/sep','KlaimBpjsController@index')->name('sep.index');
         Route::get('/sep/search','KlaimBpjsController@search')->name('sep.search');
         Route::get('/sep/pembuatan','KlaimBpjsController@buatSep')->name('sep.buat');
@@ -65,6 +66,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::post('/sep/simpansep','KlaimBpjsController@simpanSep')->name('sep.simpan');
         Route::get('/sep/print/{sep}','KlaimBpjsController@printSep')->name('sep.print');
         Route::get('/rujukan/print/{sep}','KlaimBpjsController@printRujukan')->name('rujukan.print');
+
+        Route::post('/sep/verified/petugas', 'KlaimBpjsController@verified')->name('sep.klaim');
+
 
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
         Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');

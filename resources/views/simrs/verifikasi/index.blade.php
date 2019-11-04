@@ -37,7 +37,7 @@
               <th>Tanggal SEP</th>
               <th>Sep</th>
               <th>View</th>
-              {{-- <th>Periksa</th> --}}
+              <th>Verifikasi</th>
             </tr>
           </thead>
           <tbody>
@@ -67,7 +67,7 @@
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
 @include('simrs.verifikasi.modals.ajax')
 {{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
@@ -94,20 +94,90 @@
         ajaxLoad();
         $('table .table').removeAttr('style');
     });
+
+
+    $(document).ready(function () {
+        var grantAll = true;
+        $('.check-modules').each(function (i,v) {
+            var chkAll = true;
+            var chkMdl = $(this)
+            $(chkMdl).parents('tr').find('.check-access').each(function (i,v) {
+                if(!$(v).is(':checked')) {
+                    chkAll = false;
+                }
+            })
+
+            if (chkAll) {
+                chkMdl.prop('checked', 'checked');
+                chkMdl.iCheck('update');
+            }
+
+            if (!$(v).is(':checked')) {
+                grantAll = false;
+            }
+        })
+
+        if (grantAll) {
+            $('input.all').prop('checked', 'checked');
+            $('input.all').iCheck('update');
+        }
+    });
     
-    // $(document).on('click', '#print-sep', function() {
-    //     var print = $(this),
-    //         no_reg = print.data('print'),
-    //         url = '{{ url('admin/sep/print') }}/'+no_reg; 
-    //     window.open(url, "_blank", "width=850, height=600");
-    // });
-    
-    // $(document).on('click', '#print-rujukan', function() {
-    //     var print = $(this),
-    //         noSep = print.data('rujukan');
-    //         url = '{{ url('admin/rujukan/print') }}/'+noSep;
-    //     window.open(url, "_blank", "width=850, height=600");
-    // })
+    $(document).on('click', '#verifikasi-eklaim', function() {
+      var nilai = $(this).val(),
+          no_reg = $(this).data("reg");
+          if (nilai == 1) {
+            icon = "success";
+            title = "Yakin Sudah di cek?!"
+            pesan = "Klik tombol OK jika sudah di cek!";
+            notif = "Sukses!, Kamu berhasil Review dan Verified!";
+          } else {
+            icon = "warning";
+            title = "Yakin ingin mereview ulang?!"
+            pesan = "Klik tombol OK jika ingin di cek ulang!";
+            notif = "Sukses!, Kamu membatalkan review dan veried!";
+          }
+      swal({
+        title: title,
+        text:  pesan,
+        icon: icon,
+        buttons: true
+      })
+      .then((willVerified) => {
+        if (willVerified) {
+          swal(notif, {
+            icon: "success",
+          });
+          Uverified(nilai, no_reg);
+        } else {
+          swal("Kamu Belum Review dan Verified!");
+        }
+      });
+    })
+
+    function Uverified(nilai, no_reg)
+    {
+      var nilai = nilai,
+        no_reg = no_reg,
+        url = 'sep/verified/petugas',
+        token = $('meta[name="csrf-token"]').attr('content'),
+        method = 'POST';
+        $.ajax({
+          url: url,
+          method: method,
+          data: { periksa: nilai, no_reg: no_reg, _token: token },
+          success: function(response) {
+              if (response.kode === 200) {
+                $('#mytable').DataTable().ajax.reload();
+              }
+          },
+          error: function(xhr) {
+            console.log(xhr);
+          }
+        })
+    }
+
+   
 
     $(document).on('click', '#viewer-eklaim', function(e) {
       // e.preventDefault();
@@ -149,6 +219,24 @@
                         'search' : search
                     }
                 },
+                "drawCallback": function() {
+                  $('input#ver-eklaim').iCheck({
+                    checkboxClass: 'icheckbox_square-green'
+                  });
+                },
+                'columnDefs': [
+                  {
+                      'checkboxes': {
+                        'selectRow': true,
+                        'selectCallback': function(nodes, selected){
+                            $('input#ver-ekalim', nodes).iCheck('update');
+                        },
+                        'selectAllCallback': function(nodes, selected, indeterminate){
+                            $('input#ver-eklaim', nodes).iCheck('update');
+                        }
+                      }
+                  }
+                ],
                 "columns": [
                     {"mData": "no"},
                     {"mData": "no_kartu"},
@@ -157,7 +245,7 @@
                     {"mData": "tgl_sep"},
                     {"mData": "sep"},
                     {"mData": "action"},
-                    // {"mData": "checked"},
+                    {"mData": "checked"},
                 ]
             });
             oTable = $('#mytable').DataTable();  

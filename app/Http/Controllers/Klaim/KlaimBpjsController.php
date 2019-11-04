@@ -39,16 +39,27 @@ class KlaimBpjsController extends Controller
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);
                 $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
-                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-success" id="viewer-eklaim">Show</button>';
+                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                             </button>';
+                if ($q->periksa == 0) {
+                    $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>
+                                     <input type="checkbox" id="ver-eklaim" disabled> ';
+                    
+                } else {
+                    $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">UnVerified</button>
+                                    <input type="checkbox" id="ver-eklaim" checked disabled>';
+                } 
                 // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
                     'no'          => $no++,
-                    'no_kartu'      => $q->no_kartu,
+                    'no_kartu'    => $q->no_kartu,
                     'no_rm'       => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
                     'tgl_sep'     => $tgl->format('d-m-Y'),
                     'sep'         => $q->no_sep,
                     'action'      => $btnAction,
+                    'checked'     => $btnVerified
                     // 'checked' => $btnCheck,
                 ];
             }
@@ -56,6 +67,21 @@ class KlaimBpjsController extends Controller
             // dd($result);
             return json_encode($result);
         } 
+    }
+
+    public function verified(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $editKlaim = $this->eklaim->cari($request);
+
+            if ($editKlaim) {
+                $result = $this->eklaim->update($request);
+            } else {
+                $result = ['kode' => 201, 'pesan' => 'Data yang di edit tidak di temukan'];
+            }
+        }
+        return response()->json($result);
     }
 
     public function getDestination($tanggal)

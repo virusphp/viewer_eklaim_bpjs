@@ -19,6 +19,18 @@ class ClaimSep
         return  $result;
     }
 
+    public function getKlaim($noSep)
+    {
+        $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
+        $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+        return $data;
+    }
+
+    public function getFile($tanggal)
+    {
+        return url("/") . '/storage/verifikasi/' . \tanggalPdf($tanggal) . "/";
+    }
+
     public function cari($no_reg)
     {
         $data = DB::table('sep_claim')->where('no_reg', $no_reg)->first();

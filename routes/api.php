@@ -18,7 +18,7 @@
  });
 
  Route::group(['middleware' => ['cors']], function() {
-    Route::get('eclaim', 'Api\ClaimSepController@index');
+    Route::get('eclaim/sep/{sep}', 'Api\ClaimSepController@index');
     Route::post('eclaim/create', 'Api\ClaimSepController@create');
     Route::put('eclaim/update/{no_reg}', 'Api\ClaimSepController@update');
     Route::delete('eclaim/delete/{no_reg}', 'Api\ClaimSepController@delete');

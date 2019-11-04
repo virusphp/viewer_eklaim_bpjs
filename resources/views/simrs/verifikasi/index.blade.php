@@ -177,8 +177,6 @@
         })
     }
 
-   
-
     $(document).on('click', '#viewer-eklaim', function(e) {
       // e.preventDefault();
       var viewer = $(this).val();

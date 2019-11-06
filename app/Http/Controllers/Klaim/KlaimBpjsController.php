@@ -12,6 +12,7 @@ use DB;
 Use DateTime;
 use PDF;
 use File;
+use Auth;
 
 class KlaimBpjsController extends Controller
 {
@@ -44,11 +45,10 @@ class KlaimBpjsController extends Controller
                              </button>';
                 if ($q->periksa == 0) {
                     $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>
-                                     <input type="checkbox" id="ver-eklaim" disabled> ';
-                    
+                                     <input type="checkbox" id="ver-eklaim" disabled>';
                 } else {
                     $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">UnVerified</button>
-                                    <input type="checkbox" id="ver-eklaim" checked disabled>';
+                                    <input type="checkbox" id="ver-eklaim" checked disabled> ';
                 } 
                 // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
@@ -59,7 +59,8 @@ class KlaimBpjsController extends Controller
                     'tgl_sep'     => $tgl->format('d-m-Y'),
                     'sep'         => $q->no_sep,
                     'action'      => $btnAction,
-                    'checked'     => $btnVerified
+                    'checked'     => $btnVerified,
+                    'user'        => $q->user_verified
                     // 'checked' => $btnCheck,
                 ];
             }

@@ -14,8 +14,8 @@
             <i class="nav-icon icon-pencil"></i> Viewer</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('sep.index') }}">
-                <i class="nav-icon icon-puzzle"></i> Viewer Klaim</a>
+              <a class="nav-link" href="{{ route('viewer.index') }}">
+                <i class="nav-icon icon-puzzle"></i>Penjamin</a>
             </li>
           </ul>
         </li>

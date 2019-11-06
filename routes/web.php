@@ -55,19 +55,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/bpjs/sep','BpjsController@getSep')->name('bpjs.sep'); 
         
         // VERIFIKASI OKE BEROH
-        Route::get('/sep','KlaimBpjsController@index')->name('sep.index');
-        Route::get('/sep/search','KlaimBpjsController@search')->name('sep.search');
-        Route::get('/sep/pembuatan','KlaimBpjsController@buatSep')->name('sep.buat');
-        Route::get('/sep/perubahan','KlaimBpjsController@editSep')->name('sep.ubah');
-        Route::post('/sep/insert','KlaimBpjsController@sepInsert')->name('sep.insert');
-        Route::get('/sep/edit','KlaimBpjsController@sepEdit')->name('sep.edit');
-        Route::get('/sepInap/edit','KlaimBpjsController@sepInapEdit')->name('sep.inap.edit');
-        Route::put('/sep/update','KlaimBpjsController@sepUpdate')->name('sep.update');
-        Route::post('/sep/simpansep','KlaimBpjsController@simpanSep')->name('sep.simpan');
-        Route::get('/sep/print/{sep}','KlaimBpjsController@printSep')->name('sep.print');
-        Route::get('/rujukan/print/{sep}','KlaimBpjsController@printRujukan')->name('rujukan.print');
-
-        Route::post('/sep/verified/petugas', 'KlaimBpjsController@verified')->name('sep.klaim');
+        Route::get('/viewer','KlaimBpjsController@index')->name('viewer.index');
+        Route::get('/viewer/search','KlaimBpjsController@search')->name('viewer.search');
+        Route::post('/viewer/verified/petugas', 'KlaimBpjsController@verified')->name('viewer.verified');
 
 
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');

@@ -39,22 +39,21 @@ class ClaimSep
 
     public function simpan($request)
     {
-        $data = $this->handleFile($request);
-        // dd(substr($data['no_reg'], 0, 2));
-        $simpan = DB::table('sep_claim')
-            ->insert([
-                'no_reg'        => $data['no_reg'],
-                'no_rm'         => $data['no_rm'],
-                'no_sep'        => $data['no_sep'],
-                'tgl_sep'       => $data['tgl_sep'],
-                'file_claim'    => $data['file_claim'],
-                'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-            ]);
-
-        if ($simpan) {
-            $message = ['kode' => 200, 'pesan' => 'Data berhasil di simpan!'];
+        $pasien = DB::table('pasien')->select('nama_pasien')->where('no_rm', $request->no_rm)->first();
+        if (!$pasien) {
+            $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
         } else {
-            $message = ['kode' => 500, 'pesan' => 'Ada kesalahan sistem'];
+            $data = $this->handleFile($request, $pasien->nama_pasien);
+            // dd(substr($data['no_reg'], 0, 2));
+            $simpan = DB::table('sep_claim')
+                ->insert([
+                    'no_reg'        => $data['no_reg'],
+                    'no_rm'         => $data['no_rm'],
+                    'no_sep'        => $data['no_sep'],
+                    'tgl_sep'       => $data['tgl_sep'],
+                    'file_claim'    => $data['file_claim'],
+                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+                ]);
         }
 
         return $message;
@@ -62,23 +61,29 @@ class ClaimSep
 
     public function update($request, $claimOld)
     {
-        $oldFile = $claimOld->file_claim;
-        // dd($claimOld->file_claim);
-        if ($oldFile !== $request->file_claim) {
-            $this->deleteFile($claimOld);
+        $pasien = DB::table('pasien')->select('nama_pasien')->where('no_rm', $request->no_rm)->first();
+        
+        if (!$pasien) {
+             $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
+        } else {
+            $oldFile = $claimOld->file_claim;
+            // dd($claimOld->file_claim);
+            if ($oldFile !== $request->file_claim) {
+                $this->deleteFile($claimOld);
+            }
+            
+            $data = $this->handleFile($request, $namaPasien);
+
+            $update = DB::table('sep_claim')
+                ->where('no_reg', $claimOld->no_reg)
+                ->update([
+                    'no_rm'         => $data['no_rm'],
+                    'no_sep'        => $data['no_sep'],
+                    'tgl_sep'       => $data['tgl_sep'],
+                    'file_claim'    => $data['file_claim'],
+                    'jns_pelayanan' => substr($data['no_reg'], 0, 2)
+                ]);
         }
-
-        $data = $this->handleFile($request);
-
-        $update = DB::table('sep_claim')
-            ->where('no_reg', $claimOld->no_reg)
-            ->update([
-                'no_rm'         => $data['no_rm'],
-                'no_sep'        => $data['no_sep'],
-                'tgl_sep'       => $data['tgl_sep'],
-                'file_claim'    => $data['file_claim'],
-                'jns_pelayanan' => substr($data['no_reg'], 0, 2)
-            ]);
 
         return $this->Message($update, "update");
     }
@@ -105,14 +110,14 @@ class ClaimSep
         return Storage::disk('public')->delete($path);
     }
 
-    public function handleFile($request)
+    public function handleFile($request, $namaPasien)
     {
         $data = $request->all();
 
         if ($request->hasFile('file_claim')) {
             $file =  $request->file('file_claim');
             $extensi = $file->getClientOriginalExtension();
-            $formatName = str_replace(' ', '_', $data['no_rm'] . ' ' . $data['no_sep'] . '.' . $extensi);
+            $formatName = str_replace(' ', '_', $data['no_sep'] . ' ' . $namaPasien .' '. $data['no_rm'] . '.' . $extensi);
             $pathFile = $this->getDestination($data['tgl_sep']) . $formatName;
             // dd($pathFile);
             $urlPath = $data['tgl_sep'] . '/' . $formatName;

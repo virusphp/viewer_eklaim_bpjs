@@ -7,7 +7,7 @@
     </li>
 
     <li class="breadcrumb-item">
-      <a href="{{ route('sep.index') }}">Viewer</a>
+      <a href="{{ route('viewer.index') }}">Viewer</a>
     </li>
     <li class="breadcrumb-item active">Index</li>
     <li class="breadcrumb-menu d-md-down-none">
@@ -16,12 +16,6 @@
 @endsection
 @section('content')
 <div class="col-md-12">
-    {{-- <div id="frame_sep_success" class="alert alert-success">
-        <!-- success message -->
-    </div>
-    <div id="frame_sep_error" class="alert alert-danger">
-        <!-- success message --> --}}
-    {{-- </div> --}}
   <div class="card">
       <div class="card-header">
         @include('layouts.search.search')
@@ -34,10 +28,12 @@
               <th>No Kartu</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tanggal SEP</th>
+              <th>Tgl SEP</th>
+              <th>Tgl Pulang</th>
               <th>Sep</th>
               <th>View</th>
               <th>Verifikasi</th>
+              <th>User</th>
             </tr>
           </thead>
           <tbody>
@@ -49,13 +45,11 @@
   </div>
 </div>
 
-{{-- @include('simrs.verifikasi.modals.partials.register_pasien') --}}
 @include('simrs.verifikasi.modals.modal_viewer')
 
 @endsection
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
 
 @endpush
 @push('scripts')
@@ -66,9 +60,8 @@
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
-@include('simrs.verifikasi.modals.ajax')
+{{-- @include('simrs.verifikasi.modals.ajax') --}}
 {{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
     $(function () {
@@ -87,40 +80,9 @@
     });
 
     $(document).ready(function () {
-        // getStart();
-        // r_getStart();
-        // resetSuccessSep();
         // r_resetSuccessReg();
         ajaxLoad();
         $('table .table').removeAttr('style');
-    });
-
-
-    $(document).ready(function () {
-        var grantAll = true;
-        $('.check-modules').each(function (i,v) {
-            var chkAll = true;
-            var chkMdl = $(this)
-            $(chkMdl).parents('tr').find('.check-access').each(function (i,v) {
-                if(!$(v).is(':checked')) {
-                    chkAll = false;
-                }
-            })
-
-            if (chkAll) {
-                chkMdl.prop('checked', 'checked');
-                chkMdl.iCheck('update');
-            }
-
-            if (!$(v).is(':checked')) {
-                grantAll = false;
-            }
-        })
-
-        if (grantAll) {
-            $('input.all').prop('checked', 'checked');
-            $('input.all').iCheck('update');
-        }
     });
     
     $(document).on('click', '#verifikasi-eklaim', function() {
@@ -159,7 +121,7 @@
     {
       var nilai = nilai,
         no_reg = no_reg,
-        url = 'sep/verified/petugas',
+        url = 'viewer/verified/petugas',
         token = $('meta[name="csrf-token"]').attr('content'),
         method = 'POST';
         $.ajax({
@@ -178,7 +140,6 @@
     }
 
     $(document).on('click', '#viewer-eklaim', function(e) {
-      // e.preventDefault();
       var viewer = $(this).val();
       $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
       options = {
@@ -209,7 +170,7 @@
                     "sLoadingRecords": '<img src="{{asset('ajax-loader.gif')}}"> Loading...'
                 },           
                 "ajax": {
-                    "url": "{{ route('sep.search')}}",
+                    "url": "viewer/search",
                     "type": "GET",
                     "data": {                   
                         'jns_rawat': jnsRawat,
@@ -237,13 +198,15 @@
                 ],
                 "columns": [
                     {"mData": "no"},
-                    {"mData": "no_kartu"},
+                    {"mData": "no_kartu", "width": "100"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_sep"},
-                    {"mData": "sep"},
+                    {"mData": "tgl_sep", "width": "100"},
+                    {"mData": "tgl_sep", "width": "100"},
+                    {"mData": "sep", "width": "80"},
                     {"mData": "action"},
-                    {"mData": "checked"},
+                    {"mData": "checked", "width": "130"},
+                    {"mData": "user", "width": "120"},
                 ]
             });
             oTable = $('#mytable').DataTable();  

@@ -2,6 +2,7 @@
 
 namespace App\Repository\Sep;
 use DB;
+use Auth;
 
 Class Eklaim
 {
@@ -10,7 +11,7 @@ Class Eklaim
         // $data  = DB::table('penjamin_pasien')->where('no_rm', "427466")->get();
         // DB::enableQueryLog();
         $data = DB::table('sep_claim as sc')
-            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa')
+            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified')
             ->join('pasien as p','sc.no_rm','=','p.no_rm')
             ->join('penjamin_pasien as pp', 'sc.no_rm', '=', 'pp.no_rm')
             ->where(function ($query) use ($request) {
@@ -54,9 +55,16 @@ Class Eklaim
 
     public function update($data)
     {
+        if ($data->periksa == 1) {
+            $user_verified = Auth::user()->nama_pegawai;
+        } else {
+            $user_verified = "-";
+        }
+
         $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
                     ->update([
-                        'periksa' => $data->periksa
+                        'periksa' => $data->periksa,
+                        'user_verified' =>  $user_verified
                     ]);
 
         return $this->Message($update, "update");

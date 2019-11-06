@@ -67,6 +67,11 @@ function formatTgl($nilai)
 	return date('Y-m-d', strtotime($nilai));
 }
 
+function typeRawat($nilai) 
+{
+	return substr($nilai, 0, 2);
+}
+
 function jenisRawat($nilai)
 {
 	// dd(($nilai == 1) ? "R Jalan" : (($nilai == 2) ? "R Inap" : "IGD"));

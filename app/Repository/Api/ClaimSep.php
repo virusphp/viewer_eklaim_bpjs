@@ -39,24 +39,26 @@ class ClaimSep
 
     public function simpan($request)
     {
+        // dd(typeRawat($request->no_reg));
         $pasien = DB::table('pasien')->select('nama_pasien')->where('no_rm', $request->no_rm)->first();
         if (!$pasien) {
             $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
         } else {
             $data = $this->handleFile($request, $pasien->nama_pasien);
-            // dd(substr($data['no_reg'], 0, 2));
+           
             $simpan = DB::table('sep_claim')
                 ->insert([
                     'no_reg'        => $data['no_reg'],
                     'no_rm'         => $data['no_rm'],
                     'no_sep'        => $data['no_sep'],
                     'tgl_sep'       => $data['tgl_sep'],
+                    'tgl_pulang'    => $data['tgl_pulang'],
                     'file_claim'    => $data['file_claim'],
                     'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-                ]);
+                ]); 
         }
 
-        return $message;
+        return $this->Message($simpan, "simpan");
     }
 
     public function update($request, $claimOld)
@@ -80,6 +82,7 @@ class ClaimSep
                     'no_rm'         => $data['no_rm'],
                     'no_sep'        => $data['no_sep'],
                     'tgl_sep'       => $data['tgl_sep'],
+                    'tgl_pulang'    => $data['tgl_pulang'],
                     'file_claim'    => $data['file_claim'],
                     'jns_pelayanan' => substr($data['no_reg'], 0, 2)
                 ]);

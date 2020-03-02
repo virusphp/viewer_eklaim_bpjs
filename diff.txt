@@ -1,0 +1,370 @@
+diff --git a/protected/components/Bpjs.php b/protected/components/Bpjs.php
+index 1012d0d67..4fe0bb8c2 100644
+--- a/protected/components/Bpjs.php
++++ b/protected/components/Bpjs.php
+@@ -314,17 +314,43 @@ class Bpjs
+         return $this->request($this->url.'/Rujukan/RS/List/Peserta/' . $noKartu);
+     }
+ 
++    public static function stringifyRecursive(&$array)
++    {
++        foreach ($array as $k => &$v) {
++            if (is_array($v)) {
++                self::stringifyRecursive($v);
++            } else {
++                $v = (string)$v;
++            }
++        }
++    }
++
+     // Endpint dan maping Pembuatan SEP new
+     public function create_sep($nokartu, $tglsep, $tglrujukan, $norujukan, $ppkrujukan, $ppkpelayanan, $jnspelayanan, $catatan, $diagawal, $politujuan, $klsrawat, $user, $nomr, $no_trans, $lakaLantas)
+     {
++
++        if (empty($ppkrujukan)) {
++            $bpjs = new self;
++            $json = json_decode($bpjs->search_kartu($nokartu), true);
++            $ppkrujukan = $json["response"]["peserta"]["provUmum"]["kdProvider"];
++        }
++
++        date_default_timezone_set("Asia/Jakarta");
++
++        $tglsep = strtotime($tglsep);
++        $nowUnix = time();
++        if ($tglsep > $nowUnix) {
++            $tglsep = $nowUnix;
++        }
++
+         $query = array(
+             'request' => array(
+                 't_sep' => array(
+                     'noKartu' => $nokartu,
+-                    'tglSep' => date("Y-m-d", strtotime($tglsep)),// $tglsep,
+-                    "ppkPelayanan" => $ppkpelayanan,
+-                    "jnsPelayanan" => $jnspelayanan,
+-                    "klsRawat" => $klsrawat,
++                    'tglSep' => date("Y-m-d", $tglsep),// $tglsep,
++                    "ppkPelayanan" => (string)$ppkpelayanan,
++                    "jnsPelayanan" => (string)$jnspelayanan,
++                    "klsRawat" => "3",//(string)$klsrawat,
+                     "noMR" => $nomr,
+                     "rujukan" => [
+                         "asalRujukan" =>  (defined("CONST_ASAL_RUJUKAN") ? (string)CONST_ASAL_RUJUKAN : '1'), //Isikan asal rujukan
+@@ -333,7 +359,7 @@ class Bpjs
+                         "ppkRujukan" => $ppkrujukan
+                     ],
+                     "catatan" => $catatan,
+-                    "diagAwal" => (empty($diagawal) ? "a01" : $diagawal),
++                    "diagAwal" => (empty($diagawal) ? "A03.0" : $diagawal),
+                     "poli" => [
+                         "tujuan" => $politujuan, //ISIKAN KODE POLIKLINIK contoh INT, PAR, GIG
+                         "eksekutif" => "0"  // isikan Esekutif jika ada
+@@ -347,16 +373,16 @@ class Bpjs
+                     "jaminan" => [
+                         "lakaLantas" => "0", // (string)$lakaLantas, // 0 tidak 1 jika iya
+                         "penjamin" => [
+-                            "penjamin" => "1", // 1=Jasa raharja PT, 2=BPJS Ketenagakerjaan, 3=TASPEN PT, 4=ASABRI PT} jika lebih dari 1 isi -> 1,2 (pakai delimiter koma
++                            "penjamin" => "0", // 1=Jasa raharja PT, 2=BPJS Ketenagakerjaan, 3=TASPEN PT, 4=ASABRI PT} jika lebih dari 1 isi -> 1,2 (pakai delimiter koma
+                             "tglKejadian" => "2019-01-01", // sikan tanggal kejadian kecelakaan
+-                            "keterangan" => "kll", // iisikan keterangan kll
++                            "keterangan" => "0", // iisikan keterangan kll
+                             "suplesi" => [
+                                 "suplesi" => "0", //0 tidak 1 ya
+-                                "noSepSuplesi" => "000000", //Noo.SEP yang Jika Terdapat Suplesi,
++                                "noSepSuplesi" => "0", //Noo.SEP yang Jika Terdapat Suplesi,
+                                 "lokasiLaka" => [
+-                                    "kdPropinsi" => "0000",
+-                                    "kdKabupaten" => "0000",
+-                                    "kdKecamatan" => "0000"
++                                    "kdPropinsi" => "0",
++                                    "kdKabupaten" => "0",
++                                    "kdKecamatan" => "0"
+                                 ]
+                             ]
+                         ]
+@@ -366,25 +392,12 @@ class Bpjs
+                         "kodeDPJP" => "000000" // Kd DPJP pemberi surat kontrol
+                     ],
+                     "noTelp" => "082220801333",
+-                    "user" => "Nama Rumah Sakit"
++                    "user" => "abepura"
+                 ),
+             ),
+         );
+ 
+-        file_put_contents("/tmp/query_debug.txt", json_encode($query, 128));
+-        file_put_contents("/tmp/param_debug.txt", json_encode(compact('nokartu', 'tglsep', 'tglrujukan', 'norujukan', 'ppkrujukan', 'ppkpelayanan', 'jnspelayanan', 'catatan', 'diagawal', 'politujuan', 'klsrawat', 'user', 'nomr', 'no_trans', 'lakaLantas'), 128));
+-
+-        $stringifyRecursive = function (&$array) use (&$stringifyRecursive) {
+-            foreach ($array as $k => &$v) {
+-                if (is_array($v)) {
+-                    $stringifyRecursive($v);
+-                } else {
+-                    $v = (string)$v;
+-                }
+-            }
+-        };
+-
+-        $stringifyRecursive($query);
++        self::stringifyRecursive($query);
+ 
+         // var_dump($query);
+         
+@@ -394,12 +407,19 @@ class Bpjs
+ 
+         // print json_encode($rujukan, 128);
+ 
+-        $query["request"]["t_sep"]["rujukan"]["asalRujukan"] = $res["asalFaskes"];
+-        $query["request"]["t_sep"]["rujukan"]["tglRujukan"] = $res["rujukan"]["tglKunjungan"];
+-        $query["request"]["t_sep"]["rujukan"]["noRujukan"] = $norujukan;
+-        $query["request"]["t_sep"]["rujukan"]["ppkRujukan"] = $res["rujukan"]["provPerujuk"]["kode"];
+-        $query["request"]["t_sep"]["diagAwal"] = $res["rujukan"]["diagnosa"]["kode"];
+-        $query["request"]["t_sep"]["poli"]["tujuan"] = $res["rujukan"]["poliRujukan"]["kode"];
++        if (
++            (!empty($res["asalFaskes"])) && (!empty($res["rujukan"]["tglKunjungan"])) &&
++            (!empty($norujukan)) && (!empty($res["rujukan"]["provPerujuk"]["kode"])) &&
++            (!empty($res["rujukan"]["diagnosa"]["kode"])) &&
++            (!empty($res["rujukan"]["poliRujukan"]["kode"]))
++        ) {
++            $query["request"]["t_sep"]["rujukan"]["asalRujukan"] = $res["asalFaskes"];
++            $query["request"]["t_sep"]["rujukan"]["tglRujukan"] = $res["rujukan"]["tglKunjungan"];
++            $query["request"]["t_sep"]["rujukan"]["noRujukan"] = $norujukan;
++            $query["request"]["t_sep"]["rujukan"]["ppkRujukan"] = $res["rujukan"]["provPerujuk"]["kode"];
++            $query["request"]["t_sep"]["diagAwal"] = $res["rujukan"]["diagnosa"]["kode"];
++            $query["request"]["t_sep"]["poli"]["tujuan"] = $res["rujukan"]["poliRujukan"]["kode"];
++        }
+         // var_dump($final_result);die;
+ 
+         // var_dump($query);
+@@ -407,15 +427,24 @@ class Bpjs
+ 
+         $completeUrl = $this->url.'/SEP/1.1/insert';
+ 
+-        $result = $this->request($completeUrl, 'POST', json_encode($query), 'Application/x‐www‐form‐urlencoded');
++        file_put_contents("/tmp/query_debug.txt", json_encode($query, 128));
++        file_put_contents("/tmp/param_debug.txt", json_encode(compact('nokartu', 'tglsep', 'tglrujukan', 'norujukan', 'ppkrujukan', 'ppkpelayanan', 'jnspelayanan', 'catatan', 'diagawal', 'politujuan', 'klsrawat', 'user', 'nomr', 'no_trans', 'lakaLantas'), 128));
++        $result = $this->request($completeUrl, 'POST', json_encode($query), "Application/x‐www‐form‐urlencoded");
+         // var_dump($result);
+         // echo($result); die;
++        // header("Content-Type: application/json");
++        // print $result;
++        // exit;
+         $result = json_decode($result, true);
+         // var_dump($result); die;
+ 
+         $final_result['response'] = $result['response'];
+         $final_result['metadata'] = $result['metaData'];
+-        $final_result['response']['ppk'] = $res["rujukan"]["provPerujuk"]["kode"];
++        if (empty($res["rujukan"]["provPerujuk"]["kode"])) {
++            $final_result['response']['ppk'] = "2601R002";
++        } else {
++            $final_result['response']['ppk'] = $res["rujukan"]["provPerujuk"]["kode"];
++        }
+ 
+         $this->mapping_trans($result['response'], $no_trans, $ppkpelayanan);
+         return json_encode($final_result);
+diff --git a/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatDaruratController.php b/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatDaruratController.php
+index e46a36c5b..f7f1abc3f 100755
+--- a/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatDaruratController.php
++++ b/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatDaruratController.php
+@@ -157,8 +157,9 @@ class PendaftaranRawatDaruratController extends PendaftaranRawatJalanController
+                 }
+                 if ($_POST['PPPendaftaranT']['is_bpjs']) {
+                     $model = $this->simpanPendaftaran($model, $modPasien, $modRujukanBpjs, $modPenanggungJawab, $_POST['PPPendaftaranT'], $_POST['PPPasienM'], $modAsuransiPasienBpjs);
+-                    define("CONST_ASAL_RUJUKAN", 2);
++                    define("CONST_ASAL_RUJUKAN", 1);
+                     $modRujukanBpjs->no_rujukan = $_POST["nomor_rujukan"];
++                    $_POST["PPSepT"]['ppkrujukan'] = 0;
+                     $modSep = $this->simpanSep($model, $modPasien, $modRujukanBpjs, $modAsuransiPasienBpjs, $_POST['PPSepT']);
+                     $model->sep_id = $modSep->sep_id;
+                     $model->update();
+diff --git a/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatJalanController.php b/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatJalanController.php
+index 90ec90ac0..118d41a62 100644
+--- a/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatJalanController.php
++++ b/protected/modules/pendaftaranPenjadwalan/controllers/PendaftaranRawatJalanController.php
+@@ -1007,8 +1007,8 @@ class PendaftaranRawatJalanController extends MyAuthController
+ 
+             $reqSep = json_decode($bpjs->create_sep($modSep->nokartuasuransi, $modSep->tglsep, $modSep->tglrujukan, $modSep->norujukan, $modSep->ppkrujukan, $modSep->ppkpelayanan, $modSep->jnspelayanan, $modSep->catatansep, $modSep->diagnosaawal, $modSep->politujuan, $modSep->klsrawat, Yii::app()->user->id, $modPasien->no_rekam_medik, $model->pendaftaran_id, $lakalantas), true);
+ 
+-            var_dump("test", $reqSep);
+-            die;
++            // var_dump("test", $reqSep);
++            // die;
+ 
+             // var_dump($reqSep);
+ 
+@@ -2188,7 +2188,14 @@ class PendaftaranRawatJalanController extends MyAuthController
+             $rujukan = $bpjs->search_rujukan_no_rujukan($modSep->norujukan);
+             $rujukan = json_decode($rujukan, true);
+             $res = $rujukan["response"];
+-            $asalFaskes = "(".$res["rujukan"]["provPerujuk"]["kode"].") ".$res["rujukan"]["provPerujuk"]["nama"];
++            if (isset($res["rujukan"]["provPerujuk"]["kode"]) && isset($res["rujukan"]["provPerujuk"]["nama"])) {
++                $asalFaskes = "(".$res["rujukan"]["provPerujuk"]["kode"].") ".$res["rujukan"]["provPerujuk"]["nama"];
++            } else {
++                $json = json_decode($bpjs->search_kartu($modSep->nokartuasuransi), true);
++                $asalFaskes = "(".$json["response"]["peserta"]["provUmum"]["kdProvider"].") ".$json["response"]["peserta"]["provUmum"]["nmProvider"];
++                // "(".$json["response"]["peserta"]["jenisPeserta"]["kode"].") ".
++                $jenisPeserta = $json["response"]["peserta"]["jenisPeserta"]["keterangan"];
++            }
+         } else {
+             $asalFaskes = "-";
+         }
+@@ -2205,6 +2212,7 @@ class PendaftaranRawatJalanController extends MyAuthController
+                                 'modPasien'=>$modPasien,
+                                 'modJenisPeserta'=>$modJenisPeserta,
+                                 'modRujukan'=>$modRujukan,
++                                'jenisPeserta'=>$jenisPeserta
+             ));
+     }
+         
+diff --git a/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatDarurat/index.php b/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatDarurat/index.php
+index 8f98c3168..852677fec 100755
+--- a/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatDarurat/index.php
++++ b/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatDarurat/index.php
+@@ -163,17 +163,17 @@
+                             echo CHtml::link(Yii::t('mds', '{icon} Print SEP', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('rel'=>'tooltip','title'=>'Fitur Bridging tidak aktif!','class'=>'btn btn-info','onclick'=>"return false",'disabled'=>true, 'style'=>'cursor:not-allowed;'));
+                         }
+                     } else {
+-                        echo CHtml::link(Yii::t('mds', '{icon} Print SEP', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('rel'=>'tooltip','title'=>'Fitur Bridging tidak aktif!','class'=>'btn btn-info','onclick'=>"return false",'disabled'=>true, 'style'=>'cursor:not-allowed;'));
+-                        echo CHtml::link(Yii::t('mds', '{icon} Print Karcis', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printKarcis();return false",'disabled'=>false  )).'&nbsp;';
+-                        echo CHtml::link(Yii::t('mds', '{icon} Print Status Pasien', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printStatusRD();return false",'disabled'=>false  )).'&nbsp;';
+-                        echo CHtml::link(Yii::t('mds', '{icon} Print Kartu Pasien', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printKartuPasien();return false",'disabled'=>false  )).'&nbsp;';
+                         if (Yii::app()->user->getState('isbridging')) {
+                             if (isset($modSep->sep_id)) {
+                                 echo CHtml::link(Yii::t('mds', '{icon} Print SEP', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printSEP();return false",'disabled'=>false  ));
+                             } else {
+                                 echo CHtml::link(Yii::t('mds', '{icon} Print SEP', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('rel'=>'tooltip','title'=>'Belum memiliki No. SEP!','class'=>'btn btn-info','onclick'=>"return false",'disabled'=>true, 'style'=>'cursor:not-allowed;'));
+                             }
++                            echo '&nbsp;';
+                         }
++                        echo CHtml::link(Yii::t('mds', '{icon} Print Karcis', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printKarcis();return false",'disabled'=>false  )).'&nbsp;';
++                        echo CHtml::link(Yii::t('mds', '{icon} Print Status Pasien', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printStatusRD();return false",'disabled'=>false  )).'&nbsp;';
++                        echo CHtml::link(Yii::t('mds', '{icon} Print Kartu Pasien', array('{icon}'=>'<i class="icon-print icon-white"></i>')), 'javascript:void(0);', array('class'=>'btn btn-info','onclick'=>"printKartuPasien();return false",'disabled'=>false  )).'&nbsp;';
+                     }
+                 ?>
+ 
+diff --git a/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatJalan/printSep.php b/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatJalan/printSep.php
+index 46e1ee894..4620210c0 100755
+--- a/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatJalan/printSep.php
++++ b/protected/modules/pendaftaranPenjadwalan/views/pendaftaranRawatJalan/printSep.php
+@@ -27,7 +27,7 @@
+     <thead>
+         <th width = "25%" style = "padding-left:20px;"><img src="<?php echo Yii::app()->getBaseUrl('webroot').'/images/BPJS.jpg'; ?>" width="200px"></th>
+         <th align='center' style="font-weight:bold;padding-right:200px;"><font style="font-size:17px;"><?php echo $judul_print; ?><br><?php echo 'RSUD-C ABEPURA'//$data->nama_rumahsakit;?></font></th>        
+-       <!-- <th  style = "padding:0px;"><!--<img src="<?php //echo Params::urlProfilRSDirectory().$data->logo_rumahsakit?>" width="120px"></th>-->
++       <!-- <th  style = "padding:0px;"><img src="<?php //echo Params::urlProfilRSDirectory().$data->logo_rumahsakit?>" width="120px"></th>-->
+     </thead>
+     <tbody>
+         <td colspan = "4">
+@@ -48,7 +48,11 @@
+                     <td>&nbsp;</td>
+                     <td>Peserta</td>
+                     <td>:</td>
+-                    <td><?php echo isset($modJenisPeserta->jenispeserta_nama)?$modJenisPeserta->jenispeserta_nama:'-';?></td>                    
++                    <td><?php 
++    echo isset($modJenisPeserta->jenispeserta_nama)?$modJenisPeserta->jenispeserta_nama:
++    (!empty($jenisPeserta) ? $jenisPeserta :'-');
++
++?></td>                    
+                 </tr>
+                 <tr>
+                     <td class = "header">No. Kartu</td>
+@@ -101,10 +105,7 @@
+                 <tr>
+                     <td class = "header">Asal Faskes Tk. I</td>
+                     <td>:</td>
+-                    <td style = "padding-left:20px;"><?php
+-echo empty($modRujukan) ? (
+-                        isset($asalFaskes) ? $asalFaskes : "-"
+-):$modRujukan->rujukandari->namaperujuk; ?></td>
++                    <td style = "padding-left:20px;"><?php echo empty($modRujukan) ? (isset($asalFaskes) ? $asalFaskes : "-"): $modRujukan->rujukandari->namaperujuk; ?></td>
+                     <td>&nbsp;</td>
+                     <td style = "padding-left:20px" rowspan="2">Pasien/<br>Keluarga Pasien</td>
+                     <td style = "padding-left:20px">&nbsp;</td>
+diff --git a/test.php b/test.php
+new file mode 100644
+index 000000000..954f00499
+--- /dev/null
++++ b/test.php
+@@ -0,0 +1,80 @@
++<?php
++
++ini_set('memory_limit', '-1');
++// error_reporting(0); //UNTUK PRODUKSI
++error_reporting(E_ALL | E_STRICT); //UNTUK DEVELOPMENT
++
++// // change the following paths if necessary
++// $yii=dirname(__FILE__).'/yii1_10/framework/yiilite.php'; //UNTUK PRODUKSI
++// // $yii=dirname(__FILE__).'/yii1_10/framework/yii.php'; //UNTUK DEVELOPMENT
++
++// $config=dirname(__FILE__).'/protected/config/main.php';
++
++// require_once($yii);
++
++// Yii::createWebApplication($config)->run();
++
++require __DIR__."/protected/components/Bpjs.php";
++
++$bpjs = new Bpjs;
++// $json = json_decode($bpjs->search_kartu("0002071429694"), true);
++// print $json["response"]["peserta"]["provUmum"]["kdProvider"];
++
++$json = '{
++    "request": {
++        "t_sep": {
++            "noKartu": "0000154271766",
++            "tglSep": "2019-10-18",
++            "ppkPelayanan": "2601R002",
++            "jnsPelayanan": "2",
++            "klsRawat": "3",
++            "noMR": "419919",
++            "rujukan": {
++                "asalRujukan": "2",
++                "tglRujukan": "2019-10-18",
++                "noRujukan": "333111",
++                "ppkRujukan": "2601R002"
++            },
++            "catatan": "123123123123",
++            "diagAwal": "A03.0",
++            "poli": {
++                "tujuan": "IGD",
++                "eksekutif": "0"
++            },
++            "cob": {
++                "cob": "0"
++            },
++            "katarak": {
++                "katarak": "0"
++            },
++            "jaminan": {
++                "lakaLantas": "0",
++                "penjamin": {
++                    "penjamin": "0",
++                    "tglKejadian": "2019-01-01",
++                    "keterangan": "0",
++                    "suplesi": {
++                        "suplesi": "0",
++                        "noSepSuplesi": "0",
++                        "lokasiLaka": {
++                            "kdPropinsi": "0",
++                            "kdKabupaten": "0",
++                            "kdKecamatan": "0"
++                        }
++                    }
++                }
++            },
++            "skdp": {
++                "noSurat": "000000",
++                "kodeDPJP": "000000"
++            },
++            "noTelp": "082220801333",
++            "user": "abepura"
++        }
++    }
++}';
++
++$x = $bpjs->request($bpjs->url.'/SEP/1.1/insert', 'POST', $json, "Application/x‐www‐form‐urlencoded");
++// $x = $bpjs->delete_sep("2601R0021019V000001");
++
++var_dump($x);
+\ No newline at end of file

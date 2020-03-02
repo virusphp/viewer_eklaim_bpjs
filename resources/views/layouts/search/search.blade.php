@@ -15,13 +15,12 @@
             </div>
         </div>
     </div>
-    <!-- Cara Bayar -->
-    <div class="col-md-3 col-offset-3">
     
-    </div>
+    {{-- tanggal sep --}}
     <div class="col-md-3 col-offset-3">
         <div class="form-group">
-            <div class="input-group date {{ $errors->has('tgl') ? 'has-error' : '' }}" id="datetimepicker" >
+            <div class="input-group date {{ $errors->has('tgl_sep') ? 'has-error' : '' }}" id="datetimepicker_sep" >
+            <label for="tgl_sep_filter" class="foram-check-label">Tgl Sep </label>
                 <div class="input-group-append">
                     <span class="input-group-text input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -39,6 +38,30 @@
             </div>
         </div>
     </div>
+
+    <!-- tanggal pulang -->
+    <div class="col-md-3 col-offset-3">
+        <div class="form-group">
+            <div class="input-group date {{ $errors->has('tgl_plg') ? 'has-error' : '' }}" id="datetimepicker_plg" >
+            <label for="tgl_plg_filter" class="foram-check-label">Tgl Plg </label>
+                <div class="input-group-append">
+                    <span class="input-group-text input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>                        
+                <input class="form-control" id="tgl_plg_filter" 
+                        value="{{ date('d-m-Y') }}" 
+                        placeholder="Tanggal Kwitansi" name="tgl_plg"
+                        type="text"/>
+                <div class="input-group-append">                    
+                    <button type="submit" class="btn btn-primary" onclick="ajaxLoad()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-3 col-offset-3">
         <div class="controls">
             <div class="input-group">

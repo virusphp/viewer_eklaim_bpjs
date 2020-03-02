@@ -55,6 +55,8 @@ class ClaimSep
                     'tgl_pulang'    => $data['tgl_pulang'],
                     'file_claim'    => $data['file_claim'],
                     'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+                    'tgl_created'    => date('Y-m-d'),
+                    'user_created'   => $data['user_id']
                 ]); 
         }
 
@@ -74,7 +76,7 @@ class ClaimSep
                 $this->deleteFile($claimOld);
             }
             
-            $data = $this->handleFile($request, $namaPasien);
+            $data = $this->handleFile($request, $pasien->nama_pasien);
 
             $update = DB::table('sep_claim')
                 ->where('no_reg', $claimOld->no_reg)
@@ -84,7 +86,9 @@ class ClaimSep
                     'tgl_sep'       => $data['tgl_sep'],
                     'tgl_pulang'    => $data['tgl_pulang'],
                     'file_claim'    => $data['file_claim'],
-                    'jns_pelayanan' => substr($data['no_reg'], 0, 2)
+                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+                    'tgl_updated'   => date('Y-m-d'),
+                    'user_updated'  => $data['user_id']
                 ]);
         }
 

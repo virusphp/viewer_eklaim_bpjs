@@ -28,7 +28,7 @@ class CreateRequest extends FormRequest
             'no_rm'      => 'required',
             'no_sep'     => 'required',
             'tgl_sep'    => 'required',
-            'tgl_pulang' => 'required',
+            // 'tgl_pulang' => 'required',
             'file_claim' => 'required|dokumen'
         ];
 
@@ -42,7 +42,7 @@ class CreateRequest extends FormRequest
             'no_rm.required' => 'No RM harus di isi!',
             'no_sep.required' => 'No SEP Harus di isi!',
             'tgl_sep.required' => 'Tanggal SEP harus di isi!!',
-            'tgl_pulang.required' => 'Tanggal Pulang harus di isi!!',
+            // 'tgl_pulang.required' => 'Tanggal Pulang harus di isi!!',
             // 'file_claim.required' => 'File Claim tidak boleh kosong!',
             'file_claim.dokumen' => 'File tidak sesuai dengan aturan format (PDF,pdf)!'
 		];

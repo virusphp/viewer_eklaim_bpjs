@@ -65,13 +65,13 @@
 {{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker').datetimepicker({
+        $('#datetimepicker_sep').datetimepicker({
+            format: 'D-M-Y'
+        });
+        $('#datetimepicker_plg').datetimepicker({
             format: 'D-M-Y'
         });
         $('#dtgl_kejadian').datetimepicker({
-            format: 'D-M-Y'
-        });
-        $('#tglRujukan').datetimepicker({
             format: 'D-M-Y'
         });
         $('#dtglPulang').datetimepicker({
@@ -152,6 +152,7 @@
     function ajaxLoad(){
             var jnsRawat = $("input[name=jns_rawat]:checked").val();
             var tglSep = $("#tgl_sep_filter").val();
+            var tglPlg = $("#tgl_plg_filter").val();
             var search = $("#search").val();
             // $.fn.dataTable.ext.errMode = 'throw';
             $('#mytable').dataTable({
@@ -202,7 +203,7 @@
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
                     {"mData": "tgl_sep", "width": "100"},
-                    {"mData": "tgl_sep", "width": "100"},
+                    {"mData": "tgl_plg", "width": "100"},
                     {"mData": "sep", "width": "80"},
                     {"mData": "action"},
                     {"mData": "checked", "width": "130"},

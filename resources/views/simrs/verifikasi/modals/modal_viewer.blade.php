@@ -14,8 +14,8 @@
       </div>
       <div class="modal-body">
       
-        <div class="row">
-            <embed id="id-viewer" src="{{ asset('guide/guide_simrs_mini.pdf') }}#toolbar=1&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="500" />
+        <div class="row" id="viewer">
+            <embed id="id-viewer" src="{{ asset('guide/guide_simrs_mini.pdf') }}#toolbar=1&navpanes=0&scrollbar=0" type="application/pdf" width="1020" height="500" />
         </div>
        
       </div>

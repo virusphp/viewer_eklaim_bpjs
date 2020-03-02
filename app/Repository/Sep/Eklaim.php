@@ -11,7 +11,7 @@ Class Eklaim
         // $data  = DB::table('penjamin_pasien')->where('no_rm', "427466")->get();
         // DB::enableQueryLog();
         $data = DB::table('sep_claim as sc')
-            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep', 'sc.tgl_pulang', 'sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified')
+            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep', 'sc.tgl_pulang', 'sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified', 'sc.user_created')
             ->join('pasien as p','sc.no_rm','=','p.no_rm')
             ->join('penjamin_pasien as pp', 'sc.no_rm', '=', 'pp.no_rm')
             ->where(function ($query) use ($request) {

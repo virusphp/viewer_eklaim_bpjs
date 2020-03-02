@@ -149,6 +149,11 @@
       $('#modal-viewer').modal(options);
     });
 
+    $('#modal-viewer').on('hidden.bs.modal', function(){
+        $('#id-viewer').remove();
+        $('#viewer').append('<embed id="id-viewer" src=""#toolbar=1&navpanes=0&scrollbar=0" type="application/pdf" width="1020" height="500">');
+    });
+
     function ajaxLoad(){
             var jnsRawat = $("input[name=jns_rawat]:checked").val();
             var tglSep = $("#tgl_sep_filter").val();

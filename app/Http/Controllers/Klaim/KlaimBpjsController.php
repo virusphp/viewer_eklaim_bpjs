@@ -34,6 +34,8 @@ class KlaimBpjsController extends Controller
     {
         if ($request->ajax()) {
             $no = 1;
+            $user = Auth::user()->role;
+            $userUpload = Auth::user()->kd_pegawai;
             $data = $this->eklaim->getView($request);
             // dd($request->all());
             // dd($data);
@@ -43,13 +45,19 @@ class KlaimBpjsController extends Controller
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
                                 <i class="icon-eye"></i>
                              </button>';
-                if ($q->periksa == 0) {
+                if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
                     $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>
                                      <input type="checkbox" id="ver-eklaim" disabled>';
-                } else {
+                } else if ($q->periksa == 0 && ($user == "operator")) {
+                    $btnVerified = '<button type="button" class="btn btn-sm btn-primary" disabled>Verified</button>
+                                     <input type="checkbox" id="ver-eklaim" disabled>';
+                } else if ($q->periksa ==1 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created)){
                     $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">UnVerified</button>
                                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
-                } 
+                } else {
+                    $btnVerified = '<button type="button" class="btn btn-sm btn-success" disabled>UnVerified</button>
+                    <input type="checkbox" id="ver-eklaim" checked disabled> ';
+                }
                 // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
                     'no'          => $no++,

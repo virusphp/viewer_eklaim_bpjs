@@ -41,7 +41,9 @@ Class Eklaim
                         ['sc.no_sep', 'LIKE', $keywords]
                     ]);
                 }
-            })->get();
+            })
+            ->distinct()
+            ->get();
             // dd(DB::getQueryLog());
 
         return $data;

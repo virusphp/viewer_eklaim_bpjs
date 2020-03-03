@@ -132,8 +132,6 @@ class ClaimSep
         $delete = DB::table('sep_claim')->where('no_reg', $request->no_reg)->delete();
 
         return $this->message($delete, "delete");
-
-        // return $message;
     }
 
     public function deleteFile($data)

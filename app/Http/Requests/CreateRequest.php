@@ -24,7 +24,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
        return [
-            'no_reg'     => 'required|unique:sep_claim,no_reg',
+            'no_reg'     => 'required|min:12,max:13',
             'no_rm'      => 'required',
             'no_sep'     => 'required',
             'tgl_sep'    => 'required',
@@ -38,7 +38,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'no_reg.required' => 'No Reg harus di isi!',
-            'no_reg.unique' => 'No Reg sudah ada mohon (untuk mengubah silahkan edit)!',
+            // 'no_reg.unique' => 'No Reg sudah ada mohon (untuk mengubah silahkan edit)!',
             'no_rm.required' => 'No RM harus di isi!',
             'no_sep.required' => 'No SEP Harus di isi!',
             'tgl_sep.required' => 'Tanggal SEP harus di isi!!',

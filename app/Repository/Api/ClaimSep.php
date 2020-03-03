@@ -39,13 +39,35 @@ class ClaimSep
 
     public function simpan($request)
     {
-        // dd(typeRawat($request->no_reg));
-        $pasien = DB::table('pasien')->select('nama_pasien')->where('no_rm', $request->no_rm)->first();
+        $unique = DB::table('sep_claim')->select('no_reg')->where('no_reg', $request->no_reg)->first();
+
+        if ($unique) {
+            if ($unique->no_reg === $request->no_reg) {
+                $message = ['kode' => 422, 'pesan' => 'No Registrasi sudah ada mohon edit untuk mengubah'];
+            } else {
+              $message = $this->handleSimpan($request); 
+            }
+        } else {
+            $message = $this->handleSimpan($request); 
+        }
+        
+        return $message;
+    }
+
+    private function cekPasien($noRm)
+    {
+        return DB::table('pasien')->select('nama_pasien')->where('no_rm', $noRm)->first();
+    }
+
+    private function handleSimpan($request) 
+    {
+        $pasien = $this->cekPasien($request->no_rm);
+
         if (!$pasien) {
             $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
         } else {
             $data = $this->handleFile($request, $pasien->nama_pasien);
-           
+        
             $simpan = DB::table('sep_claim')
                 ->insert([
                     'no_reg'        => $data['no_reg'],
@@ -57,10 +79,13 @@ class ClaimSep
                     'jns_pelayanan' => substr($data['no_reg'], 0, 2),
                     'tgl_created'   => date('Y-m-d'),
                     'user_created'  => $data['user_id']
-                ]); 
-        }
+                ]);
 
-        return $this->Message($simpan, "simpan");
+            if ($simpan) {
+                 $message = $this->Message($simpan, "simpan");
+            }
+        }
+        return $message;
     }
 
     public function update($request, $claimOld)
@@ -70,8 +95,9 @@ class ClaimSep
         if (!$pasien) {
              $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
         } else {
+
             $oldFile = $claimOld->file_claim;
-            // dd($claimOld->file_claim);
+
             if ($oldFile !== $request->file_claim) {
                 $this->deleteFile($claimOld);
             }

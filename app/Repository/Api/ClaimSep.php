@@ -22,7 +22,12 @@ class ClaimSep
     public function getKlaim($noSep)
     {
         $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
-        $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+        if ($data) {
+            $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+        } else {
+            $data = ['kode' => 404, 'pesan' => 'No Sep yang di cari tidak ada!!!'];
+        }
+
         return $data;
     }
 
@@ -53,6 +58,7 @@ class ClaimSep
         
         return $message;
     }
+
 
     private function cekPasien($noRm)
     {

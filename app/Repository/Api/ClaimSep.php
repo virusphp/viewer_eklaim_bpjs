@@ -24,11 +24,15 @@ class ClaimSep
         $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
         if ($data) {
             $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+            $meta = ["kode" => 200, "pesan" => "Sukses"];
+            $response = $this->remap($meta, $data);
         } else {
-            $data = ['kode' => 404, 'pesan' => 'No Sep yang di cari tidak ada!!!'];
+            $meta = ["kode" => 201, "pesan" => "Data tidak ditemukan!!!"];
+            $response = $this->remap($meta, null);
         }
 
-        return $data;
+        // dd($response);
+        return $response;
     }
 
     public function getFile($tanggal)
@@ -58,7 +62,6 @@ class ClaimSep
         
         return $message;
     }
-
 
     private function cekPasien($noRm)
     {
@@ -143,7 +146,7 @@ class ClaimSep
     public function deleteFile($data)
     {
         $path = $this->getDestination($data->tgl_sep) .  $data->file_claim;
-        // dd($path);
+        
         return Storage::disk('public')->delete($path);
     }
 
@@ -156,7 +159,7 @@ class ClaimSep
             $extensi = $file->getClientOriginalExtension();
             $formatName = str_replace(' ', '_', $data['no_sep'] . ' ' . $namaPasien .' '. $data['no_rm'] . '.' . $extensi);
             $pathFile = $this->getDestination($data['tgl_sep']) . $formatName;
-            // dd($pathFile);
+
             $urlPath = $data['tgl_sep'] . '/' . $formatName;
 
             Storage::disk('public')->put($pathFile, File::get($file));
@@ -183,4 +186,13 @@ class ClaimSep
 
         return $message;
     }
+
+    private function remap($status, $data)
+    {
+        $res['metaData'] = $status;
+        $res['response'] = $data;
+
+        return $res;
+    }
+
 }

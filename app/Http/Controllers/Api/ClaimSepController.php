@@ -20,6 +20,7 @@ class ClaimSepController extends Controller
     public function index($noSep)
     {
         $request = $this->claimSep->getKlaim($noSep);
+        
         return response()->json($request);
         // return response()->json($this->claimSep->getAll());
     }

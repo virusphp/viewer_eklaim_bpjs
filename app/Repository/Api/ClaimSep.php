@@ -19,6 +19,20 @@ class ClaimSep
         return  $result;
     }
 
+    public function getChartKlaim($request)
+    {
+        $data = DB::table('sep_claim')->select('jns_pelayanan')
+                    ->orderBy('jns_pelayanan')
+                    ->get()  
+                    ->groupBy(function($pelayanan) {
+                        return $pelayanan->jns_pelayanan == "01" ? "Rawat Jalan" : $pelayanan->jns_pelayanan == "02" ? "Rawat Inap" : "Rawat Darurat";
+                    })
+                    ->map(function($item) {
+                        return count($item);
+                    });
+        return $data;
+    }
+
     public function getKlaim($noSep)
     {
         $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
@@ -31,7 +45,6 @@ class ClaimSep
             $response = $this->remap($meta, null);
         }
 
-        // dd($response);
         return $response;
     }
 

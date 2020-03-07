@@ -21,7 +21,7 @@ Route::post('logout','AuthController@logout')->name('logout');
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 {
     Route::get('/home', 'HomeController@index')->name('home');
-
+    Route::get('verifikasi/chart/eklaim', 'HomeController@chartAjax')->name('chart.eklaim');
     // Group Route Master
     Route::group(['namespace' => 'Klaim'], function() {
         // autocompleted
@@ -58,7 +58,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/viewer','KlaimBpjsController@index')->name('viewer.index');
         Route::get('/viewer/search','KlaimBpjsController@search')->name('viewer.search');
         Route::post('/viewer/verified/petugas', 'KlaimBpjsController@verified')->name('viewer.verified');
-
 
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
         Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');

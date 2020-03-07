@@ -2,6 +2,7 @@
 
 namespace App\Repository\Api;
 
+use Carbon\Carbon;
 use DB;
 use File;
 use Illuminate\Support\Facades\Storage;
@@ -21,11 +22,17 @@ class ClaimSep
 
     public function getChartKlaim($request)
     {
-        $data = DB::table('sep_claim')->select('jns_pelayanan')
-                    ->orderBy('jns_pelayanan')
-                    ->get()  
-                    ->groupBy(function($pelayanan) {
-                        return $pelayanan->jns_pelayanan == "01" ? "Rawat Jalan" : $pelayanan->jns_pelayanan == "02" ? "Rawat Inap" : "Rawat Darurat";
+        // dd($request->all());
+        $data = DB::table('sep_claim')->select('jns_pelayanan','tgl_sep')
+                    ->where(function($query) use ($request){
+                        $year = $request->has('tahun') ? $request->tahun : date('Y');
+                        $query->orWhere('jns_pelayanan', $request->pelayanan);
+                        $query->whereYear('tgl_sep', $year);
+                    })
+                    ->orderBy('tgl_sep')
+                    ->get()
+                    ->groupBy(function($date) {
+                        return Carbon::parse($date->tgl_sep)->format('M');
                     })
                     ->map(function($item) {
                         return count($item);

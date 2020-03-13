@@ -10,50 +10,78 @@
 @endsection
 
 @section('content')
-  <div class="card text-center">
-    <div class="card-header">
-      Pengumuman
-    </div>
-    <div class="card-body">
-      RSUD Kraton adalah Rumah sakit umum daerah Kabupaten Pekalongan
-      ini adalah layanan Sistem Informasi Rumah Sakit minipack yang di desain
-      dengan minimum service serta modul modul yang terintegrasi secara langsung
-    </div>
+  <div class="card card-accent-info align-items-center">
+    <div>Informasi Klaim RSUD Kraton Pekalongan</div>
   </div>
 
-  <div class="col-md-12">
-    <div class="card text-center">
-      <div class="card-header">Chart</div>
-      <div class="card-body">
-        <div class="row justify-content-center">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>Pilih Tahun :</label>
-              <select class="sel form-control" name="tahun">
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>Pilih Jenis Pasien :</label>
-              <select id="pelayanan" class="form-control" name="tahun">
-                <option value="01">Rawat Jalan</option>
-                <option value="02">Rawat Inap</option>
-                <option value="03">Rawat Darurat</option>
-              </select>
-            </div>
-          </div>
-        <div class="col-sm-12 col-md-8 col-lg-8">
-          {!! $chart->container() !!}
+  <div class="row">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-hijau card-accent-info align-items-center">
+        <div class="card-body pb-0">
+          <div class="text-value"> {{ $rajal }} Verifikasi</div>
+          <div class="text-value">Rawat Jalan</div>
         </div>
       </div>
+    </div>
+      
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-kuning card-accent-info align-items-center">
+        <div class="card-body pb-0">
+          <div class="text-value"> {{ $ranap }} Verifikasi</div>
+          <div class="text-value">Rawat Inap</div>
+        </div>
       </div>
     </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-merah-muda card-accent-info align-items-center">
+        <div class="card-body pb-0">
+          <div class="text-value"> {{ $radar }} Verifikasi</div>
+          <div class="text-value">Rawat Darurat</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-choco card-accent-info align-items-center">
+        <div class="card-body pb-0">
+          <div class="text-value"> {{ $rajal + $ranap + $radar }} Verifikasi</div>
+          <div class="text-value">Semua Perawatanan</div>
+        </div>
+      </div>
+    </div>
+  </div>  {{-- Row --}}
+
+  <div class="card text-center">
+    <div class="card-header">Chart</div>
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Pilih Tahun :</label>
+            <select class="sel form-control" name="tahun">
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Pilih Jenis Pasien :</label>
+            <select id="pelayanan" class="form-control" name="tahun">
+              <option value="01">Rawat Jalan</option>
+              <option value="02">Rawat Inap</option>
+              <option value="03">Rawat Darurat</option>
+            </select>
+          </div>
+        </div>
+      <div class="col-sm-12 col-md-8 col-lg-8">
+        {!! $chart->container() !!}
+      </div>
+    </div>
+    </div>
   </div>
- 
 
 
 @endsection

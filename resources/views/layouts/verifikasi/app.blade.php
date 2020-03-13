@@ -17,8 +17,8 @@
     <link href="{{ asset('core-ui/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('core-ui/css/simple-line-icons.css') }}" rel="stylesheet">
     <!-- Main styles for this application-->
-    <link href="{{ asset('icheck/skins/all.css') }}?v=1.0.2" rel="stylesheet">
-    {{-- <link href="{{ asset('icheck/css/custom.css') }}?v=1.0.2" rel="stylesheet"> --}}
+    <link href="{{ asset('icheck/skins/all.css') }}?v=1.0.3" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}?v=1.0.3" rel="stylesheet">
     <link href="{{ asset('core-ui/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bg.css') }}" rel="stylesheet">
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
@@ -36,11 +36,12 @@
         {{-- @include('layouts.simrs.partials.breadcrumb') --}}
         @yield('breadcrumb')
 
-        <div class="container">
-          <div class="row">
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+          {{-- <div class="row"> --}}
               @yield('content')
+            </div>
           </div>
-        </div>
       </main>
     </div>
     @include('layouts.verifikasi.partials.footer')

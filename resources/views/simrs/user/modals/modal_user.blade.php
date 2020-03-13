@@ -45,6 +45,7 @@
                             <select id="role" name="role" class="form-control form-control-sm">
                                     <option value="">-- Pilih --</option> 
                                     <option value="admin">Admin</option> 
+                                    <option value="bpjs">Bpjs</option> 
                                     <option value="operator">Operator</option> 
                             </select>
                         </div>

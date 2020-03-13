@@ -57,16 +57,18 @@ Class Eklaim
 
     public function update($data)
     {
+        $now = date('Y-m-d');
         if ($data->periksa == 1) {
             $user_verified = Auth::user()->nama_pegawai;
         } else {
-            $user_verified = "-";
+            $user_verified = Auth::user()->nama_pegawai;;
         }
 
         $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
                     ->update([
                         'periksa' => $data->periksa,
-                        'user_verified' =>  $user_verified
+                        'user_verified' =>  $user_verified,
+                        'tgl_verified' => $now
                     ]);
 
         return $this->Message($update, "update");

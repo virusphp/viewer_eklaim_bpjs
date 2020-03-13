@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\User\User;
 use App\Charts\EklaimChart;
 use App\Repository\Api\ClaimSep;
+use Ramsey\Uuid\Generator\RandomLibAdapter;
 
 class HomeController extends Controller
 {
@@ -24,8 +25,18 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $rajal = count($this->getPerawatan(1));
+        $ranap = count($this->getPerawatan(2));
+        $radar = count($this->getPerawatan(3));
+        // dd($radar, $ranap, $radar);
         $chart = $this->chart();
-        return view('home',compact('chart'));
+        return view('home',compact('chart', 'rajal', 'ranap', 'radar'));
+    }
+
+    protected function getPerawatan($jnsRawat)
+    {
+        $dataPasien = $this->claimSep->getStatus($jnsRawat);
+        return $dataPasien;
     }
 
     public function chartAjax(Request $request)

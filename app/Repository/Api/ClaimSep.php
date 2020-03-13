@@ -66,6 +66,20 @@ class ClaimSep
         return $data;
     }
 
+    public function getStatus($jnsRawat)
+    {
+        $date = date('m');
+        // dd($date);
+        return DB::table('SEP_CLAIM')
+            ->whereMonth('tgl_sep', '=', $date)
+            ->whereRaw('LEN(no_sep) > 15')
+            ->where([
+                ['jns_pelayanan', '=', $jnsRawat],
+                ['periksa', '=', 1],
+            ])   
+            ->get();
+    }
+
     public function simpan($request)
     {
         $unique = DB::table('sep_claim')->select('no_reg')->where('no_reg', $request->no_reg)->first();

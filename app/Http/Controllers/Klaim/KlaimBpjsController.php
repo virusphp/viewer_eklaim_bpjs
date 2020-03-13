@@ -142,7 +142,6 @@ class KlaimBpjsController extends Controller
         $dataSep->antrian = $data->antrian;
         $dataSep->asalFaskes = $peserta->response->peserta->provUmum->nmProvider;
         // $dataSep->asalFaskes = $data->nama_faskes;
-        // dd($dataSep);
         // $genPdf = PDF::loadView('pdf.invoiceSep', array('data' => $dataSep));
         // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
         return view('pdf.invoiceSep', compact('dataSep', 'informasi'));

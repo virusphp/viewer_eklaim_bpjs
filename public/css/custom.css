@@ -187,7 +187,7 @@ a.btn i.tengah {
 }
 
 .app-body .main {
-    background-color: #2ab388;
+    background-color: #b0bdb9;
     font-weight: 500;
 }
 
@@ -211,4 +211,33 @@ a.btn i.tengah {
     max-width: 150px;
     max-height: 200px;
     height: auto;
+}
+
+.bg-hijau {
+    background-color: #19a55e;
+}
+
+.bg-kuning {
+    background-color: #e6da4b;
+}
+
+.bg-merah-muda {
+    background-color: #e612af;
+}
+
+.bg-choco {
+   background-color:  #5c5f63;
+}
+
+.text-value {
+    padding: 1.2rem;
+}
+
+#mytable tr > *:nth-child(7) {
+    display: none;
+}
+
+.merah {
+    background-color: crimson;
+    color: whitesmoke;
 }

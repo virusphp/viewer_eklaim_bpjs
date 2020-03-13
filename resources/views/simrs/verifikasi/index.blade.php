@@ -15,7 +15,6 @@
 </ol>
 @endsection
 @section('content')
-<div class="col-md-12">
   <div class="card">
       <div class="card-header">
         @include('layouts.search.search')
@@ -43,7 +42,6 @@
        
       </div>
   </div>
-</div>
 
 @include('simrs.verifikasi.modals.modal_viewer')
 

@@ -11,45 +11,78 @@
 
 @section('content')
   <div class="card card-accent-info align-items-center">
-    <div>Informasi Klaim RSUD Kraton Pekalongan</div>
+    <div>
+      <p class="header-info">
+        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ date('m') }} Tahun {{ date('Y') }}
+      </p> 
+    </div>
   </div>
 
   <div class="row">
     <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-hijau card-accent-info align-items-center">
+      <div class="card text-white bg-hijau">
         <div class="card-body pb-0">
-          <div class="text-value"> {{ $rajal }} Verifikasi</div>
-          <div class="text-value">Rawat Jalan</div>
+          <div class="text-box">
+            <h3>{{ $rajal }}</h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-stethoscope"></i>
+          </div>
         </div>
-      </div>
-    </div>
-      
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-kuning card-accent-info align-items-center">
-        <div class="card-body pb-0">
-          <div class="text-value"> {{ $ranap }} Verifikasi</div>
-          <div class="text-value">Rawat Inap</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-merah-muda card-accent-info align-items-center">
-        <div class="card-body pb-0">
-          <div class="text-value"> {{ $radar }} Verifikasi</div>
-          <div class="text-value">Rawat Darurat</div>
+        <div class="text-box-footer">
+           <p>Verifikasi Rawat Jalan</p>
         </div>
       </div>
     </div>
 
     <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-choco card-accent-info align-items-center">
+      <div class="card text-white bg-kuning">
         <div class="card-body pb-0">
-          <div class="text-value"> {{ $rajal + $ranap + $radar }} Verifikasi</div>
-          <div class="text-value">Semua Perawatanan</div>
+          <div class="text-box">
+            <h3>{{ $ranap }}</h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-bed"></i>
+          </div>
         </div>
+        <div class="text-box-footer">
+          <p>Verifikasi Rawat Inap</p>
+       </div>
       </div>
     </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-merah-muda">
+        <div class="card-body pb-0">
+          <div class="text-box">
+            <h3>{{ $radar }}</h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-ambulance"></i>
+          </div>
+        </div>
+        <div class="text-box-footer">
+          <p>Verifikasi Rawat Darurat</p>
+       </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-choco">
+        <div class="card-body pb-0">
+          <div class="text-box">
+            <h3>{{ $rajal + $ranap + $radar }}</h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-building"></i>
+          </div>
+        </div>
+        <div class="text-box-footer">
+          <p>Semua Perawatan</p>
+       </div>
+      </div>
+    </div>
+
   </div>  {{-- Row --}}
 
   <div class="card text-center">

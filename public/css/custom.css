@@ -229,8 +229,22 @@ a.btn i.tengah {
    background-color:  #5c5f63;
 }
 
-.text-value {
-    padding: 1.2rem;
+.text-box {
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    /* margin-left: -10px; */
+    margin-top: 10px;
+    padding: 10px;
+    margin-right: 100px;
+    /* position: absolute; */
+    top: 5px;
+    left: 10px;
+}
+
+.text-box h3 {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
 }
 
 #mytable tr > *:nth-child(7) {
@@ -240,4 +254,33 @@ a.btn i.tengah {
 .merah {
     background-color: crimson;
     color: whitesmoke;
+}
+
+.header-info {
+    font-size: 20px;
+    font-style: bold;
+}
+
+.icon {
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    /* transition: all .3s linear; */
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    z-index: 0;
+    font-size: 90px;
+    color: rgba(0,0,0,0.15);
+}
+
+.text-box-footer {
+    padding: 0;
+    display: block;
+    z-index: 10;
+    background: rgba(0,0,0,0.1);
+}
+
+.text-box-footer p{
+    margin-bottom: 0;
+    text-align: center;
 }

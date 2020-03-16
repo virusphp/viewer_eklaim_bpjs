@@ -11,9 +11,9 @@
 
 @section('content')
   <div class="card card-accent-info align-items-center">
-    <div>
-      <p class="header-info">
-        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ date('m') }} Tahun {{ date('Y') }}
+    <div class="header-info">
+      <p>
+        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ date('F') }} Tahun {{ date('Y') }}
       </p> 
     </div>
   </div>

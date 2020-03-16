@@ -256,9 +256,10 @@ a.btn i.tengah {
     color: whitesmoke;
 }
 
-.header-info {
+.header-info p{
+    margin-bottom: 0;
     font-size: 20px;
-    font-style: bold;
+    font-weight: 800;
 }
 
 .icon {

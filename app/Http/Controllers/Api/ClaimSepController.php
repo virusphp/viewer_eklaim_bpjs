@@ -36,9 +36,11 @@ class ClaimSepController extends Controller
         // dd($request->all());
         $editClaim = $this->claimSep->cari($noReg);
         // dd($editClaim);
-        if ($editClaim) {
-            // dd($editClaim, $request->all());
+        if ($editClaim->periksa == 0) {
+            // dd($editClaim->periksa, $request->all());
             $editedClaim = $this->claimSep->update($request, $editClaim);
+        } else if($editClaim->periksa == 1) {
+            $editedClaim = ['kode' => 403, 'pesan' => 'Data yang di edit Sudah di verifikasi'];
         } else {
             $editedClaim = ['kode' => 500, 'pesan' => 'Data yang di edit tidak di temukan'];
         }

@@ -13,7 +13,7 @@
   <div class="card card-accent-info align-items-center">
     <div class="header-info">
       <p>
-        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ date('F') }} Tahun {{ date('Y') }}
+        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ bulan(date('Y-m-d')) }} Tahun {{ date('Y') }}
       </p> 
     </div>
   </div>

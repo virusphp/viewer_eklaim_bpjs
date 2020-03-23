@@ -25,11 +25,11 @@
             <tr>
               <th>No</th>
               <th>No Kartu</th>
+              <th>No Sep</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tgl SEP</th>
+              {{-- <th>Tgl SEP</th> --}}
               <th>Tgl Pulang</th>
-              <th>Sep</th>
               <th>View</th>
               <th>Verifikasi</th>
               <th>User</th>
@@ -202,15 +202,15 @@
                 ],
                 "columns": [
                     {"mData": "no"},
-                    {"mData": "no_kartu", "width": "100"},
+                    {"mData": "no_kartu"},
+                    {"mData": "sep", "width": "50"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_sep", "width": "100"},
-                    {"mData": "tgl_plg", "width": "100"},
-                    {"mData": "sep", "width": "80"},
+                    // {"mData": "tgl_sep"},
+                    {"mData": "tgl_plg"},
                     {"mData": "action"},
-                    {"mData": "checked", "width": "130"},
-                    {"mData": "user", "width": "120"},
+                    {"mData": "checked"},
+                    {"mData": "user"},
                 ]
             });
             oTable = $('#mytable').DataTable();  

@@ -20,16 +20,16 @@
         @include('layouts.search.search')
       </div>
       <div class="card-body">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover" id="mytable">
+        <table class="table table-sm table-responsive-sm table-bordered table-striped table-hover" id="mytable">
           <thead>
             <tr>
-              <th>No</th>
+              <th width="20">No</th>
               <th>No Kartu</th>
               <th>No Sep</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              {{-- <th>Tgl SEP</th> --}}
               <th>Tgl Pulang</th>
+              <th>Tgl Sep</th>
               <th>View</th>
               <th>Verifikasi</th>
               <th>User</th>
@@ -203,12 +203,12 @@
                 "columns": [
                     {"mData": "no"},
                     {"mData": "no_kartu"},
-                    {"mData": "sep", "width": "50"},
+                    {"mData": "sep", "width": "25"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    // {"mData": "tgl_sep"},
                     {"mData": "tgl_plg"},
-                    {"mData": "action"},
+                    {"mData": "tgl_sep"},
+                    {"mData": "aksi"},
                     {"mData": "checked"},
                     {"mData": "user"},
                 ]
@@ -216,7 +216,7 @@
             oTable = $('#mytable').DataTable();  
             $('#searchInput').keyup(function(){
                 oTable.search($(this).val()).draw() ;
-                $('.table').removeAttr('style');
+                // $('.table').removeAttr('style');
             }); 
         }   
 </script>

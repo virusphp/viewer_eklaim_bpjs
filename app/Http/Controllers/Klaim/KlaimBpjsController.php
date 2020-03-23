@@ -42,9 +42,7 @@ class KlaimBpjsController extends Controller
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);
                 $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
-                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
-                                <i class="icon-eye"></i>
-                             </button>';
+                
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
                     $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>
                                      <input type="checkbox" id="ver-eklaim" disabled>';
@@ -58,16 +56,20 @@ class KlaimBpjsController extends Controller
                     $btnVerified = '<button type="button" class="btn btn-sm btn-success" disabled>UnVerified</button>
                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
                 }
+                    // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
+                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                               <i class="icon-eye"></i>
+                             </button>';
                 // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
                     'no'          => $no++,
                     'no_kartu'    => $q->no_kartu,
+                    'sep'         => $q->no_sep,
                     'no_rm'       => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
-                    'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                     'tgl_plg'     => date('d-m-Y', strtotime($q->tgl_pulang)),
-                    'sep'         => $q->no_sep,
-                    'action'      => $btnAction,
+                    'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
+                    'aksi'        => $btnAction,
                     'checked'     => $btnVerified,
                     'user'        => $q->user_verified
                     // 'checked' => $btnCheck,

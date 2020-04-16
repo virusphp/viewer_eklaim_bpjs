@@ -1,6 +1,6 @@
 <script>
 $(function () {
-            var checkAll = $('input.all');
+            var checkAll = $('input#check-all');
             var checkboxes = $('input.check-modules');
 
             $('input').iCheck({
@@ -10,6 +10,7 @@ $(function () {
             });
 
             checkAll.on('ifChecked ifUnchecked', function (event) {
+                console.log(event.type);
                 if (event.type == 'ifChecked') {
                     checkboxes.iCheck('check');
                 } else {
@@ -18,6 +19,7 @@ $(function () {
             });
 
             checkboxes.on('ifChanged', function (event) {
+                console.log("TIDAK BISA MODULES");
                 if (checkboxes.filter(':checked').length == checkboxes.length) {
                     checkAll.prop('checked', 'checked');
                 } else {
@@ -25,9 +27,10 @@ $(function () {
             }
             
             checkAll.iCheck('update');
-        });
+            });
 
         checkboxes.on('ifChecked ifUnchecked', function (event) {
+            console.log("TIDAK BISA MODULES");
             var checkAccess = $(this).parents('tr').find('.check-access');
             if (event.type == 'ifChecked') {
                 checkAccess.iCheck('check');
@@ -38,7 +41,8 @@ $(function () {
 
         $('.check-access').on('ifChanged', function () {
             var checkAccess = $(this).parents('tr').find('.check-access');
-            var checkModule = $(this).parents('tr').find('.check-modules');
+            // var checkModule = $(this).parents('tr').find('.check-modules');
+            console.log(checkAccess);
 
             if (checkAccess.filter(':checked').length == checkAccess.length) {
                 checkModule.prop('checked', 'checked');

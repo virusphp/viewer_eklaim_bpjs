@@ -60,8 +60,9 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
     <!-- <script type="text/javascript" src="{{ asset('core-ui/js/bootstrap.min.js') }}"></script> -->
     <script type="text/javascript" src="{{ asset('core-ui/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('icheck/icheck.js') }}?v=1.0.2"></script>
+    {{-- <script src="{{ asset('icheck/icheck.js') }}?v=1.0.2"></script> --}}
     <script src="{{ asset('icheck/icheck.min.js') }}?v=1.0.2"></script>
+    {{-- <script src="{{ asset('js/icheck.min.js') }}"></script> --}}
     @stack('scripts')
     <script type="text/javascript">
         $(document).ready(function() {

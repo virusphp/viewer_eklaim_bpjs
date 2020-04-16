@@ -57,11 +57,13 @@ class KlaimBpjsController extends Controller
                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
                 }
                     // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
+                $checkbox = '<td><input type="checkbox" value="1" name="checkModule[]" class="check-access" id="check-access"> </td>';
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
                                <i class="icon-eye"></i>
                              </button>';
                 // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
+                    'list_check'  => $checkbox,
                     'no'          => $no++,
                     'no_kartu'    => $q->no_kartu,
                     'sep'         => $q->no_sep,

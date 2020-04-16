@@ -20,10 +20,11 @@
         @include('layouts.search.search')
       </div>
       <div class="card-body">
+        <form action="#" id="form-checked">
         <table class="table table-sm table-responsive-sm table-bordered table-striped table-hover" id="mytable">
           <thead>
             <tr>
-              <th width="20">No</th>
+              <th class="check-all" width="20"><input type="checkbox"> All</th>
               <th>No Kartu</th>
               <th>No Sep</th>
               <th>No RM</th>
@@ -31,7 +32,7 @@
               <th>Tgl Pulang</th>
               <th>Tgl Sep</th>
               <th>View</th>
-              <th>Verifikasi</th>
+              <th><button id="verif-all" type="submit" class="btn btn-sm btn-outline-primary">Verif All</button></th>
               <th>User</th>
             </tr>
           </thead>
@@ -39,7 +40,7 @@
            
           </tbody>
         </table>
-       
+        </form>
       </div>
   </div>
 
@@ -53,12 +54,14 @@
 @push('scripts')
 
 <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('datatables/js/dataTables.select.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
 {{-- @include('simrs.verifikasi.modals.ajax') --}}
 {{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
@@ -82,6 +85,11 @@
         ajaxLoad();
         $('table .table').removeAttr('style');
     });
+
+    $('#form-checked').on('submit', function() {
+      var form = this;
+      console.log(form);
+    })
     
     $(document).on('click', '#verifikasi-eklaim', function() {
       var nilai = $(this).val(),
@@ -158,7 +166,7 @@
             var tglPlg = $("#tgl_plg_filter").val();
             var search = $("#search").val();
             // $.fn.dataTable.ext.errMode = 'throw';
-            $('#mytable').dataTable({
+           var tabel = $('#mytable').DataTable({
                 "Processing": true,
                 "responsive": true,
                 "ServerSide": true,
@@ -183,25 +191,42 @@
                     }
                 },
                 "drawCallback": function() {
-                  $('input#ver-eklaim').iCheck({
-                    checkboxClass: 'icheckbox_square-green'
-                  });
+                  // $('input#ver-eklaim').iCheck({
+                  //   checkboxClass: 'icheckbox_square-green'
+                  // });
+                  // $('input.check-access').iCheck({
+                  //   checkboxClass: 'icheckbox_square-yellow'
+                  // });
+                  // $('input.all').iCheck({
+                  //   checkboxClass: 'icheckbox_square-blue'
+                  // });
+                  $('input[type="checkbox"]').iCheck({
+                    checkboxClass : 'icheckbox_square-blue'
+                  })
                 },
                 'columnDefs': [
                   {
-                      'checkboxes': {
+                    'targets': 0,
+                    'checkboxes': {
                         'selectRow': true,
                         'selectCallback': function(nodes, selected){
+                            $('input[type="checkbox"]', nodes).iCheck('update');
                             $('input#ver-ekalim', nodes).iCheck('update');
+                            
+                            // $('input.check-modules', nodes).iCheck('update');
                         },
                         'selectAllCallback': function(nodes, selected, indeterminate){
+                            $('input[type="checkbox"]', nodes).iCheck('update');
                             $('input#ver-eklaim', nodes).iCheck('update');
+                            // $('input.check-modules', nodes).iCheck('update');
                         }
                       }
                   }
                 ],
+                'select': 'multi',
+                "order" : [[1, "asc"]],
                 "columns": [
-                    {"mData": "no"},
+                    {"mData": "list_check"},
                     {"mData": "no_kartu"},
                     {"mData": "sep", "width": "25"},
                     {"mData": "no_rm"},
@@ -213,11 +238,26 @@
                     {"mData": "user"},
                 ]
             });
-            oTable = $('#mytable').DataTable();  
+
             $('#searchInput').keyup(function(){
-                oTable.search($(this).val()).draw() ;
+                table.search($(this).val()).draw() ;
                 // $('.table').removeAttr('style');
             }); 
+
+            $(tabel.table().container()).on('ifChanged ifUnchecked', '.check-all input[type="checkbox"]', function(event) {
+              // console.log(event.type);
+              var cell = tabel.cells().nodes('td');
+              var checkboxes =  $(cell).find('input.check-access');
+              if (event.type == 'ifChanged') {
+                checkboxes.iCheck('check');
+              } else {
+                checkboxes.iCheck('uncheck');
+              }
+              // console.log(event);
+            });
+         
+           
         }   
 </script>
+{{-- @include('simrs.verifikasi.script') --}}
 @endpush

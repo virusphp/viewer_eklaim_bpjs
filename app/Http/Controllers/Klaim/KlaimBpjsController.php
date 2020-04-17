@@ -57,7 +57,7 @@ class KlaimBpjsController extends Controller
                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
                 }
                     // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
-                $checkbox = '<td><input type="checkbox" value="1" name="checkModule[]" class="check-access" id="check-access"> </td>';
+                $checkbox = '<td><input data-reg="'.$q->no_reg.'" type="checkbox" value="1" name="checkModule[]" class="check-access" id="check-access"> </td>';
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
                                <i class="icon-eye"></i>
                              </button>';
@@ -96,6 +96,30 @@ class KlaimBpjsController extends Controller
             }
         }
         return response()->json($result);
+    }
+
+    public function verifiedall(Request $request)
+    {
+        if ($request->ajax()) {
+            $nilai = $request->periksa;
+            $data = $request->data;
+            
+            foreach($data as $key => $val) {
+               $editKlaim = $this->eklaim->cari($val);
+                
+               if ($editKlaim) {
+                $result = $this->eklaim->updateAll($nilai, $val);
+               }
+            }
+
+            if ($result) {
+                $response = $this->eklaim->Message($result, "update");
+            } else {
+                $response = ['kode' => 201, 'pesan' => 'Data yang di edit tidak di temukan'];
+            }
+        }
+
+        return response()->json($response);
     }
 
     public function getDestination($tanggal)

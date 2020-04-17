@@ -20,7 +20,7 @@
         @include('layouts.search.search')
       </div>
       <div class="card-body">
-        <form action="#" id="form-checked">
+        <form action="#" id="form-checked" method="POST">
         <table class="table table-sm table-responsive-sm table-bordered table-striped table-hover" id="mytable">
           <thead>
             <tr>
@@ -32,7 +32,7 @@
               <th>Tgl Pulang</th>
               <th>Tgl Sep</th>
               <th>View</th>
-              <th><button id="verif-all" type="submit" class="btn btn-sm btn-outline-primary">Verif All</button></th>
+              <th><button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button></th>
               <th>User</th>
             </tr>
           </thead>
@@ -86,10 +86,53 @@
         $('table .table').removeAttr('style');
     });
 
-    $('#form-checked').on('submit', function() {
-      var form = this;
-      console.log(form);
-    })
+
+    // Verifikasi semua yang di checklist
+
+    $('#verif-all').on('click', function() {
+      var form = $("#form-checked");
+      var checked = form.find('input#check-access[name="checkModule[]"]:checked'),
+          nilai = checked.val();
+
+      var noReg = [];
+      checked.each(function(index) {
+        noReg[index] = $(this).data('reg');
+      })
+      // console.log(checked);
+
+      if (nilai == 1) {
+        icon = "success";
+        title = "Yakin Sudah di cek?!"
+        pesan = "Jumlah Verified ada "+ checked.length + " sudah di cek!";
+        notif = "Sukses!, Kamu berhasil Review dan Verified!";
+      } else {
+        icon = "warning";
+        title = "Yakin ingin mereview ulang?!"
+        pesan = "Klik tombol OK jika ingin di cek ulang!";
+        notif = "Sukses!, Kamu membatalkan review dan veried!";
+      }
+      swal({
+        title: title,
+        text:  pesan,
+        icon: icon,
+        buttons: true
+      })
+      .then((willVerified) => {
+        if (willVerified) {
+          swal(notif, {
+            icon: "success",
+          });
+          // checked.each(function(index) {
+            UnverifiedAll(nilai, noReg);
+          // }) 
+        } else {
+          swal("Kamu Belum Review dan Verified!");
+        }
+        // ajaxLoad()
+      });
+
+     })
+
     
     $(document).on('click', '#verifikasi-eklaim', function() {
       var nilai = $(this).val(),
@@ -122,6 +165,27 @@
         }
       });
     })
+
+    function UnverifiedAll(nilai, NoReg) {
+      var url = 'viewer/verified/all/petugas', 
+          token = $('meta[name="csrf-token"]').attr('content'),
+          method = 'POST';
+
+        $.ajax({
+          url: url,
+          method: method,
+          data: { periksa: nilai, data: NoReg, _token: token },
+          success: function(response) {
+            if (response.kode === 200) {
+                $('#mytable').DataTable().ajax.reload();
+              } 
+          },
+          error: function(xhr) {
+            console.log(xhr);
+          }
+        })
+
+    }
 
     function Uverified(nilai, no_reg)
     {

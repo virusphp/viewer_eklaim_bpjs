@@ -74,6 +74,25 @@ Class Eklaim
         return $this->Message($update, "update");
     }
 
+    public function updateAll($periksa, $noReg)
+    {
+        $now = date('Y-m-d');
+        if ($periksa == 1) {
+            $user_verified = Auth::user()->nama_pegawai;
+        } else {
+            $user_verified = Auth::user()->nama_pegawai;;
+        }
+
+        $update = DB::table('sep_claim')->where('no_reg', $noReg)
+                    ->update([
+                        'periksa' => $periksa,
+                        'user_verified' =>  $user_verified,
+                        'tgl_verified' => $now
+                    ]);
+
+        return $this->Message($update, "update");
+    }
+
     public function Message($data, $pesan)
     {
         if ($data) {

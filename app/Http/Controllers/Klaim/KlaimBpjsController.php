@@ -13,6 +13,7 @@ Use DateTime;
 use PDF;
 use File;
 use Auth;
+use Chumper\Zipper\Zipper;
 
 class KlaimBpjsController extends Controller
 {
@@ -87,7 +88,7 @@ class KlaimBpjsController extends Controller
     {
         if ($request->ajax())
         {
-            $editKlaim = $this->eklaim->cari($request);
+            $editKlaim = $this->eklaim->cari($request->no_reg);
 
             if ($editKlaim) {
                 $result = $this->eklaim->update($request);
@@ -122,6 +123,31 @@ class KlaimBpjsController extends Controller
         return response()->json($response);
     }
 
+    public function download(Request $request)
+    { 
+        // dd($request->all());
+        $file = $this->getDestination($request->tgl_awal);
+        $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
+        $files = [];
+        foreach($dates as $val) {
+            $file = $this->getDestination($val);
+            $datas = glob($file. '*');
+          
+            foreach ($datas as $key => $val) {
+                array_push($files, $val);
+            //   dd($val);
+            }
+        }
+        // dd($files);
+        $headers = array(
+            'Content-Type' => 'application/zip',
+        );
+        $fileName = tanggalPdf($request->tgl_awal)."_".tanggalPdf($request->tgl_akhir).'.zip';
+        $zip = new Zipper();
+        $zip->make('download/'.$fileName)->add($files)->close();;
+        return response()->download(public_path('download/'.$fileName),$fileName, $headers)->deleteFileAfterSend();
+    }
+
     public function getDestination($tanggal)
     {
         return 'storage/verifikasi/'.tanggalPdf($tanggal).'/';
@@ -135,7 +161,7 @@ class KlaimBpjsController extends Controller
         $data->alamat = $dataPasien->alamat.' Kel.'.$dataPasien->nama_kelurahan.' Kec.'.$dataPasien->nama_kecamatan.' Kab.'.$dataPasien->nama_kabupaten.' Prov.'.$dataPasien->nama_propinsi;
         if (noReg($dataPasien->no_reg) == "02") {
             $data->nama_poli = "-";
-            $data->antrian =  "-";
+            $data->antrian   = "-";
         } else if (noReg($dataPasien->no_reg) == "03") {
             $data->nama_poli = "INSTALASI GAWAT DARURAT";
             $data->antrian =  "-";

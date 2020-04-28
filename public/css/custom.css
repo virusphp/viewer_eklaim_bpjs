@@ -285,3 +285,17 @@ a.btn i.tengah {
     margin-bottom: 0;
     text-align: center;
 }
+
+/* Custom TD padding */
+.table-sm th, .table-sm td{
+    padding: 0.134rem;
+}
+
+ #dt-awal .fild-download, #dt-akhir .file-download {
+    padding: 0.35rm
+}
+
+.breadcrumb-menu .btn:hover, .breadcrumb-menu .btn.active {
+    color: #23282c;
+    background: #2ab388;
+}

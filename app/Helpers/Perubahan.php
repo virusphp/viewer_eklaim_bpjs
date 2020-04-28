@@ -141,3 +141,16 @@ function namaKelas($nilai)
 
 	return $namaKelas[$nilai];
 }
+
+function dateRange($awal, $akhir, $step = '+1 day', $format = 'Y-m-d') {
+	$dates = [];
+	$current = strtotime($awal);
+	$akhir = strtotime($akhir);
+
+	while($current <= $akhir) {
+		$dates[] = date($format, $current);
+		$current = strtotime($step, $current);
+	}
+
+	return $dates;
+}

@@ -41,7 +41,7 @@
 
     <!-- tanggal pulang -->
     <div class="col-md-3 col-offset-3">
-        <div class="form-group">
+        {{-- <div class="form-group">
             <div class="input-group date {{ $errors->has('tgl_plg') ? 'has-error' : '' }}" id="datetimepicker_plg" >
             <label for="tgl_plg_filter" class="foram-check-label">Tgl Plg </label>
                 <div class="input-group-append">
@@ -59,7 +59,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="col-md-3 col-offset-3">

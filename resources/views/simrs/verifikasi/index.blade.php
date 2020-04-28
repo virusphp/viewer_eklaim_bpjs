@@ -10,7 +10,57 @@
       <a href="{{ route('viewer.index') }}">Viewer</a>
     </li>
     <li class="breadcrumb-item active">Index</li>
-    <li class="breadcrumb-menu d-md-down-none">
+    <li class="breadcrumb-menu d-md-down-none mfe-2">
+      <div class="form-inline">
+        {{-- @include('simrs.sep.partials.radio_faskes') --}}
+        <form id="form-download" method="POST" action="{{ route('viewer.download') }}" class="form-inline">
+        @csrf
+        <div class="col-md-6">
+          <div class="col-offset-3">
+            <div class="form-group">
+              <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal" >
+                  <label class="file-download">Tgl Awal </label>
+                  <div class="input-group-append">
+                      <span class="input-group-text input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>                        
+                  <input class="form-control" id="tgl_awal" 
+                          value="{{ date('d-m-Y') }}" 
+                          placeholder="Tanggal Awal" name="tgl_awal"
+                          type="text"/>
+                 
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-offset-3">
+            <div class="form-group">
+              <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir" >
+                  <label class="file-download">Tgl Akhir</label>
+                  <div class="input-group-append">
+                      <span class="input-group-text input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>                        
+                  <input class="form-control" id="tgl_akhir" 
+                          value="{{ date('d-m-Y') }}" 
+                          placeholder="Tanggal Akhir" name="tgl_akhir"
+                          type="text"/>
+                  <button type="button" id="download" class="btn btn-dark">
+                    Download
+                  </button>
+              </div>
+            
+            </div>
+          </div>
+          
+        </div>
+        </form>
+      </div>
     </li>
 </ol>
 @endsection
@@ -29,8 +79,9 @@
               <th>No Sep</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tgl Pulang</th>
               <th>Tgl Sep</th>
+              <th>Tgl Sep</th>
+              <th>Tgl Pulang</th>
               <th>View</th>
               <th><button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button></th>
               <th>User</th>
@@ -66,13 +117,13 @@
 {{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
     $(function () {
+        $('#dt-akhir').datetimepicker({
+            format: 'D-M-Y'
+        });
+        $('#dt-awal').datetimepicker({
+            format: 'D-M-Y'
+        });
         $('#datetimepicker_sep').datetimepicker({
-            format: 'D-M-Y'
-        });
-        $('#datetimepicker_plg').datetimepicker({
-            format: 'D-M-Y'
-        });
-        $('#dtgl_kejadian').datetimepicker({
             format: 'D-M-Y'
         });
         $('#dtglPulang').datetimepicker({
@@ -132,6 +183,7 @@
       });
 
      })
+
 
     
     $(document).on('click', '#verifikasi-eklaim', function() {
@@ -208,6 +260,62 @@
           }
         })
     }
+
+    function sweetProses(title, pesan, icon, button) {
+      swal({
+        title: title,
+        text:  pesan,
+        icon: icon,
+        buttons: button
+      })
+      .then((willVerified) => {
+        if (willVerified) {
+          $('#form-download').submit();
+          swal({
+            title: notif,
+            text: 'Silahkan tunggu untuk proses download!',
+            icon: "success",
+          })
+        } else {
+          swal("Batal", "Tidak jadi download");
+        }
+      })
+    }
+
+    $('#download').on('click', function(e) {
+      // e.preventDefault();
+     
+      var url = 'viewer/download',
+          tglAwal = $('#tgl_awal').val(),
+          tglAkhir = $('#tgl_akhir').val(),
+          awal = new Date(tglAwal).getTime(), 
+          akhir = new Date(tglAkhir).getTime(), 
+          nilai = akhir - awal;
+          form = $('#form-download');
+
+          if (nilai >= 0) {
+            icon = "success";
+            title = "Yakin Sudah di cek?!"
+            pesan = "Anda akan mendownload file dari tanggal " + tglAwal + " Sampai " + tglAkhir ;
+            notif = "Sukses!, Kamu berhasil melakukan proses download mohon tunggu!";
+            sweetProses(title,pesan,icon,true)
+          } else {
+            swal("Error", " Tidak bisa DOWNLOAD, Tanggal awal " +tglAwal+ " lebih besar dari tanggal akhir "+ tglAkhir)
+          } 
+
+
+    ;
+
+          // $.ajax({
+          //   url:ur.getContent()l,
+          //   method:method,
+          //   data: form.serialize(),
+          //   success: function(response) {
+          //     console.log(response)
+          //     window.location = response;
+          //   }
+          // })
+    })
 
     $(document).on('click', '#viewer-eklaim', function(e) {
       var viewer = $(this).val();
@@ -291,12 +399,13 @@
                 "order" : [[1, "asc"]],
                 "columns": [
                     {"mData": "list_check"},
-                    {"mData": "no_kartu"},
-                    {"mData": "sep", "width": "25"},
+                    {"mData": "no_kartu", "width": "15"},
+                    {"mData": "sep", "width": "15"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_plg"},
                     {"mData": "tgl_sep"},
+                    {"mData": "tgl_sep"},
+                    {"mData": "tgl_plg"},
                     {"mData": "aksi"},
                     {"mData": "checked"},
                     {"mData": "user"},

@@ -13,14 +13,26 @@ Class Eklaim
         $data = DB::table('sep_claim as sc')
             ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep', 'sc.tgl_pulang', 'sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified', 'sc.user_created')
             ->join('pasien as p','sc.no_rm','=','p.no_rm')
-            ->join('penjamin_pasien as pp', 'sc.no_rm', '=', 'pp.no_rm')
+            ->join('penjamin_pasien as pp', function($join) {
+                $join->on('sc.no_rm', '=', 'pp.no_rm');
+                    // ->where('pp.kd_penjamin', '=', '23')
+                    // ->whereRaw('LENGTH(kd_penjamin) = 14');
+                    // ->first();
+            })
             ->where(function ($query) use ($request) {
                 $tgl = date('Y-m-d', strtotime($request->tgl_sep));
                 if ($request->search == null) {
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=', $request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl]
+                        ['sc.tgl_sep', '=', $tgl],
+                        ['pp.kd_penjamin', '=', '23']
                     ]);
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=', $request->jns_rawat],
+                        ['sc.tgl_sep', '=', $tgl],
+                        ['pp.kd_penjamin', '=', '24']
+                    ]);
+
                 } else {
                     $term = $request->get('search');
                     $keywords = '%'. $term .'%';
@@ -28,17 +40,39 @@ Class Eklaim
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_sep', '=', $tgl],
-                        ['sc.no_rm', 'LIKE', $keywords]
+                        ['sc.no_rm', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_sep', '=', $tgl],
-                        ['p.nama_pasien', 'LIKE', $keywords]
+                        ['p.nama_pasien', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_sep', '=', $tgl],
-                        ['sc.no_sep', 'LIKE', $keywords]
+                        ['sc.no_sep', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '23']
+                    ]);
+
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.no_rm', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '24']
+                    ]);
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_sep', '=', $tgl],
+                        ['p.nama_pasien', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '24']
+                    ]);
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.no_sep', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '24']
                     ]);
                 }
             })
@@ -49,9 +83,9 @@ Class Eklaim
         return $data;
     }
 
-    public function cari($data)
+    public function cari($no_reg)
     {
-        $result = DB::table('sep_claim')->where('no_reg', $data->no_reg)->first();
+        $result = DB::table('sep_claim')->where('no_reg', $no_reg)->first();
         return $result;
     }
 

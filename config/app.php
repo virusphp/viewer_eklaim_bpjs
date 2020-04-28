@@ -152,6 +152,7 @@ return [
          */
         Barryvdh\Cors\ServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        'Chumper\Zipper\ZipperServiceProvider',
         /*
          * Application Service Providers...
          */
@@ -212,7 +213,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // PACKAGES TAMBAHAN
-        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Zipper' => 'Chumper\Zipper\Zipper'
 
     ],
 

@@ -27,12 +27,12 @@ class ClaimSep
                     ->where(function($query) use ($request){
                         $year = $request->has('tahun') ? $request->tahun : date('Y');
                         $query->orWhere('jns_pelayanan', $request->pelayanan);
-                        $query->whereYear('tgl_sep', $year);
+                        $query->whereYear('tgl_pulang', $year);
                     })
-                    ->orderBy('tgl_sep')
+                    ->orderBy('tgl_pulang')
                     ->get()
                     ->groupBy(function($date) {
-                        return Carbon::parse($date->tgl_sep)->format('M');
+                        return Carbon::parse($date->tgl_pulang)->format('M');
                     })
                     ->map(function($item) {
                         return count($item);
@@ -44,7 +44,11 @@ class ClaimSep
     {
         $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
         if ($data) {
-            $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+            if (file_exists($this->getFile($data->tgl_sep) . $data->file_claim)) {
+                $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
+            } else {
+                $data->file_claim = $this->getFile($data->tgl_tanggal) . $data->file_claim;
+            }
             $meta = ["kode" => 200, "pesan" => "Sukses"];
             $response = $this->remap($meta, $data);
         } else {
@@ -133,7 +137,7 @@ class ClaimSep
 
     public function update($request, $claimOld)
     {
-        $pasien = DB::table('pasien')->select('nama_pasien')->where('no_rm', $request->no_rm)->first();
+        $pasien = $this->cekPasien($request->no_rm);
         
         if (!$pasien) {
              $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
@@ -192,9 +196,9 @@ class ClaimSep
             $file =  $request->file('file_claim');
             $extensi = $file->getClientOriginalExtension();
             $formatName = str_replace(' ', '_', $data['no_sep'] . ' ' . $namaPasien .' '. $data['no_rm'] . '.' . $extensi);
-            $pathFile = $this->getDestination($data['tgl_sep']) . $formatName;
+            $pathFile = $this->getDestination($data['tgl_pulang']) . $formatName;
 
-            $urlPath = $data['tgl_sep'] . '/' . $formatName;
+            $urlPath = $data['tgl_pulang'] . '/' . $formatName;
 
             Storage::disk('public')->put($pathFile, File::get($file));
 

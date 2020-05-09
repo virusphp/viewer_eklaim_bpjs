@@ -358,7 +358,7 @@
                     "type": "GET",
                     "data": {                   
                         'jns_rawat': jnsRawat,
-                        'tgl_sep': tglSep,
+                        'tgl_plg': tglPlg,
                         'search' : search
                     }
                 },

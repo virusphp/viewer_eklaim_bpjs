@@ -20,15 +20,15 @@
     <div class="col-md-3 col-offset-3">
         <div class="form-group">
             <div class="input-group date {{ $errors->has('tgl_sep') ? 'has-error' : '' }}" id="datetimepicker_sep" >
-            <label for="tgl_sep_filter" class="foram-check-label">Tgl Sep </label>
+            <label for="tgl_sep_filter" class="foram-check-label">Tgl Pulang </label>
                 <div class="input-group-append">
                     <span class="input-group-text input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </span>
                 </div>                        
-                <input class="form-control" id="tgl_sep_filter" 
+                <input class="form-control" id="tgl_plg_filter" 
                         value="{{ date('d-m-Y') }}" 
-                        placeholder="Tanggal Kwitansi" name="tgl_sep"
+                        placeholder="Tanggal Kwitansi" name="tgl_plg"
                         type="text"/>
                 <div class="input-group-append">                    
                     <button type="submit" class="btn btn-primary" onclick="ajaxLoad()">

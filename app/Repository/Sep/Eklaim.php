@@ -20,16 +20,16 @@ Class Eklaim
                     // ->first();
             })
             ->where(function ($query) use ($request) {
-                $tgl = date('Y-m-d', strtotime($request->tgl_sep));
+                $tgl = date('Y-m-d', strtotime($request->tgl_plg));
                 if ($request->search == null) {
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=', $request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=', $request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
 
@@ -39,38 +39,38 @@ Class Eklaim
                     // dd($keywords);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['sc.no_rm', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['p.nama_pasien', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['sc.no_sep', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
 
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['sc.no_rm', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['p.nama_pasien', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
-                        ['sc.tgl_sep', '=', $tgl],
+                        ['sc.tgl_pulang', '=', $tgl],
                         ['sc.no_sep', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);

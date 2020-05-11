@@ -45,9 +45,9 @@ class KlaimBpjsController extends Controller
                 // $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
 
                 if (storage::exists('public/'.$this->getDestination($q->tgl_sep) . $q->file_claim)) {
-                    $fileClaim = $this->getFile($q->tgl_sep) . $q->file_claim;
+                    $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
                 } else {
-                    $fileClaim = $this->getFile($q->tgl_pulang) . $q->file_claim;
+                    $fileClaim =  asset($this->getDestination($q->tgl_pulang). $q->file_claim);
                 }
                 
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {

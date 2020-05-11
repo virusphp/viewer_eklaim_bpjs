@@ -42,7 +42,13 @@ class KlaimBpjsController extends Controller
             // dd($data);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);
-                $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
+                // $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
+
+                if (storage::exists('public/'.$this->getDestination($q->tgl_sep) . $q->file_claim)) {
+                    $fileClaim = $this->getFile($q->tgl_sep) . $q->file_claim;
+                } else {
+                    $fileClaim = $this->getFile($q->tgl_pulang) . $q->file_claim;
+                }
                 
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
                     $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>

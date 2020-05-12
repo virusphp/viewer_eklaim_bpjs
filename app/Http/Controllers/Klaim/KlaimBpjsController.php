@@ -44,10 +44,11 @@ class KlaimBpjsController extends Controller
                 $tgl = new DateTime($q->tgl_sep);
                 // $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
 
-                if (storage::exists('public/'.$this->getDestination($q->tgl_sep) . $q->file_claim)) {
-                    $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
+                // dd($this->getDestination($q->tgl_pulang).$q->file_claim,$this->getDestination($q->tgl_sep).$q->file_claim, storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang) . $q->file_claim));
+                if (storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep) . $q->file_claim)) {
+                    $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep). $q->file_claim);
                 } else {
-                    $fileClaim =  asset($this->getDestination($q->tgl_pulang). $q->file_claim);
+                    $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang). $q->file_claim);
                 }
                 
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
@@ -156,8 +157,10 @@ class KlaimBpjsController extends Controller
 
     public function getDestination($tanggal)
     {
-        return 'storage/verifikasi/'.tanggalPdf($tanggal).'/';
+        // return 'storage'. DIRECTORY_SEPARATOR .'verifikasi'. DIRECTORY_SEPARATOR .tanggalPdf($tanggal). DIRECTORY_SEPARATOR;
+        return 'verifikasi' . DIRECTORY_SEPARATOR . tanggalPdf($tanggal) . DIRECTORY_SEPARATOR;
     }
+
 
     public function printSep2($noReg)
     {

@@ -45,7 +45,7 @@ class ClaimSep
         $data = DB::table('sep_claim')->where('no_sep', $noSep)->first();
         // dd($data);
         if ($data) {
-            if (storage::exists('public/'.$this->getDestination($data->tgl_sep) . $data->file_claim)) {
+            if (storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($data->tgl_sep) . $data->file_claim)) {
                 $data->file_claim = $this->getFile($data->tgl_sep) . $data->file_claim;
             } else {
                 $data->file_claim = $this->getFile($data->tgl_pulang) . $data->file_claim;

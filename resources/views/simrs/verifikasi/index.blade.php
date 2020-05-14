@@ -83,8 +83,13 @@
               <th>Tgl Sep</th>
               <th>Tgl Pulang</th>
               <th>View</th>
-              <th><button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button></th>
-              <th>User</th>
+              <th>
+                <?php $user = Auth::user()->role; ?>
+                @if( $user == 'bpjs' || $user == 'superadmin' || $user == 'developer')
+                  <button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button>
+                @endif
+              </th>
+              <th>###</th>
             </tr>
           </thead>
           <tbody>
@@ -183,8 +188,6 @@
       });
 
      })
-
-
     
     $(document).on('click', '#verifikasi-eklaim', function() {
       var nilai = $(this).val(),
@@ -260,6 +263,61 @@
           }
         })
     }
+
+    $(document).on('click', '#checklist-eklaim', function() {
+      var nilai = $(this).val(),
+          no_reg = $(this).data("reg");
+          if (nilai == 1) {
+            icon = "success";
+            title = "Yakin Sudah di cek?!"
+            pesan = "Klik tombol OK jika sudah di cek!";
+            notif = "Sukses!, Kamu berhasil Review dan Checklist!";
+          } else {
+            icon = "warning";
+            title = "Yakin ingin mereview ulang?!"
+            pesan = "Klik tombol OK jika ingin di cek ulang!";
+            notif = "Sukses!, Kamu membatalkan review dan checklist!";
+          }
+      swal({
+        title: title,
+        text:  pesan,
+        icon: icon,
+        buttons: true
+      })
+      .then((willVerified) => {
+        if (willVerified) {
+          swal(notif, {
+            icon: "success",
+          });
+          UChecklist(nilai, no_reg);
+        } else {
+          swal("Kamu Belum Review dan Verified!");
+        }
+      });
+    })
+
+    function UChecklist(nilai, no_reg)
+    {
+      var nilai = nilai,
+        no_reg = no_reg,
+        url = 'viewer/checked/petugas',
+        token = $('meta[name="csrf-token"]').attr('content'),
+        method = 'POST';
+        $.ajax({
+          url: url,
+          method: method,
+          data: { checked: nilai, no_reg: no_reg, _token: token },
+          success: function(response) {
+              if (response.kode === 200) {
+                $('#mytable').DataTable().ajax.reload();
+              }
+          },
+          error: function(xhr) {
+            console.log(xhr);
+          }
+        })
+    }
+
 
     function sweetProses(title, pesan, icon, button) {
       swal({

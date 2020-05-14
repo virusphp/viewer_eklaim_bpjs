@@ -47,19 +47,29 @@ class KlaimBpjsController extends Controller
                 // dd($this->getDestination($q->tgl_pulang).$q->file_claim,$this->getDestination($q->tgl_sep).$q->file_claim, storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang) . $q->file_claim));
                 if (storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep) . $q->file_claim)) {
                     $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep). $q->file_claim);
+                    $file = "ada";
+                } else if(storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep) . $q->file_claim)){
+                    $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang). $q->file_claim);
+                    $file = "ada";
                 } else {
                     $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang). $q->file_claim);
+                    $file = "Tidak ada";
                 }
-                
+                // dd();
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
                     $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verified</button>
                                      <input type="checkbox" id="ver-eklaim" disabled>';
-                } else if ($q->periksa == 0 && ($user == "operator")) {
-                    $btnVerified = '<button type="button" class="btn btn-sm btn-primary" disabled>Verified</button>
-                                     <input type="checkbox" id="ver-eklaim" disabled>';
+                } else if ($q->checked == 0 && $user == "operator") {
+                    // $btnVerified = '<button type="button" class="btn btn-sm btn-primary" disabled>Verified</button>
+                    //                  <input type="checkbox" id="ver-eklaim" disabled>';
+                    $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="checklist-eklaim">Ceklist</button>
+                                     <input type="checkbox" id="check-eklaim" disabled>';
                 } else if ($q->periksa ==1 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created)){
                     $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">UnVerified</button>
                                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
+                } else if ($q->checked == 1 && $user == "operator") {
+                    $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="checklist-eklaim">Unchecklist</button>
+                                    <input type="checkbox" id="check-eklaim" checked disabled> ';
                 } else {
                     $btnVerified = '<button type="button" class="btn btn-sm btn-success" disabled>UnVerified</button>
                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
@@ -69,7 +79,6 @@ class KlaimBpjsController extends Controller
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
                                <i class="icon-eye"></i>
                              </button>';
-                // $btnCheck = '<input type="checkbox" value="1" name="checkModule[]" class="check-modules">';
                 $query[] = [
                     'list_check'  => $checkbox,
                     'no'          => $no++,
@@ -81,7 +90,7 @@ class KlaimBpjsController extends Controller
                     'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                     'aksi'        => $btnAction,
                     'checked'     => $btnVerified,
-                    'user'        => $q->user_verified
+                    'user'        => $user == "operator" ? $file : $q->user_verified
                     // 'checked' => $btnCheck,
                 ];
             }
@@ -98,13 +107,30 @@ class KlaimBpjsController extends Controller
             $editKlaim = $this->eklaim->cari($request->no_reg);
 
             if ($editKlaim) {
-                $result = $this->eklaim->update($request);
+                $result = $this->eklaim->verified($request);
             } else {
                 $result = ['kode' => 201, 'pesan' => 'Data yang di edit tidak di temukan'];
             }
         }
         return response()->json($result);
     }
+
+    public function checked(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $editKlaim = $this->eklaim->cari($request->no_reg);
+
+            // dd($editKlaim);
+            if ($editKlaim) {
+                $result = $this->eklaim->checked($request);
+            } else {
+                $result = ['kode' => 201, 'pesan' => 'Data yang di edit tidak di temukan'];
+            }
+        }
+        return response()->json($result);
+    }
+    
 
     public function verifiedall(Request $request)
     {

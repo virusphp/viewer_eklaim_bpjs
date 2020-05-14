@@ -11,7 +11,7 @@ Class Eklaim
         // $data  = DB::table('penjamin_pasien')->where('no_rm', "427466")->get();
         // DB::enableQueryLog();
         $data = DB::table('sep_claim as sc')
-            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep', 'sc.tgl_pulang', 'sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified', 'sc.user_created')
+            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep', 'sc.tgl_pulang', 'sc.file_claim', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified','sc.checked', 'sc.user_checked', 'sc.user_created')
             ->join('pasien as p','sc.no_rm','=','p.no_rm')
             ->join('penjamin_pasien as pp', function($join) {
                 $join->on('sc.no_rm', '=', 'pp.no_rm');
@@ -89,7 +89,7 @@ Class Eklaim
         return $result;
     }
 
-    public function update($data)
+    public function verified($data)
     {
         $now = date('Y-m-d');
         if ($data->periksa == 1) {
@@ -103,6 +103,26 @@ Class Eklaim
                         'periksa' => $data->periksa,
                         'user_verified' =>  $user_verified,
                         'tgl_verified' => $now
+                    ]);
+
+        return $this->Message($update, "update");
+    }
+
+    public function checked($data)
+    {
+        $now = date('Y-m-d');
+        if ($data->periksa == 1) {
+            $user_verified = Auth::user()->nama_pegawai;
+        } else {
+            $user_verified = Auth::user()->nama_pegawai;;
+        }
+
+        // dd($data->no_reg, $data->checked, $user_verified, $now);
+        $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
+                    ->update([
+                        'checked' => $data->checked,
+                        'user_checked' =>  $user_verified,
+                        'tgl_checked' => $now
                     ]);
 
         return $this->Message($update, "update");

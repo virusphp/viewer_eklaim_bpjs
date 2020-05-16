@@ -299,3 +299,7 @@ a.btn i.tengah {
     color: #23282c;
     background: #2ab388;
 }
+
+.modal-sm {
+    max-width: 408px;
+}

@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         // VERIFIKASI OKE BEROH
         Route::get('/viewer','KlaimBpjsController@index')->name('viewer.index');
         Route::get('/viewer/search','KlaimBpjsController@search')->name('viewer.search');
+        Route::get('/viewer/catatan','KlaimBpjsController@catatan')->name('viewer.catatan');
         Route::post('/viewer/verified/petugas', 'KlaimBpjsController@verified')->name('viewer.verified');
         Route::post('/viewer/checked/petugas', 'KlaimBpjsController@checked')->name('viewer.checked');
         Route::post('/viewer/verified/all/petugas', 'KlaimBpjsController@verifiedall')->name('viewer.all.verified');

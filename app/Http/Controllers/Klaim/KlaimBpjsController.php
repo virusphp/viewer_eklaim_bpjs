@@ -41,7 +41,6 @@ class KlaimBpjsController extends Controller
             $userUpload = Auth::user()->kd_pegawai;
             $data = $this->eklaim->getView($request);
             // dd($request->all());
-            // dd($data);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);
                 // $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
@@ -81,6 +80,10 @@ class KlaimBpjsController extends Controller
                 $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
                                <i class="icon-eye"></i>
                              </button>';
+                
+                $catatan = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-catatan">
+                             Catatan
+                           </button>';
                 $query[] = [
                     'list_check'  => $checkbox,
                     'no'          => $no++,
@@ -89,9 +92,10 @@ class KlaimBpjsController extends Controller
                     'no_rm'       => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
                     'tgl_plg'     => date('d-m-Y', strtotime($q->tgl_pulang)),
-                    'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
+                    // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                     'aksi'        => $btnAction,
                     'checked'     => $btnVerified,
+                    'catatan'     => $catatan,
                     'user'        => $user == "operator" ? $file : $q->user_verified
                     // 'checked' => $btnCheck,
                 ];
@@ -112,6 +116,19 @@ class KlaimBpjsController extends Controller
                 $result = $this->eklaim->verified($request);
             } else {
                 $result = ['kode' => 201, 'pesan' => 'Data yang di edit tidak di temukan'];
+            }
+        }
+        return response()->json($result);
+    }
+
+    public function catatan(Request $request)
+    {
+        if ($request->ajax()) {
+            $eklaim = $this->eklaim->cari($request->no_reg);
+            if ($eklaim) {
+                $result = $eklaim;
+            } else {
+                $result = ['kode' => 201, 'pesan', 'Data tidak di temukan'];
             }
         }
         return response()->json($result);

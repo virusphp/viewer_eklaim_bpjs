@@ -79,8 +79,7 @@
               <th>No Sep</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tgl Sep</th>
-              <th>Tgl Sep</th>
+              <th>Tgl Pulang</th>
               <th>Tgl Pulang</th>
               <th>View</th>
               <th>
@@ -89,6 +88,7 @@
                   <button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button>
                 @endif
               </th>
+              <th>Catatan</th>
               <th>###</th>
             </tr>
           </thead>
@@ -101,6 +101,7 @@
   </div>
 
 @include('simrs.verifikasi.modals.modal_viewer')
+@include('simrs.verifikasi.modals.modal_catatan')
 
 @endsection
 @push('css')
@@ -403,6 +404,28 @@
           // })
     })
 
+    $(document).on('click', '#viewer-catatan', function(e) {
+      var no_reg = $(this).val(),
+          method = "GET",
+          options = {
+            'backdrop' : 'static'
+          },
+          url = "viewer/catatan";
+      $.ajax({
+        url: url,
+        method: method,
+        data: {no_reg:no_reg},
+        success: function(res) {
+          // console.log(res.no_rm)
+          $('#noRm').val(res.no_rm)
+          $('#noSep').val(res.no_sep)
+          $('#catatan').val(res.catatan)
+        },
+        error: function(xhr) {}
+      });
+      $('#modal-catatan').modal(options)
+    })
+
     $(document).on('click', '#viewer-eklaim', function(e) {
       var viewer = $(this).val();
       $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
@@ -487,11 +510,11 @@
                     {"mData": "sep", "width": "15"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_sep"},
-                    {"mData": "tgl_sep"},
+                    {"mData": "tgl_plg"},
                     {"mData": "tgl_plg"},
                     {"mData": "aksi"},
                     {"mData": "checked"},
+                    {"mData": "catatan"},
                     {"mData": "user"},
                 ]
             });

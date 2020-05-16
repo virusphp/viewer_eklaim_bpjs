@@ -181,44 +181,9 @@
         }
         // ajaxLoad()
       });
-
      })
-    
-    $(document).on('click', '#verifikasi-eklaim', function() {
-      var nilai = $(this).val(),
-          no_reg = $(this).data("reg");
-          if (nilai == 1) {
-            icon = "success";
-            title = "Apa anda Yakin Sudah di cek?!"
-            pesan = "Berikan Pesan jika Pending atau kurang data";
-            notif = "Sukses!, Kamu berhasil Review dan Verified!";
-          } else {
-            icon = "warning";
-            title = "Yakin ingin mereview ulang?!"
-            pesan = "Klik tombol OK jika ingin di cek ulang!";
-            notif = "Sukses!, Kamu membatalkan review dan veried!";
-          }
-      swal({
-        title: title,
-        // content: "input",
-        text:  pesan,
-        icon: icon,
-        buttons: true
-      })
-      .then((willVerified, value) => {
-        if (willVerified) {
-          swal(notif, {
-            icon: "success",
-          });
-          // console.log(value)
-          Uverified(nilai, no_reg);
-        } else {
-          swal("Kamu Belum Review dan Verified!");
-        }
-      });
-    })
 
-    function UnverifiedAll(nilai, NoReg) {
+     function UnverifiedAll(nilai, NoReg) {
       var url = 'viewer/verified/all/petugas', 
           token = $('meta[name="csrf-token"]').attr('content'),
           method = 'POST';
@@ -236,20 +201,58 @@
             console.log(xhr);
           }
         })
-
     }
+    
+    $(document).on('click', '#verifikasi-eklaim', function() {
+      var nilai = $(this).val(),
+          no_reg = $(this).data("reg");
+          if (nilai == 1) {
+            icon = "success";
+            title = "Apa anda Yakin Sudah di cek?!"
+            content = "input"
+            pesan = "Berikan Pesan jika Pending atau kurang data";
+            notif = "Sukses!, Kamu berhasil Review dan Verified!";
+          } else {
+            icon = "warning";
+            title = "Yakin ingin mereview ulang?!"
+            content = "none"
+            pesan = "Klik tombol OK jika ingin di cek ulang!";
+            notif = "Sukses!, Kamu membatalkan review dan veried!";
+          }
+      swal({
+        title: title,
+        content: content,
+        text:  pesan,
+        icon: icon,
+        buttons: true
+      })
+      .then((value) => {
+        // console.log(value)
+        if (value != null) {
+          swal(notif, {
+            icon: "success",
+          });
+          // console.log(value)
+          // kirimpesan(value);
+          Uverified(value, nilai, no_reg);
+        } else {
+          swal("Kamu Belum Review dan Verified!");
+        }
+      });
+    })
 
-    function Uverified(nilai, no_reg)
+    function Uverified(message, nilai, no_reg)
     {
       var nilai = nilai,
         no_reg = no_reg,
+        message = message,
         url = 'viewer/verified/petugas',
         token = $('meta[name="csrf-token"]').attr('content'),
         method = 'POST';
         $.ajax({
           url: url,
           method: method,
-          data: { periksa: nilai, no_reg: no_reg, _token: token },
+          data: { periksa: nilai, no_reg: no_reg, pesan:message, _token: token },
           success: function(response) {
               if (response.kode === 200) {
                 $('#mytable').DataTable().ajax.reload();

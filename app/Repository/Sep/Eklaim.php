@@ -102,6 +102,7 @@ Class Eklaim
                     ->update([
                         'periksa' => $data->periksa,
                         'user_verified' =>  $user_verified,
+                        'catatan' => $data->pesan,
                         'tgl_verified' => $now
                     ]);
 

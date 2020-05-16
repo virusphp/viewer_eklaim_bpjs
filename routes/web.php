@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::post('/viewer/checked/petugas', 'KlaimBpjsController@checked')->name('viewer.checked');
         Route::post('/viewer/verified/all/petugas', 'KlaimBpjsController@verifiedall')->name('viewer.all.verified');
         Route::post('/viewer/download', 'KlaimBpjsController@download')->name('viewer.download');
+        Route::post('/viewer/export', 'KlaimBpjsController@Export')->name('viewer.export');
 
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
         Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');

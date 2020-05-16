@@ -157,4 +157,31 @@ Class Eklaim
 
         return $message;
     }
+
+    public function exportEklaim($request) 
+    {
+        return DB::table('sep_claim as sc')->select(
+            // DB::raw('ROW_NUMBER() OVER(ORDER BY p.nama_pasien ASC) AS number'),
+            'sc.tgl_pulang', 'sc.no_rm', 'p.nama_pasien', 'sc.no_sep', 'pp.no_kartu', 'sc.jns_pelayanan'
+        )
+        ->join('pasien as p','sc.no_rm','=','p.no_rm')
+        ->join('penjamin_pasien as pp', function($join) {
+            $join->on('sc.no_rm', '=', 'pp.no_rm');
+        })
+        ->where(function ($query) use ($request) {
+            $tgl = date('Y-m-d', strtotime($request->tgl_plg));
+                $query->orWhere([
+                    ['sc.jns_pelayanan', '=', $request->jns_rawat],
+                    ['sc.tgl_pulang', '=', $tgl],
+                    ['pp.kd_penjamin', '=', '23']
+                ]);
+                $query->orWhere([
+                    ['sc.jns_pelayanan', '=', $request->jns_rawat],
+                    ['sc.tgl_pulang', '=', $tgl],
+                    ['pp.kd_penjamin', '=', '24']
+                ]);
+        })
+        ->distinct()
+        ->orderBy('p.nama_pasien', 'asc');
+    }
 }

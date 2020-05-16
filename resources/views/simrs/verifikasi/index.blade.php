@@ -142,9 +142,7 @@
         $('table .table').removeAttr('style');
     });
 
-
     // Verifikasi semua yang di checklist
-
     $('#verif-all').on('click', function() {
       var form = $("#form-checked");
       var checked = form.find('input#check-access[name="checkModule[]"]:checked'),
@@ -154,7 +152,6 @@
       checked.each(function(index) {
         noReg[index] = $(this).data('reg');
       })
-      // console.log(checked);
 
       if (nilai == 1) {
         icon = "success";
@@ -178,9 +175,7 @@
           swal(notif, {
             icon: "success",
           });
-          // checked.each(function(index) {
             UnverifiedAll(nilai, noReg);
-          // }) 
         } else {
           swal("Kamu Belum Review dan Verified!");
         }
@@ -194,8 +189,8 @@
           no_reg = $(this).data("reg");
           if (nilai == 1) {
             icon = "success";
-            title = "Yakin Sudah di cek?!"
-            pesan = "Klik tombol OK jika sudah di cek!";
+            title = "Apa anda Yakin Sudah di cek?!"
+            pesan = "Berikan Pesan jika Pending atau kurang data";
             notif = "Sukses!, Kamu berhasil Review dan Verified!";
           } else {
             icon = "warning";
@@ -205,15 +200,17 @@
           }
       swal({
         title: title,
+        // content: "input",
         text:  pesan,
         icon: icon,
         buttons: true
       })
-      .then((willVerified) => {
+      .then((willVerified, value) => {
         if (willVerified) {
           swal(notif, {
             icon: "success",
           });
+          // console.log(value)
           Uverified(nilai, no_reg);
         } else {
           swal("Kamu Belum Review dan Verified!");
@@ -340,6 +337,37 @@
       })
     }
 
+    $('#export-eklaim').on('click', function() {
+    var tanggal = $('#tgl_plg_filter').val(),
+        jns_rawat = $("input[name=jns_rawat]:checked").val();
+
+        if (jns_rawat == '01') {
+          jnsRawat = "Rawat Jalan"
+        } else if (jns_rawat == '02') {
+          jnsRawat = "Rawat Inap"
+        } else {
+          jnsRawat = "Rawat Darurat"
+        }
+  
+       swal({
+          title: 'Anda akan mengeksport data ke excel??',
+          text: "Tanggal: "+tanggal+"  Jenis Rawat: "+jnsRawat,
+          icon: 'success',
+          buttons: true
+        }).then((willVerified) => {
+          if (willVerified) {
+                  $('#form-export').submit();
+                  swal({
+                    title : "Sukses!!!",
+                    text: "Data berhasil di export",
+                    icon: "success" 
+                  })
+          } else {
+            swal( 'Dibatalkan', 'Data Eklaim terpilih batal di export:)', 'error')
+          }
+        })
+  })
+
     $('#download').on('click', function(e) {
       // e.preventDefault();
      
@@ -360,9 +388,6 @@
           } else {
             swal("Error", " Tidak bisa DOWNLOAD, Tanggal awal " +tglAwal+ " lebih besar dari tanggal akhir "+ tglAkhir)
           } 
-
-
-    ;
 
           // $.ajax({
           //   url:ur.getContent()l,
@@ -442,8 +467,6 @@
                         'selectCallback': function(nodes, selected){
                             $('input[type="checkbox"]', nodes).iCheck('update');
                             $('input#ver-ekalim', nodes).iCheck('update');
-                            
-                            // $('input.check-modules', nodes).iCheck('update');
                         },
                         'selectAllCallback': function(nodes, selected, indeterminate){
                             $('input[type="checkbox"]', nodes).iCheck('update');
@@ -486,8 +509,6 @@
               }
               // console.log(event);
             });
-         
-           
         }   
 </script>
 {{-- @include('simrs.verifikasi.script') --}}

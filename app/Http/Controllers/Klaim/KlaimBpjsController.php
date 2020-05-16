@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Klaim;
 
+use App\Exports\EklaimExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repository\Sep\Eklaim;
 use App\Service\Bpjs\Sep as cetak;
 use App\Service\Bpjs\Rujukan;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 Use DateTime;
 use PDF;
@@ -187,6 +189,10 @@ class KlaimBpjsController extends Controller
         return 'verifikasi' . DIRECTORY_SEPARATOR . tanggalPdf($tanggal) . DIRECTORY_SEPARATOR;
     }
 
+    public function Export(Request $request)
+    {
+        return Excel::download(new EklaimExport($request), 'Export-Eklaim-' .$request->tgl_plg.'.xls'); 
+    }
 
     public function printSep2($noReg)
     {

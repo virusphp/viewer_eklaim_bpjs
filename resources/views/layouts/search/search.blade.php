@@ -1,5 +1,7 @@
 <div class="col-md-12 form-inline">
     <div class="col-md-3 col-offset-3">
+        <form action="{{ route('viewer.export') }}" id="form-export" class="form-horizontal" method="POST">
+            @csrf
         <div class="col-md-12 col-form-label form-inline">
             <div class="form-check form-check-inline mr-1">
                 <input class="form-check-input" type="radio" id="jns_rawat1" value="01" name="jns_rawat" checked>
@@ -31,7 +33,7 @@
                         placeholder="Tanggal Kwitansi" name="tgl_plg"
                         type="text"/>
                 <div class="input-group-append">                    
-                    <button type="submit" class="btn btn-primary" onclick="ajaxLoad()">
+                    <button type="button" class="btn btn-primary" onclick="ajaxLoad()">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
@@ -41,6 +43,7 @@
 
     <!-- tanggal pulang -->
     <div class="col-md-3 col-offset-3">
+        <a id="export-eklaim" class="btn btn-outline-primary ml-3"><i class="fas fa-file-excel" aria-hidden="true"> Export</i></a>
         {{-- <div class="form-group">
             <div class="input-group date {{ $errors->has('tgl_plg') ? 'has-error' : '' }}" id="datetimepicker_plg" >
             <label for="tgl_plg_filter" class="foram-check-label">Tgl Plg </label>
@@ -61,6 +64,7 @@
             </div>
         </div> --}}
     </div>
+    </form>
 
     <div class="col-md-3 col-offset-3">
         <div class="controls">

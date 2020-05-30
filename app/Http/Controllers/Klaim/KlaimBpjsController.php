@@ -49,7 +49,7 @@ class KlaimBpjsController extends Controller
                 if (storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep) . $q->file_claim)) {
                     $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep). $q->file_claim);
                     $file = "ada";
-                } else if(storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_sep) . $q->file_claim)){
+                } else if(storage::exists('public'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang) . $q->file_claim)){
                     $fileClaim =  asset('storage'. DIRECTORY_SEPARATOR .$this->getDestination($q->tgl_pulang). $q->file_claim);
                     $file = "ada";
                 } else {

@@ -256,7 +256,8 @@
           data: { periksa: nilai, no_reg: no_reg, pesan:message, _token: token },
           success: function(response) {
               if (response.kode === 200) {
-                $('#mytable').DataTable().ajax.reload();
+                // console.log(response)
+                $('#mytable').DataTable().ajax.reload(null, false);
               }
           },
           error: function(xhr) {
@@ -471,6 +472,16 @@
                         'search' : search
                     }
                 },
+                // "createdRow": function(row, data, dataIndex) {
+                //   $(row).find('td').eq(3).addClass('editMe');
+                //   $(row).find('td').eq(3).attr('data-id', data.idx);
+                //   if (data.status == 'Ok' ) {
+                //       var panjang = $(row).find('td').length
+                //       for (i = 0; i < panjang; i++) {
+                //           $(row).find('td').eq(i).addClass('hijau');
+                //       }
+                //   }
+                // },
                 "drawCallback": function() {
                   // $('input#ver-eklaim').iCheck({
                   //   checkboxClass: 'icheckbox_square-green'

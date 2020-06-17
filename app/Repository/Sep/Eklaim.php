@@ -25,11 +25,13 @@ Class Eklaim
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=', $request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=', $request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
 
@@ -40,18 +42,21 @@ Class Eklaim
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['sc.no_rm', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['p.nama_pasien', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['sc.no_sep', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '23']
                     ]);
@@ -59,18 +64,21 @@ Class Eklaim
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['sc.no_rm', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['p.nama_pasien', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
                     $query->orWhere([
                         ['sc.jns_pelayanan', '=',$request->jns_rawat],
                         ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
                         ['sc.no_sep', 'LIKE', $keywords],
                         ['pp.kd_penjamin', '=', '24']
                     ]);
@@ -92,10 +100,18 @@ Class Eklaim
     public function verified($data)
     {
         $now = date('Y-m-d');
-        if ($data->periksa == 1) {
-            $user_verified = Auth::user()->nama_pegawai;
+        if (Auth::user()->role = "developer") {
+            if ($data->periksa == 1) {
+                $user_verified = "";
+            } else {
+                $user_verified = "";
+            }
         } else {
-            $user_verified = Auth::user()->nama_pegawai;;
+            if ($data->periksa == 1) {
+                $user_verified = Auth::user()->nama_pegawai;
+            } else {
+                $user_verified = Auth::user()->nama_pegawai;
+            }
         }
         
         if ($data->pesan == "true") {

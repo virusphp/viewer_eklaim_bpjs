@@ -119,8 +119,6 @@
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
-{{-- @include('simrs.verifikasi.modals.ajax') --}}
-{{-- @include('simrs.verifikasi.modals.ajax_register') --}}
 <script type="text/javascript">
     $(function () {
         $('#dt-akhir').datetimepicker({
@@ -228,7 +226,6 @@
         buttons: true
       })
       .then((value) => {
-        // console.log(value)
         if (value != null) {
           swal(notif, {
             icon: "success",
@@ -319,7 +316,6 @@
           }
         })
     }
-
 
     function sweetProses(title, pesan, icon, button) {
       swal({
@@ -425,6 +421,10 @@
         error: function(xhr) {}
       });
       $('#modal-catatan').modal(options)
+    })
+
+    $(document).on('change','#search', function() {
+        ajaxLoad();
     })
 
     $(document).on('click', '#viewer-eklaim', function(e) {

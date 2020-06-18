@@ -247,6 +247,8 @@
         url = 'viewer/verified/petugas',
         token = $('meta[name="csrf-token"]').attr('content'),
         method = 'POST';
+        // console.log(message == "")
+
         $.ajax({
           url: url,
           method: method,

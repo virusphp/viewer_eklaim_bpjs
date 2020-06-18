@@ -113,13 +113,14 @@ Class Eklaim
                 $user_verified = Auth::user()->nama_pegawai;
             }
         }
-        
-        if ($data->pesan == "true") {
+        if ($data->pesan == "") {
             $pesan = "-";
         } else {
             $pesan = $data->pesan;
+            $data->periksa = 0;
         }
 
+        // dd($data->periksa, $data->pesan);
         $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
                     ->update([
                         'periksa' => $data->periksa,

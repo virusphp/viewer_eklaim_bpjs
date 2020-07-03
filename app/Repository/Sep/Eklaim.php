@@ -101,7 +101,7 @@ Class Eklaim
     {
         // dd($data->periksa, $data->no_reg, $data->pesan);
         $now = date('Y-m-d');
-        if (Auth::user()->role = "developer") {
+        if (Auth::user()->role == "developer") {
             if ($data->periksa == 1) {
                 $user_verified = "";
             } else {
@@ -114,6 +114,7 @@ Class Eklaim
                 $user_verified = Auth::user()->nama_pegawai;
             }
         }
+
         if ($data->pesan == "") {
             $pesan = "-";
             $data->periksa = $data->periksa;
@@ -137,6 +138,7 @@ Class Eklaim
 
     protected function updateVerified($pesan, $data, $user_verified, $now)
     {
+        // dd($user_verified);
         if ($pesan == "true") {
             $data->periksa = 0;
             $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)

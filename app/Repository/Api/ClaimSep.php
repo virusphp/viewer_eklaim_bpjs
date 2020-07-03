@@ -23,7 +23,7 @@ class ClaimSep
     public function getChartKlaim($request)
     {
         // dd($request->all());
-        $data = DB::table('sep_claim')->select('jns_pelayanan','tgl_sep')
+        $data = DB::table('sep_claim')->select('jns_pelayanan','tgl_sep', 'tgl_pulang')
                     ->where(function($query) use ($request){
                         $year = $request->has('tahun') ? $request->tahun : date('Y');
                         $query->orWhere('jns_pelayanan', $request->pelayanan);
@@ -206,6 +206,7 @@ class ClaimSep
             $urlPath = $data['tgl_pulang'] . '/' . $formatName;
 
             Storage::disk('public')->put($pathFile, File::get($file));
+            // dd(\storage_path());
 
             $data['file_claim'] = $formatName;
             $data['full_path'] = $urlPath;

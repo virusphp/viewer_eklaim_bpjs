@@ -99,6 +99,7 @@ Class Eklaim
 
     public function verified($data)
     {
+        // dd($data->periksa, $data->no_reg, $data->pesan);
         $now = date('Y-m-d');
         if (Auth::user()->role = "developer") {
             if ($data->periksa == 1) {
@@ -115,21 +116,46 @@ Class Eklaim
         }
         if ($data->pesan == "") {
             $pesan = "-";
+            $data->periksa = $data->periksa;
         } else {
             $pesan = $data->pesan;
-            $data->periksa = 0;
+            $data->periksa = 2;
         }
 
-        // dd($data->periksa, $data->pesan);
-        $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
-                    ->update([
-                        'periksa' => $data->periksa,
-                        'user_verified' =>  $user_verified,
-                        'catatan' => $pesan,
-                        'tgl_verified' => $now
-                    ]);
+        $update = $this->updateVerified($pesan, $data, $user_verified, $now);
+
+        // $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
+        //             ->update([
+        //                 'periksa' => $data->periksa,
+        //                 'user_verified' =>  $user_verified,
+        //                 'catatan' => $pesan,
+        //                 'tgl_verified' => $now
+        //             ]);
 
         return $this->Message($update, "update");
+    }
+
+    protected function updateVerified($pesan, $data, $user_verified, $now)
+    {
+        if ($pesan == "true") {
+            $data->periksa = 0;
+            $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
+                ->update([
+                    'periksa' => $data->periksa,
+                    'user_verified' =>  $user_verified,
+                    'tgl_verified' => $now
+                ]);
+        } else {
+            $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
+                ->update([
+                    'periksa' => $data->periksa,
+                    'user_verified' =>  $user_verified,
+                    'catatan' => $pesan,
+                    'tgl_verified' => $now
+                ]);
+        }
+
+        return $update;
     }
 
     public function checked($data)

@@ -52,7 +52,7 @@ return [
             'driver' => 'local',
             'username' => 'samba',
             'password' => 'samba123',
-            'root'   => '11.11.11.2/eklaim',
+            'root'   => '11.11.12.2/eklaim',
         ],
 
         'public' => [

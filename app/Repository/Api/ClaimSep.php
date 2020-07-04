@@ -94,7 +94,7 @@ class ClaimSep
         $unique = DB::table('sep_claim')->select('no_reg')->where('no_reg', $request->no_reg)->first();
 
         if ($unique) {
-            if ($unique->no_reg === $request->no_reg) {
+            if ($unique->no_reg === $request->no_reg || $unique->no_reg === $request->no_reg && $unique->periksa == 2) {
                 $message = ['kode' => 422, 'pesan' => 'No Registrasi sudah ada mohon edit untuk mengubah'];
             } else {
               $message = $this->handleSimpan($request); 

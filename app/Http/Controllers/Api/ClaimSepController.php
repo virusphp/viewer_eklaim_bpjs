@@ -36,7 +36,7 @@ class ClaimSepController extends Controller
         // dd($request->all());
         $editClaim = $this->claimSep->cari($noReg);
         // dd($editClaim);
-        if ($editClaim->periksa == 0) {
+        if ($editClaim->periksa == 0 || $editClaim->periksa == 2) {
             // dd($editClaim->periksa, $request->all());
             $editedClaim = $this->claimSep->update($request, $editClaim);
         } else if($editClaim->periksa == 1) {

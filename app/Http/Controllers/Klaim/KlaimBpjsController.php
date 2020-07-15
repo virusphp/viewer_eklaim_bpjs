@@ -185,7 +185,8 @@ class KlaimBpjsController extends Controller
         $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
         $files = [];
         foreach($dates as $val) {
-            $file = $this->getDestination($val);
+            $file = $this->getOriginalDestination($val);
+            // dd($file);
             $datas = glob($file. '*');
           
             foreach ($datas as $key => $val) {
@@ -203,9 +204,13 @@ class KlaimBpjsController extends Controller
         return response()->download(public_path('download/'.$fileName),$fileName, $headers)->deleteFileAfterSend();
     }
 
+    public function getOriginalDestination($tanggal)
+    {
+        return 'storage'. DIRECTORY_SEPARATOR .'verifikasi'. DIRECTORY_SEPARATOR .tanggalPdf($tanggal). DIRECTORY_SEPARATOR;
+    }
+
     public function getDestination($tanggal)
     {
-        // return 'storage'. DIRECTORY_SEPARATOR .'verifikasi'. DIRECTORY_SEPARATOR .tanggalPdf($tanggal). DIRECTORY_SEPARATOR;
         return 'verifikasi' . DIRECTORY_SEPARATOR . tanggalPdf($tanggal) . DIRECTORY_SEPARATOR;
     }
 

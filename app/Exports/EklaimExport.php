@@ -96,6 +96,7 @@ class EklaimExport implements FromQuery, ShouldAutoSize, WithMapping, WithEvents
                 $event->sheet->getDelegate()->mergeCells('A3:F3');
             },
             AfterSheet::class => function(AfterSheet $event) {
+                
                 $styleArray = [
                     'borders' => [
                         'allBorders' => [
@@ -134,6 +135,7 @@ class EklaimExport implements FromQuery, ShouldAutoSize, WithMapping, WithEvents
                 $column = $last['column']; // column ke sing A - Z  tp  yang terakhir
 
                 $event->sheet->getDelegate()->getStyle('A4:'. $column.$row)->applyFromArray($styleArray);
+                
             }
         ];
     }

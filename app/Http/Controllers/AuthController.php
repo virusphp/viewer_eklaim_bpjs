@@ -12,6 +12,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        // dd("aku di sini");
         if(Auth::check()){
             return redirect()->route('home');
         }

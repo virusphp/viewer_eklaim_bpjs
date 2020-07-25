@@ -104,7 +104,6 @@ class KlaimBpjsController extends Controller
                 ];
             }
             $result = isset($query) ? ['data' => $query] : ['data' => 0];
-            // dd($result);
             return json_encode($result);
         } 
     }
@@ -180,20 +179,47 @@ class KlaimBpjsController extends Controller
 
     public function download(Request $request)
     { 
-        // dd($request->all());
-        $file = $this->getDestination($request->tgl_awal);
-        $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
+        // dd(formatTgl($request->tgl_awal), formatTgl($request->tgl_akhir));
+        $data = DB::table('sep_claim')
+        ->whereBetween('tgl_pulang', [
+            formatTgl($request->tgl_awal), 
+            formatTgl($request->tgl_akhir)
+        ])
+        ->where('jns_pelayanan', $request->jns_rawat)
+        ->get();
+
         $files = [];
-        foreach($dates as $val) {
-            $file = $this->getOriginalDestination($val);
-            // dd($file);
-            $datas = glob($file. '*');
-          
+        foreach($data as $val) {
+            $file = $this->getOriginalDestination($val->tgl_pulang);
+            $datas = glob($file. $val->file_claim);
             foreach ($datas as $key => $val) {
-                array_push($files, $val);
-            //   dd($val);
+               array_push($files, $val);
+            }
+
+        }
+
+        foreach($data as $val)
+        {
+            $file = $this->getOriginalDestination($val->tgl_sep);
+            $datas = glob($file. $val->file_claim);
+            foreach ($datas as $key => $val) {
+               array_push($files, $val);
             }
         }
+  
+        // $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
+        // // dd($dates);
+        // $files = [];
+        // foreach($dates as $val) {
+        //     $file = $this->getOriginalDestination($val);
+        //     dd($file);
+        //     $datas = glob($file. '*');
+          
+        //     foreach ($datas as $key => $val) {
+        //         array_push($files, $val);
+        //     //   dd($val);
+        //     }
+        // }
         // dd($files);
         $headers = array(
             'Content-Type' => 'application/zip',

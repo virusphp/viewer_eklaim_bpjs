@@ -15,7 +15,26 @@
         {{-- @include('simrs.sep.partials.radio_faskes') --}}
         <form id="form-download" method="POST" action="{{ route('viewer.download') }}" class="form-inline">
         @csrf
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <div class="col-offset-3">
+            <div class="form-inline">
+                <div class="form-check form-check-inline mr-1">
+                    <input class="form-check-input" type="radio" id="jns_rawat1" value="01" name="jns_rawat" checked>
+                    <label class="form-check-label" for="jns_rawat1">Rawat Jalan</label>
+                </div>
+                <div class="form-check form-check-inline mr-1">
+                    <input class="form-check-input" type="radio" id="jns_rawat2" value="02" name="jns_rawat">
+                    <label class="form-check-label" for="jns_rawat2">Rawat Inap</label>
+                </div>
+                <div class="form-check form-check-inline mr-1">
+                    <input class="form-check-input" type="radio" id="jns_rawat3" value="03" name="jns_rawat">
+                    <label class="form-check-label" for="jns_rawat3">IGD</label>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          
           <div class="col-offset-3">
             <div class="form-group">
               <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal" >
@@ -29,14 +48,13 @@
                           value="{{ date('d-m-Y') }}" 
                           placeholder="Tanggal Awal" name="tgl_awal"
                           type="text"/>
-                 
               </div>
             </div>
           </div>
 
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="col-offset-3">
             <div class="form-group">
               <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir" >

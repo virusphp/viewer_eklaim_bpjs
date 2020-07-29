@@ -1,6 +1,6 @@
 /vendor
 /.idea
-/config/database.php
+# /config/database.php
 /public/images
 /public/storage
 Homestead.json

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 Use DateTime;
-use PDF;
+// use PDF;
 use Auth;
 use Chumper\Zipper\Zipper;
 
@@ -379,11 +379,11 @@ class KlaimBpjsController extends Controller
         $dataSep->namaKlinik = $data->nama_poli;
         $dataSep->antrian = $data->antrian;
         $dataSep->asalFaskes = $peserta->response->peserta->provUmum->nmProvider;
-        $genPdf = PDF::loadView('pdf.invoiceSep', compact('dataSep', 'informasi'));
+        // $genPdf = PDF::loadView('pdf.invoiceSep', compact('dataSep', 'informasi'));
         $localDestination = 'public'.DIRECTORY_SEPARATOR.'verifikasi'.DIRECTORY_SEPARATOR.$dataSep->noMr.'_'.tanggal($dataSep->tglSep).DIRECTORY_SEPARATOR;
-        Storage::put($localDestination.$dataSep->noSep.'.pdf', $genPdf->output());
+        // Storage::put($localDestination.$dataSep->noSep.'.pdf', $genPdf->output());
         // File::move($path_source, $path_dest);
-        return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
+        // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
     }
 
     public function printRujukan($noSep)
@@ -402,7 +402,7 @@ class KlaimBpjsController extends Controller
         } 
         // $rujukan = $rujukan;
         // dd($rujukan);
-        $genPdf = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
-        return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
+        // $genPdf = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
+        // return $genPdf->stream('No SEP'.$dataSep->noSep.'.pdf');
     }
 }

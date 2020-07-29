@@ -205,8 +205,8 @@ class VerifikasiController extends Controller
             'file_pdf'   => $urlDestination . $fileName
         ]);
 
-        $genPdf = PDF::loadView('pdf.invoiceSep', compact('dataSep', 'informasi'));
-        Storage::put($localDestination . $fileName, $genPdf->output());
+        // $genPdf = PDF::loadView('pdf.invoiceSep', compact('dataSep', 'informasi'));
+        // Storage::put($localDestination . $fileName, $genPdf->output());
     }
 
     public function noAntrianPoli($data)

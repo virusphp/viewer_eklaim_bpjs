@@ -13,7 +13,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use DB;
 Use DateTime;
 use PDF;
-use File;
 use Auth;
 use Chumper\Zipper\Zipper;
 
@@ -185,7 +184,7 @@ class KlaimBpjsController extends Controller
             formatTgl($request->tgl_awal), 
             formatTgl($request->tgl_akhir)
         ])
-        ->where('jns_pelayanan', $request->jns_rawat)
+        ->where('jns_pelayanan', $request->jenisRawat)
         ->get();
 
         $files = [];
@@ -226,8 +225,8 @@ class KlaimBpjsController extends Controller
         );
         $fileName = tanggalPdf($request->tgl_awal)."_".tanggalPdf($request->tgl_akhir).'.zip';
         $zip = new Zipper();
-        $zip->make('download/'.$fileName)->add($files)->close();;
-        return response()->download(public_path('download/'.$fileName),$fileName, $headers)->deleteFileAfterSend();
+        $zip->make('download'.DIRECTORY_SEPARATOR.$fileName)->add($files)->close();;
+        return response()->download(public_path('download'.DIRECTORY_SEPARATOR.$fileName),$fileName, $headers)->deleteFileAfterSend();
     }
 
     public function getOriginalDestination($tanggal)

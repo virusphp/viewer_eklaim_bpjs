@@ -151,7 +151,6 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Cors\ServiceProvider::class,
-        // niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         'Chumper\Zipper\ZipperServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
@@ -214,7 +213,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // PACKAGES TAMBAHAN
-        // 'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
         'Zipper' => 'Chumper\Zipper\Zipper',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 

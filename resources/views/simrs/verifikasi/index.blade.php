@@ -19,16 +19,16 @@
           <div class="col-offset-3">
             <div class="form-inline">
                 <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat1" value="01" name="jns_rawat" checked>
-                    <label class="form-check-label" for="jns_rawat1">Rawat Jalan</label>
+                    <input class="form-check-input" type="radio" id="jns_rawat01" value="01" name="jenisRawat" checked>
+                    <label class="form-check-label" for="jns_rawat01">Rawat Jalan</label>
                 </div>
                 <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat2" value="02" name="jns_rawat">
-                    <label class="form-check-label" for="jns_rawat2">Rawat Inap</label>
+                    <input class="form-check-input" type="radio" id="jns_rawat02" value="02" name="jenisRawat">
+                    <label class="form-check-label" for="jns_rawat02">Rawat Inap</label>
                 </div>
                 <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat3" value="03" name="jns_rawat">
-                    <label class="form-check-label" for="jns_rawat3">IGD</label>
+                    <input class="form-check-input" type="radio" id="jns_rawat03" value="03" name="jenisRawat">
+                    <label class="form-check-label" for="jns_rawat03">IGD</label>
                 </div>
             </div>
           </div>

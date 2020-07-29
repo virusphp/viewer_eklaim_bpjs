@@ -80,11 +80,11 @@ return [
 
         'sqlsrv_prod' => [
             'driver' => 'sqlsrv',
-            'host' => '192.168.0.205\SQL2008',
-            // 'port' => '1433',
-            'database' => 'DBSIMRS',
-            'username' => 'sa',
-            'password' => 'RSUDserver2014',
+            'host' => env('DB_HOST', 'localhost'),
+            // 'port' => env('DB_PORT', '1433'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
         ],

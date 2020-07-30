@@ -11,7 +11,7 @@ use App\Service\Bpjs\Sep as Cetak;
 use Illuminate\Support\Facades\Storage;
 use App\Repository\Rujukan as RujukanInternal;
 use App\Service\Bpjs\Rujukan;
-use PDF;
+// use PDF;
 use DB;
 use Illuminate\Support\Str;
 
@@ -28,6 +28,7 @@ class VerifikasiController extends Controller
         $this->rujukan = new Rujukan();
         $this->surat = new RujukanInternal();
     }
+
 
     public function detailPeserta($noReg)
     {
@@ -123,8 +124,8 @@ class VerifikasiController extends Controller
             // dd($rujukan);
             $localDestination = $this->getDestination($tglSep);
             $status           = ['status' => 1, 'pesan' => tanggalPdf($tglSep) . '/' . $fileName];
-            $genPdf           = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
-            Storage::put($localDestination . $fileName, $genPdf->output());
+            // $genPdf           = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
+            // Storage::put($localDestination . $fileName, $genPdf->output());
             // dd("disini");
         } else {
             $request     = $this->rujukan->getRujukanRs($noRujukan);
@@ -147,8 +148,8 @@ class VerifikasiController extends Controller
             // dd($rujukan);
                 $localDestination = $this->getDestination($tglSep);
                 $status           = ['status' => 1, 'pesan' => tanggalPdf($tglSep) . '/' . $fileName];
-                $genPdf           = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
-                Storage::put($localDestination . $fileName, $genPdf->output());
+            //     $genPdf           = PDF::loadView('pdf.rujukan', compact('rujukan'), [], ['format' => [190, 100]]);
+            //     Storage::put($localDestination . $fileName, $genPdf->output());
             }
         }
         // dd($status);

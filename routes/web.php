@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
         Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');
         Route::get('/verifikasi/surat/print/{tgl}/{surat}/{rujukan}','VerifikasiController@printSurat')->name('surat.print');
+
+        Route::get('/getnas', 'KlaimBpjsController@getNas');
     });
 
     // Group Route Registrasi

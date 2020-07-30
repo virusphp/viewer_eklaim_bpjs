@@ -54,7 +54,7 @@ class CreateRequest extends FormRequest
 
         $validator->addImplicitExtension('dokumen', function($attribute, $value, $parameters) {
             if($value) {
-                return in_array($value->getClientOriginalExtension(), ['xls', 'xlsx', 'doc', 'docx', 'pdf']);
+                return in_array($value->getClientOriginalExtension(), ['xls', 'xlsx', 'doc', 'docx', 'pdf', 'PDF']);
             }
             
             return false;

@@ -50,9 +50,7 @@ return [
 
         'remote' => [
             'driver' => 'local',
-            'username' => 'samba',
-            'password' => 'samba123',
-            'root'   => '11.11.12.2/eklaim',
+            'root'   => '11.11.12.2',
         ],
 
         'public' => [

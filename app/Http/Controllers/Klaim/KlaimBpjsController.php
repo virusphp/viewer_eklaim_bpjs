@@ -176,6 +176,12 @@ class KlaimBpjsController extends Controller
         return response()->json($response);
     }
 
+    public function getNas()
+    {
+        $testNas = storage::disk('remote')->allDirectories();
+        dd($testNas); 
+    }
+
     public function download(Request $request)
     { 
         // dd(formatTgl($request->tgl_awal), formatTgl($request->tgl_akhir));

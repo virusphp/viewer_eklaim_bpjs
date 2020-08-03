@@ -15,6 +15,7 @@ Use DateTime;
 // use PDF;
 use Auth;
 use Chumper\Zipper\Zipper;
+use Telegram;
 
 class KlaimBpjsController extends Controller
 {
@@ -25,6 +26,12 @@ class KlaimBpjsController extends Controller
         $this->cetak = new cetak();
         $this->rujukan = new rujukan();
         $this->eklaim = new Eklaim();
+    }
+
+    public function getUpdates()
+    {
+        $updates = Telegram::getUpdates();
+        return (json_encode($updates));
     }
 
     public function index()
@@ -176,10 +183,10 @@ class KlaimBpjsController extends Controller
         return response()->json($response);
     }
 
-    public function getNas()
+    public function getNas($path)
     {
-        $testNas = storage::disk('remote')->allDirectories();
-        dd($testNas); 
+        $testNas = "11.11.12.2". \DIRECTORY_SEPARATOR. "eklaim" . \DIRECTORY_SEPARATOR. $path . \DIRECTORY_SEPARATOR . "1105R0010120V000002_AGUS_SUSILO_650627.pdf";
+        return $testNas;
     }
 
     public function download(Request $request)
@@ -233,6 +240,11 @@ class KlaimBpjsController extends Controller
         $zip = new Zipper();
         $zip->make('download'.DIRECTORY_SEPARATOR.$fileName)->add($files)->close();;
         return response()->download(public_path('download'.DIRECTORY_SEPARATOR.$fileName),$fileName, $headers)->deleteFileAfterSend();
+    }
+
+    public function getDestinationNas($tgl)
+    {
+        return "11.11.12.2". \DIRECTORY_SEPARATOR. "eklaim" . \DIRECTORY_SEPARATOR. tanggalPdf($tgl)  . \DIRECTORY_SEPARATOR;
     }
 
     public function getOriginalDestination($tanggal)

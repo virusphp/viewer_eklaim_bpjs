@@ -92,7 +92,7 @@ class ClaimSep
     public function simpan($request)
     {
         $unique = DB::table('sep_claim')->select('no_reg')->where('no_reg', $request->no_reg)->first();
-
+        
         if ($unique) {
             if ($unique->no_reg === $request->no_reg || $unique->no_reg === $request->no_reg && $unique->periksa == 2) {
                 $message = ['kode' => 422, 'pesan' => 'No Registrasi sudah ada mohon edit untuk mengubah'];
@@ -156,21 +156,21 @@ class ClaimSep
             
             $data = $this->handleFile($request, $pasien->nama_pasien);
 
-            $update = DB::table('sep_claim')
-                ->where('no_reg', $claimOld->no_reg)
-                ->update([
-                    'no_rm'         => $data['no_rm'],
-                    'no_sep'        => $data['no_sep'],
-                    'tgl_sep'       => $data['tgl_sep'],
-                    'tgl_pulang'    => $data['tgl_pulang'],
-                    'file_claim'    => $data['file_claim'],
-                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-                    'tgl_updated'   => date('Y-m-d'),
-                    'user_updated'  => $data['user_id']
-                ]);
+            // $update = DB::table('sep_claim')
+            //     ->where('no_reg', $claimOld->no_reg)
+            //     ->update([
+            //         'no_rm'         => $data['no_rm'],
+            //         'no_sep'        => $data['no_sep'],
+            //         'tgl_sep'       => $data['tgl_sep'],
+            //         'tgl_pulang'    => $data['tgl_pulang'],
+            //         'file_claim'    => $data['file_claim'],
+            //         'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+            //         'tgl_updated'   => date('Y-m-d'),
+            //         'user_updated'  => $data['user_id']
+            //     ]);
         }
 
-        return $this->Message($update, "update");
+        return $this->Message(200, "update");
     }
 
     public function delete($request)
@@ -206,7 +206,6 @@ class ClaimSep
             $urlPath = $data['tgl_pulang'] . '/' . $formatName;
 
             Storage::disk('public')->put($pathFile, File::get($file));
-            // dd(\storage_path());
 
             $data['file_claim'] = $formatName;
             $data['full_path'] = $urlPath;
@@ -214,7 +213,7 @@ class ClaimSep
 
         return $data;
     }
-
+    
     public function getDestination($tanggal)
     {
         return 'verifikasi' . DIRECTORY_SEPARATOR . tanggalPdf($tanggal) . DIRECTORY_SEPARATOR;

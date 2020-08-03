@@ -14,6 +14,7 @@
         "consoletvs/charts": "6.*",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
+        "irazasyed/telegram-bot-sdk": "dev-develop",
         "laravel/framework": "^5.8.0",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",

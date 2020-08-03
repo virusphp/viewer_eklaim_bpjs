@@ -17,6 +17,7 @@ Route::get('auth','AuthController@showLoginForm')->name('login');
 Route::post('auth','AuthController@loginproses')->name('login.post');
 Route::post('logout','AuthController@logout')->name('logout');
 
+
 // group route prefix admin
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 {
@@ -66,6 +67,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::get('/verifikasi/surat/print/{tgl}/{surat}/{rujukan}','VerifikasiController@printSurat')->name('surat.print');
 
         Route::get('/getnas', 'KlaimBpjsController@getNas');
+        Route::get('/getupdates', 'KlaimBpjsController@getupdates');
     });
 
     // Group Route Registrasi

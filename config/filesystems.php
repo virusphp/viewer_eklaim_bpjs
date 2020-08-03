@@ -48,9 +48,9 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'remote' => [
+        'nas' => [
             'driver' => 'local',
-            'root'   => '11.11.12.2',
+            'root'   => '11.11.12.2\\eklaim',
         ],
 
         'public' => [

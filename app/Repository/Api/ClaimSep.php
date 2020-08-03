@@ -117,30 +117,30 @@ class ClaimSep extends ApiRepository
     {
         $pasien = $this->cekPasien($request->no_rm);
         // dd($pasien);
-        // if (!$pasien) {
-        //     $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
-        // } else {
-        //     $data = $this->handleFile($request, $pasien->nama_pasien);
+        if (!$pasien) {
+            $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
+        } else {
+            $data = $this->handleFile($request, $pasien->nama_pasien);
         
-        //     $simpan = DB::table('sep_claim')
-        //         ->insert([
-        //             'no_reg'        => $data['no_reg'],
-        //             'no_rm'         => $data['no_rm'],
-        //             'no_sep'        => $data['no_sep'],
-        //             'tgl_sep'       => $data['tgl_sep'],
-        //             'tgl_pulang'    => $data['tgl_pulang'],
-        //             'file_claim'    => $data['file_claim'],
-        //             'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-        //             'tgl_created'   => date('Y-m-d'),
-        //             'user_created'  => $data['user_id']
-        //         ]);
+            $simpan = DB::table('sep_claim')
+                ->insert([
+                    'no_reg'        => $data['no_reg'],
+                    'no_rm'         => $data['no_rm'],
+                    'no_sep'        => $data['no_sep'],
+                    'tgl_sep'       => $data['tgl_sep'],
+                    'tgl_pulang'    => $data['tgl_pulang'],
+                    'file_claim'    => $data['file_claim'],
+                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+                    'tgl_created'   => date('Y-m-d'),
+                    'user_created'  => $data['user_id']
+                ]);
 
-        //     if ($simpan) {
-        //          $message = $this->Message($simpan, "simpan");
+            if ($simpan) {
+                 $message = $this->Message($simpan, "simpan");
                  $this->sendMessage($pasien);
-        //     }
-        // }
-        // return $message;
+            }
+        }
+        return $message;
     }
 
     public function update($request, $claimOld)

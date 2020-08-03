@@ -5,6 +5,21 @@ function rupiah($nilai)
     return "Rp. ". number_format(ceil($nilai), "0",",",".");
 }
 
+function kelamin($nilai)
+{
+	return $nilai == 1 ? "Perempuan" : "Laki-laki";
+}
+
+function maskCard($nilai) 
+{
+	$leng = strlen($nilai);
+	for($i=0; $i<$leng-4;$i++) {
+		if($nilai[$i] == '-'){continue;}
+		$nilai[$i] = 'X';
+	}
+	return $nilai;
+}
+
 function bulan($tanggal)
 {
 	$bulan = array (

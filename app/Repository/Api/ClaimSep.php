@@ -7,7 +7,7 @@ use DB;
 use File;
 use Illuminate\Support\Facades\Storage;
 
-class ClaimSep
+class ClaimSep extends ApiRepository
 {
     public function getAll()
     {
@@ -108,36 +108,39 @@ class ClaimSep
 
     private function cekPasien($noRm)
     {
-        return DB::table('pasien')->select('nama_pasien')->where('no_rm', $noRm)->first();
+        return DB::table('pasien as p')->select('p.nama_pasien', 'p.tempat_lahir', 'p.jns_kel', 'pp.no_kartu')
+                ->join('penjamin_pasien as pp', 'p.no_rm', '=', 'pp.no_rm')
+                ->where('p.no_rm', $noRm)->first();
     }
 
     private function handleSimpan($request) 
     {
         $pasien = $this->cekPasien($request->no_rm);
-
-        if (!$pasien) {
-            $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
-        } else {
-            $data = $this->handleFile($request, $pasien->nama_pasien);
+        // dd($pasien);
+        // if (!$pasien) {
+        //     $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
+        // } else {
+        //     $data = $this->handleFile($request, $pasien->nama_pasien);
         
-            $simpan = DB::table('sep_claim')
-                ->insert([
-                    'no_reg'        => $data['no_reg'],
-                    'no_rm'         => $data['no_rm'],
-                    'no_sep'        => $data['no_sep'],
-                    'tgl_sep'       => $data['tgl_sep'],
-                    'tgl_pulang'    => $data['tgl_pulang'],
-                    'file_claim'    => $data['file_claim'],
-                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-                    'tgl_created'   => date('Y-m-d'),
-                    'user_created'  => $data['user_id']
-                ]);
+        //     $simpan = DB::table('sep_claim')
+        //         ->insert([
+        //             'no_reg'        => $data['no_reg'],
+        //             'no_rm'         => $data['no_rm'],
+        //             'no_sep'        => $data['no_sep'],
+        //             'tgl_sep'       => $data['tgl_sep'],
+        //             'tgl_pulang'    => $data['tgl_pulang'],
+        //             'file_claim'    => $data['file_claim'],
+        //             'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+        //             'tgl_created'   => date('Y-m-d'),
+        //             'user_created'  => $data['user_id']
+        //         ]);
 
-            if ($simpan) {
-                 $message = $this->Message($simpan, "simpan");
-            }
-        }
-        return $message;
+        //     if ($simpan) {
+        //          $message = $this->Message($simpan, "simpan");
+                 $this->sendMessage($pasien);
+        //     }
+        // }
+        // return $message;
     }
 
     public function update($request, $claimOld)
@@ -155,6 +158,7 @@ class ClaimSep
             }
             
             $data = $this->handleFile($request, $pasien->nama_pasien);
+          
 
             // $update = DB::table('sep_claim')
             //     ->where('no_reg', $claimOld->no_reg)

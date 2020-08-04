@@ -2,6 +2,7 @@
 
 namespace App\Repository\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use DB;
 
 class ApiRepository
 {
@@ -9,7 +10,7 @@ class ApiRepository
     {
         $jumlahUpload = $this->getJumlah($pegawai->kd_pegawai);
         $text = $this->parsingMessage($pasien, $pegawai, $pelayanan, $jumlahUpload);
-        // dd($text, env('TELEGRAM_GROUP_ID'));
+        // // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_GROUP_ID'),
             'parse_mode' => 'HTML',
@@ -35,8 +36,8 @@ class ApiRepository
     {
         $tglCreated = date('Y-m-d');
         return DB::table('sep_claim')->where([
-            ['tgl_created','=', $tglCreated],
-            ['user_created','=', $kdPegawai]
+            ['user_created', $kdPegawai],
+            ['tgl_created', $tglCreated]
         ])->count();
     }
 

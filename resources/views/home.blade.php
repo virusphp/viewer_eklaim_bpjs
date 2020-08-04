@@ -13,7 +13,7 @@
   <div class="card card-accent-info align-items-center">
     <div class="header-info">
       <p>
-        Informasi Klaim RSUD Kraton Pekalongan Bulan {{ bulan(date('Y-m-d')) }} Tahun {{ date('Y') }}
+        Informasi Klaim RSUD Kraton Pekalongan Tahun {{ date('Y') }}
       </p> 
     </div>
   </div>
@@ -23,7 +23,7 @@
       <div class="card text-white bg-hijau">
         <div class="card-body pb-0">
           <div class="text-box">
-            <h3>{{ $rajal }}</h3>
+            <p class="rs-count">{{ $rajal }}</p>
           </div>
           <div class="icon">
             <i class="fa fa-stethoscope"></i>
@@ -39,7 +39,7 @@
       <div class="card text-white bg-kuning">
         <div class="card-body pb-0">
           <div class="text-box">
-            <h3>{{ $ranap }}</h3>
+            <p class="rs-count">{{ $ranap }}</p>
           </div>
           <div class="icon">
             <i class="fa fa-bed"></i>
@@ -55,7 +55,7 @@
       <div class="card text-white bg-merah-muda">
         <div class="card-body pb-0">
           <div class="text-box">
-            <h3>{{ $radar }}</h3>
+            <p class="rs-count">{{ $radar }}</p>
           </div>
           <div class="icon">
             <i class="fa fa-ambulance"></i>
@@ -71,7 +71,7 @@
       <div class="card text-white bg-choco">
         <div class="card-body pb-0">
           <div class="text-box">
-            <h3>{{ $rajal + $ranap + $radar }}</h3>
+            <p class="rs-count">{{ $rajal + $ranap + $radar }}</p>
           </div>
           <div class="icon">
             <i class="fa fa-building"></i>

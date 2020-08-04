@@ -303,3 +303,9 @@ a.btn i.tengah {
 .modal-sm {
     max-width: 408px;
 }
+
+.rs-count {
+    font-size: 25pt;
+    font-weight: bold;
+    
+}

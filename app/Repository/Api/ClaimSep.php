@@ -77,10 +77,10 @@ class ClaimSep extends ApiRepository
 
     public function getStatus($jnsRawat)
     {
-        $date = date('m');
+        $date = date('Y');
         // dd($date);
         return DB::table('SEP_CLAIM')
-            ->whereMonth('tgl_sep', '=', $date)
+            ->whereYear('tgl_sep', '=', $date)
             ->whereRaw('LEN(no_sep) > 15')
             ->where([
                 ['jns_pelayanan', '=', $jnsRawat],
@@ -160,18 +160,23 @@ class ClaimSep extends ApiRepository
             $data = $this->handleFile($request, $pasien->nama_pasien);
           
 
-            // $update = DB::table('sep_claim')
-            //     ->where('no_reg', $claimOld->no_reg)
-            //     ->update([
-            //         'no_rm'         => $data['no_rm'],
-            //         'no_sep'        => $data['no_sep'],
-            //         'tgl_sep'       => $data['tgl_sep'],
-            //         'tgl_pulang'    => $data['tgl_pulang'],
-            //         'file_claim'    => $data['file_claim'],
-            //         'jns_pelayanan' => substr($data['no_reg'], 0, 2),
-            //         'tgl_updated'   => date('Y-m-d'),
-            //         'user_updated'  => $data['user_id']
-            //     ]);
+            $update = DB::table('sep_claim')
+                ->where('no_reg', $claimOld->no_reg)
+                ->update([
+                    'no_rm'         => $data['no_rm'],
+                    'no_sep'        => $data['no_sep'],
+                    'tgl_sep'       => $data['tgl_sep'],
+                    'tgl_pulang'    => $data['tgl_pulang'],
+                    'file_claim'    => $data['file_claim'],
+                    'jns_pelayanan' => substr($data['no_reg'], 0, 2),
+                    'tgl_updated'   => date('Y-m-d'),
+                    'user_updated'  => $data['user_id']
+                ]);
+
+            if ($update) {
+                $message = $this->Message($update, "simpan");
+                //  $this->sendMessage($pasien);
+            }
         }
 
         return $this->Message(200, "update");

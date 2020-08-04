@@ -113,10 +113,17 @@ class ClaimSep extends ApiRepository
                 ->where('p.no_rm', $noRm)->first();
     }
 
+    private function cekPegawai($kdPegawai)
+    {
+        return DB::table('pegawai')->select('kd_pegawai','nama_pegawai')->where('kd_pegawai', $kdPegawai)->first();
+    }
+
     private function handleSimpan($request) 
     {
         $pasien = $this->cekPasien($request->no_rm);
-        // dd($pasien);
+        $pegawai = $this->cekPegawai($request->user_id);
+        $pelayanan = substr($request->no_reg, 0, 2);
+        // dd($pelayanan);
         if (!$pasien) {
             $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
         } else {
@@ -137,7 +144,7 @@ class ClaimSep extends ApiRepository
 
             if ($simpan) {
                  $message = $this->Message($simpan, "simpan");
-                 $this->sendMessage($pasien);
+                 $this->sendMessage($pasien,$pegawai,$pelayanan);
             }
         }
         return $message;

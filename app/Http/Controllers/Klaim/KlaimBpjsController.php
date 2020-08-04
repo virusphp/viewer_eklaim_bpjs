@@ -31,7 +31,8 @@ class KlaimBpjsController extends Controller
     public function getUpdates()
     {
         $updates = Telegram::getUpdates();
-        return (json_encode($updates));
+        $token = env('TELEGRAM_BOT_TOKEN');
+        return (json_encode($token));
     }
 
     public function index()

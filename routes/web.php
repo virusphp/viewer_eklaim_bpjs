@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
 {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('verifikasi/chart/eklaim', 'HomeController@chartAjax')->name('chart.eklaim');
-    // Group Route Master
+    // Group Route Masteear
     Route::group(['namespace' => 'Klaim'], function() {
         // autocompleted
         Route::get('/bpjs/kelas','BpjsController@getKelas')->name('bpjs.kelas');

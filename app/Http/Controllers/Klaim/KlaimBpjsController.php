@@ -15,7 +15,7 @@ Use DateTime;
 // use PDF;
 use Auth;
 use Chumper\Zipper\Zipper;
-use Telegram;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class KlaimBpjsController extends Controller
 {

@@ -137,7 +137,7 @@ class ClaimSep extends ApiRepository
 
             if ($simpan) {
                  $message = $this->Message($simpan, "simpan");
-                //  $this->sendMessage($pasien);
+                 $this->sendMessage($pasien);
             }
         }
         return $message;

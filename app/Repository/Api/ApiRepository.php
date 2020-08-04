@@ -7,7 +7,6 @@ class ApiRepository
 {
     protected function sendMessage($params)
     {
-        
         $text = $this->parsingMessage($params);
         // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
@@ -20,7 +19,7 @@ class ApiRepository
     protected function parsingMessage($params)
     {
         $text = "Data Viewer :\n"
-                ."🙍🏻‍♂️ : $params->nama_pasien\n"
+                ."🙍🏻‍♂️ : ".maskCard($params->nama_pasien). "\n"
                 ."💳‍ : ".maskCard($params->no_kartu)."\n"
                 ."🏠 : $params->tempat_lahir\n"
                 ."🚻 : ".kelamin($params->jns_kel) ."\n"

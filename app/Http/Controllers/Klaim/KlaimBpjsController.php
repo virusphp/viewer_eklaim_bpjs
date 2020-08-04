@@ -15,7 +15,7 @@ Use DateTime;
 // use PDF;
 use Auth;
 use Chumper\Zipper\Zipper;
-use Telegram\Bot\Traits\Telegram;
+use Telegram;
 
 class KlaimBpjsController extends Controller
 {

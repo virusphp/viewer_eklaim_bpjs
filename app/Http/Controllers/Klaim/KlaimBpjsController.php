@@ -15,7 +15,7 @@ Use DateTime;
 // use PDF;
 use Auth;
 use Chumper\Zipper\Zipper;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Traits\Telegram;
 
 class KlaimBpjsController extends Controller
 {
@@ -32,7 +32,8 @@ class KlaimBpjsController extends Controller
     {
         $updates = Telegram::getUpdates();
         $token = env('TELEGRAM_BOT_TOKEN');
-        return (json_encode($token));
+        $data = [$token, $updates];
+        return (json_encode($data));
     }
 
     public function index()

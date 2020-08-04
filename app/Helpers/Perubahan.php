@@ -7,7 +7,7 @@ function rupiah($nilai)
 
 function kelamin($nilai)
 {
-	return $nilai == 1 ? "Perempuan" : "Laki-laki";
+	return $nilai == 1 ? "Laki-laki" : "Perempuan";
 }
 
 function maskCard($nilai) 

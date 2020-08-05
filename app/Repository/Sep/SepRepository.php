@@ -8,9 +8,14 @@ class SepRepository
 {
     protected function sendMessage($data, $user_verified, $now)
     {
-        $params = $this->getDataClaim($data->reg);
+        $params = $this->getDataClaim($data->no_reg);
         $jumlah = $this->getJumlah($now);
-        $text = $this->parsingMessage($params, $user_verified, $now, $jumlah);
+        if ($data->periksa == 2) {
+            $text = $this->parsingMessagePending($params, $user_verified, $now, $data->pesan );
+        } else {
+            $text = $this->parsingMessage($params, $user_verified, $now, $jumlah);
+        }
+        // dd($data->periksa, $params, $jumlah, $text); 
         
         // // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
@@ -20,14 +25,25 @@ class SepRepository
         ]);
     }
 
+    protected function parsingMessagePending($params, $user_verified, $now, $pesan)
+    {
+        $text = "Pending Verifikasi Data :\n"
+                ."🙍🏻‍♂️ : $params->nama_pasien\n"
+                ."💳‍ : ".maskCard($params->no_sep)."\n"
+                ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
+                ."Catatan : $pesan\n"
+                ."Di Verifikasi Oleh : Testing\n"
+                ."Data Pending pada : $now";
+        return $text;
+    }
+
     protected function parsingMessage($params, $user_verified, $now, $jumlah)
     {
         $text = "Verifikasi Data :\n"
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
                 ."💳‍ : ".maskCard($params->no_sep)."\n"
-                ."🚻 : ".kelamin($params->jns_kel) ."\n"
                 ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
-                ."User Verifikasi : $user_verified\n"
+                ."Di Verifikasi Oleh : Testing\n"
                 ."Jumlah Verified Hari ini : $jumlah\n"
                 ."Data Terverifikasi pada : $now";
         return $text;

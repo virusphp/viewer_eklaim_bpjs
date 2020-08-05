@@ -99,7 +99,7 @@ Class Eklaim extends SepRepository
 
     public function verified($data)
     {
-        // dd($data->periksa, $data->no_reg, $data->pesan);
+        
         $now = date('Y-m-d');
         if (Auth::user()->role == "developer") {
             if ($data->periksa == 1) {
@@ -125,6 +125,7 @@ Class Eklaim extends SepRepository
 
         $update = $this->updateVerified($pesan, $data, $user_verified, $now);
         if ($update) {
+            // dd($update,$user_verified, $now );
             $this->sendMessage($data, $user_verified, $now);
         }
 

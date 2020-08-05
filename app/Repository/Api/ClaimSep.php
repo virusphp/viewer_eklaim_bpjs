@@ -144,7 +144,7 @@ class ClaimSep extends ApiRepository
 
             if ($simpan) {
                  $message = $this->Message($simpan, "simpan");
-                 $this->sendMessage($pasien,$pegawai,$pelayanan);
+                 $this->sendMessage($pasien,$pegawai,$pelayanan,"created");
             }
         }
         return $message;
@@ -153,6 +153,8 @@ class ClaimSep extends ApiRepository
     public function update($request, $claimOld)
     {
         $pasien = $this->cekPasien($request->no_rm);
+        $pegawai = $this->cekPegawai($request->user_id);
+        $pelayanan = substr($request->no_reg, 0, 2); 
         
         if (!$pasien) {
              $message = ['kode' => 201, 'pesan' => 'No RM tidak di ketahui'];
@@ -166,7 +168,6 @@ class ClaimSep extends ApiRepository
             
             $data = $this->handleFile($request, $pasien->nama_pasien);
           
-
             $update = DB::table('sep_claim')
                 ->where('no_reg', $claimOld->no_reg)
                 ->update([
@@ -182,7 +183,7 @@ class ClaimSep extends ApiRepository
 
             if ($update) {
                 $message = $this->Message($update, "simpan");
-                //  $this->sendMessage($pasien);
+                // $this->sendMessage($pasien,$pegawai,$pelayanan,"updated");
             }
         }
 

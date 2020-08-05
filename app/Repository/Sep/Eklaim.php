@@ -4,7 +4,7 @@ namespace App\Repository\Sep;
 use DB;
 use Auth;
 
-Class Eklaim
+Class Eklaim extends SepRepository
 {
     public function getView($request)
     {
@@ -124,6 +124,9 @@ Class Eklaim
         }
 
         $update = $this->updateVerified($pesan, $data, $user_verified, $now);
+        if ($update) {
+            $this->sendMessage($data, $user_verified, $now);
+        }
 
         // $update = DB::table('sep_claim')->where('no_reg', $data->no_reg)
         //             ->update([

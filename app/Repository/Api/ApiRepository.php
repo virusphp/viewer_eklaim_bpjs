@@ -6,10 +6,11 @@ use DB;
 
 class ApiRepository
 {
-    protected function sendMessage($pasien, $pegawai, $pelayanan)
+    protected function sendMessage($pasien, $pegawai, $pelayanan, $status)
     {
         $jumlahUpload = $this->getJumlah($pegawai->kd_pegawai);
-        $text = $this->parsingMessage($pasien, $pegawai, $pelayanan, $jumlahUpload);
+        $text = $this->parsingMessage($pasien, $pegawai, $pelayanan, $status, $jumlahUpload);
+        
         // // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_GROUP_ID'),
@@ -18,7 +19,7 @@ class ApiRepository
         ]);
     }
 
-    protected function parsingMessage($params, $pegawai, $pelayanan, $jumlah)
+    protected function parsingMessage($params, $pegawai, $pelayanan, $status, $jumlah)
     {
         $text = "Data Viewer :\n"
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
@@ -26,7 +27,7 @@ class ApiRepository
                 ."🏠 : $params->tempat_lahir\n"
                 ."🚻 : ".kelamin($params->jns_kel) ."\n"
                 ."🏥 : ".jenisRawat($pelayanan) ."\n"
-                ."User : $pegawai->nama_pegawai\n"
+                ."User $status : $pegawai->nama_pegawai\n"
                 ."Jumlah Upload Hari ini : $jumlah\n"
                 ."Data berhasil Di uploads";
         return $text;

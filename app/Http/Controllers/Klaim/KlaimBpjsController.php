@@ -100,8 +100,8 @@ class KlaimBpjsController extends Controller
                     'sep'         => $q->no_sep,
                     'no_rm'       => $q->no_rm,
                     'nama_pasien' => $q->nama_pasien,
+                    'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                     'tgl_plg'     => date('d-m-Y', strtotime($q->tgl_pulang)),
-                    // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                     'aksi'        => $btnAction,
                     'checked'     => $btnVerified,
                     'catatan'     => $catatan,
@@ -148,7 +148,6 @@ class KlaimBpjsController extends Controller
         {
             $editKlaim = $this->eklaim->cari($request->no_reg);
 
-            // dd($editKlaim);
             if ($editKlaim) {
                 $result = $this->eklaim->checked($request);
             } else {

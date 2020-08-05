@@ -93,11 +93,10 @@
           <thead>
             <tr>
               <th class="check-all" width="20"><input type="checkbox"> All</th>
-              <th>No Kartu</th>
               <th>No Sep</th>
               <th>No RM</th>
               <th>Nama Pasien</th>
-              <th>Tgl Pulang</th>
+              <th>Tgl Sep</th>
               <th>Tgl Pulang</th>
               <th>View</th>
               <th>
@@ -537,11 +536,10 @@
                 "order" : [[1, "asc"]],
                 "columns": [
                     {"mData": "list_check"},
-                    {"mData": "no_kartu", "width": "15"},
                     {"mData": "sep", "width": "15"},
                     {"mData": "no_rm"},
                     {"mData": "nama_pasien"},
-                    {"mData": "tgl_plg"},
+                    {"mData": "tgl_sep"},
                     {"mData": "tgl_plg"},
                     {"mData": "aksi"},
                     {"mData": "checked"},

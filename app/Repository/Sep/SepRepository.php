@@ -22,14 +22,14 @@ class SepRepository
 
     protected function parsingMessage($params, $user_verified, $now, $jumlah)
     {
-        $text = "Data Viewer :\n"
+        $text = "Verifikasi Data :\n"
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
                 ."💳‍ : ".maskCard($params->no_sep)."\n"
                 ."🚻 : ".kelamin($params->jns_kel) ."\n"
                 ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
-                ."User Verifikasi : $user_verified verifikasi pada : $now\n"
+                ."User Verifikasi : $user_verified\n"
                 ."Jumlah Verified Hari ini : $jumlah\n"
-                ."Data berhasil Di uploads";
+                ."Data Terverifikasi pada : $now";
         return $text;
     }
 

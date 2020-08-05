@@ -43,7 +43,7 @@ class SepRepository
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
                 ."💳‍ : ".maskCard($params->no_sep)."\n"
                 ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
-                ."Di Verifikasi Oleh : Testing\n"
+                ."Di Verifikasi Oleh : $user_verified\n"
                 ."Jumlah Verified Hari ini : $jumlah\n"
                 ."Data Terverifikasi pada : $now";
         return $text;

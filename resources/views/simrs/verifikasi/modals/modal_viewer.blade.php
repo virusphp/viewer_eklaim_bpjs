@@ -20,6 +20,7 @@
        
       </div>
       <div class="modal-footer">
+        <button type="button" id="modal-verif" class="btn btn-sm" data-dismiss="modal"></button>
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

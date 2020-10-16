@@ -64,31 +64,47 @@ class KlaimBpjsController extends Controller
                 }
                 // dd();
                 if ($q->periksa == 0 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created) )  {
-                    $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verify</button>
+                    $btnVerified = '<button type="button" value="1" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="verifikasi-eklaim">Verify</button>
                                      <input type="checkbox" id="ver-eklaim" disabled>';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 } else if ($q->checked == 0 && $user == "operator") {
                     // $btnVerified = '<button type="button" class="btn btn-sm btn-primary" disabled>Verified</button>
                     //                  <input type="checkbox" id="ver-eklaim" disabled>';
-                    $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="checklist-eklaim">Ceklist</button>
+                    $btnVerified = '<button type="button" value="1" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-primary" id="checklist-eklaim">Ceklist</button>
                                      <input type="checkbox" id="check-eklaim" disabled>';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 } else if ($q->periksa == 1 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created)){
-                    $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">Verified</button>
+                    $btnVerified = '<button type="button" value="0" data-nilai="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="verifikasi-eklaim">Verified</button>
                                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 } else if ($q->checked == 1 && $user == "operator") {
-                    $btnVerified = '<button type="button" value="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="checklist-eklaim">Unchecklist</button>
+                    $btnVerified = '<button type="button" value="0" data-nilai="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-success" id="checklist-eklaim">Unchecklist</button>
                                     <input type="checkbox" id="check-eklaim" checked disabled> ';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 } else if ($q->periksa == 2 && ($user == "developer" || $user == "admin" || $user == "bpjs" || $userUpload == $q->user_created)) {
-                    $btnVerified = '<button type="button" value="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-secondary" id="verifikasi-eklaim">Pending</button>
+                    $btnVerified = '<button type="button" value="1" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-secondary" id="verifikasi-eklaim">Pending</button>
                                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="1" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 } else {
                     $btnVerified = '<button type="button" class="btn btn-sm btn-success" disabled>Verified</button>
                     <input type="checkbox" id="ver-eklaim" checked disabled> ';
+                    $btnAction = '<button type="button" value="'.$fileClaim.'" data-nilai="0" data-reg="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
+                                <i class="icon-eye"></i>
+                                </button>';
                 }
                     // 'tgl_sep'     => date('d-m-Y', strtotime($q->tgl_sep)),
                 $checkbox = '<td><input data-reg="'.$q->no_reg.'" type="checkbox" value="1" name="checkModule[]" class="check-access" id="check-access"> </td>';
-                $btnAction = '<button type="button" value="'.$fileClaim.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-eklaim">
-                               <i class="icon-eye"></i>
-                             </button>';
+              
                 
                 $catatan = '<button type="button" value="'.$q->no_reg.'" class="btn btn-sm btn-block btn-outline-dark" id="viewer-catatan">
                              Catatan

@@ -219,8 +219,8 @@
         })
     }
     
-    $(document).on('click', '#verifikasi-eklaim', function() {
-      var nilai = $(this).val(),
+    $(document).on('click', '#verifikasi-eklaim, #modal-verif', function() {
+      var nilai = $(this).data("nilai"),
           no_reg = $(this).data("reg");
           if (nilai == 1) {
             icon = "success";
@@ -447,18 +447,34 @@
     })
 
     $(document).on('click', '#viewer-eklaim', function(e) {
-      var viewer = $(this).val();
+      var viewer = $(this).val(),
+          nilai = $(this).data('nilai'),
+          noreg = $(this).data('reg');
       $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
       options = {
         'backdrop' : 'static'
       },
       $('#id-viewer').attr('src', viewer)
+      $('#modal-verif').attr('data-nilai', nilai)
+      $('#modal-verif').attr('data-reg', noreg)
+      if (nilai === 1) {
+        $('#modal-verif').addClass('btn-primary')
+        $('#modal-verif').prepend("<span>Verify</span>")
+      } else {
+        $('#modal-verif').addClass('btn-success')
+        $('#modal-verif').prepend("<span>Verified</span>")
+      }
+
       $('#modal-viewer').modal(options);
     });
 
     $('#modal-viewer').on('hidden.bs.modal', function(){
         $('#id-viewer').remove();
         $('#viewer').append('<embed id="id-viewer" src=""#toolbar=1&navpanes=0&scrollbar=0" type="application/pdf" width="1020" height="500">');
+        $('#modal-verif').removeClass('btn-primary')
+        $('#modal-verif').removeClass('btn-success')
+        $('#modal-verif span').remove()
+        
     });
 
     function ajaxLoad(){

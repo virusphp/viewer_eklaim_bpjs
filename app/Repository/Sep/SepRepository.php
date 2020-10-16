@@ -15,7 +15,6 @@ class SepRepository
         } else {
             $text = $this->parsingMessage($params, $user_verified, $now, $jumlah);
         }
-        // dd($data->periksa, $params, $jumlah, $text); 
         
         // // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
@@ -32,7 +31,7 @@ class SepRepository
                 ."💳‍ : ".maskCard($params->no_sep)."\n"
                 ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
                 ."Catatan : $pesan\n"
-                ."Di Verifikasi Oleh : Testing\n"
+                ."Di Verifikasi Oleh : $user_verified\n"
                 ."Data Pending pada : $now";
         return $text;
     }

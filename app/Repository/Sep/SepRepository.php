@@ -28,7 +28,7 @@ class SepRepository
     {
         $text = "Pending Verifikasi Data :\n"
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
-                ."💳‍ : ".maskCard($params->no_sep)."\n"
+                ."💳‍ : $params->no_sep\n"
                 ."🏥 : ".jenisRawat($params->jns_pelayanan) ."\n"
                 ."Catatan : $pesan\n"
                 ."Di Verifikasi Oleh : $user_verified\n"

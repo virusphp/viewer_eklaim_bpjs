@@ -474,7 +474,8 @@
         $('#modal-verif').removeClass('btn-primary')
         $('#modal-verif').removeClass('btn-success')
         $('#modal-verif span').remove()
-        
+        $('#modal-verif').removeData('nilai')
+        $('#modal-verif').removeData('reg')
     });
 
     function ajaxLoad(){

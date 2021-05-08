@@ -19,7 +19,7 @@ use Telegram;
 
 class KlaimBpjsController extends Controller
 {
-    protected $conn, $cetak, $reg, $rujukan;
+    protected $conn, $cetak, $reg, $rujukan, $eklaim;
 
     public function __construct()
     {
@@ -46,7 +46,7 @@ class KlaimBpjsController extends Controller
             $user = Auth::user()->role;
             $userUpload = Auth::user()->kd_pegawai;
             $data = $this->eklaim->getView($request);
-            // dd($request->all());
+            // dd($data);
             foreach($data as $q) {
                 $tgl = new DateTime($q->tgl_sep);
                 // $fileClaim =  asset($this->getDestination($q->tgl_sep). $q->file_claim);
@@ -206,13 +206,16 @@ class KlaimBpjsController extends Controller
 
     public function download(Request $request)
     { 
-        // dd(formatTgl($request->tgl_awal), formatTgl($request->tgl_akhir));
+        // dd(formatTgl($request->tgl_awal), formatTgl($request->tgl_akhir), $request->status_verified);
         $data = DB::table('sep_claim')
         ->whereBetween('tgl_pulang', [
             formatTgl($request->tgl_awal), 
             formatTgl($request->tgl_akhir)
         ])
-        ->where('jns_pelayanan', $request->jenisRawat)
+        ->where([
+            ['jns_pelayanan', $request->jenisRawat],
+            ['periksa', $request->status_verified],
+        ])
         ->get();
 
         $files = [];
@@ -222,7 +225,6 @@ class KlaimBpjsController extends Controller
             foreach ($datas as $key => $val) {
                array_push($files, $val);
             }
-
         }
 
         foreach($data as $val)

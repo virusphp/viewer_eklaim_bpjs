@@ -1,86 +1,83 @@
 @extends('layouts.verifikasi.app')
 
 @section('breadcrumb')
-<ol class="breadcrumb">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
     <li class="breadcrumb-item">
-      Master
+     <a href="{{ route('viewer.index') }}">Viewer</a> 
     </li>
-
-    <li class="breadcrumb-item">
-      <a href="{{ route('viewer.index') }}">Viewer</a>
-    </li>
-    <li class="breadcrumb-item active">Index</li>
-    <li class="breadcrumb-menu d-md-down-none mfe-2">
-      <div class="form-inline">
-        {{-- @include('simrs.sep.partials.radio_faskes') --}}
-        <form id="form-download" method="POST" action="{{ route('viewer.download') }}" class="form-inline">
-        @csrf
-        <div class="col-md-4">
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu">
+      <form id="form-download" method="POST" action="{{ route('viewer.download') }}" class="form-inline">
+      @csrf
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <div class="col-offset-3">
             <div class="form-inline">
-                <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat01" value="01" name="jenisRawat" checked>
-                    <label class="form-check-label" for="jns_rawat01">Rawat Jalan</label>
-                </div>
-                <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat02" value="02" name="jenisRawat">
-                    <label class="form-check-label" for="jns_rawat02">Rawat Inap</label>
-                </div>
-                <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" id="jns_rawat03" value="03" name="jenisRawat">
-                    <label class="form-check-label" for="jns_rawat03">IGD</label>
-                </div>
+              <div class="form-check form-check-inline my-1">
+                  <input class="form-check-input" type="radio" id="jns_rawat01" value="01" name="jenisRawat" checked>
+                  <label class="form-check-label" for="jns_rawat01">Rawat Jalan</label>
+              </div>
+              <div class="form-check form-check-inline my-1">
+                  <input class="form-check-input" type="radio" id="jns_rawat02" value="02" name="jenisRawat">
+                  <label class="form-check-label" for="jns_rawat02">Rawat Inap</label>
+              </div>
+              <div class="form-check form-check-inline my-1">
+                  <input class="form-check-input" type="radio" id="jns_rawat03" value="03" name="jenisRawat">
+                  <label class="form-check-label" for="jns_rawat03">IGD</label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          
           <div class="col-offset-3">
-            <div class="form-group">
-              <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal" >
-                  <label class="file-download">Tgl Awal </label>
-                  <div class="input-group-append">
-                      <span class="input-group-text input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                      </span>
-                  </div>                        
-                  <input class="form-control" id="tgl_awal" 
-                          value="{{ date('d-m-Y') }}" 
-                          placeholder="Tanggal Awal" name="tgl_awal"
-                          type="text"/>
+            <select class="form-control form-control-sm" name="status_verified" id="status-verified">
+              <option value="0">Non Verify</option>
+              <option value="1">Verified</option>
+              <option value="2">Pending</option>
+            </select>
+          </div>
+          <div class="col-offset-3">
+            <div class="form-inline">
+
+              <div class="form-group">
+                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal" >
+                  <label class="mx-2 my-1" for="tgl_awal">Tgl Awal</label>
+                    <div class="input-group-append">
+                        <span class="input-group-text input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>                        
+                    <input class="form-control form-control-sm" id="tgl_awal" 
+                            value="{{ date('d-m-Y') }}" 
+                            placeholder="Tanggal Awal" name="tgl_awal"
+                            type="text"/>
+                </div>
               </div>
+              <div class="form-group">
+                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir" >
+                    <label class="mx-2 my-1" for="tgl_akhir">Tgl Akhir</label>
+                    <div class="input-group-append">
+                        <span class="input-group-text input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>                        
+                    <input class="form-control form-control-sm" id="tgl_akhir" 
+                            value="{{ date('d-m-Y') }}" 
+                            placeholder="Tanggal Akhir" name="tgl_akhir"
+                            type="text"/>
+                    <button type="button" id="download" class="btn btn-sm btn-dark">
+                      Download
+                    </button>
+                </div>
+              </div>
+
             </div>
           </div>
 
         </div>
-
-        <div class="col-md-4">
-          <div class="col-offset-3">
-            <div class="form-group">
-              <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir" >
-                  <label class="file-download">Tgl Akhir</label>
-                  <div class="input-group-append">
-                      <span class="input-group-text input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                      </span>
-                  </div>                        
-                  <input class="form-control" id="tgl_akhir" 
-                          value="{{ date('d-m-Y') }}" 
-                          placeholder="Tanggal Akhir" name="tgl_akhir"
-                          type="text"/>
-                  <button type="button" id="download" class="btn btn-dark">
-                    Download
-                  </button>
-              </div>
-            
-            </div>
-          </div>
-          
-        </div>
-        </form>
-      </div>
+      </form>
     </li>
-</ol>
+  </ol>
+</nav>
 @endsection
 @section('content')
   <div class="card">
@@ -392,6 +389,7 @@
       // e.preventDefault();
      
       var url = 'viewer/download',
+          status_verified = $('#status-verified').val(),
           tglAwal = $('#tgl_awal').val(),
           tglAkhir = $('#tgl_akhir').val(),
           awal = new Date(tglAwal).getTime(), 

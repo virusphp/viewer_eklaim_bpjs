@@ -80,7 +80,29 @@ Class Eklaim extends SepRepository
                         ['sc.tgl_pulang', '=', $tgl],
                         // ['sc.tgl_sep', '=', $tgl],
                         ['sc.no_sep', 'LIKE', $keywords],
-                        ['pp.kd_penjamin', '=', '24']
+                        ['pp.kd_penjamin', '=', '46']
+                    ]);
+
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
+                        ['sc.no_rm', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '46']
+                    ]);
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
+                        ['p.nama_pasien', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '46']
+                    ]);
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=',$request->jns_rawat],
+                        ['sc.tgl_pulang', '=', $tgl],
+                        // ['sc.tgl_sep', '=', $tgl],
+                        ['sc.no_sep', 'LIKE', $keywords],
+                        ['pp.kd_penjamin', '=', '46']
                     ]);
                 }
             })

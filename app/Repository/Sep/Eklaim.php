@@ -113,6 +113,48 @@ Class Eklaim extends SepRepository
         return $data;
     }
 
+    public function getLaporan($params)
+    {
+        $tglAwal = date('Y-m-d', strtotime($params->tgl_awal));
+        $tglAkhir = date('Y-m-d', strtotime($params->tgl_akhir));
+        $data = DB::table('sep_claim as sc')
+            ->select('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','sc.tgl_pulang', 'p.nama_pasien', 'pp.no_kartu', 'sc.periksa', 'sc.user_verified','sc.checked','sc.user_created')
+            ->join('pasien as p','sc.no_rm','=','p.no_rm')
+            ->join('penjamin_pasien as pp', function($join) {
+                $join->on('sc.no_rm', '=', 'pp.no_rm')->limit(1);
+            })
+            ->whereBetWeen('tgl_pulang', [$tglAwal, $tglAkhir])
+            ->where(function($query) use ($params) {
+                if ($params->status_claim == null) {
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=', $params->jns_rawat],
+                        ['pp.kd_penjamin', '=', '23']
+                    ]);
+                    
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=', $params->jns_rawat],
+                        ['pp.kd_penjamin', '=', '24']
+                    ]);
+                } else {
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=', $params->jns_rawat],
+                        ['pp.kd_penjamin', '=', '23'],
+                        ['sc.periksa', '=', $params->status_claim]
+                    ]);
+                    
+                    $query->orWhere([
+                        ['sc.jns_pelayanan', '=', $params->jns_rawat],
+                        ['pp.kd_penjamin', '=', '24'],
+                        ['sc.periksa', '=', $params->status_claim]
+                    ]);
+                }
+            })
+            // ->groupBy('sc.no_reg','sc.no_sep','sc.no_rm','sc.tgl_sep','p.nama_pasien','pp.no_kartu','sc.periksa','sc.user_verified','sc.checked','sc.catatan','sc.user_created')
+            ->distinct()
+            ->get();
+        return $data;
+    }
+
     public function cari($no_reg)
     {
         $result = DB::table('sep_claim')->where('no_reg', $no_reg)->first();
@@ -260,6 +302,24 @@ Class Eklaim extends SepRepository
                 ]);
         })
         ->distinct()
+        ->orderBy('p.nama_pasien', 'asc');
+    }
+
+    public function laporanExport($params)
+    {
+        $tglAwal = date('Y-m-d', strtotime($params->tgl_awal));
+        $tglAkhir = date('Y-m-d', strtotime($params->tgl_akhir));
+        return DB::table('sep_claim as sc')
+        ->select(
+            'sc.tgl_pulang', 'sc.no_rm', 'p.nama_pasien', 'sc.no_sep', 'sc.jns_pelayanan', 'sc.periksa', 'sc.catatan',
+        )
+        ->join('pasien as p','sc.no_rm','=','p.no_rm')
+         ->whereBetWeen('tgl_pulang', [$tglAwal, $tglAkhir])
+        ->where(function ($query) use ($params) {
+            $query->orWhere([
+                ['sc.jns_pelayanan', '=', $params->jns_rawat],
+            ]);
+        })
         ->orderBy('p.nama_pasien', 'asc');
     }
 }

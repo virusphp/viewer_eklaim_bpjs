@@ -169,3 +169,7 @@ function dateRange($awal, $akhir, $step = '+1 day', $format = 'Y-m-d') {
 
 	return $dates;
 }
+
+function statusKlaim($nilai) {
+	return ($nilai == 0 ? "Unverified" : ($nilai == 1 ?  "Verified" : "Pending"));
+}

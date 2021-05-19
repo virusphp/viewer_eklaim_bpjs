@@ -62,6 +62,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function()
         Route::post('/viewer/download', 'KlaimBpjsController@download')->name('viewer.download');
         Route::post('/viewer/export', 'KlaimBpjsController@Export')->name('viewer.export');
 
+        Route::get('/laporan/viewer', 'LaporanKlaimController@index')->name('export.index');
+        Route::get('/laporan/search', 'LaporanKlaimController@search')->name('export.search');
+        Route::post('/laporan/export', 'LaporanKlaimController@export')->name('laporan.export');
+
         Route::get('/verifikasi/peserta/{peserta}', 'VerifikasiController@detailPeserta')->name('detail.peserta');
         Route::get('/verifikasi/suratkontrol', 'VerifikasiController@getSuratInternal')->name('surat.kontrol');
         Route::get('/verifikasi/surat/print/{tgl}/{surat}/{rujukan}','VerifikasiController@printSurat')->name('surat.print');

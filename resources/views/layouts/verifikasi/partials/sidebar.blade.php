@@ -15,7 +15,13 @@
           <ul class="nav-dropdown-items">
             <li class="nav-item">
               <a class="nav-link" href="{{ route('viewer.index') }}">
-                <i class="nav-icon icon-puzzle"></i>Penjamin</a>
+                <i class="nav-icon icon-puzzle"></i>Penjamin
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('export.index') }}">
+                <i class="nav-icon icon-wallet"></i>Export
+              </a>
             </li>
           </ul>
         </li>

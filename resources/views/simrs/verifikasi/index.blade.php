@@ -5,26 +5,26 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Home</li>
     <li class="breadcrumb-item">
-     <a href="{{ route('viewer.index') }}">Viewer</a> 
+      <a href="{{ route('viewer.index') }}">Viewer</a>
     </li>
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu">
       <form id="form-download" method="POST" action="{{ route('viewer.download') }}" class="form-inline">
-      @csrf
+        @csrf
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <div class="col-offset-3">
             <div class="form-inline">
               <div class="form-check form-check-inline my-1">
-                  <input class="form-check-input" type="radio" id="jns_rawat01" value="01" name="jenisRawat" checked>
-                  <label class="form-check-label" for="jns_rawat01">Rawat Jalan</label>
+                <input class="form-check-input" type="radio" id="jns_rawat01" value="01" name="jenisRawat" checked>
+                <label class="form-check-label" for="jns_rawat01">Rawat Jalan</label>
               </div>
               <div class="form-check form-check-inline my-1">
-                  <input class="form-check-input" type="radio" id="jns_rawat02" value="02" name="jenisRawat">
-                  <label class="form-check-label" for="jns_rawat02">Rawat Inap</label>
+                <input class="form-check-input" type="radio" id="jns_rawat02" value="02" name="jenisRawat">
+                <label class="form-check-label" for="jns_rawat02">Rawat Inap</label>
               </div>
               <div class="form-check form-check-inline my-1">
-                  <input class="form-check-input" type="radio" id="jns_rawat03" value="03" name="jenisRawat">
-                  <label class="form-check-label" for="jns_rawat03">IGD</label>
+                <input class="form-check-input" type="radio" id="jns_rawat03" value="03" name="jenisRawat">
+                <label class="form-check-label" for="jns_rawat03">IGD</label>
               </div>
             </div>
           </div>
@@ -39,34 +39,30 @@
             <div class="form-inline">
 
               <div class="form-group">
-                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal" >
+                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-awal">
                   <label class="mx-2 my-1" for="tgl_awal">Tgl Awal</label>
-                    <div class="input-group-append">
-                        <span class="input-group-text input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>                        
-                    <input class="form-control form-control-sm" id="tgl_awal" 
-                            value="{{ date('d-m-Y') }}" 
-                            placeholder="Tanggal Awal" name="tgl_awal"
-                            type="text"/>
+                  <div class="input-group-append">
+                    <span class="input-group-text input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                  <input class="form-control form-control-sm" id="tgl_awal" value="{{ date('d-m-Y') }}"
+                      placeholder="Tanggal Awal" name="tgl_awal" type="text" />
                 </div>
               </div>
               <div class="form-group">
-                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir" >
-                    <label class="mx-2 my-1" for="tgl_akhir">Tgl Akhir</label>
-                    <div class="input-group-append">
-                        <span class="input-group-text input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>                        
-                    <input class="form-control form-control-sm" id="tgl_akhir" 
-                            value="{{ date('d-m-Y') }}" 
-                            placeholder="Tanggal Akhir" name="tgl_akhir"
-                            type="text"/>
-                    <button type="button" id="download" class="btn btn-sm btn-dark">
-                      Download
-                    </button>
+                <div class="input-group date {{ $errors->has('tgl_akhir') ? 'has-error' : '' }}" id="dt-akhir">
+                  <label class="mx-2 my-1" for="tgl_akhir">Tgl Akhir</label>
+                  <div class="input-group-append">
+                    <span class="input-group-text input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                  <input class="form-control form-control-sm" id="tgl_akhir" value="{{ date('d-m-Y') }}"
+                      placeholder="Tanggal Akhir" name="tgl_akhir" type="text" />
+                  <button type="button" id="download" class="btn btn-sm btn-dark">
+                    Download
+                  </button>
                 </div>
               </div>
 
@@ -80,39 +76,39 @@
 </nav>
 @endsection
 @section('content')
-  <div class="card">
-      <div class="card-header">
-        @include('layouts.search.search')
-      </div>
-      <div class="card-body">
-        <form action="#" id="form-checked" method="POST">
-        <table class="table table-sm table-responsive-sm table-bordered table-striped table-hover" id="mytable">
-          <thead>
-            <tr>
-              <th class="check-all" width="20"><input type="checkbox"> All</th>
-              <th>No Sep</th>
-              <th>No RM</th>
-              <th>Nama Pasien</th>
-              <th>Tgl Sep</th>
-              <th>Tgl Pulang</th>
-              <th>View</th>
-              <th>
-                <?php $user = Auth::user()->role; ?>
-                @if( $user == 'bpjs' || $user == 'superadmin' || $user == 'developer')
-                  <button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button>
-                @endif
-              </th>
-              <th>Catatan</th>
-              <th>###</th>
-            </tr>
-          </thead>
-          <tbody>
-           
-          </tbody>
-        </table>
-        </form>
-      </div>
+<div class="card">
+  <div class="card-header">
+    @include('layouts.search.search')
   </div>
+  <div class="card-body">
+    <form action="#" id="form-checked" method="POST">
+      <table class="table table-sm table-responsive-sm table-bordered table-striped table-hover" id="mytable">
+        <thead>
+          <tr>
+            <th class="check-all" width="20"><input type="checkbox"> All</th>
+            <th>No Sep</th>
+            <th>No RM</th>
+            <th>Nama Pasien</th>
+            <th>Tgl Sep</th>
+            <th>Tgl Pulang</th>
+            <th>View</th>
+            <th>
+              <?php $user = Auth::user()->role; ?>
+              @if( $user == 'bpjs' || $user == 'superadmin' || $user == 'developer')
+              <button id="verif-all" type="button" class="btn btn-sm btn-outline-primary">Verif All</button>
+              @endif
+            </th>
+            <th>Catatan</th>
+            <th>###</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
 
 @include('simrs.verifikasi.modals.modal_viewer')
 @include('simrs.verifikasi.modals.modal_catatan')
@@ -124,22 +120,24 @@
 @endpush
 @push('scripts')
 
-<script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}" ></script>
-<script type="text/javascript" src="{{ asset('datatables/js/dataTables.select.min.js') }}" ></script>
-<script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}" ></script>
-<script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('datatables/js/dataTables.select.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
+  $(function () {
         $('#dt-akhir').datetimepicker({
-            format: 'D-M-Y'
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY'
         });
         $('#dt-awal').datetimepicker({
-            format: 'D-M-Y'
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY'
         });
         $('#datetimepicker_sep').datetimepicker({
             format: 'D-M-Y'
@@ -390,11 +388,12 @@
      
       var url = 'viewer/download',
           status_verified = $('#status-verified').val(),
-          tglAwal = $('#tgl_awal').val(),
-          tglAkhir = $('#tgl_akhir').val(),
+          tglAwal = $('#tgl_awal').val().split("-").reverse().join("-"),
+          tglAkhir = $('#tgl_akhir').val().split("-").reverse().join("-"),
           awal = new Date(tglAwal).getTime(), 
           akhir = new Date(tglAkhir).getTime(), 
           nilai = akhir - awal;
+
           form = $('#form-download');
 
           if (nilai >= 0) {

@@ -150,8 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Cors\ServiceProvider::class,
-        'Chumper\Zipper\ZipperServiceProvider',
+        'Virusphp\Zipper\ZipperServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...

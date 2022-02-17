@@ -7,7 +7,7 @@ use Guzzle\Http\Message\Response;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 
-class CaraBayar
+class Carabayar
 {
     protected $client = null;
     protected $api_url;

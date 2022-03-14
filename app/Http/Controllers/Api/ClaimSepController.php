@@ -26,7 +26,6 @@ class ClaimSepController extends Controller
 
     public function create(CreateRequest $request)
     {
-        // dd($requet->all());
         $saveClaim = $this->claimSep->simpan($request);
         return response()->json($saveClaim);
     }

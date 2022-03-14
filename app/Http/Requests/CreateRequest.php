@@ -44,7 +44,7 @@ class CreateRequest extends FormRequest
             'tgl_sep.required' => 'Tanggal SEP harus di isi!!',
             // 'tgl_pulang.required' => 'Tanggal Pulang harus di isi!!',
             // 'file_claim.required' => 'File Claim tidak boleh kosong!',
-            'file_claim.dokumen' => 'File tidak sesuai dengan aturan format (PDF,pdf)!'
+            'file_claim.mimes' => 'File tidak sesuai dengan aturan format (PDF,pdf)!'
 		];
     }
 

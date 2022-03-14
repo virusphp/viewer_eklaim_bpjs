@@ -6,10 +6,10 @@ use DB;
 
 class ApiRepository
 {
-    protected function sendMessage($pasien, $pegawai, $pelayanan, $status)
+    protected function sendMessage($pasien, $pegawai, $pelayanan, $status, $data)
     {
         $jumlahUpload = $this->getJumlah($pegawai->kd_pegawai);
-        $text = $this->parsingMessage($pasien, $pegawai, $pelayanan, $status, $jumlahUpload);
+        $text = $this->parsingMessage($pasien, $pegawai, $pelayanan, $status, $jumlahUpload, $data);
         
         // // dd($text, env('TELEGRAM_GROUP_ID'));
         Telegram::sendMessage([
@@ -19,9 +19,10 @@ class ApiRepository
         ]);
     }
 
-    protected function parsingMessage($params, $pegawai, $pelayanan, $status, $jumlah)
+    protected function parsingMessage($params, $pegawai, $pelayanan, $status, $jumlah, $data)
     {
         $text = "Data Viewer :\n"
+                ."💳‍ : $params->no_rm\n"
                 ."🙍🏻‍♂️ : $params->nama_pasien\n"
                 ."💳‍ : ".maskCard($params->no_kartu)."\n"
                 ."🏠 : $params->tempat_lahir\n"

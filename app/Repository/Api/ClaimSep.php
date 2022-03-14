@@ -108,7 +108,7 @@ class ClaimSep extends ApiRepository
 
     private function cekPasien($noRm)
     {
-        return DB::table('pasien as p')->select('p.nama_pasien', 'p.tempat_lahir', 'p.jns_kel', 'pp.no_kartu')
+        return DB::table('pasien as p')->select('p.no_rm','p.nama_pasien', 'p.tempat_lahir', 'p.jns_kel', 'pp.no_kartu')
                 ->join('penjamin_pasien as pp', 'p.no_rm', '=', 'pp.no_rm')
                 ->where('p.no_rm', $noRm)->first();
     }
@@ -144,7 +144,7 @@ class ClaimSep extends ApiRepository
 
             if ($simpan) {
                  $message = $this->Message($simpan, "simpan");
-                 $this->sendMessage($pasien,$pegawai,$pelayanan,"created");
+                 $this->sendMessage($pasien,$pegawai,$pelayanan,"created", $data);
             }
         }
         return $message;
@@ -183,7 +183,7 @@ class ClaimSep extends ApiRepository
 
             if ($update) {
                 $message = $this->Message($update, "simpan");
-                // $this->sendMessage($pasien,$pegawai,$pelayanan,"updated");
+                $this->sendMessage($pasien,$pegawai,$pelayanan,"updated", $data);
             }
         }
 

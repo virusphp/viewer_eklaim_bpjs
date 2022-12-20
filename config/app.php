@@ -150,6 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
+
         'Virusphp\Zipper\ZipperServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
@@ -212,6 +213,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // PACKAGES TAMBAHAN
+
         'Zipper' => 'Virusphp\Zipper\Zipper',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 

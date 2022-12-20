@@ -212,7 +212,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // PACKAGES TAMBAHAN
-        'Zipper' => 'Chumper\Zipper\Zipper',
+        'Zipper' => 'Virusphp\Zipper\Zipper',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],

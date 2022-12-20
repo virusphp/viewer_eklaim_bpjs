@@ -217,7 +217,6 @@ class KlaimBpjsController extends Controller
             ['periksa', $request->status_verified],
         ])
         ->get();
-        dd($data);
         $files = [];
         foreach($data as $val) {
             $file = $this->getOriginalDestination($val->tgl_pulang);
@@ -236,6 +235,7 @@ class KlaimBpjsController extends Controller
             }
         }
   
+        dd($files);
         // $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
         // // dd($dates);
         // $files = [];

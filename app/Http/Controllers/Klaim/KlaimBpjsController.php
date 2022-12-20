@@ -217,7 +217,6 @@ class KlaimBpjsController extends Controller
             ['periksa', $request->status_verified],
         ])
         ->get();
-
         $files = [];
         foreach($data as $val) {
             $file = $this->getOriginalDestination($val->tgl_pulang);

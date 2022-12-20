@@ -235,7 +235,6 @@ class KlaimBpjsController extends Controller
             }
         }
   
-        dd($files);
         // $dates = dateRange($request->tgl_awal, $request->tgl_akhir);
         // // dd($dates);
         // $files = [];
@@ -255,7 +254,7 @@ class KlaimBpjsController extends Controller
         );
         $fileName = tanggalPdf($request->tgl_awal)."_".tanggalPdf($request->tgl_akhir).'.zip';
         $zip = new Zipper();
-        $zip->make('download'.DIRECTORY_SEPARATOR.$fileName)->add($files)->close();;
+        $zip->make('download'.DIRECTORY_SEPARATOR.$fileName)->add($files)->close();
         return response()->download(public_path('download'.DIRECTORY_SEPARATOR.$fileName),$fileName, $headers)->deleteFileAfterSend();
     }
 

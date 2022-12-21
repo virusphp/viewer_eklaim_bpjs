@@ -14,11 +14,13 @@ use DB;
 Use DateTime;
 // use PDF;
 use Auth;
-use Virusphp\Zipper\Zipper;
 use Telegram;
+use ZanySoft\Zip\ZipManager;
+use Zip;
 
 class KlaimBpjsController extends Controller
 {
+    
     protected $conn, $cetak, $reg, $rujukan, $eklaim;
 
     public function __construct()
@@ -253,8 +255,13 @@ class KlaimBpjsController extends Controller
             'Content-Type' => 'application/zip',
         );
         $fileName = tanggalPdf($request->tgl_awal)."_".tanggalPdf($request->tgl_akhir).'.zip';
-        $zip = new Zipper();
-        $zip->make('download'.DIRECTORY_SEPARATOR.$fileName)->add($files)->close();
+        $zip = Zip::create(public_path().DIRECTORY_SEPARATOR.'download'.DIRECTORY_SEPARATOR.$fileName);
+        // dd(public_path().DIRECTORY_SEPARATOR.'download'.DIRECTORY_SEPARATOR.$fileName);
+        // $zip->add($files);
+        // dd($files);
+        $zip->add($files);
+        $zip->close();
+        // dd($zip, $fileName);
         return response()->download(public_path('download'.DIRECTORY_SEPARATOR.$fileName),$fileName, $headers)->deleteFileAfterSend();
     }
 

@@ -150,8 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
-
-        'Virusphp\Zipper\ZipperServiceProvider',
+        ZanySoft\Zip\ZipServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
@@ -214,7 +213,7 @@ return [
 
         // PACKAGES TAMBAHAN
 
-        'Zipper' => 'Virusphp\Zipper\Zipper',
+        'Zip' => ZanySoft\Zip\ZipFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],

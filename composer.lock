@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fe73f1d59ef75c190871e0d82ef1bff",
+    "content-hash": "dea51cd38befacaff64af9a08fec96a3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5910,71 +5910,6 @@
             "time": "2022-09-12T13:28:28+00:00"
         },
         {
-            "name": "virusphp/zipper",
-            "version": "v1.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/virusphp/zippers.git",
-                "reference": "76f6cec5943d46f23bd5fb7523747cc00281af8f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/virusphp/zippers/zipball/76f6cec5943d46f23bd5fb7523747cc00281af8f",
-                "reference": "76f6cec5943d46f23bd5fb7523747cc00281af8f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-zip": "*",
-                "illuminate/filesystem": "^8.8|^9.1.0",
-                "illuminate/support": "^8.8|^9.1.0",
-                "php": ">=5.6.0|^7.4|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4.4",
-                "phpunit/phpunit": "^9.5.10"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Virusphp\\Zipper\\ZipperServiceProvider"
-                    ],
-                    "aliases": {
-                        "Zipper": "Virusphp\\Zipper\\Zipper"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Virusphp\\Zipper\\": "src/Virusphp/Zipper"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sugandi",
-                    "email": "github@setsuga.io",
-                    "homepage": "http://megonodev.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "This is a little neat helper for the ZipArchive methods with handy functions",
-            "homepage": "http://github.com/virusphp/zipper",
-            "keywords": [
-                "archive",
-                "laravel",
-                "zip"
-            ],
-            "support": {
-                "issues": "https://github.com/virusphp/zippers/issues",
-                "source": "https://github.com/virusphp/zippers/tree/v1.1.3"
-            },
-            "time": "2022-12-20T06:56:16+00:00"
-        },
-        {
             "name": "vlucas/phpdotenv",
             "version": "v5.5.0",
             "source": {
@@ -6189,6 +6124,78 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zanysoft/laravel-zip",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zanysoft/laravel-zip.git",
+                "reference": "8bdcb51f47b68f3ffa27f9cc5a66626db98c7318"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zanysoft/laravel-zip/zipball/8bdcb51f47b68f3ffa27f9cc5a66626db98c7318",
+                "reference": "8bdcb51f47b68f3ffa27f9cc5a66626db98c7318",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.24",
+                "phpunit/phpunit": "^9.5",
+                "scrutinizer/ocular": "^1.9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ZanySoft\\Zip\\ZipServiceProvider"
+                    ],
+                    "aliases": {
+                        "Zip": "ZanySoft\\Zip\\Facades\\Zip"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ZanySoft\\Zip\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zany Soft",
+                    "email": "info@zanysoft.net",
+                    "homepage": "http://www.zanysoft.net"
+                }
+            ],
+            "description": "laravel-zip is the world's leading zip utility for file compression and backup.",
+            "homepage": "http://www.zanysoft.net",
+            "keywords": [
+                "backup",
+                "extract",
+                "laravel",
+                "laravel-zip",
+                "laravel8",
+                "laravel9",
+                "merge",
+                "multiple",
+                "unzip",
+                "zip",
+                "ziparchive"
+            ],
+            "support": {
+                "issues": "https://github.com/zanysoft/laravel-zip/issues",
+                "source": "https://github.com/zanysoft/laravel-zip/tree/2.0.3"
+            },
+            "time": "2022-11-08T12:03:57+00:00"
         }
     ],
     "packages-dev": [

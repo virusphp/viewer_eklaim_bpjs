@@ -18,7 +18,7 @@
     "laravel/framework": "^8.65",
     "laravel/tinker": "^2.5",
     "maatwebsite/excel": "^3.1",
-    "virusphp/zipper": "^1.1"
+    "zanysoft/laravel-zip": "^2.0"
   },
   "require-dev": {
     "facade/ignition": "^2.5",
